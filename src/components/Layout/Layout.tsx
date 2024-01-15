@@ -10,10 +10,13 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <>
+      {/* HEAD */}
       <Head>
         <title>比特幣中文標題</title>
         <meta name="description" content="比特幣中文" />
       </Head>
+
+      {/* Body */}
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-grow">

@@ -9,8 +9,49 @@ const Home = () => {
       <Button
         type="large"
         theme="primary"
-        className="border-red-800 "
+        className=""
       ></Button>
+      <Button
+        type="medium"
+        theme="primary"
+        className=" "
+      ></Button>
+      <Button
+        type="small"
+        theme="primary"
+        className=" "
+      ></Button>
+      <Button
+        type="large"
+        theme="secondary"
+        className=" "
+      ></Button>
+      <Button
+        type="medium"
+        theme="secondary"
+        className=" "
+      ></Button>
+      <Button
+        type="small"
+        theme="secondary"
+        className=" "
+      ></Button>
+      <Button
+        type="large"
+        theme="normal"
+        className=" "
+      ></Button>
+      <Button
+        type="medium"
+        theme="normal"
+        className=" "
+      ></Button>
+      <Button
+        type="small"
+        theme="normal"
+        className=" "
+      ></Button>
+
       <Themes></Themes>
 
       <SearchBtn></SearchBtn>

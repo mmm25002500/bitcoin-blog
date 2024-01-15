@@ -7,7 +7,7 @@ const SearchBtn = () => {
       <button className="
       border focus:outline-none focus:ring-4 font-medium rounded-xl text-sm px-5 py-2.5 me-2 mb-2 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px]
 
-      /* White Mode */
+      /* Light Mode */
       border-neutral-gray-200
       hover:border-primary-black-300
       active:border-primary-black-300
@@ -22,7 +22,7 @@ const SearchBtn = () => {
       <Image
         src={ searchIcon }
         alt="Images Not Found"
-        className="text-primary-black-300 dark:text-neutral-white"
+        className="dark:invert"
       />
       </button>
     </>
