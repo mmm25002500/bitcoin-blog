@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCookies } from 'react-cookie';
 import { useTheme } from "next-themes";
 import Image from 'next/image';
-import Moon from '@/icons/Moon.svg';
+import Moon from '@/icons/moon.svg';
 import light from '@/icons/light.svg';
 
 const Themes = () => {
