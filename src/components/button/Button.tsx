@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Button = (props: Props) => {
-  const basicCSS = "border focus:outline-none focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 w-[120px]" + " ";
+  const basicCSS = "border focus:outline-none focus:ring-4 font-medium rounded-[6.25rem] text-sm px-5 py-2.5 me-2 mb-2 w-[120px]" + " ";
 
   const [css, setCSS] = useState(basicCSS);
 
@@ -43,7 +43,7 @@ const Button = (props: Props) => {
 
 	return (
 		<>
-      <button type="button" className={ css }>Button ></button>
+      <button type="button" className={ css }>Button </button>
 		</>
 	)
 }
