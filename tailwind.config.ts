@@ -43,6 +43,9 @@ const config: Config = {
           'gray-200': '#DEDEDE',
           'gray-100': '#F5F5F5 ',
         },
+        'wireframe': {
+          700: '#BCBACD',
+        },
         'func': {
           'error': '#D82027',
           'info': '#208BD8',
