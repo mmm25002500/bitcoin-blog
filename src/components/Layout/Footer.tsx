@@ -30,13 +30,15 @@ const Icon = () => {
 const Footer = () => {
   return (
     <>
-      <hr className='border-white dark:border-1 dark:border-[#E7E6F2]'/>
-      <div className="h-[15.75rem] dark:bg-primary-black-300 px-10 pt-10 pb-[3.75rem] gap-8">
+      <hr className='border-white dark:border-1 dark:border-[#E7E6F2]' />
+      {/* figma: px-10 pt-10 */}
+      <div className="h-[15.75rem] dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
         {/* Icon */}
         <Icon></Icon>
 
         {/* Link */}
-        <div className='flex gap-6 justify-center'>
+        {/* figma: gap-6 */}
+        <div className='flex gap-6 justify-center pt-10'>
           <Link
             href='/'
             prefetch={false}
@@ -68,11 +70,12 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className='flex gap-3 justify-center'>
+        <div className='flex gap-3 justify-center pt-6'>
           <p className='text-neutral-600 dark:text-neutral-300'>© Bitcoin.zh 2140</p>
-          <p className='text-neutral-300 dark:text-neutral-300'>|</p>
-          <p className='text-neutral-600 dark:text-neutral-300'>All Rights Reserved</p>
+          <p className='text-neutral-300 dark:text-neutral-300 hidden sm:block'>|</p>
+          <p className='text-neutral-600 dark:text-neutral-300 hidden sm:block'>All Rights Reserved</p>
         </div>
+          <p className='flex text-neutral-600 dark:text-neutral-300 justify-center sm:hidden'>All Rights Reserved</p>
       </div>
     </>
   )
