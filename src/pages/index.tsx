@@ -1,8 +1,18 @@
+import Card from "@/components/Card/Card";
 import Button from "@/components/button/Button";
+import illustationIcon from "@/icons/illustation.svg";
 
 const Home = () => {
   return (
     <>
+      <Card className="" onClick={ () => console.log('聯絡我們') }>
+        <Card.Infomation>
+          <Card.Title text="CONTACT US"></Card.Title>
+          <Card.Description text="聯絡我們"></Card.Description>
+        </Card.Infomation>
+        <Card.Photo src={illustationIcon}></Card.Photo>
+      </Card>
+
       <Button
         type="large"
         theme="primary"

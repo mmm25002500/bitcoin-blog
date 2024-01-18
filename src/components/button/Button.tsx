@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-interface Props {
+interface ButtonProps {
   type: "large" | "medium" | "small";
   theme: "primary" | "secondary" | "normal";
   className?: string;
 }
 
-const Button = (props: Props) => {
+const Button = (props: ButtonProps) => {
   const basicCSS = "border focus:outline-none focus:ring-4 font-medium rounded-[6.25rem] text-sm px-5 py-2.5 me-2 mb-2 w-[120px] ";
 
   const [css, setCSS] = useState(basicCSS);

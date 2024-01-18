@@ -1,7 +1,7 @@
 import moreIcon from '@/icons/more.svg';
 import Image from 'next/image';
 
-const More = () => {
+const More = (props: {className?: string}) => {
   return (
     <>
       <button className="
@@ -22,7 +22,7 @@ const More = () => {
       <Image
         src={ moreIcon }
         alt="Images Not Found"
-        className="dark:invert"
+        className={`dark:invert ${props.className}`}
       />
       </button>
     </>

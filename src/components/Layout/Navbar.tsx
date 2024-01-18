@@ -5,29 +5,7 @@ import { useTheme } from 'next-themes';
 import Themes from '@/components/Layout/Themes';
 import SearchBtn from '@/components/button/SearchBtn';
 import More from '@/components/button/More';
-
-// 切換圖片樣式
-const Icon = (props: { className: string }) => {
-  const { theme, setTheme } = useTheme();
-
-  return (
-    <>
-      {theme === 'dark' ? (
-        <Image
-          src={IconDark}
-          alt="Icon Dark"
-          className={props.className}
-        ></Image>
-      ) : (
-        <Image
-          src={IconLight}
-          alt="Icon Light"
-          className={props.className}
-        ></Image>
-      )}
-    </>
-  )
-}
+import Icon from '@/components/Icon';
 
 const Navbar = () => {
   return (
@@ -38,18 +16,26 @@ const Navbar = () => {
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
               <></>
             </div>
+            {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
-                <Icon className="h-8 w-auto" />
+                <Icon
+                  icon_light={IconLight}
+                  icon_dark={IconDark}
+                  className="h-8 w-auto"
+                />
               </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              {/* 切換主題 */}
               <div className="relative ml-3">
                 <Themes></Themes>
               </div>
+              {/* 搜尋 */}
               <div className="relative ml-3">
                 <SearchBtn></SearchBtn>
               </div>
+              {/* 更多 */}
               <div className="relative ml-3">
                 <More></More>
               </div>

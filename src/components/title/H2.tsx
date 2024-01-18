@@ -1,8 +1,8 @@
-const H2 = (props: {title: string}) => {
+const H3 = (props: {title: string, className?: string}) => {
   return (
     // Font Weight: 700
-    <h2 className="text-h2 font-blod">{ props.title }</h2>
+    <h3 className={`text-h3 font-blod ${props.className}`}>{ props.title }</h3>
   )
 }
 
-export default H2;
+export default H3;

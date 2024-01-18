@@ -3,29 +3,7 @@ import btc_icon_light from '@/icons/btc_footer_light.svg';
 import btc_icon_dark from '@/icons/btc_footer_dark.svg';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-
-// 切換圖片樣式
-const Icon = () => {
-  const { theme, setTheme } = useTheme();
-
-  return (
-    <>
-      {theme === 'dark' ? (
-        <Image
-          src={btc_icon_dark}
-          alt="Icon Dark"
-          className='mr-auto ml-auto'
-        ></Image>
-      ) : (
-        <Image
-          src={btc_icon_light}
-          alt="Icon Light"
-          className='mr-auto ml-auto'
-        ></Image>
-      )}
-    </>
-  )
-}
+import Icon from '@/components/Icon';
 
 const Footer = () => {
   return (
@@ -34,7 +12,10 @@ const Footer = () => {
       {/* figma: px-10 pt-10 */}
       <div className="h-[15.75rem] dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
         {/* Icon */}
-        <Icon></Icon>
+        <Icon
+          icon_light={btc_icon_light}
+          className='mr-auto ml-auto'
+        />
 
         {/* Link */}
         {/* figma: gap-6 */}
