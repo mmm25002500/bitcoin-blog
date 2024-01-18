@@ -1,7 +1,7 @@
-import searchIcon from '@/icons/SearchBtn.svg';
+import moreIcon from '@/icons/more.svg';
 import Image from 'next/image';
 
-const SearchBtn = () => {
+const More = () => {
   return (
     <>
       <button className="
@@ -20,7 +20,7 @@ const SearchBtn = () => {
       dark:active:bg-primary-black-100
       ">
       <Image
-        src={ searchIcon }
+        src={ moreIcon }
         alt="Images Not Found"
         className="dark:invert"
       />
@@ -29,4 +29,4 @@ const SearchBtn = () => {
   );
 }
 
-export default SearchBtn;
+export default More;

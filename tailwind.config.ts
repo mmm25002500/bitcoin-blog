@@ -32,6 +32,7 @@ const config: Config = {
         },
         'neutral': {
           'white': '#FFFFFF',
+          'black': '#1A1A1A',
           'gray-900': '#3D3D3D',
           'gray-800': '#545454',
           'gray-700': '#6B6B6B',
