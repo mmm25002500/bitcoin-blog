@@ -64,7 +64,7 @@ const Header = () => {
                   <div className="relative flex px-2 items-center">
                     <Icon
                       icon_light={btcIcon}
-                      className="h-5 w-auto mr-2" />
+                      className="h-5 w-auto mr-2 dark:invert" />
                     <p className=''>BTC {btc}</p>
                   </div>
                 </div>

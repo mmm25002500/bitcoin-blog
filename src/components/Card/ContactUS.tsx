@@ -1,9 +1,11 @@
+import Icon from "../Icon";
 import Card from "./Card";
 
 interface ContactUSProps {
   title: string;
   description: string;
-  photo: string;
+  photo_light: string;
+  photo_dark?: string;
   className?: string;
   onClick?: () => void;
 }
@@ -12,7 +14,7 @@ const ContactUS = (props: ContactUSProps) => {
   return (
     <Card
       className="
-      max-w-xl px-7 gap-8 w-full rounded-lg border items-center justify-between
+      max-w-xl px-7 gap-8 w-[343px] sm:w-full rounded-lg border items-center justify-between
 
       /* Light Mode */
       bg-neutral-white
@@ -28,20 +30,21 @@ const ContactUS = (props: ContactUSProps) => {
       onClick={() => props.onClick}
     >
       <Card.Infomation
-        className="leading-normal p-4"
+        className="leading-normal p-4 items-start"
       >
         <Card.Title
           text={props.title}
-          className="mb-2 text-base font-medium leading-6 text-neutral-800 dark:text-neutral-200"
+          className="mb-2 text-sm sm:text-base font-medium leading-5 sm:leading-6 text-neutral-800 dark:text-neutral-200"
         />
         <Card.Description
           text={props.description}
-          className="mb-3 font-medium text-2xl leading-9 text-gray-700 dark:text-white tracking-[.04rem]"
+          className="mb-3 font-medium text-xl sm:text-2xl leading-[30px] sm:leading-9 text-gray-700 dark:text-white tracking-[.04rem]"
         />
       </Card.Infomation>
-      <Card.Photo
-        src={props.photo}
-        className="object-cover rounded-t-lg h-auto w-[100px]]"
+      <Icon
+        icon_light={props.photo_light}
+        icon_dark={props.photo_dark}
+        className="object-cover rounded-t-lg h-auto w-[96px] sm:w-[100px]"
       />
     </Card>
   )

@@ -7,8 +7,32 @@ interface CardProps {
   onClick?: () => void;
 }
 
+// Card 的左邊的 Props
+interface InfomationProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+// Card 的左上的 Props
+interface TitleProps {
+  text: string;
+  className?: string;
+}
+
+// Card 的左下的 Props
+interface DescriptionProps {
+  text: string;
+  className?: string;
+}
+
+// Card 的右邊的 Props
+interface PhotoProps {
+  src: string;
+  className?: string;
+}
+
 // 左邊的 Infomation
-const Infomation = (props: { children: React.ReactNode, className?: string }) => {
+const Infomation = (props: InfomationProps) => {
   return (
     <div className={`flex flex-col justify-between ${ props.className }`}>
       {props.children}
@@ -17,7 +41,7 @@ const Infomation = (props: { children: React.ReactNode, className?: string }) =>
 }
 
 // 左上的 Title
-const Title = (props: { text: string, className?: string }) => {
+const Title = (props: TitleProps) => {
   return (
     <p className={`${props.className}`}>
       {props.text}
@@ -26,7 +50,7 @@ const Title = (props: { text: string, className?: string }) => {
 }
 
 // 左下的 Description
-const Description = (props: { text: string, className?: string }) => {
+const Description = (props: DescriptionProps) => {
   return (
     <p className={`${ props.className }`}>
       { props.text}
@@ -35,7 +59,7 @@ const Description = (props: { text: string, className?: string }) => {
 }
 
 // 右邊的 Photo
-const Photo = (props: { src: string, className?: string }) => {
+const Photo = (props: PhotoProps) => {
   return (
     <Image
       src={props.src}
