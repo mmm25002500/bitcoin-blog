@@ -7,10 +7,28 @@ import cryptoWalletIconDark from "@/icons/crypto_wallet_dark.svg";
 import Input from "@/components/Input/Input";
 import Post from "@/components/List/Post";
 import Lable from "@/components/Label/Label";
+import Tab from "@/components/Tab/Tab";
 
 const Home = () => {
   return (
     <>
+      <Tab
+        className="gap-6"
+        data={[
+          {
+            name: 'Tab1',
+            link: 'tab1'
+          },
+          {
+            name: 'Tab2',
+            link: 'tab2'
+          },
+          {
+            name: 'Tab3',
+            link: 'tab3'
+          }
+        ]}
+      />
       <Lable text="標籤" />
       <Post
         title="玩而非賺錢？區塊鏈遊戲與賺錢遊戲的新思考"
