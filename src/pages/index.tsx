@@ -6,10 +6,12 @@ import cryptoWalletIconLight from "@/icons/crypto_wallet_light.svg";
 import cryptoWalletIconDark from "@/icons/crypto_wallet_dark.svg";
 import Input from "@/components/Input/Input";
 import Post from "@/components/List/Post";
+import Lable from "@/components/Label/Label";
 
 const Home = () => {
   return (
     <>
+      <Lable text="標籤" />
       <Post
         title="玩而非賺錢？區塊鏈遊戲與賺錢遊戲的新思考"
         description="在區塊鏈遊戲和賺錢遊戲（P2E）平台飛速發展的世界中，很容易迷失在追求利潤和積累代幣的浪潮中。但我們是否忘記了遊戲的本質 - 那就是娛樂呢？今天，我們深入探討一個古老的問題：Play-to-Earn 概念中哪一部分更關鍵 - 玩還是賺？"
