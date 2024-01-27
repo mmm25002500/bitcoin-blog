@@ -1,11 +1,7 @@
+import { TagData } from '@/types/Tag/Tag';
 import { useRouter } from 'next/navigation';
 
-interface TagProps {
-  text: string;
-  className?: string;
-}
-
-const Tag = (props: TagProps) => {
+const Tag = (props: TagData) => {
   const router = useRouter();
 
   return (

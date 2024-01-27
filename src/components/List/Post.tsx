@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import Tag from '../Tag/Tag';
+import { AuthorData } from '@/types/List/Author';
 
 interface PostProps {
   title: string;
@@ -9,11 +10,6 @@ interface PostProps {
   img: string;
   authorData: AuthorData;
   date: number;
-}
-
-interface AuthorData {
-  name: string;
-  img: string;
 }
 
 const Post = (props: PostProps) => {

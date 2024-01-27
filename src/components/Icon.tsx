@@ -1,11 +1,6 @@
 import { useTheme } from "next-themes";
 import Image from 'next/image';
 
-interface IconProps {
-  icon: string;
-  className?: string;
-}
-
 // 切換圖片樣式
 const Icon = (props: { icon_light: string, icon_dark?: string, className?: string }) => {
   const { theme, setTheme } = useTheme();

@@ -1,16 +1,8 @@
+import { CreateWalletData } from "@/types/Card/CreateWallet";
 import Icon from "../Icon";
 import Card from "./Card";
 
-interface CreateWalletProps {
-  title: string;
-  description: string;
-  photo_light: string;
-  photo_dark?: string;
-  className?: string;
-  onClick?: () => void;
-}
-
-const CreateWallet = (props: CreateWalletProps) => {
+const CreateWallet = (props: CreateWalletData) => {
   return (
     <Card
       className="

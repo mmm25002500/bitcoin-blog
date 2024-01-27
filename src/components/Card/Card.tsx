@@ -1,38 +1,8 @@
+import * as CardData from '@/types/Card/Card';
 import Image from 'next/image';
 
-// 整個 Card 的 Props
-interface CardProps {
-  className?: string;
-  children?: React.ReactNode;
-  onClick?: () => void;
-}
-
-// Card 的左邊的 Props
-interface InfomationProps {
-  className?: string;
-  children?: React.ReactNode;
-}
-
-// Card 的左上的 Props
-interface TitleProps {
-  text: string;
-  className?: string;
-}
-
-// Card 的左下的 Props
-interface DescriptionProps {
-  text: string;
-  className?: string;
-}
-
-// Card 的右邊的 Props
-interface PhotoProps {
-  src: string;
-  className?: string;
-}
-
 // 左邊的 Infomation
-const Infomation = (props: InfomationProps) => {
+const Infomation = (props: CardData.InfomationData) => {
   return (
     <div className={`flex flex-col justify-between ${ props.className }`}>
       {props.children}
@@ -41,7 +11,7 @@ const Infomation = (props: InfomationProps) => {
 }
 
 // 左上的 Title
-const Title = (props: TitleProps) => {
+const Title = (props: CardData.TitleData) => {
   return (
     <p className={`${props.className}`}>
       {props.text}
@@ -50,7 +20,7 @@ const Title = (props: TitleProps) => {
 }
 
 // 左下的 Description
-const Description = (props: DescriptionProps) => {
+const Description = (props: CardData.DescriptionData) => {
   return (
     <p className={`${ props.className }`}>
       { props.text}
@@ -59,7 +29,7 @@ const Description = (props: DescriptionProps) => {
 }
 
 // 右邊的 Photo
-const Photo = (props: PhotoProps) => {
+const Photo = (props: CardData.PhotoData) => {
   return (
     <Image
       src={props.src}
@@ -70,7 +40,7 @@ const Photo = (props: PhotoProps) => {
 }
 
 // 整個 Card
-const Card = (props: CardProps) => {
+const Card = (props: CardData.CardData) => {
   return (
     <button onClick={ props.onClick } className={`
     flex flex-row ${props.className}`}>

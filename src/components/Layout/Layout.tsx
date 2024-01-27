@@ -3,12 +3,9 @@ import Head from "next/head"
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Header from "./Header";
+import { LayoutData } from "@/styles/Layout/Layout";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children }: LayoutData) => {
   return (
     <>
       {/* HEAD */}

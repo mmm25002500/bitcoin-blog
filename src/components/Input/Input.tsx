@@ -1,11 +1,7 @@
+import { InputData } from "@/types/Input/Input";
 import { useState } from "react";
 
-interface InputProps {
-  placeholder: string;
-  className?: string;
-}
-
-const Input = (props: InputProps) => {
+const Input = (props: InputData) => {
 
   const [content, setContent] = useState<string>("");
 

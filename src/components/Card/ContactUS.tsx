@@ -1,16 +1,8 @@
+import { ContactUSData } from "@/types/Card/ContactUS";
 import Icon from "../Icon";
 import Card from "./Card";
 
-interface ContactUSProps {
-  title: string;
-  description: string;
-  photo_light: string;
-  photo_dark?: string;
-  className?: string;
-  onClick?: () => void;
-}
-
-const ContactUS = (props: ContactUSProps) => {
+const ContactUS = (props: ContactUSData) => {
   return (
     <Card
       className="
