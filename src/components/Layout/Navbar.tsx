@@ -3,8 +3,8 @@ import IconDark from '@/icons/icon_dark.svg';
 import IconLight from '@/icons/icon_light.svg';
 import { useTheme } from 'next-themes';
 import Themes from '@/components/Layout/Themes';
-import SearchBtn from '@/components/button/SearchBtn';
-import More from '@/components/button/More';
+import SearchBtn from '@/components/Button/SearchBtn';
+import More from '@/components/Button/More';
 import Icon from '@/components/Icon';
 
 const Navbar = () => {

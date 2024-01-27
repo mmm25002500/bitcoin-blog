@@ -42,6 +42,7 @@ const config: Config = {
           'gray-300': '#C7C7C7',
           'gray-200': '#DEDEDE',
           'gray-100': '#F5F5F5 ',
+          'tone-700': '#F2F3F5',
         },
         'wireframe': {
           700: '#BCBACD',
