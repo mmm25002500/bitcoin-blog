@@ -13,10 +13,25 @@ const Home = () => {
       <Post
         title="玩而非賺錢？區塊鏈遊戲與賺錢遊戲的新思考"
         description="在區塊鏈遊戲和賺錢遊戲（P2E）平台飛速發展的世界中，很容易迷失在追求利潤和積累代幣的浪潮中。但我們是否忘記了遊戲的本質 - 那就是娛樂呢？今天，我們深入探討一個古老的問題：Play-to-Earn 概念中哪一部分更關鍵 - 玩還是賺？"
-        tags={['NFT', 'BTC', 'DeFi']}
+        tags={['NFT', 'BTC', 'DeFi', 'Layer 2']}
         img=""
-        author="John Carter"
-        date={ 1706352760 }
+        authorData={{
+          name: 'John Carter',
+          img: ''
+        }}
+        date={1706373630844}
+      />
+
+      <Post
+        title="標題標題標題標題"
+        description="描述描述描述描述描述"
+        tags={['TON', 'Layer 1', 'Telegram']}
+        img=""
+        authorData={{
+          name: 'John Carter',
+          img: ''
+        }}
+        date={1706373630844}
       />
 
       <ContactUS
