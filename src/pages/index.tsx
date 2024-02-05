@@ -8,10 +8,17 @@ import Input from "@/components/Input/Input";
 import Post from "@/components/List/Post";
 import Lable from "@/components/Label/Label";
 import Tab from "@/components/Tab/Tab";
+import Pagination from "@/components/Pagination/Pagination";
 
 const Home = () => {
   return (
     <>
+      <Pagination
+        page={1}
+        pageSize={10}
+        link={`/page/`}
+        className=""
+      />
       <Tab
         className="gap-6"
         data={[
