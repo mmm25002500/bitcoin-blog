@@ -9,10 +9,56 @@ import Post from "@/components/List/Post";
 import Lable from "@/components/Label/Label";
 import Tab from "@/components/Tab/Tab";
 import Pagination from "@/components/Pagination/Pagination";
+import Post2 from "@/components/List/Post2";
 
+// example Photo
+import authorPhoto from '@/icons/examplePhoto/author.png';
+import postPhoto from '@/icons/examplePhoto/bg.png';
+import Menu from "@/components/Menu/Menu";
+{
+  [
+    {
+      "title": "什麼是區塊鏈技術",
+      "subMenu": [
+        {
+          "name": "不同產業使用區塊鏈1",
+          "link": "/blockchain1"
+        },
+        {
+          "name": "不同產業使用區塊鏈2",
+          "link": "/blockchain2"
+        }
+      ]
+    },
+    {
+      "title": "什麼是區塊鏈技術2",
+      "subMenu": [
+        {
+          "name": "不同產業使用區塊鏈3",
+          "link": "/blockchain3"
+        },
+        {
+          "name": "不同產業使用區塊鏈4",
+          "link": "/blockchain4"
+        }
+      ]
+    }
+  ]
+}
 const Home = () => {
   return (
     <>
+      <Menu>
+        <Menu.List title="什麼是區塊鏈技術">
+          <Menu.SubList name="不同產業使用區塊鏈1" link="/post/1" />
+          <Menu.SubList name="不同產業使用區塊鏈2" link="/post/2" />
+        </Menu.List>
+        <Menu.List title="什麼是區塊鏈技術2">
+          <Menu.SubList name="不同產業使用區塊鏈3" link="/post/3" />
+          <Menu.SubList name="不同產業使用區塊鏈4" link="/post/4" />
+        </Menu.List>
+      </Menu>
+
       <Pagination
         page={1}
         pageSize={10}
@@ -37,26 +83,35 @@ const Home = () => {
         ]}
       />
       <Lable text="標籤" />
+
       <Post
         title="玩而非賺錢？區塊鏈遊戲與賺錢遊戲的新思考"
         description="在區塊鏈遊戲和賺錢遊戲（P2E）平台飛速發展的世界中，很容易迷失在追求利潤和積累代幣的浪潮中。但我們是否忘記了遊戲的本質 - 那就是娛樂呢？今天，我們深入探討一個古老的問題：Play-to-Earn 概念中哪一部分更關鍵 - 玩還是賺？"
-        tags={['NFT', 'BTC', 'DeFi', 'Layer 2']}
-        img=""
+        tags={['NFT', 'BTC', 'DeFi', 'L2']}
+        img={postPhoto}
         authorData={{
           name: 'John Carter',
-          img: ''
+          img: authorPhoto
         }}
         date={1706373630844}
       />
 
       <Post
-        title="標題標題標題標題"
-        description="描述描述描述描述描述"
+        title="玩而非賺錢？區塊鏈遊戲與賺錢遊戲的新思考"
+        description="在區塊鏈遊戲和賺錢遊戲（P2E）平台飛速發展的世界中，很容易迷失在追求利潤和積累代幣的浪潮中。但我們是否忘記了遊戲的本質 - 那就是娛樂呢？今天，我們深入探討一個古老的問題：Play-to-Earn 概念中哪一部分更關鍵 - 玩還是賺？"
         tags={['TON', 'Layer 1', 'Telegram']}
-        img=""
+        img={postPhoto}
+        date={1706373630844}
+      />
+
+      <Post2
+        title="玩而非賺錢？區塊鏈遊戲與賺錢遊戲的新思考"
+        description="在區塊鏈遊戲和賺錢遊戲（P2E）平台飛速發展的世界中，很容易迷失在追求利潤和積累代幣的浪潮中。但我們是否忘記了遊戲的本質 - 那就是娛樂呢？今天，我們深入探討一個古老的問題：Play-to-Earn 概念中哪一部分更關鍵 - 玩還是賺？"
+        tags={['NFT', 'BTC', 'DeFi', 'L2']}
+        img={postPhoto}
         authorData={{
           name: 'John Carter',
-          img: ''
+          img: authorPhoto
         }}
         date={1706373630844}
       />

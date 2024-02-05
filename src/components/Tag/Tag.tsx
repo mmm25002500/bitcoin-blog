@@ -10,7 +10,7 @@ const Tag = (props: TagData) => {
         type="button"
         onClick={() => { router.push(`/tag/${props.text}`); }}
         className={`
-        py-1 px-4 text-sm font-medium rounded-full border focus:outline-none leading-5
+        text-sm font-medium rounded-full border focus:outline-none leading-5
 
         /* Light Mode */
         bg-white
