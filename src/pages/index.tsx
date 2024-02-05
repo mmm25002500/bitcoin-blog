@@ -17,10 +17,12 @@ import postPhoto from '@/icons/examplePhoto/bg.png';
 import Menu from "@/components/Menu/Menu";
 import Author from "@/components/List/Author";
 import CreateWallet2 from "@/components/Card/CreateWallet2";
+import AboutUSNav from "@/components/Layout/AboutUSNav";
 
 const Home = () => {
   return (
     <>
+      <AboutUSNav />
       <CreateWallet2
         title="創建錢包"
         description="Create Wallet"
