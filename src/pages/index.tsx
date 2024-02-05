@@ -16,12 +16,20 @@ import authorPhoto from '@/icons/examplePhoto/author.png';
 import postPhoto from '@/icons/examplePhoto/bg.png';
 import Menu from "@/components/Menu/Menu";
 import Author from "@/components/List/Author";
+import CreateWallet2 from "@/components/Card/CreateWallet2";
 
 const Home = () => {
   return (
     <>
+      <CreateWallet2
+        title="創建錢包"
+        description="Create Wallet"
+        photo_light={cryptoWalletIconLight}
+        photo_dark={cryptoWalletIconDark}
+      />
+
       <Author img={authorPhoto}>
-        <Author.Name postCount={ 24 }>Michael Robinson</Author.Name>
+        <Author.Name postCount={24}>Michael Robinson</Author.Name>
         <Author.Description>舉例來說，擁有自有白牌錢包的WaaS公司可以擁有完全的控制權和管理權，可以自主設計和開發錢包的功能和界面。這讓項目能夠提升品牌信任，並專注於展示自家的業務內容，而不受傳統錢包的限制。另一方面，串接KPI服務則可以選擇與第三方的KPI（Key Performance Indicator）服務進行整合，以提供更多功能和服務。這樣可以節省開發時間和成本，同時擁有廣泛的功能和服務選擇。
         </Author.Description>
       </Author>
