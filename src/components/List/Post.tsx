@@ -6,7 +6,10 @@ import { PostProps } from '@/types/List/PostData';
 const Post = (props: PostProps) => {
   const time = new Date(props.date);
 
-  const authorData = props.authorData;
+  const authorData = {
+    name: 'John Doe',
+    img: '/images/avater.jpg'
+  }
 
   return (
     <div className="pt-6 pr-6 pl-6 pb-3 sm:pb-6 bg-white border-b-[1px] border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800">

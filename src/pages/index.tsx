@@ -15,39 +15,17 @@ import Post2 from "@/components/List/Post2";
 import authorPhoto from '@/icons/examplePhoto/author.png';
 import postPhoto from '@/icons/examplePhoto/bg.png';
 import Menu from "@/components/Menu/Menu";
-{
-  [
-    {
-      "title": "什麼是區塊鏈技術",
-      "subMenu": [
-        {
-          "name": "不同產業使用區塊鏈1",
-          "link": "/blockchain1"
-        },
-        {
-          "name": "不同產業使用區塊鏈2",
-          "link": "/blockchain2"
-        }
-      ]
-    },
-    {
-      "title": "什麼是區塊鏈技術2",
-      "subMenu": [
-        {
-          "name": "不同產業使用區塊鏈3",
-          "link": "/blockchain3"
-        },
-        {
-          "name": "不同產業使用區塊鏈4",
-          "link": "/blockchain4"
-        }
-      ]
-    }
-  ]
-}
+import Author from "@/components/List/Author";
+
 const Home = () => {
   return (
     <>
+      <Author img={authorPhoto}>
+        <Author.Name postCount={ 24 }>Michael Robinson</Author.Name>
+        <Author.Description>舉例來說，擁有自有白牌錢包的WaaS公司可以擁有完全的控制權和管理權，可以自主設計和開發錢包的功能和界面。這讓項目能夠提升品牌信任，並專注於展示自家的業務內容，而不受傳統錢包的限制。另一方面，串接KPI服務則可以選擇與第三方的KPI（Key Performance Indicator）服務進行整合，以提供更多功能和服務。這樣可以節省開發時間和成本，同時擁有廣泛的功能和服務選擇。
+        </Author.Description>
+      </Author>
+
       <Menu>
         <Menu.List title="什麼是區塊鏈技術">
           <Menu.SubList name="不同產業使用區塊鏈1" link="/post/1" />
