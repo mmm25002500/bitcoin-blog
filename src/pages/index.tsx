@@ -4,7 +4,6 @@ import Button from "@/components/Button/Button";
 import illustationIcon from "@/icons/illustation.svg";
 import cryptoWalletIconLight from "@/icons/crypto_wallet_light.svg";
 import cryptoWalletIconDark from "@/icons/crypto_wallet_dark.svg";
-import Input from "@/components/Input/Input";
 import Post from "@/components/List/Post";
 import Lable from "@/components/Label/Label";
 import Tab from "@/components/Tab/Tab";
@@ -18,10 +17,51 @@ import Menu from "@/components/Menu/Menu";
 import Author from "@/components/List/Author";
 import CreateWallet2 from "@/components/Card/CreateWallet2";
 import AboutUSNav from "@/components/Layout/AboutUSNav";
+import Button2 from "@/components/Button/Button2";
+import InputText from "@/components/Input/InputText";
+import InputLable from "@/components/Input/InputLable";
 
 const Home = () => {
   return (
     <>
+      <InputText
+        placeholder="文字內容"
+        className="w-80"
+      />
+
+      <InputLable
+        placeholder="文字內容"
+        className=""
+      />
+
+      <Button
+        onClick={() => console.log('click')}
+        type="large"
+      >這是一個按鈕</Button>
+      <Button
+        onClick={() => console.log('click')}
+        type="medium"
+      >這是一個按鈕</Button>
+      <Button
+        onClick={() => console.log('click')}
+        type="small"
+      >這是一個按鈕</Button>
+
+      <br />
+
+      <Button2
+        onClick={() => console.log('click')}
+        type="large"
+      >這是一個按鈕</Button2>
+      <Button2
+        onClick={() => console.log('click')}
+        type="medium"
+      >這是一個按鈕</Button2>
+      <Button2
+        onClick={() => console.log('click')}
+        type="small"
+      >這是一個按鈕</Button2>
+
       <AboutUSNav />
       <CreateWallet2
         title="創建錢包"
@@ -116,56 +156,6 @@ const Home = () => {
         photo_light={cryptoWalletIconLight}
         photo_dark={cryptoWalletIconDark}
       />
-
-      <Input
-        placeholder="文字內容"
-        className=""
-      />
-      <Button
-        type="large"
-        theme="primary"
-        className=""
-      ></Button>
-      <Button
-        type="medium"
-        theme="primary"
-        className=" "
-      ></Button>
-      <Button
-        type="small"
-        theme="primary"
-        className=" "
-      ></Button>
-      <Button
-        type="large"
-        theme="secondary"
-        className=" "
-      ></Button>
-      <Button
-        type="medium"
-        theme="secondary"
-        className=" "
-      ></Button>
-      <Button
-        type="small"
-        theme="secondary"
-        className=" "
-      ></Button>
-      <Button
-        type="large"
-        theme="normal"
-        className=" "
-      ></Button>
-      <Button
-        type="medium"
-        theme="normal"
-        className=" "
-      ></Button>
-      <Button
-        type="small"
-        theme="normal"
-        className=" "
-      ></Button>
     </>
   )
 }

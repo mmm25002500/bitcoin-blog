@@ -1,7 +1,7 @@
 import { ButtonProps } from "@/types/Button/Button";
 import { useEffect, useState } from "react";
 
-const Button = (props: ButtonProps) => {
+const Button2 = (props: ButtonProps) => {
   const buttonType = props.type;
   const [buttonSize, setButtonSize] = useState('');
 
@@ -24,13 +24,17 @@ const Button = (props: ButtonProps) => {
 
       /* Light Mode (Secondary) */
       bg-white
-      text-primary-black-300
-      border-primary-black-300
-      hover:bg-primary-black-500
+      text-neutral-500
+    border-neutral-500
+      hover:bg-neutral-500
+      hover:text-neutral-500
+      disabled:text-primary-black-600
+      disabled:border-primary-black-400
       disabled:bg-white
-      disabled:text-primary-black-400
-      active:text-black
-      active:bg-primary-black-500
+
+      active:bg-primary-black-200
+      active:border-primary-black-600
+      active:text-primary-black-600
 
 
       /* Dark Mode (Primary) */
@@ -52,4 +56,4 @@ const Button = (props: ButtonProps) => {
     </button>
   )
 }
-export default Button;
+export default Button2;

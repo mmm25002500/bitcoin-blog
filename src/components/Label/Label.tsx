@@ -9,7 +9,7 @@ const Label = (props: LabelData) => {
         {props.text}
       </p>
       <button
-        onClick={() => { console.log("clicked") }}
+        onClick={() => props.onClick && props.onClick()}
       >
         <Image
           src={CloseIcon}
