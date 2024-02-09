@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '../Icon';
-import SearchBtn from '@/icons/searchBtn.svg';
+import SearchBtn from '@/icons/SearchBtn.svg';
 import { InputData } from '@/types/Input/Input';
 import clearIcon from '@/icons/clear.svg';
 import Label from '../Label/Label';
