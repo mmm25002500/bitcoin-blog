@@ -86,31 +86,33 @@ const Header = () => {
             </div>
 
             {/* 右邊的資訊 - 電腦版*/}
-            <div className="relative overflow-x-visible hidden sm:block">
-              <div className='flex gap-3 justify-center divide-x-2 divide-wireframe-700 dark:divide-neutral-800'>
-                <div className="flex items-center whitespace-nowrap">
-                  <Icon
-                    icon_light={shovelIcon}
-                    className="h-5 w-auto mr-2 dark:invert" />
-                  <p className='text-neutral-800 dark:text-neutral-200'>
-                    Hash Rate
-                    <span className='text-black dark:text-white ml-2'>{hashRate} PH/s</span>
-                  </p>
-                </div>
-
-
-                <div className="flex items-center whitespace-nowrap">
-                  <Icon
-                    icon_light={boxIcon}
-                    className="h-5 w-auto mr-2 dark:invert" />
-                  <p className=''>Block Height {blockHeight}</p>
-                </div>
-
-                <div className="flex items-center whitespace-nowrap">
-                  <Icon
-                    icon_light={btcIcon}
-                    className="h-5 w-auto mr-2 dark:invert" />
-                  <p >BTC {btc}</p>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 hidden sm:block">
+              <div className="relative ml-3 items-center">
+                <div className='flex gap-3 justify-center divide-x-2 divide-wireframe-700 dark:divide-neutral-800'>
+                  {/* Hash Rate */}
+                  <div className="relative flex items-center">
+                    <Icon
+                      icon_light={shovelIcon}
+                      className="h-5 w-auto mr-2 dark:invert" />
+                    <p className='text-neutral-800 dark:text-neutral-200'>
+                      Hash Rate
+                      <span className='text-black dark:text-white ml-2'>{hashRate} PH/s</span>
+                    </p>
+                  </div>
+                  {/* Block Height */}
+                  <div className="relative flex px-2 items-center">
+                    <Icon
+                      icon_light={boxIcon}
+                      className="h-5 w-auto mr-2 dark:invert" />
+                    <p className=''>Block Height {blockHeight}</p>
+                  </div>
+                  {/* BTC Price */}
+                  <div className="relative flex px-2 items-center">
+                    <Icon
+                      icon_light={btcIcon}
+                      className="h-5 w-auto mr-2 dark:invert" />
+                    <p className=''>BTC {btc}</p>
+                  </div>
                 </div>
               </div>
             </div>
