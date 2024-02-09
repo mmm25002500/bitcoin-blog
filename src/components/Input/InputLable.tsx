@@ -56,11 +56,11 @@ const InputLabel = (props: InputData) => {
       <div className='flex-grow flex flex-wrap items-center'>
         {content.map((item, index) => (
           <Label
-          key={index}
+            key={index}
             text={item}
             onClick={() => removeContent(index)}
-        >
-        </Label>
+        />
+
           // <div  className="flex items-center bg-white text-black dark:bg-black dark:text-white m-1 rounded-full">
           //   <span className="px-2 py-1">{item}</span>
           //   <button
