@@ -1,11 +1,16 @@
-import Image from 'next/image';
 import calendarIcon from '@/icons/calendar.svg';
 import shovelIcon from '@/icons/shovel.svg';
 import boxIcon from '@/icons/box.svg';
 import btcIcon from '@/icons/btc.svg';
-import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import Icon from '@/components/Icon';
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 const Header = () => {
 
@@ -29,22 +34,23 @@ const Header = () => {
         <div className="mx-auto px-2 sm:px-6 lg:px-5">
           <div className="relative flex h-16 items-center justify-between">
             {/* 日期 */}
-            <div className="absolute inset-y-0 left-0 flex items-center">
+            <div className="grow inset-y-0 left-0 flex items-center whitespace-nowrap">
               <Icon
                 icon_light={calendarIcon}
                 className="h-5 w-auto dark:invert" />
               <p className='ml-2'>{today}</p>
             </div>
-            <div className="flex flex-1 sm:items-stretch sm:justify-start">
-              <div className="flex flex-shrink-0 items-center">
-                <></>
-              </div>
-            </div>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <div className="relative ml-3 items-center">
-                <div className='flex gap-3 justify-center divide-x-2 divide-wireframe-700 dark:divide-neutral-800'>
-                  {/* Hash Rate */}
-                  <div className="relative flex items-center">
+
+            {/* 右邊的資訊 - 手機版 */}
+            <div className='block sm:hidden w-full'>
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={1}
+                className="w-72 bg-gradient-to-r from-black to-white inline-block text-transparent bg-clip-text"
+              >
+                {/* BTC Price */}
+                <SwiperSlide>
+                  <div className="flex items-center whitespace-nowrap">
                     <Icon
                       icon_light={shovelIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
@@ -52,21 +58,59 @@ const Header = () => {
                       Hash Rate
                       <span className='text-black dark:text-white ml-2'>{hashRate} PH/s</span>
                     </p>
+                    <div className='text-wireframe-700 dark:text-neutral-800'>｜</div>
                   </div>
-                  {/* Block Height */}
-                  <div className="relative flex px-2 items-center">
+                </SwiperSlide>
+
+                {/* Hash Rate */}
+                <SwiperSlide >
+                  <div className="flex items-center whitespace-nowrap">
                     <Icon
                       icon_light={boxIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
                     <p className=''>Block Height {blockHeight}</p>
+                    <div className='text-wireframe-700 dark:text-neutral-800'>｜</div>
                   </div>
-                  {/* BTC Price */}
-                  <div className="relative flex px-2 items-center">
+                </SwiperSlide>
+
+                {/* Block Height */}
+                <SwiperSlide >
+                  <div className="flex items-center whitespace-nowrap">
                     <Icon
                       icon_light={btcIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p className=''>BTC {btc}</p>
+                    <p >BTC {btc}</p>
                   </div>
+                </SwiperSlide>
+              </Swiper>
+            </div>
+
+            {/* 右邊的資訊 - 電腦版*/}
+            <div className="relative overflow-x-visible hidden sm:block">
+              <div className='flex gap-3 justify-center divide-x-2 divide-wireframe-700 dark:divide-neutral-800'>
+                <div className="flex items-center whitespace-nowrap">
+                  <Icon
+                    icon_light={shovelIcon}
+                    className="h-5 w-auto mr-2 dark:invert" />
+                  <p className='text-neutral-800 dark:text-neutral-200'>
+                    Hash Rate
+                    <span className='text-black dark:text-white ml-2'>{hashRate} PH/s</span>
+                  </p>
+                </div>
+
+
+                <div className="flex items-center whitespace-nowrap">
+                  <Icon
+                    icon_light={boxIcon}
+                    className="h-5 w-auto mr-2 dark:invert" />
+                  <p className=''>Block Height {blockHeight}</p>
+                </div>
+
+                <div className="flex items-center whitespace-nowrap">
+                  <Icon
+                    icon_light={btcIcon}
+                    className="h-5 w-auto mr-2 dark:invert" />
+                  <p >BTC {btc}</p>
                 </div>
               </div>
             </div>
