@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import Icon from '../Icon';
-import SearchBtn from '@/icons/SearchBtn.svg';
 import { InputData } from '@/types/Input/Input';
 import clearIcon from '@/icons/clear.svg';
 
 const InputText = (props: InputData) => {
-  const [content, setContent] = useState('');
+  // const [content, setContent] = useState('');
 
   return (
     <div className={`
         rounded-full
         border-0
         relative flex items-center
+        text-left
         focus:border-[1px]
         hover:border-[1px]
         focus:outline-none
@@ -22,18 +22,18 @@ const InputText = (props: InputData) => {
         focus:border-neutral-600
         hover:border-neutral-600
         focus:bg-neutral-tone-700
-        ${content ? "border-[1px] border-black" : ""}
+        ${props.className ? "border-[1px] border-black" : ""}
 
         /* Dark Mode */
         dark:bg-neutral-900
-        ${content ? "dark:text-white" : "dark:text-neutral-300"}
+        ${props.className ? "dark:text-white" : "dark:text-neutral-300"}
 
         ${props.className}
     `}>
       {/* 圖標容器 */}
       <div className="flex-none ml-3">
         <Icon
-          icon_light={SearchBtn}
+          icon_light={props.icon}
           className='dark:invert'
         /> {/* 渲染圖標 */}
       </div>
@@ -43,16 +43,16 @@ const InputText = (props: InputData) => {
         <input
           type="text"
           placeholder={props.placeholder}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className={`flex-1 outline-none p-2.5 dark:bg-neutral-900`}
+          value={props.text}
+          onChange={(e) => props.onChange(e)}
+          className={`flex-1 outline-none p-2.5 dark:bg-neutral-900 w-[100%]`}
         />
       </div>
 
       {/* 刪除 */}
-      <div className='flex-none'>
+      {/* <div className='flex-none'>
         <button
-          onClick={() => setContent('')}
+          onClick={() => props.onClick()}
           className="
           rounded-full py-[9px] px-3
           text-sm font-medium
@@ -65,7 +65,7 @@ const InputText = (props: InputData) => {
             className='dark:invert'
           />
         </button>
-      </div>
+      </div> */}
 
       {/* 按鈕 */}
       <div className='flex-none'>
@@ -77,7 +77,7 @@ const InputText = (props: InputData) => {
         focus:outline-none
         dark:bg-white dark:text-black
       ">
-          訂閱
+          {props.btnText}
         </button>
       </div>
     </div>
