@@ -1,12 +1,13 @@
 import mail_dark from "@/icons/mail_dark.svg";
 import InputText from "@/components/Input/InputText";
 import { useState } from 'react';
+import { SubscribeSection } from "@/types/HomePage/SubscribeSction";
 
-const SubscribeSection = () => {
+const SubscribeSection = (props: SubscribeSection) => {
   const [email, setEmail] = useState('');
 
   return (
-    <div className="py-16">
+    <section className={`${props.className}`}>
       <p className="text-2xl leading-9 text-center">
         訂閱我們電子報
       </p>
@@ -24,7 +25,7 @@ const SubscribeSection = () => {
           className='w-96'
         />
       </div>
-    </div>
+    </section>
   );
 }
 
