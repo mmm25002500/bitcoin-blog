@@ -5,6 +5,7 @@ import Navbar from '@/components/Layout/Navbar';
 import MD from '@/components/MD'
 import ContactSection from '@/components/Page/ContactSection';
 import SubscribeSection from '@/components/Page/SubscribeSection';
+import IconLight from '@/icons/illustation/about us.svg';
 
 const AboutPage = () => {
   const markdown = " \
@@ -28,7 +29,7 @@ const AboutPage = () => {
       <ArticalHeader
         title="ABOUT US"
         subtitle="關於我們"
-        icon=""
+        icon={IconLight}
       />
       <div className="mx-auto sm:px-28">
         <ArticalLayout className='pt-10 px-5 sm:px-0'>

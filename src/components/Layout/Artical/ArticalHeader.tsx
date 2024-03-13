@@ -12,7 +12,7 @@ const ArticalHeader = (props: ArticalHeaderProps) => {
       <div className="grow"></div>
       <div className="flex-nonw">
         <Icon
-          icon_light={IconLight}
+          icon_light={props.icon}
           className="h-full w-auto"
         />
       </div>
