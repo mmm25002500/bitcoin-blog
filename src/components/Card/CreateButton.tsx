@@ -1,4 +1,4 @@
-import { CreateWalletData } from "@/types/Card/CreateWallet";
+import { CreateWalletData } from "@/types/Card/CreateButton";
 import Icon from "../Icon";
 import Card from "./Card";
 
@@ -6,7 +6,7 @@ const CreateWallet = (props: CreateWalletData) => {
   return (
     <Card
       className="
-      max-w-[248px] sm:max-w-xs px-7 gap-8 sm:w-full rounded-lg border justify-between
+      max-w-[248px] sm:max-w-xs px-7 gap-8 w-full rounded-lg border justify-between
 
       h-[150px] sm:h-full
       sm:items-center

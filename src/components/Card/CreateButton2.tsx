@@ -2,14 +2,14 @@ import { CreateWalletData } from "@/types/Card/CreateButton";
 import Icon from "../Icon";
 import Card from "./Card";
 
-const CreateWallet2 = (props: CreateWalletData) => {
+const CreateWallet = (props: CreateWalletData) => {
   return (
     <Card
       className="
-      max-w-[248px] sm:max-w-xs px-7 gap-8 sm:w-full rounded-lg border
+      pl-7 pr-3 pb-3 gap-8 w-full sm:w-[200px] md:w-[200px] lg:w-[300px] rounded-lg border justify-between
 
       h-[150px] sm:h-full
-      sm:items-center
+      sm:items-start
 
       /* Light Mode */
       bg-neutral-white
@@ -27,11 +27,6 @@ const CreateWallet2 = (props: CreateWalletData) => {
       "
       onClick={() => props.onClick}
     >
-      <Icon
-        icon_light={props.photo_light}
-        icon_dark={props.photo_dark}
-        className="object-cover rounded-xl border py-[8px] px-[8px] h-[45px] w-[45px] sm:h-[60px] sm:w-[60px] relative top-[4.5rem] sm:top-0"
-      />
       <Card.Infomation
         className="leading-normal py-3 items-start"
       >
@@ -44,8 +39,13 @@ const CreateWallet2 = (props: CreateWalletData) => {
           className="mb-3 font-medium text-[13px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300"
         />
       </Card.Infomation>
+      <Icon
+        icon_light={props.photo_light}
+        icon_dark={props.photo_dark}
+        className="sm:place-self-end object-cover rounded-xl border py-[8px] px-[8px] h-[45px] w-[45px] sm:h-[60px] sm:w-[60px] relative top-[4.5rem] sm:top-0"
+      />
     </Card>
   )
 }
 
-export default CreateWallet2;
+export default CreateWallet;
