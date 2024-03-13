@@ -1,9 +1,7 @@
-import { ReactNode } from "react";
 import Head from "next/head"
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import Header from "./Header";
-import { LayoutData } from "@/styles/Layout/Layout";
+import { LayoutData } from "@/types/Layout/Layout";
 
 const Layout = ({ children }: LayoutData) => {
   return (
@@ -16,8 +14,6 @@ const Layout = ({ children }: LayoutData) => {
 
       {/* Body */}
       <div className="min-h-screen flex flex-col">
-        <Header></Header>
-        <Navbar />
         <main className="flex-grow">
           {children}
         </main>

@@ -13,7 +13,8 @@ const Footer = () => {
       <div className="h-[15.75rem] dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
         {/* Icon */}
         <Icon
-          icon_light={btc_icon_light}
+          icon_light={btc_icon_dark}
+          icon_dark={btc_icon_light}
           className='mr-auto ml-auto'
         />
 

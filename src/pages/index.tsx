@@ -1,17 +1,16 @@
 import ButtonSection from "@/components/HomePage/ButtonSection";
-import ContactSection from "@/components/HomePage/ContactSection";
-import SubscribeSection from "@/components/HomePage/SubscribeSection";
-
-const HorizontalLine = (props: {className?: string}) => {
-  return (
-    <hr className={`border-neutral-200 dark:border-neutral-800 ${props.className}`} />
-  )
-}
+import HorizontalLine from "@/components/HorizontalLine";
+import Header from "@/components/Layout/Header";
+import Navbar from "@/components/Layout/Navbar";
+import ContactSection from "@/components/Page/ContactSection";
+import SubscribeSection from "@/components/Page/SubscribeSection";
 
 const Home = () => {
 
   return (
     <>
+      <Header></Header>
+      <Navbar />
       <div className="mx-auto sm:px-16">
         <ButtonSection classname="py-8 px-8 sm:px-0" />
         <HorizontalLine />
