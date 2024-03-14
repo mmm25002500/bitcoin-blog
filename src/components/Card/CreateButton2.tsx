@@ -42,7 +42,7 @@ const CreateWallet = (props: CreateWalletData) => {
       <Icon
         icon_light={props.photo_light}
         icon_dark={props.photo_dark}
-        className="sm:place-self-end object-cover rounded-xl border py-[8px] px-[8px] h-[45px] w-[45px] sm:h-[60px] sm:w-[60px] relative top-[4.5rem] sm:top-0"
+        className="sm:place-self-end bg-[#F3F4F8] dark:bg-primary-black-300 object-cover rounded-xl py-[8px] px-[8px] h-[45px] w-[45px] sm:h-[60px] sm:w-[60px] relative top-[4.5rem] sm:top-0"
       />
     </Card>
   )
