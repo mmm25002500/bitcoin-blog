@@ -1,5 +1,6 @@
 import HorizontalLine from "@/components/HorizontalLine";
 import Icon from "@/components/Icon";
+import Header from "@/components/Layout/Header";
 import Navbar from "@/components/Layout/Navbar";
 import NotFoundCat from "@/icons/not_found_cat.svg";
 import NotFoundCatDark from "@/icons/not_found_cat_dark.svg";
@@ -7,6 +8,9 @@ import NotFoundCatDark from "@/icons/not_found_cat_dark.svg";
 const NotFoundPage = () => {
   return (
     <>
+      <div className="sm:hidden">
+        <Header></Header>
+      </div>
       <Navbar />
       <HorizontalLine />
       <div className="mx-auto sm:px-28 py-20">

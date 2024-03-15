@@ -10,6 +10,7 @@ import Icon from "@/components/Icon";
 
 import DownIcon from '@/icons/down.svg';
 import UpIcon from '@/icons/up.svg';
+import Header from "@/components/Layout/Header";
 
 const getAuthorData = (userID: string) => {
   return AuthorData.filter((author) => author.id === userID);
@@ -30,6 +31,9 @@ const AuthorPage = () => {
 
   return (
     <>
+      <div className="sm:hidden">
+        <Header />
+      </div>
       <Navbar />
       <div className="mx-auto px-6 sm:px-28 p">
         <div className="flex gap-10 my-5">
@@ -53,7 +57,7 @@ const AuthorPage = () => {
 
             {/* 描述 */}
             <div className="col-span-2 sm:col-span-1 font-normal text-sm leading-6 text-neutral-900 dark:text-neutral-300 overflow-hidden">
-              <p className={ collaspe? 'line-clamp-2' :'' }>
+              <p className={collaspe ? 'line-clamp-2' : ''}>
                 {author?.description}
               </p>
             </div>

@@ -1,6 +1,7 @@
 import HorizontalLine from '@/components/HorizontalLine';
 import ArticalLayout from '@/components/Layout/Artical/AriticalLayout';
 import ArticalHeader from '@/components/Layout/Artical/ArticalHeader';
+import Header from '@/components/Layout/Header';
 import Navbar from '@/components/Layout/Navbar';
 import MD from '@/components/MD'
 import ContactSection from '@/components/Page/ContactSection';
@@ -16,11 +17,14 @@ const DisclaimerPage = () => {
 
   return (
     <>
+      <div className="sm:hidden">
+        <Header />
+      </div>
       <Navbar />
       <ArticalHeader
         title="Disclaimer"
         subtitle="免責聲明"
-        icon={ IconLight }
+        icon={IconLight}
       />
       <div className="mx-auto sm:px-28">
         <ArticalLayout className='pt-10 px-5 sm:px-0'>

@@ -1,6 +1,7 @@
 import HorizontalLine from '@/components/HorizontalLine';
 import ArticalLayout from '@/components/Layout/Artical/AriticalLayout';
 import ArticalHeader from '@/components/Layout/Artical/ArticalHeader';
+import Header from '@/components/Layout/Header';
 import Navbar from '@/components/Layout/Navbar';
 import MD from '@/components/MD'
 import ContactSection from '@/components/Page/ContactSection';
@@ -25,6 +26,9 @@ const AboutPage = () => {
 
   return (
     <>
+      <div className="sm:hidden">
+        <Header />
+      </div>
       <Navbar />
       <ArticalHeader
         title="ABOUT US"
@@ -35,7 +39,7 @@ const AboutPage = () => {
         <ArticalLayout className='pt-10 px-5 sm:px-0'>
           <MD>{markdown}</MD>
         </ArticalLayout>
-        <HorizontalLine className='sm:hidden'/>
+        <HorizontalLine className='sm:hidden' />
         <ContactSection className="py-16" />
         <HorizontalLine />
         <SubscribeSection className="py-16" />

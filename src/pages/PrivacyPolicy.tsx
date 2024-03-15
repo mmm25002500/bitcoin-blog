@@ -1,6 +1,7 @@
 import HorizontalLine from '@/components/HorizontalLine';
 import ArticalLayout from '@/components/Layout/Artical/AriticalLayout';
 import ArticalHeader from '@/components/Layout/Artical/ArticalHeader';
+import Header from '@/components/Layout/Header';
 import Navbar from '@/components/Layout/Navbar';
 import MD from '@/components/MD'
 import ContactSection from '@/components/Page/ContactSection';
@@ -17,6 +18,9 @@ const PrivacyPolicyPage = () => {
 
   return (
     <>
+      <div className="sm:hidden">
+        <Header />
+      </div>
       <Navbar />
       <ArticalHeader
         title="Privacy Policy"
