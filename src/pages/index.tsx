@@ -17,7 +17,6 @@ const Home = () => {
         <ContactSection className="py-16 sm:px-5" />
         <HorizontalLine />
         <SubscribeSection className="py-16" />
-        <HorizontalLine />
       </div>
     </>
   )

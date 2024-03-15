@@ -8,7 +8,7 @@ import Icon from '@/components/Icon';
 const Footer = () => {
   return (
     <>
-      <hr className='border-white dark:border-1 dark:border-[#E7E6F2]' />
+      <hr className='border-[#E7E6F2] dark:border-1' />
       {/* figma: px-10 pt-10 */}
       <div className="h-[15.75rem] dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
         {/* Icon */}
