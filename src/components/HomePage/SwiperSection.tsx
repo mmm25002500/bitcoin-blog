@@ -10,18 +10,18 @@ import Button from "../Button/Button";
 
 const SwiperSection = () => {
 
-  const pagination = {
-    clickable: true,
-    bulletClass: `swiper-pagination-bullet `, // 使用自定義樣式
-    bulletActiveClass: `swiper-pagination-bullet-active `, // 使用自定義樣式
-    renderBullet: function (index: number, className: string) {
-      return '<span class="' + className + '"></span>';
-    },
-  };
+  // const pagination = {
+  //   clickable: true,
+  //   bulletClass: `swiper-pagination-bullet `, // 使用自定義樣式
+  //   bulletActiveClass: `swiper-pagination-bullet-active `, // 使用自定義樣式
+  //   renderBullet: function (index: number, className: string) {
+  //     return '<span class="' + className + '"></span>';
+  //   },
+  // };
 
   return (
     <Swiper
-      pagination={pagination}
+      // pagination={pagination}
       modules={[Pagination]}
     >
       <SwiperSlide>
