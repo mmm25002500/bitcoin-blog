@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swiper-pagination-bullet {
+    width: 16px; /* 長方形的寬度 */
+    height: 4px; /* 長方形的高度 */
+    border-radius: 0; /* 無圓角 */
+    margin-right: 4px; /* 指示器之間的間距 */
+    opacity: 1; /* 完全不透明 */
+    background: #FFFFFF; /* 指示器的顏色 */
+}
+
+.swiper-pagination-bullet-active {
+    width: 40px; /* 活動指示器的寬度 */
+}
+
+/* 可能需要添加 !important 以覆蓋內聯樣式或其他高優先級的樣式 */

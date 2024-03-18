@@ -1,4 +1,5 @@
 import ButtonSection from "@/components/HomePage/ButtonSection";
+import SwiperSection from "@/components/HomePage/SwiperSection";
 import HorizontalLine from "@/components/HorizontalLine";
 import Header from "@/components/Layout/Header";
 import Navbar from "@/components/Layout/Navbar";
@@ -11,6 +12,7 @@ const Home = () => {
     <>
       <Header></Header>
       <Navbar />
+      <SwiperSection />
       <div className="mx-auto sm:px-16">
         <ButtonSection classname="py-8 px-8 sm:px-0" />
         <HorizontalLine />

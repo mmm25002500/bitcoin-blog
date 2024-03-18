@@ -8,9 +8,8 @@ import Icon from '@/components/Icon';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+// import required modules
+import { FreeMode } from 'swiper/modules';
 
 const Header = () => {
 
@@ -45,7 +44,13 @@ const Header = () => {
             <div className='block sm:hidden w-full'>
               <Swiper
                 slidesPerView={1}
-                spaceBetween={1}
+                spaceBetween={-55}
+
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[FreeMode]}
                 className="w-72 bg-gradient-to-r from-black to-white inline-block text-transparent bg-clip-text"
               >
                 {/* BTC Price */}
@@ -63,23 +68,23 @@ const Header = () => {
                 </SwiperSlide>
 
                 {/* Hash Rate */}
-                <SwiperSlide >
-                  <div className="flex items-center whitespace-nowrap">
+                <SwiperSlide className='m-0'>
+                  <div className="flex items-center whitespace-nowrap w-10">
                     <Icon
                       icon_light={boxIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p className=''>Block Height {blockHeight}</p>
+                    <p className='text-black dark:text-white'>Block Height {blockHeight}</p>
                     <div className='text-wireframe-700 dark:text-neutral-800'>｜</div>
                   </div>
                 </SwiperSlide>
 
                 {/* Block Height */}
-                <SwiperSlide >
-                  <div className="flex items-center whitespace-nowrap">
+                <SwiperSlide>
+                  <div className="flex items-center whitespace-nowrap w-10">
                     <Icon
                       icon_light={btcIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p >BTC {btc}</p>
+                    <p className='text-black dark:text-white'>BTC {btc}</p>
                   </div>
                 </SwiperSlide>
               </Swiper>
@@ -104,14 +109,14 @@ const Header = () => {
                     <Icon
                       icon_light={boxIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p className=''>Block Height {blockHeight}</p>
+                    <p className='text-black dark:text-white'>Block Height {blockHeight}</p>
                   </div>
                   {/* BTC Price */}
                   <div className="relative flex px-2 items-center">
                     <Icon
                       icon_light={btcIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p className=''>BTC {btc}</p>
+                    <p className='text-black dark:text-white'>BTC {btc}</p>
                   </div>
                 </div>
               </div>
