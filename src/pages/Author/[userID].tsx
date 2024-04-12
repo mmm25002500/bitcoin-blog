@@ -11,6 +11,7 @@ import Icon from "@/components/Icon";
 import DownIcon from '@/icons/down.svg';
 import UpIcon from '@/icons/up.svg';
 import Header from "@/components/Layout/Header";
+import PostList from "@/components/List/PostList";
 
 const getAuthorData = (userID: string) => {
   return AuthorData.filter((author) => author.id === userID);
@@ -94,6 +95,45 @@ const AuthorPage = () => {
           </div>
         </div>
         <HorizontalLine className="dark:border-neutral-200" />
+        <div>
+          <PostList
+            data={[
+              {
+                title: 'Title',
+                description: 'Description',
+                tags: ['tag1', 'tag2'],
+                img: AuthorImg,
+                date: 0,
+                authorData: {
+                  name: 'John Carter',
+                  img: AuthorImg,
+                },
+              },
+              {
+                title: 'Title2',
+                description: 'Description1',
+                tags: ['tag1', 'tag2'],
+                img: AuthorImg,
+                date: 0,
+                authorData: {
+                  name: 'John Carter',
+                  img: AuthorImg,
+                },
+              },
+              {
+                title: 'Title3',
+                description: 'Description2',
+                tags: ['tag1', 'tag2'],
+                img: AuthorImg,
+                date: 0,
+                authorData: {
+                  name: 'John Carter',
+                  img: AuthorImg,
+                },
+              },
+            ]}
+          />
+        </div>
       </div>
     </>
   );
