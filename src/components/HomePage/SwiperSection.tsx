@@ -23,21 +23,22 @@ const SwiperSection = () => {
     <Swiper
       // pagination={pagination}
       modules={[Pagination]}
+      className="h-[500px]"
     >
       <SwiperSlide>
         <div className="relative">
-          <div className="absolute p-24">
-            <p className="text-white uppercase font-black text-5xl leading-[65px]">
+          <div className="absolute pt-28 px-12 sm:px-28 sm:pt-20">
+            <p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px]">
               A dedicated team to <br />
               grow your company
             </p>
-            <p className="text-white font-normal text-lg leading-[30px] mt-5">
+            <p className="text-white font-normal text-sm leading-[18.23px] sm:text-lg sm:leading-[30px] mt-5">
               Lorem ipsum dolor sit amet consectetur adipiscing eli <br /> mattis sit phasellus mollis sit aliquam sit nullam neque ultrices.
             </p>
             <Button
               type={"small"}
               onClick={() => console.log('test')}
-              className="pt-3 pb-3 pr-10 pl-10 flex items-center gap-3 mt-7"
+              className="pt-3 pb-3 pr-10 pl-10 flex items-center gap-3 mt-10 sm:mt-7"
             >
               <p>Get Started</p>
               <Icon
@@ -45,9 +46,13 @@ const SwiperSection = () => {
               />
             </Button>
           </div>
-          <Icon
-            icon_light={IMG}
-            className="w-full"
+          <div
+            style={{
+              backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
+              backgroundAttachment: 'fixed',
+              backgroundPosition: 'center',
+            }}
+            className="h-[500px]"
           />
         </div>
       </SwiperSlide>
@@ -61,9 +66,13 @@ const SwiperSection = () => {
               文字文字文字
             </p>
           </div>
-          <Icon
-            icon_light={IMG}
-            className="w-full"
+          <div
+            style={{
+              backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
+              backgroundAttachment: 'fixed',
+              backgroundPosition: 'center',
+            }}
+            className="h-[500px]"
           />
         </div>
       </SwiperSlide>
@@ -77,9 +86,13 @@ const SwiperSection = () => {
               文字文字文字
             </p>
           </div>
-          <Icon
-            icon_light={IMG}
-            className="w-full"
+          <div
+            style={{
+              backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
+              backgroundAttachment: 'fixed',
+              backgroundPosition: 'center',
+            }}
+            className="h-[500px]"
           />
         </div>
       </SwiperSlide>
