@@ -1,9 +1,11 @@
 import { PostListData } from "../../types/List/PostList";
+import HorizontalLine from "../HorizontalLine";
 const PostList = (props: PostListData) => {
   return (
     <div>
       {props.data.map((post, index) => (
         <div key={index} className="flex flex-col gap-4">
+          <HorizontalLine className="dark:border-neutral-200" />
           <div className="flex gap-4">
             {/* <img src={post.img}
               className="w-32 h-32 object-cover rounded-lg"
@@ -28,7 +30,6 @@ const PostList = (props: PostListData) => {
                 <span>{post.authorData?.name}</span>
               </div>
             </div>
-            <button className="text-primary-500">Read more</button>
           </div>
         </div>
       ))}

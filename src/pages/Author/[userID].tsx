@@ -94,7 +94,6 @@ const AuthorPage = () => {
             </div>
           </div>
         </div>
-        <HorizontalLine className="dark:border-neutral-200" />
         <div>
           <PostList
             data={[
