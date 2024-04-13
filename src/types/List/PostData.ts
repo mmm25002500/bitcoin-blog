@@ -6,6 +6,7 @@ export interface PostProps {
   description: string;
   tags: string[];
   img: string | StaticImageData;
+  image: string | StaticImageData;
   authorData?: AuthorData;
   date: number;
   id?: string;

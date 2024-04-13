@@ -1,4 +1,8 @@
-# 比特幣中文部落格網站 - 開發說明
+# 比特幣中文部落格網站 - 文檔
+
+## 使用說明
+### 作者
+`/src/config/Author.json` 的 `id` 務必與 `/src/Articals/${USERNAME}` 一致。
 
 ## 網站架構
 
@@ -13,8 +17,6 @@
 |  |  |  | supabase(如有) |
 
 ### API
-
-
 | Price | Hash Rate | Block High |
 | -------- | -------- | -------- |
 | CoinMarketCap(暫定) | Blockchain.com(暫定) | Blockchain.com(暫定) |

@@ -78,13 +78,11 @@ const Post = (props: PostProps) => {
         </div>
 
         {/* 圖片 */}
-        <div className='inline-flex items-center'>
-          <Image
-            src={props.img}
+        <div className='inline-flex items-center relative w-[120px] sm:w-[236px]'>
+          <img
+            src={props.image}
             alt={props.title}
-            width={0}
-            height={0}
-            className="ml-3 sm:ml-0 w-full h-fit rounded-md"
+            className="ml-3 sm:ml-0 h-full rounded-md"
           />
         </div>
       </div>

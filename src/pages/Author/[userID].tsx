@@ -2,7 +2,6 @@ import HorizontalLine from "@/components/HorizontalLine";
 import Navbar from "@/components/Layout/Navbar";
 import Avater from "@/components/User/Avater";
 import { useRouter } from "next/router";
-import AuthorImg from '@/../public/Author/JohnCarter/author.png';
 import AuthorData from '@/config/Author.json';
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
@@ -21,16 +20,15 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { GetStaticProps } from 'next';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { PostProps } from '@/types/List/PostData';
-import { MarkDownProps } from '@/types/User/UserID';
+import { MarkDownsProps } from '@/types/User/UserID';
 
 // 通過使用者ID 獲取使用者資料
 const getAuthorData = (userID: string) => {
   return AuthorData.filter((author) => author.id === userID);
 }
 
-const AuthorPage = ({ posts }: MarkDownProps) => {
+const AuthorPage = ({ posts }: MarkDownsProps) => {
 
-  { console.log(posts) }
   const router = useRouter();
   const { userID } = router.query;
 
@@ -43,6 +41,11 @@ const AuthorPage = ({ posts }: MarkDownProps) => {
     setAuthor(getAuthorData(userID as string)[0]);
   }, [userID]);
 
+  // 計算文章數量
+  useEffect(() => {
+    setPostQuantity(posts.length);
+  }, [posts]);
+
   return (
     <>
       <div className="sm:hidden">
@@ -54,56 +57,60 @@ const AuthorPage = ({ posts }: MarkDownProps) => {
         <div className="flex gap-10 my-5">
           <div className="flex-none">
             <Avater
-              src={AuthorImg}
+              src={author?.image}
               className=""
             />
           </div>
-          <div className="flex flex-wrap sm:flex-nowrap sm:grid sm:grid-cols-1 gap-1">
-            {/* 名字 */}
-            <div className="flex-none font-semibold text-base leading-6 sm:font-bold sm:text-[28px] sm:leading-[42px] text-neutral-black dark:text-neutral-white">
-              {author?.fullname}
-            </div>
-            <div className="flex-grow"></div>
+          <div className="w-full">
+            <div className="flex flex-wrap sm:flex-nowrap sm:grid sm:grid-cols-1 gap-1">
+              {/* 名字 */}
+              <div className="flex-none font-semibold text-base leading-6 sm:font-bold sm:text-[28px] sm:leading-[42px] text-neutral-black dark:text-neutral-white">
+                {author?.fullname}
+              </div>
+              <div className="flex-grow"></div>
 
-            {/* 文章數量 */}
-            <div className="flex-none font-medium text-sm leading-5 text-neutral-800 dark:text-neutral-200">
-              {postQuantity} Posts
-            </div>
-
-            {/* 描述 */}
-            <div className="col-span-2 sm:col-span-1 font-normal text-sm leading-6 text-neutral-900 dark:text-neutral-300 overflow-hidden">
-              <p className={collaspe ? 'line-clamp-2' : ''}>
-                {author?.description}
-              </p>
+              {/* 文章數量 */}
+              <div className="flex-none font-medium text-sm leading-5 text-neutral-800 dark:text-neutral-200">
+                {postQuantity} Posts
+              </div>
             </div>
 
-            {/* 查看更多 按鈕 */}
-            <div>
-              <Button
-                onClick={() => setCollaspe(!collaspe)}
-                type={"large"}
-                className="dark:border-neutral-white flex items-center gap-2">
-                {
-                  collaspe ? (
-                    <>
-                      查看更多
-                      <Icon
-                        icon_light={DownIcon}
-                        className="invert dark:invert-0"
-                      />
-                    </>
-                  ) : (
-                    <>
-                      收合
-                      <Icon
-                        icon_light={UpIcon}
-                        className="invert dark:invert-0"
-                      />
-                    </>
-                  )
-                }
+            <div className="flex flex-col">
+              {/* 描述 */}
+              <div className="flex-none col-span-2 sm:col-span-1 font-normal text-sm leading-6 text-neutral-900 dark:text-neutral-300 overflow-hidden">
+                <p className={collaspe ? 'line-clamp-2' : ''}>
+                  {author?.description}
+                </p>
+              </div>
 
-              </Button>
+              {/* 查看更多 按鈕 */}
+              <div>
+                <Button
+                  onClick={() => setCollaspe(!collaspe)}
+                  type={"large"}
+                  className="dark:border-neutral-white flex items-center gap-2">
+                  {
+                    collaspe ? (
+                      <>
+                        查看更多
+                        <Icon
+                          icon_light={DownIcon}
+                          className="invert dark:invert-0"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        收合
+                        <Icon
+                          icon_light={UpIcon}
+                          className="invert dark:invert-0"
+                        />
+                      </>
+                    )
+                  }
+
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -122,6 +129,8 @@ const AuthorPage = ({ posts }: MarkDownProps) => {
                 id: author.id,
               },
               img: post.frontMatter.img,
+              image: post.frontMatter.image,
+              id: post.frontMatter.id,
             }))}
           />
         </div>
@@ -131,7 +140,7 @@ const AuthorPage = ({ posts }: MarkDownProps) => {
 }
 
 // 頁面元件遍歷所有文章渲染
-const Test = ({ posts }: MarkDownProps) => {
+const Test = ({ posts }: MarkDownsProps) => {
   return (
     <>
       {posts.map((post, index) => (
@@ -164,32 +173,41 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const articlesDirectory = join(process.cwd(), `src/Articals/${userID}`);
-  const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
+  try {
+    const articlesDirectory = join(process.cwd(), `src/Articals/${userID}`);
+    const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
 
-  // 遍歷所有文件獲取內容
-  const posts = await Promise.all(fileNames.map(async (fileName) => {
-    const filePath = join(articlesDirectory, fileName);
-    const fileContents = readFileSync(filePath, 'utf8');
-    const { content, data } = matter(fileContents);
-    const mdxSource = await serialize(content, { scope: data });
-    const articleID = fileName.replace(/\.mdx$/, '');
+    // 遍歷所有文件獲取內容
+    const posts = await Promise.all(fileNames.map(async (fileName) => {
+      const filePath = join(articlesDirectory, fileName);
+      const fileContents = readFileSync(filePath, 'utf8');
+      const { content, data } = matter(fileContents);
+      const mdxSource = await serialize(content, { scope: data });
+      const articleID = fileName.replace(/\.mdx$/, '');
+
+      return {
+        id: articleID,
+        source: mdxSource,
+        frontMatter: {
+          ...data as PostProps,
+          id: articleID
+        }
+      };
+    }));
 
     return {
-      id: articleID,
-      source: mdxSource,
-      frontMatter: {
-        ...data as PostProps,
-        id: articleID
-      }
+      props: {
+        posts,
+      },
     };
-  }));
+  } catch (error) {
+    console.error('Error reading files:', error);
 
-  return {
-    props: {
-      posts,
-    },
-  };
+    // 回傳錯誤頁面或 fallback props
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default AuthorPage;
