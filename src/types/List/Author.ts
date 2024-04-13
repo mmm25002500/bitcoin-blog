@@ -6,6 +6,7 @@ export interface AuthorData {
   img: string | StaticImageData;
   description?: string;
   posts?: number;
+  id: string;
 }
 
 // Components

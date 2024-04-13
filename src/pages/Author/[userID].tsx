@@ -2,7 +2,7 @@ import HorizontalLine from "@/components/HorizontalLine";
 import Navbar from "@/components/Layout/Navbar";
 import Avater from "@/components/User/Avater";
 import { useRouter } from "next/router";
-import AuthorImg from '@/icons/examplePhoto/author.png';
+import AuthorImg from '@/../public/Author/JohnCarter/author.png';
 import AuthorData from '@/config/Author.json';
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
@@ -13,11 +13,24 @@ import UpIcon from '@/icons/up.svg';
 import Header from "@/components/Layout/Header";
 import PostList from "@/components/List/PostList";
 
+// import ArticalsData from '@/Articals/JohnCarter/Articals.json';
+import { readdirSync, readFileSync } from 'fs';
+import { join } from 'path';
+import matter from 'gray-matter';
+import { serialize } from 'next-mdx-remote/serialize';
+import { GetStaticProps } from 'next';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { PostProps } from '@/types/List/PostData';
+import { MarkDownProps } from '@/types/User/UserID';
+
+// 通過使用者ID 獲取使用者資料
 const getAuthorData = (userID: string) => {
   return AuthorData.filter((author) => author.id === userID);
 }
 
-const AuthorPage = () => {
+const AuthorPage = ({ posts }: MarkDownProps) => {
+
+  { console.log(posts) }
   const router = useRouter();
   const { userID } = router.query;
 
@@ -96,453 +109,79 @@ const AuthorPage = () => {
         </div>
         <div>
           <PostList
-            data={[
-              {
-                title: 'Title',
-                description: 'Description',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title2',
-                description: 'Description1',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title3',
-                description: 'Description2',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title4',
-                description: 'Description3',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title5',
-                description: 'Description4',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title6',
-                description: 'Description5',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title7',
-                description: 'Description6',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title8',
-                description: 'Description7',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title9',
-                description: 'Description8',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title10',
-                description: 'Description9',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title11',
-                description: 'Description10',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title12',
-                description: 'Description11',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              },
-              {
-                title: 'Title13',
-                description: 'Description12',
-                tags: ['tag1', 'tag2'],
-                img: AuthorImg,
-                date: 0,
-                authorData: {
-                  name: 'John Carter',
-                  img: AuthorImg,
-                },
-              }
-            ]}
+            data={posts.map((post) => ({
+              title: post.frontMatter.title,
+              description: post.frontMatter.description,
+              tags: post.frontMatter.tags,
+              date: post.frontMatter.date,
+              authorData: author,
+              img: post.frontMatter.img,
+              id: post.id
+            }))}
           />
         </div>
       </div>
     </>
   );
 }
+
+// 頁面元件遍歷所有文章渲染
+const Test = ({ posts }: MarkDownProps) => {
+  return (
+    <>
+      {posts.map((post, index) => (
+        <div key={index}>
+          <p>標題：{post.frontMatter.title}</p>
+          <p>描述：{post.frontMatter.description}</p>
+          <p>日期：{post.frontMatter.date}</p>
+          <p>作者：{post.frontMatter.author_id}</p>
+          <MDXRemote {...post.source} />
+        </div>
+      ))}
+    </>
+  );
+};
+
+export async function getStaticPaths() {
+  const paths = AuthorData.map(author => ({ params: { userID: author.id } }));
+
+  return { paths, fallback: 'blocking' };
+}
+
+// getStaticProps讀取目錄下所有 mdx 文件
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { params } = context;
+  const userID = params?.userID;
+
+  if (!userID) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const articlesDirectory = join(process.cwd(), `src/Articals/${userID}`);
+  const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
+
+  // 遍歷所有文件獲取內容
+  const posts = await Promise.all(fileNames.map(async (fileName) => {
+    const filePath = join(articlesDirectory, fileName);
+    const fileContents = readFileSync(filePath, 'utf8');
+    const { content, data } = matter(fileContents);
+    const mdxSource = await serialize(content, { scope: data });
+    const articleID = fileName.replace(/\.mdx$/, '');
+
+    return {
+      id: articleID,
+      source: mdxSource,
+      frontMatter: data as PostProps
+    };
+  }));
+
+  return {
+    props: {
+      posts,
+    },
+  };
+};
 
 export default AuthorPage;

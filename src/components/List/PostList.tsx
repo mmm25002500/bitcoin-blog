@@ -3,10 +3,13 @@ import { PostListData } from "../../types/List/PostList";
 import HorizontalLine from "../HorizontalLine";
 import Post from "./Post";
 import Pagination from '../Pagination/Pagination';
+import { useRouter } from "next/router";
 
 const PostList = ({ data }: PostListData) => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
+
+  const router = useRouter();
 
   // 計算當前頁的文章範圍
   const indexOfLastPost = currentPage * postsPerPage;
@@ -22,7 +25,12 @@ const PostList = ({ data }: PostListData) => {
   return (
     <>
       {currentPosts.map((post, index) => (
-        <Post key={index} {...post} />
+        <div
+          key={index}
+          onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
+        >
+          <Post  {...post} />
+        </div>
       ))}
 
       {/* 分頁按鈕 */}
