@@ -8,4 +8,5 @@ export interface PostProps {
   img: string | StaticImageData;
   authorData?: AuthorData;
   date: number;
+  id?: string;
 }
