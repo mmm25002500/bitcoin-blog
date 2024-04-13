@@ -113,10 +113,15 @@ const AuthorPage = ({ posts }: MarkDownProps) => {
               title: post.frontMatter.title,
               description: post.frontMatter.description,
               tags: post.frontMatter.tags,
-              date: post.frontMatter.date,
-              authorData: author,
+              date: typeof post.frontMatter.date === 'string' ? Date.parse(post.frontMatter.date) : post.frontMatter.date,
+              authorData: {
+                fullname: author.fullname,
+                name: author.name,
+                description: author.description,
+                img: author.image,
+                id: author.id,
+              },
               img: post.frontMatter.img,
-              id: post.id
             }))}
           />
         </div>
@@ -173,7 +178,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
       id: articleID,
       source: mdxSource,
-      frontMatter: data as PostProps
+      frontMatter: {
+        ...data as PostProps,
+        id: articleID
+      }
     };
   }));
 

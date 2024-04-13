@@ -3,4 +3,7 @@ export interface PostProps {
   description: string;
   date: string | number;
   author_id: string;
+  img: string;
+  id: string;
+  tags: string[];
 }

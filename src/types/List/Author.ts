@@ -2,6 +2,7 @@ import { StaticImageData } from "next/image";
 
 // Data
 export interface AuthorData {
+  fullname: string;
   name: string;
   img: string | StaticImageData;
   description?: string;
