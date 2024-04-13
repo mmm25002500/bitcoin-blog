@@ -18,7 +18,6 @@ import { join } from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import { GetStaticProps } from 'next';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { PostProps } from '@/types/List/PostData';
 import { MarkDownsProps } from '@/types/User/UserID';
 
@@ -138,23 +137,6 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
     </>
   );
 }
-
-// 頁面元件遍歷所有文章渲染
-const Test = ({ posts }: MarkDownsProps) => {
-  return (
-    <>
-      {posts.map((post, index) => (
-        <div key={index}>
-          <p>標題：{post.frontMatter.title}</p>
-          <p>描述：{post.frontMatter.description}</p>
-          <p>日期：{post.frontMatter.date}</p>
-          <p>作者：{post.frontMatter.author_id}</p>
-          <MDXRemote {...post.source} />
-        </div>
-      ))}
-    </>
-  );
-};
 
 export async function getStaticPaths() {
   const paths = AuthorData.map(author => ({ params: { userID: author.id } }));

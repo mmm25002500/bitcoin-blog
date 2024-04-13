@@ -50,6 +50,8 @@ const SwiperSection = () => {
             style={{
               backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
               backgroundAttachment: 'fixed',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
             className="h-[500px]"
@@ -70,6 +72,8 @@ const SwiperSection = () => {
             style={{
               backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
               backgroundAttachment: 'fixed',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
             className="h-[500px]"
@@ -90,6 +94,8 @@ const SwiperSection = () => {
             style={{
               backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
               backgroundAttachment: 'fixed',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
             className="h-[500px]"
