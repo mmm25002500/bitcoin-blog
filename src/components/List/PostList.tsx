@@ -1,39 +1,41 @@
+import React, { useState } from 'react';
 import { PostListData } from "../../types/List/PostList";
 import HorizontalLine from "../HorizontalLine";
-const PostList = (props: PostListData) => {
+import Post from "./Post";
+import Pagination from '../Pagination/Pagination';
+
+const PostList = ({ data }: PostListData) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6;
+
+  // 計算當前頁的文章範圍
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
+
+  // 換頁函數
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  // 計算總頁數
+  const pageCount = Math.ceil(data.length / postsPerPage);
+
   return (
-    <div>
-      {props.data.map((post, index) => (
-        <div key={index} className="flex flex-col gap-4">
-          <HorizontalLine className="dark:border-neutral-200" />
-          <div className="flex gap-4">
-            {/* <img src={post.img}
-              className="w-32 h-32 object-cover rounded-lg"
-            /> */}
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-5">
-                <span>{post.date}</span>
-                <div className="flex gap-2">
-                  {post.tags.map((tag, index) => (
-                    <span key={index} className="bg-primary-100 text-primary-500 text-sm px-2 py-1 rounded-full">{tag}</span>
-                  ))}
-                </div>
-              </div>
-              <h3 className="text-lg font-bold">{post.title}</h3>
-              <p>{post.description}</p>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex gap-2">
-              <img src={post.authorData?.img} className="w-8 h-8 object-cover rounded-full" />
-              <div className="flex flex-col">
-                <span>{post.authorData?.name}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+    <>
+      {currentPosts.map((post, index) => (
+        <Post key={index} {...post} />
       ))}
-    </div>
+
+      {/* 分頁按鈕 */}
+      <div className='flex justify-center py-10'>
+        <Pagination
+          page={currentPage}
+          pageSize={pageCount}
+          link={''}
+          onClick={(pageNumber: number) => paginate(pageNumber)}
+          className={''}
+        />
+      </div>
+    </>
   );
 }
 

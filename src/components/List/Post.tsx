@@ -6,13 +6,8 @@ import { PostProps } from '@/types/List/PostData';
 const Post = (props: PostProps) => {
   const time = new Date(props.date);
 
-  const authorData = {
-    name: 'John Doe',
-    img: '/images/avater.jpg'
-  }
-
   return (
-    <div className="pt-6 pr-6 pl-6 pb-3 sm:pb-6 bg-white border-b-[1px] border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800">
+    <div className="pt-6 pr-6 pl-6 pb-3 sm:pb-6 bg-white border-t-[1px] border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800">
       {/* 標籤 */}
       <div className="flex justify-between items-center mb-5 text-gray-500">
         <span className="inline-flex items-center gap-4 sm:gap-12">
@@ -59,19 +54,19 @@ const Post = (props: PostProps) => {
 
           {/* 作者 */}
           {
-            authorData !== undefined ? (
+            props.authorData !== undefined ? (
               <>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
                     <Image
-                      src={authorData.img}
-                      alt={authorData.name + ' avater'}
+                      src={props.authorData.img}
+                      alt={props.authorData.name + ' avater'}
                       width={28}
                       height={28}
                       className="w-7 h-7 rounded-full"
                     />
                     <span className="font-medium dark:text-white">
-                      {authorData.name}
+                      {props.authorData.name}
                     </span>
                   </div>
                 </div>

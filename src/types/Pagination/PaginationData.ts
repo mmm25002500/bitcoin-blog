@@ -3,4 +3,5 @@ export interface PaginationData {
   pageSize: number;
   link: string;
   className: string;
+  onClick: (page: number) => void;
 }
