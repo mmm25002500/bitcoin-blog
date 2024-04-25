@@ -22,7 +22,7 @@ const Footer = () => {
         {/* figma: gap-6 */}
         <div className='flex gap-6 justify-center pt-10'>
           <Link
-            href='/'
+            href='/About'
             prefetch={false}
             className=""
           >
@@ -36,14 +36,14 @@ const Footer = () => {
             <p>合作夥伴</p>
           </Link>
           <Link
-            href='/'
+            href='/Disclaimer'
             prefetch={false}
             className=""
           >
             <p>免責聲明</p>
           </Link>
           <Link
-            href='/'
+            href='/PrivacyPolicy'
             prefetch={false}
             className=""
           >
