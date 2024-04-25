@@ -15,3 +15,25 @@ export interface MarkDownProps {
     frontMatter: PostProps;
   };
 }
+
+export interface NewsPostProps {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  date: string;
+  source: string;
+  authorData: {
+    fullname: string;
+    name: string;
+    description: string;
+    image: string;
+    id: string;
+  };
+  img: string;
+  image: string;
+}
+
+export interface NewsProps {
+  posts: NewsPostProps[];
+}

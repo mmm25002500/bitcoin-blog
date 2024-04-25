@@ -6,27 +6,18 @@ import Header from "@/components/Layout/Header";
 import Navbar from "@/components/Layout/Navbar";
 import ContactSection from "@/components/Page/ContactSection";
 import SubscribeSection from "@/components/Page/SubscribeSection";
-import { PostProps } from "@/types/List/PostData";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import matter from "gray-matter";
 import { GetStaticProps } from "next";
-import { serialize } from "next-mdx-remote/serialize";
 import { join } from "path";
 import AuthorData from '@/config/Author.json';
-import { MarkDownsProps } from "@/types/User/UserID";
+import { NewsPostProps, NewsProps } from "@/types/User/UserID";
 
 
 // TODO:
-// 1. 要把posts 傳入到 NewsSection 並製作出 Tag 顯示
-// 2. posts 要以時間去排序
+// 1. posts 要以時間去排序
 
-// 我们将使用这个类型来定义 posts 数组中每篇文章的结构
-interface ExtendedPostProps extends PostProps {
-  id: string;
-  source: string; // 此属性将包含序列化后的 MDX 内容
-}
-
-const Home = ({ posts }: { posts: ExtendedPostProps[] }) => {
+const Home = ({ posts }: NewsProps) => {
   console.log(posts);
 
   return (
@@ -36,8 +27,8 @@ const Home = ({ posts }: { posts: ExtendedPostProps[] }) => {
       <SwiperSection />
       <div className="mx-auto sm:px-16">
         <ButtonSection classname="py-8 px-8 sm:px-0" />
-        <HorizontalLine />
-        <NewsSection posts={[]} />
+        {/* <HorizontalLine /> */}
+        <NewsSection posts={posts} />
         <HorizontalLine />
         <ContactSection className="py-16 sm:px-5" />
         <HorizontalLine />
@@ -53,13 +44,13 @@ const getAuthorData = (userID: string) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  let allPosts: ExtendedPostProps[] = [];
+  let allPosts: NewsPostProps[] = [];
 
-  // 遍历每个作者目录来收集文章
+  // 遍歷所有作者
   AuthorData.forEach(author => {
     const authorDirectory = join(process.cwd(), 'src/Articals', author.id);
 
-    // 确保作者目录存在
+    // 如果作者目錄存在，則讀取所有文章
     if (existsSync(authorDirectory)) {
       const fileNames = readdirSync(authorDirectory).filter(file => file.endsWith('.mdx'));
 
@@ -68,24 +59,31 @@ export const getStaticProps: GetStaticProps = async () => {
         const fileContents = readFileSync(filePath, 'utf8');
         const { content, data } = matter(fileContents);
 
-        // 序列化 MDX 内容，这里仅示例，实际使用时可以根据需要处理
-        // const mdxSource = await serialize(content, { scope: data });
-
         allPosts.push({
           id: fileName.replace(/\.mdx$/, ''),
-          ...data as PostProps,
-          source: content, // 这里我们存储原始的 MDX 内容或序列化后的内容
+          title: data.title,
+          description: data.description,
+          tags: data.tags,
+          date: data.date,
+          source: content,
+          authorData: getAuthorData(author.id)[0],
+          img: data.img,
+          image: data.image,
         });
       });
     }
+
+
   });
 
-  // 按时间排序文章
+  // 按日期排序所有文章
   allPosts.sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
-  // 返回排序后的文章列表作为 props
+
+
+  // 返回所有文章
   return {
     props: {
       posts: allPosts,

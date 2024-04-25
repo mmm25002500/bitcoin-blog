@@ -2,48 +2,40 @@ import React, { useState } from 'react';
 import { PostListData } from "../../types/List/PostList";
 import HorizontalLine from "../HorizontalLine";
 import Post from "./Post";
-import Pagination from '../Pagination/Pagination';
+import Button from '../Button/Button';
 import { useRouter } from "next/router";
 import { PostProps } from '@/types/List/PostData';
 
 const PostList = ({ data }: PostListData) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 6;
+  const [showAll, setShowAll] = useState(false);
 
   const router = useRouter();
 
-  // 計算當前頁的文章範圍
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
-
-  // 換頁函數
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  // 計算總頁數
-  const pageCount = Math.ceil(data.length / postsPerPage);
+  // 先六個
+  const postsToShow = showAll ? data : data.slice(0, 6);
 
   return (
     <>
-      {currentPosts.map((post: PostProps, index) => (
+      {postsToShow.map((post: PostProps, index) => (
         <div
           key={index}
           onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
         >
-          <Post  {...post} />
+          <Post {...post} />
         </div>
       ))}
 
-      {/* 分頁按鈕 */}
-      <div className='flex justify-center py-10'>
-        <Pagination
-          page={currentPage}
-          pageSize={pageCount}
-          link={''}
-          onClick={(pageNumber: number) => paginate(pageNumber)}
-          className={''}
-        />
-      </div>
+      {/* 查看更多 */}
+      {!showAll && (
+        <div className='flex justify-center py-10'>
+          <Button
+            onClick={() => setShowAll(true)}
+            type="large"
+            className="dark:border-neutral-white flex items-center gap-2">
+            More
+          </Button>
+        </div>
+      )}
     </>
   );
 }
