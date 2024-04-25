@@ -13,10 +13,6 @@ import { join } from "path";
 import AuthorData from '@/config/Author.json';
 import { NewsPostProps, NewsProps } from "@/types/User/UserID";
 
-
-// TODO:
-// 1. posts 要以時間去排序
-
 const Home = ({ posts }: NewsProps) => {
   console.log(posts);
 
@@ -27,7 +23,7 @@ const Home = ({ posts }: NewsProps) => {
       <SwiperSection />
       <div className="mx-auto sm:px-16">
         <ButtonSection classname="py-8 px-8 sm:px-0" />
-        {/* <HorizontalLine /> */}
+        <HorizontalLine />
         <NewsSection posts={posts} />
         <HorizontalLine />
         <ContactSection className="py-16 sm:px-5" />
@@ -72,16 +68,12 @@ export const getStaticProps: GetStaticProps = async () => {
         });
       });
     }
-
-
   });
 
   // 按日期排序所有文章
   allPosts.sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
-
-
 
   // 返回所有文章
   return {

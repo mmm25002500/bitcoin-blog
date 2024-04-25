@@ -10,4 +10,5 @@ export interface PostProps {
   authorData?: AuthorData;
   date: number;
   id?: string;
+  idx?: number;
 }

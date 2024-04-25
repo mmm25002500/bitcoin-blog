@@ -21,7 +21,7 @@ const PostList = ({ data }: PostListData) => {
           key={index}
           onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
         >
-          <Post {...post} />
+          <Post {...post} idx={ index } />
         </div>
       ))}
 
