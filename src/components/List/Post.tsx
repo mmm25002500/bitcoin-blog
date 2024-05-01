@@ -82,7 +82,7 @@ const Post = (props: PostProps) => {
           <img
             src={props.image}
             alt={props.title}
-            className="ml-3 sm:ml-0 h-full rounded-md"
+            className="ml-3 sm:ml-0 h-[78px] sm:h-[152px] rounded-md"
           />
         </div>
       </div>

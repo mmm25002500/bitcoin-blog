@@ -2,22 +2,65 @@ import NewsList from "../List/NewsList";
 import { NewsProps } from "@/types/User/UserID";
 import Tag from "../Tag/TagTab";
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// import required modules
+import { FreeMode } from 'swiper/modules';
+
 const NewsSection = ({ posts }: NewsProps) => {
 
   return (
     <>
       <p className="font-bold text-xl leading-6 sm:text-[28px] sm:leading-[42px] text-center py-8">NEWS</p>
-      <Tag className="w-full flex gap-5 py-4">
-        <Tag.Tab text="ALL" />
-        <Tag.Tab text="Software Developemnt" />
-        <Tag.Tab text="JavaScript" />
-        <Tag.Tab text="Technology" />
-        <Tag.Tab text="Coding" />
-        <Tag.Tab text="Web Development" />
-        <Tag.Tab text="Web Development" />
-        <Tag.Tab text="Python" />
-        <Tag.Tab text="Machine Learning" />
-        <Tag.Tab text="Machine Learning" />
+      <Tag className="w-full">
+        <div className="lg:hidden">
+          <Swiper
+            slidesPerView={"auto"}
+            spaceBetween={"20%"} // 根據需要調整間距
+            freeMode={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[FreeMode]}
+            className="w-full bg-gradient-to-r from-black to-white inline-block text-transparent bg-clip-text"
+          >
+            <SwiperSlide>
+              <div className="flex gap-5 w-[120%]">
+                <Tag.Tab text="ALL" />
+                <Tag.Tab text="Software Developemnt" />
+                <Tag.Tab text="JavaScript" />
+                <Tag.Tab text="Technology" />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="flex gap-5 w-[120%]">
+                <Tag.Tab text="Coding" />
+                <Tag.Tab text="Web Development" />
+                <Tag.Tab text="Web Development" />
+                <Tag.Tab text="Python" />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="flex gap-5 w-[120%]">
+                <Tag.Tab text="Machine Learning" />
+                <Tag.Tab text="Machine Learning" />
+              </div>
+            </SwiperSlide>
+          </Swiper>
+        </div>
+        <div className="w-full gap-5 py-4 hidden lg:flex">
+          <Tag.Tab text="ALL" />
+          <Tag.Tab text="Software Developemnt" />
+          <Tag.Tab text="JavaScript" />
+          <Tag.Tab text="Technology" />
+          <Tag.Tab text="Coding" />
+          <Tag.Tab text="Web Development" />
+          <Tag.Tab text="Web Development" />
+          <Tag.Tab text="Python" />
+          <Tag.Tab text="Machine Learning" />
+          <Tag.Tab text="Machine Learning" />
+        </div>
       </Tag>
 
       <NewsList
