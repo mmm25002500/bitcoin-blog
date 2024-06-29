@@ -30,7 +30,7 @@ export interface NewsPostProps {
     image: string;
     id: string;
   };
-  type: ['Posts'|'News'];
+  type: ['Post'|'News'];
   img: string;
   image: string;
 }

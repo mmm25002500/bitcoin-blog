@@ -2,8 +2,45 @@
 
 ## 使用說明
 1. 在寫 Markdown 要使用 HTML語法的 class的時候要使用 className
+### 首頁
+1. 
+### 文章
+1. 文章路徑為 `src/Articals/${name}/${mdx name}`
+2. 文章元標頭為：
+> title: "文章標題"
+> description: "文章描述"
+> date: "YYYY-MM-DD HH:MM"
+> tags: ["標籤1", "標籤2", "標籤n"]
+> type: ['News','Post'] （類別：文章為Post，新聞為 News）
+> img: "/Author/JohnCarter/author.png"（必須放在本地，其位置於`public/Author/${name}/author.png`）
+> image: "https://封面網址/圖片檔名.副檔名"
+
+### 標籤
+1. 
+### 文章列表
+1. 
+### 文章內頁
+1. 如果該文章只有 News 而沒有 Post 則跳轉到新聞頁面。
+2. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `ArticalPostListMorePostPerclick`。
+3. 底部 More Posts 會根據標籤進行查詢，只要本文標籤有的，其他文章有的，都會被篩選出，另外排除掉重複的。
+### 新聞列表
+1. 
+### 新聞內頁
+1. 如果該文章只有 Post 而沒有 News 則跳轉到文章頁面
+2. 如想更改一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `ArticalNewsListMorePostPerclick`。
+3. 底部 More Posts 會根據標籤進行查詢，只要本文標籤有的，其他文章有的，都會被篩選出，另外排除掉重複的。
+### 更多資訊
+1. 
+### Sidebar
+1. 
+### Firebase
+1. 
+### 文章後端
+1. 
+### SEO
+1. 
 ### 作者
-`/src/config/Author.json` 的 `id` 務必與 `/src/Articals/${USERNAME}` 一致。
+1. `/src/config/Author.json` 的 `id` 務必與 `/src/Articals/${USERNAME}` 一致。
 
 ## 網站架構
 

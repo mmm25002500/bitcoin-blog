@@ -14,9 +14,11 @@ import ArticalLayout from "@/components/Layout/Artical/AriticalLayout";
 import MD from "@/components/MD";
 import Tag from "@/components/Tag/Tag";
 import HorizontalLine from "@/components/HorizontalLine";
-import ArticalPostList from "@/components/List/ArticalPostList";
+import ArticalNewsList from "@/components/List/ArticalNewsList";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Image from 'next/image';
+import AuthorData from '@/config/Author.json';
 
 const PostPage = ({ post }: MarkDownProps) => {
   // 如果 postID 沒有是 undefined，就出現 404 頁面
@@ -24,12 +26,25 @@ const PostPage = ({ post }: MarkDownProps) => {
   const { postID } = router.query;
 
   const [relatedPosts, setRelatedPosts] = useState<PostProps[]>([]);
+  const [authorData, setAuthorData] = useState<any>(AuthorData);
 
-  // 如果不是 Post 就跳轉到 News 頁面
+  // 如果不是 News 就跳轉到 Post 頁面
   useEffect(() => {
-    if (!post.frontMatter.type.includes('Post'))
-      router.push(`/News/${post.frontMatter.authorData.id}/${postID}`);
+    if (!post.frontMatter.type.includes('News'))
+      router.push(`/Post/${post.frontMatter.authorData.id}/${postID}`);
   }, [post.frontMatter.type, postID]);
+
+  // 拿 post 的 authorData id 去 Author.json 拿資料
+  useEffect(() => {
+    if (post.frontMatter.authorData.id) {
+      AuthorData.map((item) => {
+        if (item.id === post.frontMatter.authorData.id) {
+          setAuthorData(item);
+        }
+      }
+      );
+    }
+  }, [post.frontMatter.authorData.id]);
 
   // 傳到後端拿資料，用TAG篩選文章
   useEffect(() => {
@@ -85,18 +100,40 @@ const PostPage = ({ post }: MarkDownProps) => {
               }
             </div>
 
-            {/* 日期 */}
-            <div className="text-sm font-medium leading-5 dark:text-neutral-white">
-              {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}
-              &nbsp;
-              {date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:{date.getMinutes()}
-              &nbsp;
-              {date.getHours() > 12 ? 'PM' : 'AM'}
+            <div className="flex gap-2 items-center">
+              {/* 作者頭貼 */}
+              <div>
+                <Image
+                  src={authorData.image}
+                  alt="Icon Dark"
+                  width={1000}
+                  height={1000}
+                  className="rounded-full w-10 h-10"
+                />
+              </div>
+
+              {/* 作者 */}
+              <div className="text-sm font-medium leading-5 dark:text-neutral-white">
+                {authorData.name}
+              </div>
+
+              <div className="text-neutral-300">
+                ﹒
+              </div>
+
+              {/* 日期 */}
+              <div className="text-sm font-medium leading-5 dark:text-neutral-white">
+                {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}
+                &nbsp;
+                {date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:{date.getMinutes()}
+                &nbsp;
+                {date.getHours() > 12 ? 'PM' : 'AM'}
+              </div>
             </div>
 
             <HorizontalLine className="my-5" />
             <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More Posts</p>
-            <ArticalPostList data={relatedPosts} />
+            <ArticalNewsList data={relatedPosts} />
           </ArticalLayout>
         </div>
       </article>
