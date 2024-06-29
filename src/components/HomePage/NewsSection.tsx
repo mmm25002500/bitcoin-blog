@@ -76,6 +76,7 @@ const NewsSection = ({ posts }: NewsProps) => {
             img: post.authorData.image,
             id: post.authorData.id,
           },
+          type: post.type,
           img: post.img,
           image: post.image,
           id: post.id,
