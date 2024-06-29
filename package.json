@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "axios": "^1.7.2",
     "cookies-next": "^4.1.0",
     "gray-matter": "^4.0.3",
     "next": "14.0.4",

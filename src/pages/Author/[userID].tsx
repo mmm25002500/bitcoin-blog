@@ -45,6 +45,11 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
     setPostQuantity(posts.length);
   }, [posts]);
 
+  // 以日期排序文章
+  posts.sort((a, b) => {
+    return new Date(b.frontMatter.date).getTime() - new Date(a.frontMatter.date).getTime();
+  });
+
   return (
     <>
       <div className="sm:hidden">
@@ -127,6 +132,7 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
                 img: author.image,
                 id: author.id,
               },
+              type: post.frontMatter.type,
               img: post.frontMatter.img,
               image: post.frontMatter.image,
               id: post.frontMatter.id,

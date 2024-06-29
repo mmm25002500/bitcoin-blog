@@ -17,7 +17,7 @@ const Post = (props: PostProps) => {
           <div className='text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium'>
             {time.getFullYear()}/{time.getMonth() + 1}/{time.getDate()}
             &nbsp;
-            {time.getHours()}:{time.getMinutes()}
+            {time.getHours() > 12? time.getHours()-12 : time.getHours()}:{time.getMinutes()}
             &nbsp;
             {time.getHours() > 12 ? 'PM' : 'AM'}
           </div>

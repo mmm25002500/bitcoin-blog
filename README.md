@@ -1,6 +1,7 @@
 # 比特幣中文部落格網站 - 文檔
 
 ## 使用說明
+1. 在寫 Markdown 要使用 HTML語法的 class的時候要使用 className
 ### 作者
 `/src/config/Author.json` 的 `id` 務必與 `/src/Articals/${USERNAME}` 一致。
 
