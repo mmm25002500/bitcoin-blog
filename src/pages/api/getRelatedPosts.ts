@@ -45,7 +45,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       const { data } = matter(fileContents);
 
       // 如果文章包含指定標籤中的至少一個且不是當前文章，則將其添加到相關文章陣列中
-      if (tagsArray.some(tag => data.tags.includes(tag)) && data.id !== exclude) {
+      if (tagsArray.some((tag: string) => data.tags.includes(tag)) && data.id !== exclude) {
         relatedPosts.push({ ...data, id: fileName.replace(/\.mdx$/, '') } as PostProps);
       }
     });
