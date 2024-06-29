@@ -52,7 +52,7 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
       </div>
       <Navbar />
       <HorizontalLine />
-      <div className="mx-auto px-6 sm:px-28 p">
+      <div className="mx-auto px-6 sm:px-28">
         <div className="flex gap-10 my-5">
           <div className="flex-none">
             <Avater

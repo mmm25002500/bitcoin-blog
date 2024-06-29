@@ -31,7 +31,7 @@ const PostList = ({ data }: PostListData) => {
           <Button
             onClick={() => setShowAll(true)}
             type="large"
-            className="dark:border-neutral-white flex items-center gap-2">
+            className="dark:border-neutral-white dark:bg-neutral-white dark:text-primary-black-300 flex items-center gap-2">
             More
           </Button>
         </div>

@@ -9,6 +9,9 @@ import { readFileSync } from 'fs';
 import { MarkDownProps } from "@/types/User/UserID";
 import { MDXRemote } from "next-mdx-remote";
 import { PostProps } from '@/types/List/PostData';
+import Navbar from "@/components/Layout/Navbar";
+import ArticalLayout from "@/components/Layout/Artical/AriticalLayout";
+import MD from "@/components/MD";
 
 const PostPage = ({ post }: MarkDownProps) => {
   // 如果 postID 沒有是 undefined，就出現 404 頁面
@@ -22,9 +25,16 @@ const PostPage = ({ post }: MarkDownProps) => {
   } else {
     return (
       <article>
-        <h1>{post.frontMatter.title}</h1>
-        <p>{post.frontMatter.description}</p>
-        <MDXRemote {...post.source} />
+        <Navbar></Navbar>
+        <div className="mx-auto sm:px-28">
+          <ArticalLayout className='pt-10 px-5 sm:px-0'>
+            <h1 className="text-xl leading-[30px] sm:text-[32px] sm:leading-[48px] font-bold">{post.frontMatter.title}</h1>
+            <p className="text-sm leading-[22px] sm:text-xl sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{post.frontMatter.description}</p>
+            <MD>
+              {post.source}
+            </MD>
+          </ArticalLayout>
+        </div>
       </article>
     );
   }

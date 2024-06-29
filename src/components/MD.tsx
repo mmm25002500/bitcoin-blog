@@ -1,7 +1,16 @@
 import { MarkDownProperties } from '@/types/MarkDownProperties';
-import Markdown from 'react-markdown'
+import { MDXRemote } from 'next-mdx-remote';
+import Markdown from 'react-markdown';
 
 const MD = (props: MarkDownProperties) => {
+
+  const renderContent = () => {
+    if (typeof props.children === 'string') {
+      return <Markdown>{props.children}</Markdown>;
+    } else {
+      return <MDXRemote {...props.children} />;
+    }
+  };
 
   return (
     <div className={`
@@ -20,9 +29,11 @@ const MD = (props: MarkDownProperties) => {
       prose-h1:text-xl
       prose-h1:leading-[30px]
 
+      prose-img:rounded-lg
+
       ${props.className}
     `}>
-      <Markdown>{props.children}</Markdown>
+      {renderContent()}
     </div>
   )
 }

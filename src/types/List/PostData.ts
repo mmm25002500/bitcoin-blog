@@ -11,4 +11,5 @@ export interface PostProps {
   date: number;
   id?: string;
   idx?: number;
+  onClick?: () => void;
 }

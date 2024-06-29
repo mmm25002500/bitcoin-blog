@@ -26,12 +26,11 @@ const PostList = ({ data }: PostListData) => {
   return (
     <>
       {currentPosts.map((post: PostProps, index) => (
-        <div
+        <Post
           key={index}
           onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
-        >
-          <Post  {...post} />
-        </div>
+          {...post}
+        />
       ))}
 
       {/* 分頁按鈕 */}
