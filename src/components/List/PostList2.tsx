@@ -8,7 +8,7 @@ import Button from '../Button/Button';
 import Icon from '../Icon';
 import right from '@/icons/right.svg';
 
-const PostList = ({ data }: PostListData) => {
+const PostList2 = ({ data }: PostListData) => {
   const [visibleCount, setVisibleCount] = useState(2); // 初始顯示的文章數量
   const increment = 2; // 每次增加的文章數量
 
@@ -29,7 +29,12 @@ const PostList = ({ data }: PostListData) => {
           key={index}
           idx={index}
           onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
-          {...post}
+          title={post.title}
+          description={post.description}
+          tags={post.tags}
+          date={post.date}
+          type={post.type}
+          image={post.image}
         />
       ))}
 
@@ -42,7 +47,7 @@ const PostList = ({ data }: PostListData) => {
             onClick={showMorePosts}
             type={"large"}
             className="font-medium text-sm leading-5 dark:!bg-neutral-white dark:!text-primary-black-300 dark:border-neutral-white flex items-center gap-2">
-            See More
+            顯示更多
             <Icon
               icon_light={right}
               className="invert dark:invert-0"
@@ -54,4 +59,4 @@ const PostList = ({ data }: PostListData) => {
   );
 }
 
-export default PostList;
+export default PostList2;

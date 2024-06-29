@@ -134,7 +134,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       post: {
         source: mdxSource,
-        frontMatter: data as PostProps,
+        frontMatter: {
+          ...data,
+          authorData: { id: userID, ...data.authorData }
+        } as PostProps,
       },
     },
   };

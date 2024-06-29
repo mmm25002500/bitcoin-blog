@@ -9,11 +9,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // 從請求中獲取標籤和排除的文章 ID
   const { tag, exclude } = req.query;
 
-  // if (!tags || !exclude) {
-  //   res.status(400).json({ error: "Missing tags or exclude parameter" });
-  //   return;
-  // }
-
   // 確保 tags 是一個陣列
   const tagsArray = JSON.parse(tag as string);
   // 設置文章目錄的基礎路徑
@@ -46,7 +41,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
       // 如果文章包含指定標籤中的至少一個且不是當前文章，則將其添加到相關文章陣列中
       if (tagsArray.some((tag: string) => data.tags.includes(tag)) && data.id !== exclude) {
-        relatedPosts.push({ ...data, id: fileName.replace(/\.mdx$/, '') } as PostProps);
+        relatedPosts.push({
+          ...data,
+          id: fileName.replace(/\.mdx$/, ''),
+          authorData: { id: userID }
+        } as PostProps);
       }
     });
   });
