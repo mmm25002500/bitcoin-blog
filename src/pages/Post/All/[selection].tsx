@@ -22,7 +22,7 @@ const getAuthorData = (userID: string) => {
   return AuthorData.filter((author) => author.id === userID);
 }
 
-const Tag = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
+const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
   const router = useRouter();
   const { selection } = router.query;
 
@@ -96,7 +96,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { selection: tag }
   }));
 
-  // 添加一個沒有 selection 的默認路徑
+  // 添加 /Post/All 路徑，使用預設標籤
   paths.push({ params: { selection: '' } });
 
   return { paths, fallback: 'blocking' };
@@ -134,4 +134,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
-export default Tag;
+export default All;
