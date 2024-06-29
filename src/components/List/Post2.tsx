@@ -11,15 +11,21 @@ const Post2 = (props: PostProps) => {
   return (
     <div className="pt-6 pr-6 pl-6 pb-3 sm:pb-6 bg-white border-b-[1px] border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800">
       {/* 圖片 */}
-      <div className='inline-flex items-center'>
-        <Image
-          src={props.img}
-          alt={props.title}
-          width={0}
-          height={0}
-          className="w-[9999px] sm:w-fit rounded-md"
-        />
-      </div>
+      {
+        props.img !== undefined ? (
+          <div className='inline-flex items-center'>
+            <Image
+              src={props.img}
+              alt={props.title}
+              width={0}
+              height={0}
+              className="w-[9999px] sm:w-fit rounded-md"
+            />
+          </div>
+        ) : (
+          <></>
+        )
+      }
 
       {/* 文章*/}
       <div className=''>
