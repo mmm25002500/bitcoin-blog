@@ -16,36 +16,35 @@ import { PostProps } from '@/types/List/PostData';
 import { MarkDownProps } from '@/types/User/UserID';
 import Radio from "@/components/Radio/Radio";
 import Tags from "@/config/Tags.json";
-import ArticalPostList from "@/components/List/ArticalPostList";
-import PostListAll from "@/components/List/PostListAll";
 
+// 通過使用者ID 獲取使用者資料
+const getAuthorData = (userID: string) => {
+  return AuthorData.filter((author) => author.id === userID);
+}
 
-// 文章列表頁面
 const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
   const router = useRouter();
   const { selection } = router.query;
 
   const [currentSelection, setCurrentSelection] = useState<string>(initialSelection);
   const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
-  const [currentType, setCurrentType] = useState<string>('Both');
-  const [currentAuthor, setCurrentAuthor] = useState<string>('all');
 
   // 傳到後端拿資料，用TAG篩選文章
   useEffect(() => {
     const fetchFilteredPosts = async () => {
       const response = await axios.get('/api/getPostsByFilter', {
-        params: { type: currentType, author: currentAuthor, tag: currentSelection }
+        params: { tag: currentSelection }
       });
       setFilteredPosts(response.data);
     };
 
     fetchFilteredPosts();
-  }, [currentSelection, currentType, currentAuthor]);
+  }, [currentSelection]);
 
   // 當 currentSelection 改變時更新 URL
   useEffect(() => {
     if (selection !== currentSelection) {
-      router.push(`/Post/All/${currentSelection}`, undefined, { shallow: true });
+      router.push(`/News/All/${currentSelection}`, undefined, { shallow: true });
     }
   }, [currentSelection, selection, router]);
 
@@ -58,34 +57,15 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
       <div className="mx-auto px-6 sm:px-28">
         <div className="my-5">
           {/* 標題 */}
-          <p className="text-center font-bold text-2xl leading-[24.38px] sm:text-[28px] sm:leading-[42px]">
+          <p className="text-center font-bold text-xl leading-[24.38px] sm:text-[28px] sm:leading-[42px]">
             Posters
           </p>
 
-          {/* 類型選擇 */}
-          {/* <div className="flex justify-center mb-4">
-            <select value={currentType} onChange={(e) => setCurrentType(e.target.value)} className="text-xs py-1 px-3 border rounded">
-              <option value="Both">Both</option>
-              <option value="Post">Post</option>
-              <option value="News">News</option>
-            </select>
-          </div> */}
-
-          {/* 作者選擇 */}
-          {/* <div className="flex justify-center mb-4">
-            <select value={currentAuthor} onChange={(e) => setCurrentAuthor(e.target.value)} className="text-xs py-1 px-3 border rounded">
-              <option value="all">All</option>
-              {AuthorData.map(author => (
-                <option key={author.id} value={author.id}>{author.name}</option>
-              ))}
-            </select>
-          </div> */}
-
           {/* 標籤 */}
-          <div className="my-5 flex justify-center">
+          <div className="flex justify-center">
             <Radio.Group name="tags" className="flex gap-4" selectedValue={currentSelection} onChange={(value) => {
               setCurrentSelection(value);
-              router.push(`/Post/All/${value}`);
+              router.push(`/News/All/${value}`);
             }}>
               {
                 Tags.Post.map((tag, idx) => (
@@ -93,7 +73,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
                     key={idx}
                     text={tag}
                     value={tag}
-                    id={tag}
+                    id = { tag }
                     onChange={(value: string) => setCurrentSelection(value)}
                     className="text-xs py-1 px-3"
                   />
@@ -103,7 +83,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
           </div>
         </div>
         <div>
-          <PostListAll data={filteredPosts} />
+          <PostList data={filteredPosts} />
         </div>
       </div>
     </>
@@ -112,11 +92,11 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
 
 // 設置靜態路徑
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = Tags.Post.map(tag => ({
+  const paths = Tags.News.map(tag => ({
     params: { selection: tag }
   }));
 
-  // 添加默認路徑
+  // 添加默认路径
   paths.push({ params: { selection: 'default' } });
 
   return { paths, fallback: 'blocking' };
@@ -124,9 +104,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 // 獲取靜態頁面所需的數據
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { params } = context;
-  const selection = params?.selection || 'default';
-  const tag = selection === 'default' ? Tags.Post[0] : selection;
+  const { selection } = context.params as { selection: string };
+  const tag = selection === 'default' ? Tags.News[0] : Array.isArray(selection) ? selection[0] : selection;
 
   const basePath = join(process.cwd(), 'src/Articals');
   const authorDirs = readdirSync(basePath);
@@ -139,30 +118,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     fileNames.forEach((fileName) => {
       const filePath = join(articlesDirectory, fileName);
       const fileContents = readFileSync(filePath, 'utf8');
-      const { content, data } = matter(fileContents);
-
-      const author = AuthorData.find(author => author.id === userID);
-
-      const post: PostProps = {
-        title: data.title || '',
-        description: data.description || '',
-        tags: data.tags || [],
-        date: typeof data.date === 'string' ? Date.parse(data.date) : data.date,
-        type: data.type || 'Post',
-        id: fileName.replace(/\.mdx$/, ''),
-        authorData: {
-          id: userID,
-          fullname: author?.fullname || '',
-          name: author?.name || '',
-          img: author?.image || '',
-          description: author?.description || '',
-        },
-        img: data.img || undefined,
-        image: data.image || undefined,
-      };
+      const { data } = matter(fileContents);
 
       if (data.tags.includes(tag)) {
-        initialPosts.push(post);
+        initialPosts.push({ ...data, id: fileName.replace(/\.mdx$/, '') } as PostProps);
       }
     });
   });

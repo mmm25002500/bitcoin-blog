@@ -3,8 +3,21 @@ import { useState } from 'react';
 import Tag from '../Tag/Tag';
 import { PostProps } from '@/types/List/PostData';
 
+const formatDate = (date: number) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = d.getMonth() + 1; // Months are zero-indexed
+  const day = d.getDate();
+  const hours = d.getHours();
+  const minutes = d.getMinutes().toString().padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = hours % 12 || 12; // Convert 24-hour time to 12-hour time
+
+  return `${year}/${month}/${day} ${formattedHours}:${minutes} ${ampm}`;
+};
+
 const Post = (props: PostProps) => {
-  const time = new Date(props.date);
+  const formattedDate = formatDate(props.date);
 
   return (
     <div
@@ -15,11 +28,7 @@ const Post = (props: PostProps) => {
         <span className="inline-flex items-center gap-4 sm:gap-12">
           {/* 日期 */}
           <div className='text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium'>
-            {time.getFullYear()}/{time.getMonth() + 1}/{time.getDate()}
-            &nbsp;
-            {time.getHours() > 12? time.getHours()-12 : time.getHours()}:{time.getMinutes()}
-            &nbsp;
-            {time.getHours() > 12 ? 'PM' : 'AM'}
+            {formattedDate}
           </div>
 
           {/* 標籤 */}
@@ -56,16 +65,24 @@ const Post = (props: PostProps) => {
           {
             props.authorData && (
               <div className="flex items-center space-x-4 mt-auto">
-                <Image
-                  src={props.authorData.img}
-                  alt={props.authorData.name + ' avater'}
-                  width={28}
-                  height={28}
-                  className="w-7 h-7 rounded-full"
-                />
-                <span className="font-medium dark:text-white">
-                  {props.authorData.name}
-                </span>
+                {
+                  props.authorData.img && (
+                    <Image
+                      src={props.authorData.img}
+                      alt={props.authorData.name + ' avater'}
+                      width={28}
+                      height={28}
+                      className="w-7 h-7 rounded-full"
+                    />
+                  )
+                }
+                {
+                  props.authorData.name && (
+                    <span className="font-medium dark:text-white">
+                      {props.authorData.name}
+                    </span>
+                  )
+                }
               </div>
             )
           }

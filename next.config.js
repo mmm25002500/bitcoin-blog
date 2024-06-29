@@ -7,6 +7,11 @@ const nextConfig = {
       destination: `/Post/All/default`, // 默认标签路径
       permanent: false,
     },
+    {
+      source: '/News/All',
+      destination: `/News/All/default`, // 默认标签路径
+      permanent: false,
+    },
   ];
 },
 

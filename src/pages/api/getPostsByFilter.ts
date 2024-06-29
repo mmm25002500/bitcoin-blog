@@ -3,47 +3,71 @@ import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 import { PostProps } from '@/types/List/PostData';
+import AuthorData from '@/config/Author.json';
 
-// API 處理函數，用於根據標籤篩選文章
+// 根據 userID 獲取作者資料
+const getAuthorData = (userID: string) => {
+  return AuthorData.find((author) => author.id === userID);
+}
+
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { tag } = req.query;
+  const { type, author, tag } = req.query;
 
-  // 如果沒有提供標籤參數，返回 400 錯誤
-  if (!tag) {
-    res.status(400).json({ error: "Missing tag parameter" });
+  if (!type || !author || !tag) {
+    res.status(400).json({ error: "缺少 type, author 或 tag 參數" });
     return;
   }
 
-  // 設置文章目錄的基礎路徑
   const basePath = join(process.cwd(), 'src/Articals');
-  // 讀取作者目錄
   const authorDirs = readdirSync(basePath);
-  // 初始化過濾後的文章陣列
   let filteredPosts: PostProps[] = [];
 
   // 遍歷每個作者目錄
   authorDirs.forEach((userID) => {
-    // 設置每個作者文章目錄的路徑
+    if (author !== 'all' && userID !== author) {
+      return;
+    }
+
     const articlesDirectory = join(basePath, userID);
-    // 讀取文章目錄下的所有文件名，過濾出以 .mdx 結尾的文件
     const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
 
-    // 遍歷每個文章文件
+    // 遍歷每篇文章文件
     fileNames.forEach((fileName) => {
-      // 設置文章文件的路徑
       const filePath = join(articlesDirectory, fileName);
-      // 讀取文章文件的內容
       const fileContents = readFileSync(filePath, 'utf8');
-      // 使用 gray-matter 解析文章內容中的元數據
-      const { data } = matter(fileContents);
+      const { content, data } = matter(fileContents);
+      const postAuthor = getAuthorData(userID);
 
-      // 如果文章包含指定標籤，則將其添加到過濾後的文章陣列中
-      if (data.tags.includes(tag)) {
-        filteredPosts.push({ ...data, id: fileName.replace(/\.mdx$/, '') } as PostProps);
+      // 篩選符合條件的文章
+      if (
+        (type === 'Both' || data.type.includes(type)) &&
+        data.tags.includes(tag)
+      ) {
+        filteredPosts.push({
+          ...data,
+          id: fileName.replace(/\.mdx$/, ''),
+          authorData: postAuthor ? {
+            ...postAuthor,
+            id: userID,
+          } : {
+            id: userID,
+          },
+        } as PostProps);
       }
     });
   });
 
-  // 返回過濾後的文章的 JSON 響應
+  // 根據 type 動態生成 URL
+  filteredPosts = filteredPosts.map(post => {
+    let urlType = 'Post';
+    if (type === 'News') {
+      urlType = 'News';
+    }
+    return {
+      ...post,
+      url: `/${urlType}/${post.authorData?.id}/${post.id}`
+    };
+  });
+
   res.status(200).json(filteredPosts);
 }
