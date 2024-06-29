@@ -63,6 +63,7 @@ export const getStaticProps: GetStaticProps = async () => {
           date: data.date,
           source: content,
           authorData: getAuthorData(author.id)[0],
+          type: data.type,
           img: data.img,
           image: data.image,
         });
