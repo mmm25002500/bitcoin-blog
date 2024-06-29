@@ -96,8 +96,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { selection: tag }
   }));
 
-  // 添加 /Post/All 路徑，使用預設標籤
-  paths.push({ params: { selection: '' } });
+  // 添加默认路径
+  paths.push({ params: { selection: 'default' } });
 
   return { paths, fallback: 'blocking' };
 }
@@ -105,7 +105,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // 獲取靜態頁面所需的數據
 export const getStaticProps: GetStaticProps = async (context) => {
   const { selection } = context.params as { selection: string };
-  const tag = selection || Tags.Post[0];
+  const tag = selection === 'default' ? Tags.Post[0] : Array.isArray(selection) ? selection[0] : selection;
 
   const basePath = join(process.cwd(), 'src/Articals');
   const authorDirs = readdirSync(basePath);
