@@ -18,7 +18,7 @@
 ### 標籤
 1. 
 ### 文章列表
-1. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `NewsListAllPerpage`。
+1. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `PostListAllPerpage`。
 ### 文章內頁
 1. 如果該文章只有 News 而沒有 Post 則跳轉到新聞頁面。
 2. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `ArticalPostListMorePostPerclick`。
@@ -64,10 +64,10 @@
 ### 第一階段 (預計 01/13至01/15 開始動工)
 > 著重完成 Component 和架構建立。
 
-### 第二階段(尚未決定日期)
+### 第二階段(02/20 開發)
 > 著重完成 首頁、作者頁面、關於我們、免責聲明、隱私權政策、暗色模式
 
-### 第三階段(尚未決定日期)
+### 第三階段(預計05/12 開始開發)
 > 著重完成 標籤、文章、新聞、更多資訊、暗色模式
 
 如果有另外新功能再開會談
