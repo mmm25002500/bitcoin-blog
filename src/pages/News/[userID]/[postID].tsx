@@ -7,7 +7,6 @@ import { serialize } from 'next-mdx-remote/serialize';
 import matter from 'gray-matter';
 import { readFileSync } from 'fs';
 import { MarkDownProps } from "@/types/User/UserID";
-import { MDXRemote } from "next-mdx-remote";
 import { PostProps } from '@/types/List/PostData';
 import Navbar from "@/components/Layout/Navbar";
 import ArticalLayout from "@/components/Layout/Artical/AriticalLayout";
@@ -53,7 +52,7 @@ const PostPage = ({ post }: MarkDownProps) => {
         const response = await axios.get('/api/getRelatedPosts', {
           params: {
             tag: JSON.stringify(post.frontMatter.tags), // 將 tags 轉換為 JSON 字串
-            exclude: postID
+            exclude: `${post.frontMatter.authorData.id}/${postID}`
           }
         });
         setRelatedPosts(response.data);

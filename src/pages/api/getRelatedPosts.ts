@@ -39,8 +39,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       // 使用 gray-matter 解析文章內容中的元數據
       const { data } = matter(fileContents);
 
+      // console.log(`fileName: ${userID}/${fileName}, exclude: ${exclude}`);
       // 如果文章包含指定標籤中的至少一個且不是當前文章，則將其添加到相關文章陣列中
-      if (tagsArray.some((tag: string) => data.tags.includes(tag)) && data.id !== exclude) {
+      if (tagsArray.some((tag: string) => data.tags.includes(tag)) && `${userID}/${fileName}` !== `${exclude}.mdx`) {
         relatedPosts.push({
           ...data,
           id: fileName.replace(/\.mdx$/, ''),
