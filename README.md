@@ -18,13 +18,13 @@
 ### 標籤
 1. 
 ### 文章列表
-1. 
+1. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `NewsListAllPerpage`。
 ### 文章內頁
 1. 如果該文章只有 News 而沒有 Post 則跳轉到新聞頁面。
 2. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `ArticalPostListMorePostPerclick`。
 3. 底部 More Posts 會根據標籤進行查詢，只要本文標籤有的，其他文章有的，都會被篩選出，另外排除掉重複的。
 ### 新聞列表
-1. 
+1. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `NewsListAllPerpage`。
 ### 新聞內頁
 1. 如果該文章只有 Post 而沒有 News 則跳轉到文章頁面
 2. 如想更改一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `ArticalNewsListMorePostPerclick`。

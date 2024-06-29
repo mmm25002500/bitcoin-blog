@@ -3,22 +3,15 @@ import { useRouter } from "next/router";
 import AuthorData from '@/config/Author.json';
 import { useEffect, useState } from "react";
 import axios from 'axios';
-
 import Header from "@/components/Layout/Header";
-import PostList from "@/components/List/PostList";
-
-import { existsSync, readdirSync, readFileSync } from 'fs';
+import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
-import { serialize } from 'next-mdx-remote/serialize';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
-import { MarkDownProps } from '@/types/User/UserID';
 import Radio from "@/components/Radio/Radio";
 import Tags from "@/config/Tags.json";
-import ArticalPostList from "@/components/List/ArticalPostList";
 import PostListAll from "@/components/List/PostListAll";
-
 
 // 文章列表頁面
 const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
@@ -27,7 +20,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
 
   const [currentSelection, setCurrentSelection] = useState<string>(initialSelection);
   const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
-  const [currentType, setCurrentType] = useState<string>('Both');
+  const [currentType, setCurrentType] = useState<string>('Post');
   const [currentAuthor, setCurrentAuthor] = useState<string>('all');
 
   // 傳到後端拿資料，用TAG篩選文章
@@ -61,25 +54,6 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
           <p className="text-center font-bold text-2xl leading-[24.38px] sm:text-[28px] sm:leading-[42px]">
             Posters
           </p>
-
-          {/* 類型選擇 */}
-          {/* <div className="flex justify-center mb-4">
-            <select value={currentType} onChange={(e) => setCurrentType(e.target.value)} className="text-xs py-1 px-3 border rounded">
-              <option value="Both">Both</option>
-              <option value="Post">Post</option>
-              <option value="News">News</option>
-            </select>
-          </div> */}
-
-          {/* 作者選擇 */}
-          {/* <div className="flex justify-center mb-4">
-            <select value={currentAuthor} onChange={(e) => setCurrentAuthor(e.target.value)} className="text-xs py-1 px-3 border rounded">
-              <option value="all">All</option>
-              {AuthorData.map(author => (
-                <option key={author.id} value={author.id}>{author.name}</option>
-              ))}
-            </select>
-          </div> */}
 
           {/* 標籤 */}
           <div className="my-5 flex justify-center">

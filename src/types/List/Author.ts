@@ -4,7 +4,7 @@ import { StaticImageData } from "next/image";
 export interface AuthorData {
   fullname?: string;
   name?: string;
-  img?: string | StaticImageData;
+  img: string | StaticImageData;
   description?: string;
   posts?: number;
   id: string;

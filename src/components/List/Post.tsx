@@ -66,9 +66,9 @@ const Post = (props: PostProps) => {
             props.authorData && (
               <div className="flex items-center space-x-4 mt-auto">
                 {
-                  props.authorData.img && (
+                  props.img && (
                     <Image
-                      src={props.authorData.img}
+                      src={props.img}
                       alt={props.authorData.name + ' avater'}
                       width={28}
                       height={28}

@@ -9,7 +9,7 @@ export interface PostProps {
   image?: string | undefined;
   authorData?: AuthorData;
   date: number;
-  type: ['Post'|'News'];
+  type: ['Post' | 'News'];
   id?: string;
   idx?: number;
   onClick?: () => void;
