@@ -1,14 +1,12 @@
 import { TagData } from '@/types/Tag/Tag';
-import { useRouter } from 'next/router';
 
 const Tag = (props: TagData) => {
-  const router = useRouter();
 
   return (
     <>
       <button
         type="button"
-        onClick={() => { window.location.href = `/Post/All/${props.text}` }}
+        onClick={() => { window.location.href = `/${props.type}/All/${props.text}` }}
         className={`
         text-sm font-medium rounded-full border focus:outline-none leading-5
 

@@ -35,7 +35,7 @@ const PostList = ({ data }: PostListData) => {
           tags={post.tags}
           idx={index}
           date={post.date}
-          type={post.type}
+          type={["News"]}
           image={post.image}
           img={post.img}
           authorData={post.authorData}

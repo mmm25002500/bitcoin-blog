@@ -1,87 +1,76 @@
-import NewsList from "../List/NewsList";
-import { NewsProps } from "@/types/User/UserID";
+import { useEffect, useState } from "react";
+import axios from 'axios';
+import { PostProps } from '@/types/List/PostData';
+import Radio from "@/components/Radio/Radio";
+import Tags from "@/config/Tags.json";
+import NewsListAll from "@/components/List/NewsListAll";
+import { NewsPostProps } from "@/types/HomePage/NewsSection";
 import Tag from "../Tag/TagTab";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 // import required modules
 import { FreeMode } from 'swiper/modules';
 
-const NewsSection = ({ posts }: NewsProps) => {
+const NewsSection = (props: NewsPostProps) => {
+  const [currentSelection, setCurrentSelection] = useState<string>(props.initialSelection);
+  const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(props.initialPosts);
+  const [currentType, setCurrentType] = useState<string>('News');
+  const [currentAuthor, setCurrentAuthor] = useState<string>('all');
+
+  // 傳到後端拿資料，用TAG篩選文章
+  useEffect(() => {
+    const fetchFilteredPosts = async () => {
+      const response = await axios.get('/api/getPostsByFilter', {
+        params: { type: 'News', author: currentAuthor, tag: currentSelection }
+      });
+      setFilteredPosts(response.data);
+    };
+
+    fetchFilteredPosts();
+  }, [currentSelection, currentType, currentAuthor]);
 
   return (
     <>
       <p className="font-bold text-xl leading-6 sm:text-[28px] sm:leading-[42px] text-center py-8">NEWS</p>
       <Tag className="w-full">
-        <div className="lg:hidden">
+        <div className="w-full h-7">
           <Swiper
             slidesPerView={"auto"}
-            spaceBetween={"20%"} // 根據需要調整間距
+            spaceBetween={20} // 调整间距
             freeMode={true}
-            pagination={{
-              clickable: true,
-            }}
+            pagination={{ clickable: true }}
             modules={[FreeMode]}
-            className="w-full bg-gradient-to-r from-black to-white inline-block text-transparent bg-clip-text"
+            className="w-full h-7"
           >
-            <SwiperSlide>
-              <div className="flex gap-5 w-[120%]">
-                <Tag.Tab text="ALL" />
-                <Tag.Tab text="Software Developemnt" />
-                <Tag.Tab text="JavaScript" />
-                <Tag.Tab text="Technology" />
-              </div>
+            <SwiperSlide key={"all"} className="!w-auto">
+              <Radio.Btn
+                text="All"
+                value="all"
+                id="All"
+                selectedValue={currentSelection}
+                onChange={(value: string) => setCurrentSelection(value)}
+                className={`text-xs py-1 px-3 ${currentSelection === "all" ? 'bg-black text-white' : ''}`}
+              />
             </SwiperSlide>
-            <SwiperSlide>
-              <div className="flex gap-5 w-[120%]">
-                <Tag.Tab text="Coding" />
-                <Tag.Tab text="Web Development" />
-                <Tag.Tab text="Web Development" />
-                <Tag.Tab text="Python" />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="flex gap-5 w-[120%]">
-                <Tag.Tab text="Machine Learning" />
-                <Tag.Tab text="Machine Learning" />
-              </div>
-            </SwiperSlide>
+
+            {Tags.News.map((tag, idx) => (
+              <SwiperSlide key={idx} className="!w-auto">
+                <Radio.Btn
+                  text={tag}
+                  value={tag}
+                  id={tag}
+                  selectedValue={currentSelection}
+                  onChange={(value: string) => setCurrentSelection(value)}
+                  className={`text-xs py-1 px-3 ${currentSelection === tag ? 'bg-black text-white' : ''}`}
+                />
+              </SwiperSlide>
+            ))}
           </Swiper>
-        </div>
-        <div className="w-full gap-5 py-4 hidden lg:flex">
-          <Tag.Tab text="ALL" />
-          <Tag.Tab text="Software Developemnt" />
-          <Tag.Tab text="JavaScript" />
-          <Tag.Tab text="Technology" />
-          <Tag.Tab text="Coding" />
-          <Tag.Tab text="Web Development" />
-          <Tag.Tab text="Web Development" />
-          <Tag.Tab text="Python" />
-          <Tag.Tab text="Machine Learning" />
-          <Tag.Tab text="Machine Learning" />
         </div>
       </Tag>
 
-      <NewsList
-        data={posts.map((post) => ({
-          title: post.title,
-          description: post.description,
-          tags: post.tags,
-          date: typeof post.date === 'string' ? Date.parse(post.date) : post.date,
-          authorData: {
-            fullname: post.authorData.fullname,
-            name: post.authorData.name,
-            description: post.authorData.description,
-            img: post.authorData.image,
-            id: post.authorData.id,
-          },
-          type: post.type,
-          img: post.img,
-          image: post.image,
-          id: post.id,
-        }))}
-      />
+      <NewsListAll data={filteredPosts} />
     </>
   );
 }

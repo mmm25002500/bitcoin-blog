@@ -13,6 +13,11 @@ import Radio from "@/components/Radio/Radio";
 import Tags from "@/config/Tags.json";
 import PostListAll from "@/components/List/PostListAll";
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+// import required modules
+import { FreeMode } from 'swiper/modules';
+
 // 文章列表頁面
 const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
   const router = useRouter();
@@ -56,24 +61,39 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
           </p>
 
           {/* 標籤 */}
-          <div className="my-5 flex justify-center">
-            <Radio.Group name="tags" className="flex gap-4" selectedValue={currentSelection} onChange={(value) => {
-              setCurrentSelection(value);
-              router.push(`/Post/All/${value}`);
-            }}>
-              {
-                Tags.Post.map((tag, idx) => (
+          <div className="w-full h-7">
+            <Swiper
+              slidesPerView={"auto"}
+              spaceBetween={20}
+              freeMode={true}
+              pagination={{ clickable: true }}
+              modules={[FreeMode]}
+              className="w-full h-7"
+            >
+              <SwiperSlide key={"all"} className="!w-auto">
+                <Radio.Btn
+                  text="All"
+                  value="all"
+                  id="All"
+                  selectedValue={currentSelection}
+                  onChange={(value: string) => setCurrentSelection(value)}
+                  className={`text-xs py-1 px-3 ${currentSelection === "all" ? 'bg-black text-white' : ''}`}
+                />
+              </SwiperSlide>
+
+              {Tags.Post.map((tag, idx) => (
+                <SwiperSlide key={idx} className="!w-auto">
                   <Radio.Btn
-                    key={idx}
                     text={tag}
                     value={tag}
                     id={tag}
+                    selectedValue={currentSelection}
                     onChange={(value: string) => setCurrentSelection(value)}
-                    className="text-xs py-1 px-3"
+                    className={`text-xs py-1 px-3 ${currentSelection === tag ? 'bg-black text-white' : ''}`}
                   />
-                ))
-              }
-            </Radio.Group>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
         <div>

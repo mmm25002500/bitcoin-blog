@@ -5,8 +5,17 @@
     "Technology",
     "Coding",
     "Web Development",
-    "tag1",
-    "tag2"
+    "Web Development",
+    "Python",
+    "Machine Learning",
+    "Deep Learning",
+    "Artificial Intelligence",
+    "JavaScript",
+    "React",
+    "Angular",
+    "Vue",
+    "Node",
+    "Express"
   ],
   "Post": [
     "Software Development",
@@ -14,7 +23,35 @@
     "Technology",
     "Coding",
     "Web Development",
-    "tag1",
-    "tag2"
+    "Web Development",
+    "Python",
+    "Machine Learning",
+    "Deep Learning",
+    "Artificial Intelligence",
+    "JavaScript",
+    "React",
+    "Angular",
+    "Vue",
+    "Node",
+    "Express"
+  ],
+  "Programming": [
+    "Software Development",
+    "Programming",
+    "JavaScript",
+    "Technology",
+    "Coding",
+    "Web Development",
+    "Web Development",
+    "Python",
+    "Machine Learning",
+    "Deep Learning",
+    "Artificial Intelligence",
+    "JavaScript",
+    "React",
+    "Angular",
+    "Vue",
+    "Node",
+    "Express"
   ]
 }

@@ -40,8 +40,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
       // 篩選符合條件的文章
       if (
-        (type === 'Both' || data.type.includes(type)) &&
-        data.tags.includes(tag)
+        (type === 'both' || data.type.includes(type)) &&
+        (tag === 'all' || data.tags.includes(tag))
       ) {
         filteredPosts.push({
           ...data,

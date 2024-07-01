@@ -38,6 +38,7 @@ const Post = (props: PostProps) => {
                 <Tag
                   key={index}
                   text={item}
+                  type={props.type}
                   className="text-xs py-1 px-3"
                 />
               ))

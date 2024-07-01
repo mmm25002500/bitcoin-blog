@@ -1,5 +1,6 @@
 export interface TagData {
   text: string;
+  type?: ["News" | "Post"];
   className?: string;
 }
 
