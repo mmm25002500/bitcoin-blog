@@ -19,7 +19,7 @@ const PostList = ({ data }: PostListData) => {
       {postsToShow.map((post: PostProps, index) => (
         <div
           key={index}
-          onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
+          onClick={() => router.push(`/Tag/Post/${post.authorData?.id}/${post.id}`)}
         >
           <Post {...post} idx={ index } />
         </div>

@@ -4,6 +4,7 @@ import AuthorData from '@/config/Author.json';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Header from "@/components/Layout/Header";
+
 import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
@@ -11,7 +12,8 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
 import Tags from "@/config/Tags.json";
-import PostListAll from "@/components/List/PostListAll";
+import NewsListAll from "@/components/List/NewsListAll";
+import Tag from "@/config/Tags.json";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -25,7 +27,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
 
   const [currentSelection, setCurrentSelection] = useState<string>(initialSelection);
   const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
-  const [currentType, setCurrentType] = useState<string>('Post');
+  const [currentType, setCurrentType] = useState<string>('both');
   const [currentAuthor, setCurrentAuthor] = useState<string>('all');
 
   // 傳到後端拿資料，用TAG篩選文章
@@ -43,7 +45,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
   // 當 currentSelection 改變時更新 URL
   useEffect(() => {
     if (selection !== currentSelection) {
-      router.push(`/Post/All/${currentSelection}`, undefined, { shallow: true });
+      router.push(`/Tag/${currentSelection}`, undefined, { shallow: true });
     }
   }, [currentSelection, selection, router]);
 
@@ -57,7 +59,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
         <div className="my-5">
           {/* 標題 */}
           <p className="text-center font-bold text-2xl leading-[24.38px] sm:text-[28px] sm:leading-[42px]">
-            Posters
+            {currentSelection}
           </p>
 
           {/* 標籤 */}
@@ -81,7 +83,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
                 />
               </SwiperSlide>
 
-              {Tags.Post.map((tag, idx) => (
+              {Tags.News.map((tag, idx) => (
                 <SwiperSlide key={idx} className="!w-auto">
                   <Radio.Btn
                     text={tag}
@@ -97,7 +99,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
           </div>
         </div>
         <div>
-          <PostListAll data={filteredPosts} />
+          <NewsListAll data={filteredPosts} />
         </div>
       </div>
     </>
@@ -106,12 +108,12 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
 
 // 設置靜態路徑
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = Tags.Post.map(tag => ({
+  const paths = Tags.News.map(tag => ({
     params: { selection: tag }
   }));
 
   // 添加默認路徑
-  paths.push({ params: { selection: 'default' } });
+  paths.push({ params: { selection: 'all' } });
 
   return { paths, fallback: 'blocking' };
 }
@@ -119,8 +121,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // 獲取靜態頁面所需的數據
 export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
-  const selection = params?.selection || 'default';
-  const tag = selection === 'default' ? Tags.Post[0] : selection;
+  const selection = params?.selection;
 
   const basePath = join(process.cwd(), 'src/Articals');
   const authorDirs = readdirSync(basePath);
@@ -142,7 +143,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         description: data.description || '',
         tags: data.tags || [],
         date: typeof data.date === 'string' ? Date.parse(data.date) : data.date,
-        type: data.type || 'Post',
+        type: data.type || 'News',
         id: fileName.replace(/\.mdx$/, ''),
         authorData: {
           id: userID,
@@ -155,7 +156,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         image: data.image || undefined,
       };
 
-      if (data.tags.includes(tag)) {
+      if (data.tags.includes(selection)) {
         initialPosts.push(post);
       }
     });
@@ -164,7 +165,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       initialPosts,
-      initialSelection: tag,
+      initialSelection: selection,
     },
   };
 };

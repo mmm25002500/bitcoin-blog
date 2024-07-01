@@ -6,7 +6,7 @@ const Tag = (props: TagData) => {
     <>
       <button
         type="button"
-        onClick={() => { window.location.href = `/${props.type}/All/${props.text}` }}
+        onClick={() => { window.location.href = `/Tag/${props.type}/${props.text}` }}
         className={`
         text-sm font-medium rounded-full border focus:outline-none leading-5
 

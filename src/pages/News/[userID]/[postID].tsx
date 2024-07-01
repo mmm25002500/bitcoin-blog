@@ -30,7 +30,7 @@ const PostPage = ({ post }: MarkDownProps) => {
   // 如果不是 News 就跳轉到 Post 頁面
   useEffect(() => {
     if (!post.frontMatter.type.includes('News'))
-      router.push(`/Post/${post.frontMatter.authorData.id}/${postID}`);
+      router.push(`/Tag/Post/${post.frontMatter.authorData.id}/${postID}`);
   }, [post.frontMatter.type, postID]);
 
   // 拿 post 的 authorData id 去 Author.json 拿資料

@@ -12,7 +12,6 @@ import { GetStaticProps } from 'next';
 import { join } from "path";
 import AuthorData from '@/config/Author.json';
 import { PostProps } from '@/types/List/PostData';
-import Tags from "@/config/Tags.json";
 import { NewsPostProps } from "@/types/HomePage/NewsSection";
 
 const Home = (props: NewsPostProps) => {
@@ -41,8 +40,7 @@ const Home = (props: NewsPostProps) => {
 // 獲取靜態頁面所需的數據
 export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
-  const selection = params?.selection || 'default';
-  const tag = selection === 'default' ? Tags.News[0] : selection;
+  const selection = params?.selection;
 
   const basePath = join(process.cwd(), 'src/Articals');
   const authorDirs = readdirSync(basePath);
@@ -77,7 +75,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         image: data.image || undefined,
       };
 
-      if (data.tags.includes(tag)) {
+      if (data.tags.includes(selection)) {
         initialPosts.push(post);
       }
     });
@@ -86,7 +84,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       initialPosts,
-      initialSelection: tag,
+      initialSelection: selection,
     },
   };
 };

@@ -3,13 +3,18 @@ const nextConfig = {
   async redirects() {
   return [
     {
-      source: '/Post/All',
-      destination: `/Post/All/default`, // 默认标签路径
+      source: '/Tag/News',
+      destination: `/Tag/News/all`, // 默认标签路径
       permanent: false,
     },
     {
-      source: '/News/All',
-      destination: `/News/All/default`, // 默认标签路径
+      source: '/Tag/Post',
+      destination: `/Tag/Post/all`, // 默认标签路径
+      permanent: false,
+    },
+    {
+      source: '/Tag',
+      destination: `/Tag/all`, // 默认标签路径
       permanent: false,
     },
   ];
