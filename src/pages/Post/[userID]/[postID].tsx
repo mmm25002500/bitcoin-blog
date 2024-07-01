@@ -78,6 +78,7 @@ const PostPage = ({ post }: MarkDownProps) => {
                   <Tag
                     key={index}
                     text={item}
+                    type={["Post"]}
                     className="text-xs py-1 px-3"
                   />
                 ))
