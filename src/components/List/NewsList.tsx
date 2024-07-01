@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { PostListData } from "../../types/List/PostList";
-import HorizontalLine from "../HorizontalLine";
 import Post from "./Post";
 import Button from '../Button/Button';
 import { useRouter } from "next/router";
@@ -19,7 +18,7 @@ const PostList = ({ data }: PostListData) => {
       {postsToShow.map((post: PostProps, index) => (
         <div
           key={index}
-          onClick={() => router.push(`/Tag/Post/${post.authorData?.id}/${post.id}`)}
+          onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
         >
           <Post {...post} idx={ index } />
         </div>

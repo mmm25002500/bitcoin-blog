@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useState } from 'react';
 import Tag from '../Tag/Tag';
 import { PostProps } from '@/types/List/PostData';
 
@@ -52,7 +51,7 @@ const Post = (props: PostProps) => {
         <div className='flex-grow basis-3/4 flex flex-col justify-between'>
           <div>
             {/* 標題 */}
-            <h2 className="mb-2 text-base sm:text-2xl font-bold tracking-tight text-neutral-black dark:text-neutral-300 sm:text-neutral-black">
+            <h2 className="mb-2 text-base sm:text-2xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black">
               <a href="#">{props.title}</a>
             </h2>
             {/* 描述 */}

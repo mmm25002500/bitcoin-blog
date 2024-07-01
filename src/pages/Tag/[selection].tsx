@@ -4,7 +4,6 @@ import AuthorData from '@/config/Author.json';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Header from "@/components/Layout/Header";
-
 import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
@@ -13,12 +12,15 @@ import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
 import Tags from "@/config/Tags.json";
 import NewsListAll from "@/components/List/NewsListAll";
-import Tag from "@/config/Tags.json";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import required modules
-import { FreeMode } from 'swiper/modules';
+import { FreeMode, Navigation } from 'swiper/modules';
+
+import right from '@/icons/right.svg';
+import left from '@/icons/left.svg';
+import Image from 'next/image';
 
 // 文章列表頁面
 const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
@@ -63,13 +65,16 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
           </p>
 
           {/* 標籤 */}
-          <div className="w-full h-7">
+          <div className="relative w-full h-7">
             <Swiper
               slidesPerView={"auto"}
               spaceBetween={20}
               freeMode={true}
-              pagination={{ clickable: true }}
-              modules={[FreeMode]}
+              modules={[FreeMode, Navigation]}
+              navigation={{
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+              }}
               className="w-full h-7"
             >
               <SwiperSlide key={"all"} className="!w-auto">
@@ -96,6 +101,26 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
                 </SwiperSlide>
               ))}
             </Swiper>
+
+            {/* 左右箭頭 */}
+            <div className="swiper-button-prev absolute left-0 top-1/2 transform -translate-y-1/2 z-10">
+              <Image
+                src={left}
+                alt="Icon Dark"
+                width={1000}
+                height={1000}
+                className="rounded-full w-5 h-5 dark:invert"
+              />
+            </div>
+            <div className="swiper-button-next absolute right-0 top-1/2 transform -translate-y-1/2 z-10">
+              <Image
+                src={right}
+                alt="Icon Dark"
+                width={1000}
+                height={1000}
+                className="rounded-full w-5 h-5 dark:invert"
+              />
+            </div>
           </div>
         </div>
         <div>

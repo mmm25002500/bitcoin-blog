@@ -15,8 +15,6 @@ import { PostProps } from '@/types/List/PostData';
 import { NewsPostProps } from "@/types/HomePage/NewsSection";
 
 const Home = (props: NewsPostProps) => {
-  // console.log(posts);
-
   return (
     <>
       <Header></Header>
@@ -39,8 +37,7 @@ const Home = (props: NewsPostProps) => {
 
 // 獲取靜態頁面所需的數據
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { params } = context;
-  const selection = params?.selection;
+  const selection = context.params?.selection || "all";
 
   const basePath = join(process.cwd(), 'src/Articals');
   const authorDirs = readdirSync(basePath);

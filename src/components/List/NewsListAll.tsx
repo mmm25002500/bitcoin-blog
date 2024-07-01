@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { PostListData } from "../../types/List/PostList";
-import HorizontalLine from "../HorizontalLine";
 import Post from "./Post";
 import Pagination from '../Pagination/Pagination';
 import { useRouter } from "next/router";
 import { PostProps } from '@/types/List/PostData';
-import { NewsListAllPerpage } from '@/config/SiteConfig.json';
+import postListConfig from '@/config/SiteConfig.json';
 
 const PostList = ({ data }: PostListData) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = NewsListAllPerpage;
+  const postsPerPage = postListConfig.NewsListAllPerpage;
 
   const router = useRouter();
 
@@ -29,7 +28,7 @@ const PostList = ({ data }: PostListData) => {
       {currentPosts.map((post: PostProps, index) => (
         <Post
           key={index}
-          onClick={() => router.push(`/Tag/News/${post.authorData?.id}/${post.id}`)}
+          onClick={() => router.push(`/News/${post.authorData?.id}/${post.id}`)}
           title={post.title}
           description={post.description}
           tags={post.tags}

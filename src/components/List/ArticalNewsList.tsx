@@ -11,7 +11,7 @@ import SiteConfig from '@/config/SiteConfig.json';
 
 const ArticalPostList = ({ data }: PostListData) => {
   const [visibleCount, setVisibleCount] = useState(2); // 初始顯示的文章數量
-  const increment = SiteConfig['ArticalNewsListMorePostPerclick']; // 每次增加的文章數量
+  const increment = SiteConfig.ArticalNewsListMorePostPerclick // 每次增加的文章數量
 
   const router = useRouter();
 
@@ -29,7 +29,7 @@ const ArticalPostList = ({ data }: PostListData) => {
         <Post
           key={index}
           idx={index}
-          onClick={() => router.push(`/Tag/News/${post.authorData?.id}/${post.id}`)}
+          onClick={() => router.push(`/News/${post.authorData?.id}/${post.id}`)}
           title={post.title}
           description={post.description}
           tags={post.tags}

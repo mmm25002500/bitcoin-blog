@@ -41,7 +41,7 @@ const Pagination = (props: PaginationData) => {
       {/* 左箭頭 */}
       <button
         onClick={() => props.onClick(Math.max(1, props.page - 1))}
-        className="pt-1 pb-3 py-0.5 px-2.5 text-primary-black-300 disabled:text-primary-black-400 hover:text-black-30 text-base font-medium leading-6"
+        className="pt-1 pb-3 py-0.5 px-2.5 text-primary-black-300 dark:text-neutral-white disabled:text-primary-black-400 dark:disabled:text-neutral-600 hover:text-black-30 text-base font-medium leading-6"
         disabled={props.page === 1}
       >
         {'<'}
@@ -54,7 +54,7 @@ const Pagination = (props: PaginationData) => {
           <button
             key={index}
             onClick={() => props.onClick(pageNum)}
-            className={`pt-1 pb-3 py-0.5 px-2.5 active:border-b-2 active:border-neutral-black ${props.page === pageNum ? 'text-primary-black-300' : 'text-neutral-600'}`}
+            className={`pt-1 pb-3 py-0.5 px-2.5 active:border-b-2 active:border-neutral-black ${props.page === pageNum ? 'dark:text-neutral-white text-primary-black-300' : 'dark:text-neutral-400 text-neutral-600'}`}
           >
             {pageNum}
           </button>
@@ -63,7 +63,7 @@ const Pagination = (props: PaginationData) => {
       {/* 右箭頭 */}
       <button
         onClick={() => props.onClick(Math.min(props.pageSize, props.page + 1))}
-        className="pt-1 pb-3 py-0.5 px-2.5 text-primary-black-300 disabled:text-primary-black-400 hover:text-black-30 text-base font-medium leading-6"
+        className="pt-1 pb-3 py-0.5 px-2.5 text-primary-black-300 dark:text-neutral-white disabled:text-primary-black-400 dark:disabled:text-neutral-600 hover:text-black-30 text-base font-medium leading-6"
         disabled={props.page === props.pageSize}
       >
         {'>'}
