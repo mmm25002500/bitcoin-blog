@@ -15,8 +15,11 @@ const ArticalPostList = ({ data }: PostListData) => {
 
   const router = useRouter();
 
+  // 以日期排序
+  const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   // 顯示當前的文章
-  const currentPosts = data.slice(0, visibleCount);
+  const currentPosts = sortedData.slice(0, visibleCount);
 
   // 點擊按鈕時增加顯示的文章數量
   const showMorePosts = () => {

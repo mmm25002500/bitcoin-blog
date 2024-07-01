@@ -12,6 +12,9 @@ const PostList = ({ data }: PostListData) => {
 
   const router = useRouter();
 
+  // 以日期排序
+  const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   // 計算當前頁的文章範圍
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;

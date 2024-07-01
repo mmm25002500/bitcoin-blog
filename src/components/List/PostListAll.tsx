@@ -13,7 +13,7 @@ const PostList = ({ data }: PostListData) => {
 
   const router = useRouter();
 
-  // 确保数据按日期排序
+  // 以日期排序
   const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   // 計算當前頁的文章範圍

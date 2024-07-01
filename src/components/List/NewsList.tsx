@@ -10,8 +10,11 @@ const PostList = ({ data }: PostListData) => {
 
   const router = useRouter();
 
+  // 以日期排序
+  const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   // 先六個
-  const postsToShow = showAll ? data : data.slice(0, 6);
+  const postsToShow = showAll ? sortedData : sortedData.slice(0, 6);
 
   return (
     <>
