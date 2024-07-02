@@ -20,14 +20,14 @@ const Home = (props: NewsPostProps) => {
       <Header></Header>
       <Navbar />
       <SwiperSection />
-      <div className="mx-auto sm:px-16">
-        <ButtonSection classname="py-8 px-8 sm:px-0" />
+      <div className="sm:mx-auto sm:px-16 mx-8">
+        <ButtonSection classname="py-8" />
         <HorizontalLine />
         <NewsSection
           initialPosts={props.initialPosts}
           initialSelection={props.initialSelection} />
         <HorizontalLine />
-        <ContactSection className="py-16 sm:px-5" />
+        <ContactSection className="py-16" />
         <HorizontalLine />
         <SubscribeSection className="py-16" />
       </div>

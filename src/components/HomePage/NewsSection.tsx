@@ -3,7 +3,6 @@ import axios from 'axios';
 import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
 import Tags from "@/config/Tags.json";
-import NewsListAll from "@/components/List/NewsListAll";
 import { NewsPostProps } from "@/types/HomePage/NewsSection";
 
 // Import Swiper React components
@@ -14,6 +13,7 @@ import { FreeMode, Navigation } from 'swiper/modules';
 import right from '@/icons/right.svg';
 import left from '@/icons/left.svg';
 import Image from 'next/image';
+import NewsList from "../List/NewsList";
 
 const NewsSection = (props: NewsPostProps) => {
   const [currentSelection, setCurrentSelection] = useState<string>(props.initialSelection);
@@ -95,7 +95,7 @@ const NewsSection = (props: NewsPostProps) => {
         </div>
       </div>
 
-      <NewsListAll data={filteredPosts} />
+      <NewsList data={filteredPosts} />
     </>
   );
 }

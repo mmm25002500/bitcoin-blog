@@ -13,4 +13,5 @@ export interface PostProps {
   id?: string;
   idx?: number;
   onClick?: () => void;
+  className?: string;
 }

@@ -6,10 +6,11 @@ const CreateWallet = (props: CreateWalletData) => {
   return (
     <Card
       className="
-      max-w-[248px] sm:max-w-xs px-7 gap-8 w-full rounded-lg border justify-between
+      grid grid-cols-1 sm:grid-cols-2 content-center py-10
+      max-w-[248px] sm:max-w-xs gap-8 w-full rounded-lg border justify-between
 
-      h-[150px] sm:h-full
-      sm:items-center
+      /*h-[150px] sm:h-full
+      sm:items-center*/
 
       /* Light Mode */
       bg-neutral-white
@@ -28,7 +29,7 @@ const CreateWallet = (props: CreateWalletData) => {
       onClick={() => props.onClick}
     >
       <Card.Infomation
-        className="leading-normal py-3 items-start"
+        className="leading-normal flex flex-col items-start text-left px-7"
       >
         <Card.Title
           text={props.title}
@@ -42,7 +43,7 @@ const CreateWallet = (props: CreateWalletData) => {
       <Icon
         icon_light={props.photo_light}
         icon_dark={props.photo_dark}
-        className="object-cover bg-[#F3F4F8] dark:bg-primary-black-300 rounded-xl py-[8px] px-[8px] h-[45px] w-[45px] sm:h-[60px] sm:w-[60px] relative top-[4.5rem] sm:top-0"
+        className="justify-self-end object-cover bg-[#F3F4F8] dark:bg-primary-black-300 rounded-xl py-[8px] px-[8px] h-[45px] w-[45px] sm:h-[60px] sm:w-[60px] relative mr-4"
       />
     </Card>
   )

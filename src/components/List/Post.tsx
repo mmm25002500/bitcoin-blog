@@ -20,7 +20,7 @@ const Post = (props: PostProps) => {
 
   return (
     <div
-      className={`pt-6 pr-6 pl-6 pb-3 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.idx != 0 ? 'border-t-[1px]' : ''}`}
+      className={`pt-6 pb-3 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.idx != 0 ? 'border-t-[1px]' : ''}`}
     >
       {/* 標籤 */}
       <div className="flex justify-between items-center mb-5 text-gray-500">
