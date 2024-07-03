@@ -1,6 +1,7 @@
 {
     "ArticalPostListMorePostPerclick" : 2,
     "ArticalNewsListMorePostPerclick" : 2,
+    "HomePageNewsListPerpage" : 3,
     "NewsListAllPerpage" : 6,
     "PostListAllPerpage" : 6
 }
