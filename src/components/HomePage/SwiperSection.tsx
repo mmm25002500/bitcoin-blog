@@ -1,27 +1,24 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import IMG from '@/icons/examplePhoto/Image Container.png'
-import Right from '@/icons/right.svg'
-import Icon from "../Icon";
-
-// import required modules
 import { Pagination } from 'swiper/modules';
+import IMG from '@/icons/examplePhoto/Image Container.png';
+import Right from '@/icons/right.svg';
+import Icon from "../Icon";
 import Button from "../Button/Button";
 
 const SwiperSection = () => {
 
-  // const pagination = {
-  //   clickable: true,
-  //   bulletClass: `swiper-pagination-bullet `, // 使用自定義樣式
-  //   bulletActiveClass: `swiper-pagination-bullet-active `, // 使用自定義樣式
-  //   renderBullet: function (index: number, className: string) {
-  //     return '<span class="' + className + '"></span>';
-  //   },
-  // };
+  const pagination = {
+    clickable: true,
+    bulletClass: `swiper-pagination-bullet custom-bullet`, // 使用自定義樣式
+    bulletActiveClass: `swiper-pagination-bullet-active custom-bullet-active`, // 使用自定義樣式
+    renderBullet: function (index: number, className: string) {
+      return '<span class="' + className + '"></span>';
+    },
+  };
 
   return (
     <Swiper
-      // pagination={pagination}
+      pagination={pagination}
       modules={[Pagination]}
       className="h-[500px]"
     >
@@ -102,7 +99,7 @@ const SwiperSection = () => {
           />
         </div>
       </SwiperSlide>
-    </Swiper >
+    </Swiper>
   );
 }
 

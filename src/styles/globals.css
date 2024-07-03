@@ -3,16 +3,58 @@
 @tailwind utilities;
 
 .swiper-pagination-bullet {
-    width: 16px; /* 長方形的寬度 */
-    height: 4px; /* 長方形的高度 */
-    border-radius: 0; /* 無圓角 */
-    margin-right: 4px; /* 指示器之間的間距 */
-    opacity: 1; /* 完全不透明 */
-    background: #FFFFFF; /* 指示器的顏色 */
+  width: 16px;
+  /* 長方形的寬度 */
+  height: 4px;
+  /* 長方形的高度 */
+  border-radius: 0;
+  /* 無圓角 */
+  margin-right: 4px;
+  /* 指示器之間的間距 */
+  opacity: 1;
+  /* 完全不透明 */
+  background: #FFFFFF;
+  /* 指示器的顏色 */
 }
 
 .swiper-pagination-bullet-active {
-    width: 40px; /* 活動指示器的寬度 */
+  width: 40px;
+  /* 活動指示器的寬度 */
 }
 
-/* 可能需要添加 !important 以覆蓋內聯樣式或其他高優先級的樣式 */
+/* Swiper 自定義 */
+
+/* sm以上 右下 */
+.swiper-pagination {
+  bottom: 30px !important;
+  right: 80px !important;
+  left: auto !important;
+  text-align: right !important;
+}
+
+/* sm以下 中下 */
+@media (max-width: 640px) {
+  .swiper-pagination {
+    text-align: center !important;
+    right: 0 !important;
+    left: 0 !important;
+  }
+}
+
+/* inactive */
+.swiper-pagination-bullet.custom-bullet {
+  width: 8px;
+  height: 8px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* active */
+.swiper-pagination-bullet-active.custom-bullet-active {
+  width: 40px;
+  height: 8px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+}
