@@ -31,31 +31,29 @@ const Header = () => {
     <>
       <nav className="bg-white dark:bg-neutral-black">
         <div className="mx-auto px-2 sm:px-6 lg:px-5">
-          <div className="relative flex h-16 items-center justify-between">
+          <div className="flex h-16 items-center">
             {/* 日期 */}
-            <div className="grow inset-y-0 left-0 flex items-center whitespace-nowrap">
-              <Icon
-                icon_light={calendarIcon}
-                className="h-5 w-auto dark:invert" />
-              <p className='ml-2'>{today}</p>
+            <div className="flex items-center sm:grow w-full sm:w-auto">
+              <div className='w-full flex'>
+                <Icon
+                  icon_light={calendarIcon}
+                  className="h-5 block w-auto dark:invert" />
+                <p className='block ml-2'>{today}</p>
+              </div>
             </div>
 
             {/* 右邊的資訊 - 手機版 */}
-            <div className='block sm:hidden w-full'>
+            <div className='sm:hidden relative w-full'>
               <Swiper
-                slidesPerView={1}
-                spaceBetween={-55}
-
+                slidesPerView={"auto"}
+                spaceBetween={0}
                 freeMode={true}
-                pagination={{
-                  clickable: true,
-                }}
                 modules={[FreeMode]}
-                className="w-72 bg-gradient-to-r from-black to-white inline-block text-transparent bg-clip-text"
+                className="bg-gradient-to-r from-black to-white inline-block text-transparent bg-clip-text"
               >
                 {/* BTC Price */}
-                <SwiperSlide>
-                  <div className="flex items-center whitespace-nowrap">
+                <SwiperSlide className="!w-auto">
+                  <div className="flex items-center w-full">
                     <Icon
                       icon_light={shovelIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
@@ -68,8 +66,8 @@ const Header = () => {
                 </SwiperSlide>
 
                 {/* Hash Rate */}
-                <SwiperSlide className='m-0'>
-                  <div className="flex items-center whitespace-nowrap w-10">
+                <SwiperSlide className="!w-auto">
+                  <div className="flex items-center ">
                     <Icon
                       icon_light={boxIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
@@ -79,8 +77,8 @@ const Header = () => {
                 </SwiperSlide>
 
                 {/* Block Height */}
-                <SwiperSlide>
-                  <div className="flex items-center whitespace-nowrap w-10">
+                <SwiperSlide className="!w-auto">
+                  <div className="flex items-center">
                     <Icon
                       icon_light={btcIcon}
                       className="h-5 w-auto mr-2 dark:invert" />

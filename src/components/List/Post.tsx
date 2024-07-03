@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Tag from '../Tag/Tag';
 import { PostProps } from '@/types/List/PostData';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode } from 'swiper/modules';
 
 const formatDate = (date: number) => {
   const d = new Date(date);
@@ -23,27 +25,37 @@ const Post = (props: PostProps) => {
       className={`pt-6 pb-3 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.idx != 0 ? 'border-t-[1px]' : ''}`}
     >
       {/* 標籤 */}
-      <div className="flex justify-between items-center mb-5 text-gray-500">
-        <span className="inline-flex items-center gap-4 sm:gap-12">
+      <div className="flex justify-between items-center mb-5 text-gray-500 w-full relative">
+        <div className="inline-flex items-center gap-4 sm:gap-12 w-full relative">
           {/* 日期 */}
-          <div className='text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium'>
+          <div className='w-full text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium'>
             {formattedDate}
           </div>
 
           {/* 標籤 */}
-          <div className='flex gap-2'>
-            {
-              props.tags.map((item, index) => (
-                <Tag
-                  key={index}
-                  text={item}
-                  type={props.type}
-                  className="text-xs py-1 px-3"
-                />
-              ))
-            }
+          <div className='flex gap-2 relative overflow-hidden'>
+            <Swiper
+              slidesPerView={"auto"}
+              spaceBetween={8} // 调整间距
+              freeMode={true}
+              modules={[FreeMode]}
+              className="h-7"
+            >
+              {
+                props.tags.map((item, index) => (
+                  <SwiperSlide key={index} className="!w-auto max-w-full">
+                    <Tag
+                      key={index}
+                      text={item}
+                      type={props.type}
+                      className="text-xs py-1 px-3"
+                    />
+                  </SwiperSlide>
+                ))
+              }
+            </Swiper>
           </div>
-        </span>
+        </div>
       </div>
       {/* 左邊文章，右邊圖片 */}
       <div className='flex' onClick={props.onClick}>
@@ -69,7 +81,7 @@ const Post = (props: PostProps) => {
                   props.img && (
                     <Image
                       src={props.img}
-                      alt={props.authorData.name + ' avater'}
+                      alt={props.authorData.name + ' avatar'}
                       width={28}
                       height={28}
                       className="w-7 h-7 rounded-full"
