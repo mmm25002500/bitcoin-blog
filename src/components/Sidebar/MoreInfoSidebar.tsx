@@ -15,9 +15,9 @@ const Sidebar = (props: MoreInfoSidebarProps) => {
   };
 
   return (
-    <div className={`p-3 ${props.className}`}>
+    <div className={`${props.className}`}>
       {props.data.map((category: categoryData, index: number) => (
-        <div key={index} className="border-b-[1px] border-[#E7E6F2] dark:border-neutral-800">
+        <div key={index} className="border-b-[1px] border-[#E7E6F2] dark:border-neutral-800 p-2">
 
           {/* 類別 */}
           <button
@@ -38,7 +38,7 @@ const Sidebar = (props: MoreInfoSidebarProps) => {
           {expandedIndex === index && (
             <ul className="pl-3">
               {category.post.map((post, postIndex) => (
-                <li key={postIndex} className={`py-1 ${props.path === `${post.filename}` ? 'bg-neutral-100 text-neutral-black dark:bg-neutral-900 dark:text-neutral-white rounded-[4px]' : 'text-neutral-800 dark:text-neutral-300'}`}>
+                <li key={postIndex} className={`py-2 ${props.path === `${post.filename}` ? 'bg-neutral-100 text-neutral-black dark:bg-neutral-900 dark:text-neutral-white rounded-[4px]' : 'text-neutral-800 dark:text-neutral-300'}`}>
                   <button
                     onClick={
                       () => {
