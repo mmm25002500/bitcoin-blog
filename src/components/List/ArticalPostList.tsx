@@ -10,7 +10,7 @@ import right from '@/icons/right.svg';
 import SiteConfig from '@/config/SiteConfig.json';
 
 const ArticalPostList = ({ data }: PostListData) => {
-  const [visibleCount, setVisibleCount] = useState(2); // 初始顯示的文章數量
+  const [visibleCount, setVisibleCount] = useState(3); // 初始顯示的文章數量
   const increment = SiteConfig.ArticalPostListMorePostPerclick; // 每次增加的文章數量
 
   const router = useRouter();

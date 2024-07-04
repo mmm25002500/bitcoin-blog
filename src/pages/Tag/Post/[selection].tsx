@@ -65,7 +65,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
           </p>
 
           {/* 標籤 */}
-          <div className="relative w-full h-7">
+          <div className="relative w-full h-7 mt-4">
             <Swiper
               slidesPerView={"auto"}
               spaceBetween={20}

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  Drawer,
-  Card,
-} from "@material-tailwind/react";
+import { Drawer } from "@material-tailwind/react";
 import { SidebarProps } from "@/types/Drawer/MoreInfoDrawer";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
@@ -43,7 +39,7 @@ const MoreInfoDrawer = (props: SidebarProps) => {
         className="text-white dark:bg-neutral-black"
         transition={{ type: "spring", duration: 0.3 }}
         overlayProps={{
-          className: "fixed",
+          className: "fixed bg-neutral-black/50 backdrop-blur-none",
           onClick: closeDrawer
         }}
       >

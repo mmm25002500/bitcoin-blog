@@ -26,8 +26,8 @@ const DisclaimerPage = () => {
         subtitle="免責聲明"
         icon={IconLight}
       />
-      <div className="mx-auto sm:px-28">
-        <ArticalLayout className='pt-10 px-5 sm:px-0'>
+      <div className="mx-auto px-5 sm:px-28">
+        <ArticalLayout className='pt-10'>
           <MD>{markdown}</MD>
         </ArticalLayout>
         <HorizontalLine className='sm:hidden' />

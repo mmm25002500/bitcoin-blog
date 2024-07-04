@@ -75,24 +75,66 @@ const MoreInfos = (props: MoreInfoData) => {
     return (
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        <div className="flex">
+        <div className="sm:flex">
 
           {/* Sidebar */}
           <div>
             {
               category &&
-              <Sidebar
-                data={category}
-                path={props.ArticalName}
-                onChange={(value: string) => setCurrentSelection(value)}
-                className="w-80"
-              />
+              <>
+                {/* 電腦版 Sidebar */}
+                <div className="border-r-[1px] border-[#E7E6F2] dark:border-neutral-800 hidden sm:block">
+                  <Sidebar
+                    data={category}
+                    path={props.ArticalName}
+                    onChange={(value: string) => setCurrentSelection(value)}
+                    className="w-80"
+                  />
+                </div>
+
+                {/* 手機版目錄 */}
+                <div className="relative mx-5 sm:hidden">
+                  <IconWithTextBtn
+                    onClick={() => setIsDrawerOpen(true)}
+                    icon={DownIcon}
+                    className="flex"
+                  >
+                    <div className="flex grow">
+                      目錄
+                      <div className="text-neutral-500 mx-2">
+                        ｜
+                      </div>
+                      尚未選取文章
+                      {/* 箭頭 */}
+                    </div>
+                    <div className="self-center">
+                      <Image
+                        src={DownIcon}
+                        alt="Icon Dark"
+                        className={`transition-transform duration-200 dark:invert`}
+                      ></Image>
+                    </div>
+                  </IconWithTextBtn>
+                </div>
+              </>
             }
           </div>
 
           {/* 404 */}
           <NotFound></NotFound>
         </div>
+
+        {/* 手機版目錄 */}
+        {
+          category && <MoreInfoDrawer
+            isDrawerOpen={isDrawerOpen}
+            setIsDrawerOpen={setIsDrawerOpen}
+            data={category}
+            path={props.ArticalName}
+            onChange={(value: string) => setCurrentSelection(value)}
+          ></MoreInfoDrawer>
+        }
+
       </div>
     )
   }

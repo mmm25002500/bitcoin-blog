@@ -24,12 +24,13 @@ const Post = (props: PostProps) => {
     <div
       className={`pt-6 pb-3 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.idx != 0 ? 'border-t-[1px]' : ''}`}
     >
-      {/* 標籤 */}
-      <div className="flex justify-between items-center mb-5 text-gray-500 w-full relative">
-        <div className="inline-flex items-center gap-4 sm:gap-12 w-full relative">
+      {/* 標籤與日期 */}
+      <div className="mb-5 text-gray-500">
+        <div className="flex items-center sm:gap-12">
           {/* 日期 */}
-          <div className='w-full text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium'>
-            {formattedDate}
+          <div className=' text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium flex sm:grow
+          w-auto mr-4'>
+            <p className='whitespace-nowrap'>{formattedDate}</p>
           </div>
 
           {/* 標籤 */}
@@ -39,7 +40,7 @@ const Post = (props: PostProps) => {
               spaceBetween={8} // 调整间距
               freeMode={true}
               modules={[FreeMode]}
-              className="h-7"
+              className="h-8"
             >
               {
                 props.tags.map((item, index) => (
