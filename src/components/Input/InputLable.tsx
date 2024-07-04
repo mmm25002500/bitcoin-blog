@@ -4,6 +4,7 @@ import SearchBtn from '@/icons/SearchBtn.svg';
 import { InputData } from '@/types/Input/Input';
 import clearIcon from '@/icons/clear.svg';
 import Label from '../Label/Label';
+import Image from 'next/image';
 
 const InputLabel = (props: InputData) => {
   const [contentTemp, setContentTemp] = useState('');
@@ -59,7 +60,7 @@ const InputLabel = (props: InputData) => {
             key={index}
             text={item}
             onClick={() => removeContent(index)}
-        />
+          />
 
           // <div  className="flex items-center bg-white text-black dark:bg-black dark:text-white m-1 rounded-full">
           //   <span className="px-2 py-1">{item}</span>
@@ -71,15 +72,15 @@ const InputLabel = (props: InputData) => {
           //   </button>
           // </div>
         ))}
-      {/* 輸入框 */}
-      <input
-        type="text"
-        placeholder={props.placeholder}
-        value={contentTemp}
-        onChange={(e) => setContentTemp(e.target.value)}
-        onKeyPress={(e) => { if (e.key === 'Enter') addContent(); }}
-        className={`flex-grow outline-none p-2.5 dark:bg-neutral-900`}
-      />
+        {/* 輸入框 */}
+        <input
+          type="text"
+          placeholder={props.placeholder}
+          value={contentTemp}
+          onChange={(e) => setContentTemp(e.target.value)}
+          onKeyPress={(e) => { if (e.key === 'Enter') addContent(); }}
+          className={`flex-grow outline-none p-2.5 dark:bg-neutral-900`}
+        />
       </div>
 
 
@@ -110,12 +111,15 @@ const InputLabel = (props: InputData) => {
           className="
           rounded-full py-[9px] px-3 mr-2
           text-sm font-medium
-          bg-black text-white
           hover:bg-gray-700
           focus:outline-none
-          dark:bg-white dark:text-black
+          dark:bg-white
         ">
-          訂閱
+          <Image
+            src={props.icon}
+            className='dark:invert-0'
+            alt={''}
+          />
         </button>
       </div>
     </div>

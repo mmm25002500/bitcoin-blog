@@ -33,17 +33,15 @@ const Header = () => {
         <div className="mx-auto px-2 sm:px-6 lg:px-5">
           <div className="flex h-16 items-center">
             {/* 日期 */}
-            <div className="flex items-center sm:grow w-full sm:w-auto">
-              <div className='w-full flex'>
-                <Icon
-                  icon_light={calendarIcon}
-                  className="h-5 block w-auto dark:invert" />
-                <p className='block ml-2'>{today}</p>
-              </div>
+            <div className='w-full flex items-center sm:grow sm:w-auto'>
+              <Icon
+                icon_light={calendarIcon}
+                className="h-5 block w-auto dark:invert" />
+              <p className='whitespace-nowrap ml-2'>{today}</p>
             </div>
 
             {/* 右邊的資訊 - 手機版 */}
-            <div className='sm:hidden relative w-full'>
+            <div className='flex gap-2 relative overflow-hidden'>
               <Swiper
                 slidesPerView={"auto"}
                 spaceBetween={0}
@@ -88,37 +86,6 @@ const Header = () => {
               </Swiper>
             </div>
 
-            {/* 右邊的資訊 - 電腦版*/}
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 hidden sm:block">
-              <div className="relative ml-3 items-center">
-                <div className='flex gap-3 justify-center divide-x-2 divide-wireframe-700 dark:divide-neutral-800'>
-                  {/* Hash Rate */}
-                  <div className="relative flex items-center">
-                    <Icon
-                      icon_light={shovelIcon}
-                      className="h-5 w-auto mr-2 dark:invert" />
-                    <p className='text-neutral-800 dark:text-neutral-200'>
-                      Hash Rate
-                      <span className='text-black dark:text-white ml-2'>{hashRate} PH/s</span>
-                    </p>
-                  </div>
-                  {/* Block Height */}
-                  <div className="relative flex px-2 items-center">
-                    <Icon
-                      icon_light={boxIcon}
-                      className="h-5 w-auto mr-2 dark:invert" />
-                    <p className='text-black dark:text-white'>Block Height {blockHeight}</p>
-                  </div>
-                  {/* BTC Price */}
-                  <div className="relative flex px-2 items-center">
-                    <Icon
-                      icon_light={btcIcon}
-                      className="h-5 w-auto mr-2 dark:invert" />
-                    <p className='text-black dark:text-white'>BTC {btc}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 

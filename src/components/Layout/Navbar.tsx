@@ -7,6 +7,7 @@ import Icon from '@/components/Icon';
 import HomePageSidebar from '../Sidebar/HomePageSidebar';
 import { useState } from 'react';
 import SidebarBtn from '../Card/SidebarBtn';
+import HomePageSearchDrawer from '../Drawer/HomePageSearchDrawer';
 
 // Light Mode
 import CryptoWallet from "@/icons/HomePage/crypto_wallet.svg";
@@ -17,6 +18,7 @@ import BuyBic from "@/icons/HomePage/buy_bic.svg";
 import Mining from "@/icons/HomePage/mining.svg";
 import Social from "@/icons/HomePage/social.svg";
 import UseBTC from "@/icons/HomePage/use_btc.svg";
+import searchBtn from '@/icons/SearchBtn.svg';
 
 // Dark Mode
 import CryptoWallet_Dark from "@/icons/HomePage/crypto_wallet_dark.svg";
@@ -34,9 +36,11 @@ import Twitter from "@/icons/HomePage/twitter.svg";
 import Instagram from "@/icons/HomePage/ig.svg";
 import Youtube from "@/icons/HomePage/yt.svg";
 import Discord from "@/icons/HomePage/dc.svg";
+import InputLabel from '../Input/InputLable';
 
 const Navbar = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const SocialMedia = [
     {
@@ -64,13 +68,12 @@ const Navbar = () => {
       link: "",
       icon: Discord
     }
-  ]
-
+  ];
 
   return (
     <>
-      <nav className="bg-white dark:bg-neutral-black">
-        <div className="mx-auto px-2 sm:px-6 lg:px-5">
+      <nav className="relative bg-white dark:bg-neutral-black">
+        <div className="mx-auto px-2 sm:px-6 lg:px-5 z-20">
           <div className="relative flex h-16 items-center justify-between">
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
@@ -89,22 +92,44 @@ const Navbar = () => {
               </div>
               {/* 搜尋 */}
               <div className="relative ml-3">
-                <SearchBtn></SearchBtn>
+                <SearchBtn
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                />
               </div>
               {/* 更多 */}
               <div className="relative ml-3">
                 <More
-                  onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                 />
               </div>
             </div>
           </div>
         </div>
 
+        {/* Search Drawer */}
+        <div className='absolute top-full left-0 right-0 z-10'>
+          <HomePageSearchDrawer
+            isDrawerOpen={isSearchOpen}
+            setIsDrawerOpen={setIsSearchOpen}
+            className='bg-white dark:bg-neutral-black p-5'
+          >
+            <div>
+              <InputLabel
+                placeholder={'請輸入內容'}
+                icon={searchBtn}
+                btnText={''}
+                text={''}
+                onClick={() => { }}
+                onChange={() => { }}
+              />
+            </div>
+          </HomePageSearchDrawer>
+        </div>
+
         {/* Sidebar */}
         <HomePageSidebar
-          isDrawerOpen={isDrawerOpen}
-          setIsDrawerOpen={setIsDrawerOpen}
+          isDrawerOpen={isSidebarOpen}
+          setIsDrawerOpen={setIsSidebarOpen}
           className=''
         >
           {/* List */}

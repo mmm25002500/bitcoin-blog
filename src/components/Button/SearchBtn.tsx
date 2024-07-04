@@ -1,7 +1,8 @@
 import searchIcon from '@/icons/SearchBtn.svg';
+import { SearchProps } from '@/types/Button/Search';
 import Image from 'next/image';
 
-const SearchBtn = (props: {className?: string}) => {
+const SearchBtn = (props: SearchProps) => {
   return (
     <>
       <button className="
@@ -18,12 +19,14 @@ const SearchBtn = (props: {className?: string}) => {
       dark:bg-primary-black-300
       dark:hover:bg-primary-black-300
       dark:active:bg-primary-black-100
-      ">
-      <Image
-        src={ searchIcon }
-        alt="Images Not Found"
-        className={`dark:invert ${props.className}`}
-      />
+      "
+        onClick={props.onClick}
+      >
+        <Image
+          src={searchIcon}
+          alt="Images Not Found"
+          className={`dark:invert ${props.className}`}
+        />
       </button>
     </>
   );

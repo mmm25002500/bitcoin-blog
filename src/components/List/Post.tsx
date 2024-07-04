@@ -28,7 +28,7 @@ const Post = (props: PostProps) => {
       <div className="mb-5 text-gray-500">
         <div className="flex items-center sm:gap-12">
           {/* 日期 */}
-          <div className=' text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium flex sm:grow
+          <div className='text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium flex sm:grow
           w-auto mr-4'>
             <p className='whitespace-nowrap'>{formattedDate}</p>
           </div>
