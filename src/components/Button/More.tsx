@@ -1,7 +1,8 @@
 import moreIcon from '@/icons/more.svg';
+import { MoreProps } from '@/types/Button/More';
 import Image from 'next/image';
 
-const More = (props: {className?: string}) => {
+const More = (props: MoreProps) => {
   return (
     <>
       <button className="
@@ -18,7 +19,9 @@ const More = (props: {className?: string}) => {
       dark:bg-primary-black-300
       dark:hover:bg-primary-black-300
       dark:active:bg-primary-black-100
-      ">
+      "
+      onClick={props.onClick}
+      >
       <Image
         src={ moreIcon }
         alt="Images Not Found"

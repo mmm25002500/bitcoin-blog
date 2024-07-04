@@ -6,7 +6,7 @@ const CreateWallet = (props: CreateWalletData) => {
   return (
     <Card
       className="
-      grid grid-cols-1 sm:grid-cols-2 content-center py-10
+      grid grid-cols-1 sm:flex sm:items-center content-center py-2
       max-w-[248px] sm:max-w-xs gap-8 w-full rounded-lg border justify-between
 
       /*h-[150px] sm:h-full
@@ -29,7 +29,7 @@ const CreateWallet = (props: CreateWalletData) => {
       onClick={() => props.onClick}
     >
       <Card.Infomation
-        className="leading-normal flex flex-col items-start text-left px-7"
+        className="leading-normal flex flex-col items-start text-left px-5"
       >
         <Card.Title
           text={props.title}
@@ -37,7 +37,7 @@ const CreateWallet = (props: CreateWalletData) => {
         />
         <Card.Description
           text={props.description}
-          className="mb-3 font-medium text-[13px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300"
+          className="font-medium text-[13px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300"
         />
       </Card.Infomation>
       <Icon

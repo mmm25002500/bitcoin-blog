@@ -1,21 +1,77 @@
-import Image from 'next/image';
 import IconDark from '@/icons/icon_dark.svg';
 import IconLight from '@/icons/icon_light.svg';
-import { useTheme } from 'next-themes';
 import Themes from '@/components/Layout/Themes';
 import SearchBtn from '@/components/Button/SearchBtn';
 import More from '@/components/Button/More';
 import Icon from '@/components/Icon';
+import HomePageSidebar from '../Sidebar/HomePageSidebar';
+import { useState } from 'react';
+import SidebarBtn from '../Card/SidebarBtn';
+
+// Light Mode
+import CryptoWallet from "@/icons/HomePage/crypto_wallet.svg";
+import BicNews from "@/icons/HomePage/bic-news.svg";
+import blockchain from "@/icons/HomePage/blockchain.svg";
+import coffee from "@/icons/HomePage/coffee.svg";
+import BuyBic from "@/icons/HomePage/buy_bic.svg";
+import Mining from "@/icons/HomePage/mining.svg";
+import Social from "@/icons/HomePage/social.svg";
+import UseBTC from "@/icons/HomePage/use_btc.svg";
+
+// Dark Mode
+import CryptoWallet_Dark from "@/icons/HomePage/crypto_wallet_dark.svg";
+import BicNews_Dark from "@/icons/HomePage/bic-news_dark.svg";
+import blockchain_Dark from "@/icons/HomePage/blockchain_dark.svg";
+import coffee_Dark from "@/icons/HomePage/coffee_dark.svg";
+import BuyBic_Dark from "@/icons/HomePage/buy_bic_dark.svg";
+import Mining_Dark from "@/icons/HomePage/mining_dark.svg";
+import Social_Dark from "@/icons/HomePage/social_dark.svg";
+import UseBTC_Dark from "@/icons/HomePage/use_btc_dark.svg";
+
+// Social Media
+import Facebook from "@/icons/HomePage/fb.svg";
+import Twitter from "@/icons/HomePage/twitter.svg";
+import Instagram from "@/icons/HomePage/ig.svg";
+import Youtube from "@/icons/HomePage/yt.svg";
+import Discord from "@/icons/HomePage/dc.svg";
 
 const Navbar = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const SocialMedia = [
+    {
+      title: "Facebook",
+      link: "",
+      icon: Facebook
+    },
+    {
+      title: "Twitter",
+      link: "",
+      icon: Twitter
+    },
+    {
+      title: "Instagram",
+      link: "",
+      icon: Instagram
+    },
+    {
+      title: "Youtube",
+      link: "",
+      icon: Youtube
+    },
+    {
+      title: "Discord",
+      link: "",
+      icon: Discord
+    }
+  ]
+
+
   return (
     <>
       <nav className="bg-white dark:bg-neutral-black">
         <div className="mx-auto px-2 sm:px-6 lg:px-5">
           <div className="relative flex h-16 items-center justify-between">
-            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-              <></>
-            </div>
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
@@ -37,16 +93,100 @@ const Navbar = () => {
               </div>
               {/* 更多 */}
               <div className="relative ml-3">
-                <More></More>
+                <More
+                  onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+                />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="sm:hidden" id="mobile-menu">
-        </div>
-      </nav>
+        {/* Sidebar */}
+        <HomePageSidebar
+          isDrawerOpen={isDrawerOpen}
+          setIsDrawerOpen={setIsDrawerOpen}
+          className=''
+        >
+          {/* List */}
+          <div className='overflow-y-auto'>
+            <SidebarBtn
+              title="創建錢包"
+              description="CreateWallet"
+              photo_dark={CryptoWallet}
+              photo_light={CryptoWallet_Dark}
+              onClick={() => console.log("CreateWallet")}
+            />
+            <SidebarBtn
+              title="購買比特幣"
+              description="Purchase BTC"
+              photo_dark={BuyBic}
+              photo_light={BuyBic_Dark}
+              onClick={() => console.log("Purchase BTC")}
+            />
+            <SidebarBtn
+              title="比特幣挖礦"
+              description="BTC Mining"
+              photo_dark={Mining}
+              photo_light={Mining_Dark}
+              onClick={() => console.log("BTC Mining")}
+            />
+            <SidebarBtn
+              title="使用比特幣"
+              description="Used BTC"
+              photo_dark={UseBTC}
+              photo_light={UseBTC_Dark}
+              onClick={() => console.log("Used BTC")}
+            />
+            <SidebarBtn
+              title="加入社群"
+              description="Join Community"
+              photo_dark={Social}
+              photo_light={Social_Dark}
+              onClick={() => console.log("Join Community")}
+            />
+            <SidebarBtn
+              title="支持我們"
+              description="Support us"
+              photo_dark={coffee}
+              photo_light={coffee_Dark}
+              onClick={() => console.log("Support us")}
+            />
+            <SidebarBtn
+              title="更多比特幣資訊"
+              description="About BTC"
+              photo_dark={BicNews}
+              photo_light={BicNews_Dark}
+              onClick={() => console.log("About BTC")}
+            />
+            <SidebarBtn
+              title="其他區塊鏈資訊"
+              description="About Blockchain"
+              photo_dark={blockchain}
+              photo_light={blockchain_Dark}
+              onClick={() => console.log("About Blockchain")}
+            />
+          </div>
 
+          {/* Social Media */}
+          <div className='absolute bottom-7 left-0 w-full'>
+            <div className='flex justify-center space-x-6'>
+              {SocialMedia.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.link}
+                  target="_blank"
+                >
+                  <Icon
+                    icon_light={item.icon}
+                    icon_dark={item.icon}
+                    className="h-6 w-6 invert dark:invert-0"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        </HomePageSidebar>
+      </nav>
     </>
   )
 }
