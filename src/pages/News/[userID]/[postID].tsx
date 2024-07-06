@@ -31,7 +31,7 @@ const PostPage = ({ post }: MarkDownProps) => {
   useEffect(() => {
     if (!post.frontMatter.type.includes('News'))
       router.push(`/Tag/Post/${post.frontMatter.authorData.id}/${postID}`);
-  }, [post.frontMatter.type, postID]);
+  }, [post.frontMatter.type, postID, router, post.frontMatter.authorData.id]);
 
   // 拿 post 的 authorData id 去 Author.json 拿資料
   useEffect(() => {
@@ -60,7 +60,7 @@ const PostPage = ({ post }: MarkDownProps) => {
 
       fetchRelatedPosts();
     }
-  }, [postID, post.frontMatter.tags]);
+  }, [postID, post.frontMatter.tags, post.frontMatter.authorData.id]);
 
 
   if (postID === 'undefined' || postID === undefined) {
