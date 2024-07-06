@@ -2,9 +2,10 @@ export interface InputData {
   placeholder: string;
   icon: string;
   text: string;
+  btnText?: string;
   frontIcon?: boolean;
   onClick: () => void;
-  onChange: (e: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 }
 

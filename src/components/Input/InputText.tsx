@@ -50,8 +50,11 @@ const InputText = (props: InputData) => {
         type="text"
         placeholder={props.placeholder}
         value={content}
-        onChange={(e) => { setContent(e.target.value) }}
-        onKeyPress={(e) => { if (e.key === 'Enter') props.onChange(content); }}
+          onChange={(e) => {
+            setContent(e.target.value)
+            props.onChange(e)
+          }}
+        onKeyPress={(e) => { if (e.key === 'Enter') props.onClick(); }}
         className={`flex-grow outline-none p-2.5 dark:bg-neutral-900 rounded-full`}
       />
     </div>

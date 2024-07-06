@@ -119,22 +119,22 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
         {
           // 如果是文字類型
           selectedTab === 'Creators' ?
-            searchText && <InputText
+            <InputText
               placeholder={'請輸入內容'}
               icon={searchBtn}
               text={searchText}
               onClick={handleSearch}
-              onChange={(text: string) => setSearchText(text)}
+              onChange={(e) => setSearchText(e.target.value)}
             />
             :
             // 如果是標籤類型
-            searchText && <InputLabel
+            <InputLabel
               placeholder={'請輸入標籤'}
               icon={searchBtn}
               frontIcon={false}
-              text={searchText.split(',')}
+              text={searchText ? searchText.split(',') : []}
               onClick={handleSearch}
-              onChange={(text) => handleSearchChange(text)}
+              onChange={handleSearchChange}
             />
         }
 
