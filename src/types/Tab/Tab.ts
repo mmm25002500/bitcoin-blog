@@ -1,9 +1,11 @@
-interface Data {
+export interface TabDataType {
   name: string;
   link: string;
 }
 
-export interface TabData {
-  data: Data[];
+export interface TabDataProps {
+  data: TabDataType[];
   className?: string;
+  selectedTab: string;
+  onChange: (tabName: string) => void;
 }

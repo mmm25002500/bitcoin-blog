@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import Icon from '../Icon';
 import { InputData } from '@/types/Input/Input';
 import clearIcon from '@/icons/clear.svg';
+import Image from 'next/image';
 
 const InputText = (props: InputData) => {
-  // const [content, setContent] = useState('');
+  const [content, setContent] = useState(props.text);
 
   return (
     <div className={`
         rounded-full
         border-0
         relative flex items-center
-        text-left
+        text-leftÍ
         focus:border-[1px]
         hover:border-[1px]
         focus:outline-none
@@ -30,54 +31,69 @@ const InputText = (props: InputData) => {
 
         ${props.className}
     `}>
-      {/* 圖標容器 */}
+    {/* 圖標 */}
+    {
+      props.frontIcon &&
       <div className="flex-none ml-3">
-        <Icon
-          icon_light={props.icon}
-          className='dark:invert'
-        /> {/* 渲染圖標 */}
-      </div>
-
-      {/* 輸入框 */}
-      <div className='grow'>
-        <input
-          type="text"
-          placeholder={props.placeholder}
-          value={props.text}
-          onChange={(e) => props.onChange(e)}
-          className={`flex-1 outline-none p-2.5 dark:bg-neutral-900 w-[100%]`}
+        <Image
+          src={props.icon}
+          className='dark:invert-0 invert'
+          alt={''}
         />
       </div>
+    }
 
-      {/* 刪除 */}
-      {/* <div className='flex-none'>
-        <button
-          onClick={() => props.onClick()}
-          className="
-          rounded-full py-[9px] px-3
-          text-sm font-medium
-          text-black
-          focus:outline-none
-          dark:text-white
-        ">
-          <Icon
-            icon_light={clearIcon}
-            className='dark:invert'
-          />
-        </button>
-      </div> */}
+    {/* 標籤 */}
+    <div className='flex-grow flex flex-wrap items-center gap-2'>
+      {/* 輸入框 */}
+      <input
+        type="text"
+        placeholder={props.placeholder}
+        value={content}
+        onChange={(e) => { setContent(e.target.value) }}
+        onKeyPress={(e) => { if (e.key === 'Enter') props.onChange(content); }}
+        className={`flex-grow outline-none p-2.5 dark:bg-neutral-900 rounded-full`}
+      />
+    </div>
+
+
+      {/* 清除按鈕 */}
+      {content && (
+        <div className='flex-none'>
+          <button
+            onClick={() => setContent('')}
+            className="
+            rounded-full py-[9px] px-3
+            text-sm font-medium
+            text-black
+            focus:outline-none
+            dark:text-white
+          ">
+            <Icon
+              icon_light={clearIcon}
+              className='dark:invert'
+            />
+          </button>
+        </div>
+      )}
 
       {/* 按鈕 */}
       <div className='flex-none'>
-        <button className="
-        rounded-full py-[9px] px-3 mr-2
-        text-sm font-medium
-        bg-black text-white
-        hover:bg-gray-700
-        focus:outline-none
-        dark:bg-white dark:text-black
-      ">
-          {props.btnText}
+        <button
+          onClick={props.onClick}
+          className="
+          rounded-full py-[9px] px-3 mr-2
+          bg-primary-black-300
+          text-sm font-medium
+          hover:bg-gray-700
+          focus:outline-none
+          dark:bg-white
+        ">
+          <Image
+            src={props.icon}
+            className='dark:invert-0 invert'
+            alt={''}
+          />
         </button>
       </div>
     </div>

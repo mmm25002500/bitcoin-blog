@@ -1,24 +1,30 @@
-import { TabData } from "@/types/Tab/Tab";
-import { useRouter } from 'next/navigation';
+import { TabDataProps } from "@/types/Tab/Tab";
 
-const Tab = (props: TabData) => {
-  const router = useRouter();
+const Tab = (props: TabDataProps) => {
+
+  const handleTabChange = (tabName: string, tabLink: string) => {
+    props.onChange(tabName);
+  };
 
   return (
     <div className={`flex ${props.className}`}>
       {props.data.map((tab, key) => (
-        <button
-          onClick={() => { router.push(`/${tab.link}`); }}
-          key={tab.name + key}
-          className="pt-1 pb-3 active:border-b-2 active:border-neutral-black dark:active:border-white"
-        >
-          <p className="text-neutral-800 hover:text-neutral-black active:text-neutral-black text-base font-medium leading-6 dark:text-neutral-600 dark:hover:text-neutral-400 dark:active:text-white">
+        <label key={tab.name + key} className="pt-1  cursor-pointer">
+          <input
+            type="radio"
+            name="tab"
+            value={tab.name}
+            checked={props.selectedTab === tab.name}
+            onChange={() => handleTabChange(tab.name, tab.link)}
+            className="hidden"
+          />
+          <p className={`font-medium text-base leading-6 inline-block px-3 pb-2 ${props.selectedTab === tab.name ? 'border-b-2 border-neutral-black dark:border-white text-neutral-black dark:text-neutral-white' : 'text-neutral-800 dark:text-neutral-600'}`}>
             {tab.name}
           </p>
-        </button>
+        </label>
       ))}
     </div>
-  )
+  );
 }
 
 export default Tab;

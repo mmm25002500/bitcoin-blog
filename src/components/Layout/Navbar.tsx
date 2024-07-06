@@ -37,10 +37,22 @@ import Instagram from "@/icons/HomePage/ig.svg";
 import Youtube from "@/icons/HomePage/yt.svg";
 import Discord from "@/icons/HomePage/dc.svg";
 import InputLabel from '../Input/InputLable';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchList, setSearchList] = useState<string[]>([]);
+
+  const router = useRouter();
+
+  // 處理搜尋
+  const handleSearch = () => {
+    const newPath = `/Search/Posters/${searchList.join(',')}`;
+    if (router.asPath !== newPath) {
+      router.push(newPath);
+    }
+  }
 
   const SocialMedia = [
     {
@@ -117,10 +129,9 @@ const Navbar = () => {
               <InputLabel
                 placeholder={'請輸入內容'}
                 icon={searchBtn}
-                btnText={''}
-                text={''}
-                onClick={() => { }}
-                onChange={() => { }}
+                text={searchList}
+                onClick={handleSearch}
+                onChange={(searchText: string[]) => setSearchList(searchText)}
               />
             </div>
           </HomePageSearchDrawer>
