@@ -6,7 +6,7 @@ const MoreInfos = () => {
 
   useEffect(() => {
     router.push(`/MoreInfo/%20`);
-  }, []);
+  }, [router]);
 
   return null;
 };

@@ -28,7 +28,7 @@ const PostPage = ({ post }: MarkDownProps) => {
   useEffect(() => {
     if (!post.frontMatter.type.includes('Post'))
       router.push(`/Tag/News/${post.frontMatter.authorData.id}/${postID}`);
-  }, [post.frontMatter.type, postID]);
+  }, [post.frontMatter.type, postID, router]);
 
   // 傳到後端拿資料，用TAG篩選文章
   useEffect(() => {
@@ -45,7 +45,7 @@ const PostPage = ({ post }: MarkDownProps) => {
 
       fetchRelatedPosts();
     }
-  }, [postID, post.frontMatter.tags]);
+  }, [postID, post.frontMatter.tags, post.frontMatter.authorData.id]);
 
 
   if (postID === 'undefined' || postID === undefined) {

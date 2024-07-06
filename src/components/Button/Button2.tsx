@@ -13,7 +13,7 @@ const Button2 = (props: ButtonProps) => {
     } else if (buttonType === 'small') {
       setButtonSize('px-2 py-[5px]');
     }
-  }, []);
+  }, [buttonType]);
 
   return (
     <button

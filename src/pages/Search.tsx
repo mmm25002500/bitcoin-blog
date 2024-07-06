@@ -6,7 +6,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     router.push(`/Search/%20`);
-  }, []);
+  }, [router]);
 
   return null;
 };
