@@ -8,70 +8,78 @@ import TabData from "@/config/SearchTab.json";
 import HorizontalLine from "@/components/HorizontalLine";
 import { TabDataType } from "@/types/Tab/Tab";
 import InputText from "@/components/Input/InputText";
+import PostListAll from "@/components/List/PostListAll";
+import { PostProps } from '@/types/List/PostData';
+import axios from "axios";
 
-const SearchPage = () => {
+const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
   const router = useRouter();
-  const [searchList2, setSearchList2] = useState<string[]>([]);
-  const [searchText, setSearchText] = useState<string>('');
-  const [selectedTab, setSelectedTab] = useState<string>('');
-  const [tabData, setTabData] = useState<TabDataType>();
-  const [searchType, setSearchType] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>(router.query.items as string);
+  const [selectedTab, setSelectedTab] = useState<string>(initialSelection);
+
+  const [currentAuthor, setCurrentAuthor] = useState<string>('all');
+  const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
+  const [mode, setMode] = useState<string>('all');
 
   const items = router.query.items as string;
   const tab = router.query.tab as string;
 
   // 初始化資料
   useEffect(() => {
-    if (tab) {
-      setSelectedTab(tab);
-    }
     if (items) {
       setSearchText(items);
     }
-  }, [tab, items]);
-
-  // 處理 Tab 改變
-  useEffect(() => {
-    // 從 TabData 找出 selectedTab 的資料
-    const data = TabData.find((tab) => tab.name === selectedTab);
-    if (data)
-      setTabData(data);
-
-    switch (selectedTab) {
-      case 'Posters':
-        setSearchType('label');
-        break;
-      case 'News':
-        setSearchType('label');
-        break;
-      case 'Creators':
-        setSearchType('text');
-        break;
-      default:
-        setSearchType('label');
-    }
-  }, [selectedTab]);
-
-  useEffect(() => {
-    // 如果 items 是 list 並且非 undefined
-    if (items != undefined && typeof items == 'string') {
-      setSearchList2(items.split(','));
-    }
   }, [items]);
 
+  useEffect(() => {
+    if (tab) {
+      setSelectedTab(tab);
+    }
+  }, [tab]);
+
+  // 傳到後端拿資料，用TAG篩選文章
+  // Type = Post or News
+  // Author = all
+  // Tag = searchList2
+  // mode = all
+  useEffect(() => {
+    const fetchFilteredPosts = async () => {
+      // 確保 currentType, currentAuthor 和 mode 不為空
+      if (selectedTab && currentAuthor && mode !== undefined) {
+        try {
+          const response = await axios.get('/api/getPostsByFilter', {
+            params: {
+              type: {
+                Posters: 'Post',
+                News: 'News'
+              }[selectedTab], author: currentAuthor, tag: searchText, mode: mode
+            }
+          }
+          );
+          console.log(response.data);
+          setFilteredPosts(response.data);
+        } catch (error) {
+          console.error("Error fetching filtered posts:", error);
+        }
+      }
+    };
+
+    fetchFilteredPosts();
+  }, [selectedTab, currentAuthor, mode, searchText]);
+
   // 處理搜尋欄位改變
-  const handleSearchChange = (tabName: string, searchText: string[]) => {
-    redirect(tabName, searchText);
+  const handleSearchChange = (searchText: string[]) => {
+    // redirect(tabName, searchText);
+    setSearchText(searchText.join(','));
   };
 
   // 處理 Poster 及 News 搜尋
   const handleSearch = () => {
-    redirect(selectedTab, searchList2);
+    searchText && redirect(selectedTab, searchText);
   }
 
   // 重新導向 帶有陣列字串的搜尋
   const redirect = (tabName: string, searchText: string | string[]) => {
-
     switch (typeof searchText) {
       case 'string':
         {
@@ -95,11 +103,11 @@ const SearchPage = () => {
   // 處理 Tab 改變
   const handleTabChange = (tabName: string) => {
     setSelectedTab(tabName);
-    if (searchType === 'text') {
+    if (selectedTab === 'Creators') {
       redirect(tabName, searchText);
     }
     else {
-      redirect(tabName, searchList2);
+      redirect(tabName, searchText);
     }
   };
 
@@ -108,26 +116,25 @@ const SearchPage = () => {
       <Navbar />
       <div className="sm:mx-auto sm:px-16 mx-8">
         {/* Search Bar */}
-
         {
-          // 如果是標籤類型
-          searchType === 'label' ?
-            <InputLabel
-              placeholder={'請輸入標籤'}
-              icon={searchBtn}
-              frontIcon={false}
-              text={searchList2}
-              onClick={handleSearch}
-              onChange={(text) => handleSearchChange(selectedTab, text)}
-            />
-            :
-            // 如果是文字類型
-            <InputText
+          // 如果是文字類型
+          selectedTab === 'Creators' ?
+            searchText && <InputText
               placeholder={'請輸入內容'}
               icon={searchBtn}
               text={searchText}
               onClick={handleSearch}
               onChange={(text: string) => setSearchText(text)}
+            />
+            :
+            // 如果是標籤類型
+            searchText && <InputLabel
+              placeholder={'請輸入標籤'}
+              icon={searchBtn}
+              frontIcon={false}
+              text={searchText.split(',')}
+              onClick={handleSearch}
+              onChange={(text) => handleSearchChange(text)}
             />
         }
 
@@ -141,6 +148,18 @@ const SearchPage = () => {
 
         <HorizontalLine />
 
+        {/* Label區域 */}
+        {
+          selectedTab === 'Posters' || selectedTab === 'News' ?
+            <>
+              {
+                filteredPosts && <PostListAll data={filteredPosts}></PostListAll>
+              }
+            </>
+            :
+            // 如果是創作者類型
+            <></>
+        }
       </div>
     </>
   );

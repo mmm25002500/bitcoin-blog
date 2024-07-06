@@ -11,7 +11,7 @@ const getAuthorData = (userID: string) => {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { type, author, tag } = req.query;
+  const { type, author, tag, mode } = req.query;
 
   if (!type || !author || !tag) {
     res.status(400).json({ error: "缺少 type, author 或 tag 參數" });
@@ -21,6 +21,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const basePath = join(process.cwd(), 'src/Articals');
   const authorDirs = readdirSync(basePath);
   let filteredPosts: PostProps[] = [];
+
+  // 如果 tag 是 all，則不進行標籤篩選
+  const isAllTags = tag === 'all';
+  const tagsArray: string[] = isAllTags ? [] : (tag as string).split(',');
 
   // 遍歷每個作者目錄
   authorDirs.forEach((userID) => {
@@ -39,9 +43,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       const postAuthor = getAuthorData(userID);
 
       // 篩選符合條件的文章
+      const hasAllTags = tagsArray.every((tag) => data.tags.includes(tag));
+      const hasAnyTag = tagsArray.some((tag) => data.tags.includes(tag));
+
       if (
         (type === 'both' || data.type.includes(type)) &&
-        (tag === 'all' || data.tags.includes(tag))
+        (isAllTags || (mode === 'all' && hasAllTags) || (mode === 'any' && hasAnyTag) || (!mode && hasAnyTag))
       ) {
         filteredPosts.push({
           ...data,

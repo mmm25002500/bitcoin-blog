@@ -7,10 +7,10 @@ import { PostProps } from '@/types/List/PostData';
 // API 處理函數，用於獲取相關文章
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // 從請求中獲取標籤和排除的文章 ID
-  const { tag, exclude } = req.query;
+  const { tag, exclude, mode } = req.query;
 
   // 確保 tags 是一個陣列
-  const tagsArray = JSON.parse(tag as string);
+  const tagsArray: string[] = JSON.parse(tag as string);
   // 設置文章目錄的基礎路徑
   const basePath = join(process.cwd(), 'src/Articals');
 
@@ -41,12 +41,25 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
       // console.log(`fileName: ${userID}/${fileName}, exclude: ${exclude}`);
       // 如果文章包含指定標籤中的至少一個且不是當前文章，則將其添加到相關文章陣列中
-      if (tagsArray.some((tag: string) => data.tags.includes(tag)) && `${userID}/${fileName}` !== `${exclude}.mdx`) {
-        relatedPosts.push({
-          ...data,
-          id: fileName.replace(/\.mdx$/, ''),
-          authorData: { id: userID }
-        } as PostProps);
+      if (`${userID}/${fileName}` !== `${exclude}.mdx`) {
+        if (tagsArray.length > 0) {
+          const hasAllTags = tagsArray.every((tag) => data.tags.includes(tag));
+          const hasAnyTag = tagsArray.some((tag) => data.tags.includes(tag));
+
+          if ((mode === 'all' && hasAllTags) || (mode !== 'all' && hasAnyTag)) {
+            relatedPosts.push({
+              ...data,
+              id: fileName.replace(/\.mdx$/, ''),
+              authorData: { id: userID }
+            } as PostProps);
+          }
+        } else {
+          relatedPosts.push({
+            ...data,
+            id: fileName.replace(/\.mdx$/, ''),
+            authorData: { id: userID }
+          } as PostProps);
+        }
       }
     });
   });

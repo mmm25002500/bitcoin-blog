@@ -84,7 +84,7 @@ const InputLabel = (props: InputLabelProps) => {
           type="text"
           placeholder={props.placeholder}
           value={contentTemp}
-          onChange={(e) => { setContentTemp(e.target.value) }}
+          onChange={(e) => {setContentTemp(e.target.value) }}
           onKeyPress={(e) => { if (e.key === 'Enter') addContent(); }}
           className={`flex-grow outline-none p-2.5 dark:bg-neutral-900 rounded-full`}
         />
