@@ -27,7 +27,7 @@ const PostPage = ({ post }: MarkDownProps) => {
   // 如果不是 Post 就跳轉到 News 頁面
   useEffect(() => {
     if (!post.frontMatter.type.includes('Post'))
-      router.push(`/Tag/News/${post.frontMatter.authorData.id}/${postID}`);
+      router.push(`/News/${post.frontMatter.authorData.id}/${postID}`);
   }, [post.frontMatter.type, postID, router, post.frontMatter.authorData.id]);
 
   // 傳到後端拿資料，用TAG篩選文章
