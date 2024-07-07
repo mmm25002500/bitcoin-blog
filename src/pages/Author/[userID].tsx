@@ -92,14 +92,14 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
                 <Button
                   onClick={() => setCollaspe(!collaspe)}
                   type={"large"}
-                  className="dark:border-neutral-white flex items-center gap-2">
+                  className="dark:!border-neutral-white flex items-center gap-2">
                   {
                     collaspe ? (
                       <>
                         查看更多
                         <Icon
                           icon_light={DownIcon}
-                          className="invert dark:invert-0"
+                          className="invert-0 dark:invert"
                         />
                       </>
                     ) : (
@@ -107,7 +107,7 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
                         收合
                         <Icon
                           icon_light={UpIcon}
-                          className="invert dark:invert-0"
+                          className="invert-0 dark:invert"
                         />
                       </>
                     )

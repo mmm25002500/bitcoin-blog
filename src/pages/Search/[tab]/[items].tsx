@@ -11,6 +11,9 @@ import InputText from "@/components/Input/InputText";
 import PostListAll from "@/components/List/PostListAll";
 import { PostProps } from '@/types/List/PostData';
 import axios from "axios";
+import { LawAuthorData } from "@/types/List/Author";
+import Author from "@/components/List/Author";
+import AuthorList from "@/components/List/AuthorList";
 
 const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
   const router = useRouter();
@@ -20,6 +23,7 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
   const [currentAuthor, setCurrentAuthor] = useState<string>('all');
   const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
   const [mode, setMode] = useState<string>('all');
+  const [filteredAuthors, setFilteredAuthors] = useState<LawAuthorData[]>();
 
   const items = router.query.items as string;
   const tab = router.query.tab as string;
@@ -56,7 +60,6 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
             }
           }
           );
-          console.log(response.data);
           setFilteredPosts(response.data);
         } catch (error) {
           console.error("Error fetching filtered posts:", error);
@@ -64,8 +67,43 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
       }
     };
 
-    fetchFilteredPosts();
+    if (selectedTab === 'Posters' || selectedTab === 'News') {
+      fetchFilteredPosts();
+    }
   }, [selectedTab, currentAuthor, mode, searchText]);
+
+
+  // 傳到後端拿資料，用 searchText 篩選作者
+  // text = searchText
+  useEffect(() => {
+    const fetchFilteredAuthors = async () => {
+      if (selectedTab && searchText) {
+        try {
+          const response = await axios.get('/api/getAuthorsByDescription', {
+            params: { text: searchText }
+          });
+          const authors = response.data;
+
+          // 取得作者的文章數量
+          const authorsWithPostCount = await Promise.all(authors.map(async (author: LawAuthorData) => {
+            const postCountResponse = await axios.get('/api/getAuthorPostCount', {
+              params: { author: author.id }
+            });
+            const postCount = postCountResponse.data.postCount;
+            return { ...author, posts: postCount };
+          }));
+
+          setFilteredAuthors(authorsWithPostCount);
+        } catch (error) {
+          console.error("Error fetching filtered authors:", error);
+        }
+      }
+    };
+
+    if (selectedTab === 'Creators') {
+      fetchFilteredAuthors();
+    }
+  }, [selectedTab, searchText]);
 
   // 處理搜尋欄位改變
   const handleSearchChange = (searchText: string[]) => {
@@ -137,6 +175,10 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
               onChange={handleSearchChange}
             />
         }
+      </div>
+
+
+      <div className="sm:mx-auto sm:px-16">
 
         {/* Tab */}
         <Tab
@@ -158,7 +200,13 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
             </>
             :
             // 如果是創作者類型
-            <></>
+            <>
+              {
+                filteredAuthors && <AuthorList
+                  data={filteredAuthors}
+                />
+              }
+            </>
         }
       </div>
     </>

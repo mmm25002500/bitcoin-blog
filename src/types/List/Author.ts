@@ -10,11 +10,15 @@ export interface AuthorData {
   id: string;
 }
 
-// Components
-export interface AuthorProps {
-  img: string | StaticImageData;
-  className?: string;
-  children?: React.ReactNode;
+// Law Author Data
+export interface LawAuthorData {
+  fullname?: string;
+  name?: string;
+  image: string | StaticImageData;
+  description?: string;
+  posts?: number;
+  id: string;
+  idx?: number;
 }
 
 export interface AuthorNameProps {

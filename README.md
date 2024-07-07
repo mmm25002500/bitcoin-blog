@@ -17,6 +17,7 @@
 
 ### 標籤
 1. 
+### 搜尋頁面
 ### 文章列表
 1. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `PostListAllPerpage`。
 ### 文章內頁
@@ -54,7 +55,19 @@
 |  |  |  | firebase(如有) |
 |  |  |  | supabase(如有) |
 
-### API
+### 內部API
+| 檔案 | Input | Output | 簡介 |
+| --- | --- | --- | --- |
+| getArticalLinkByFilename.ts | `req.query: { filename: string }` | `res: { title: string, authorData: { fullname?: string, name?: string, img?: string, description?: string, id: string }, date: string, description: string, link: string }` | 根據文件名獲取文章的相關鏈接和信息 |
+| getMoreInfo.ts | 無 | `res: { category: string, post: { title: string, filename: string, description?: string, link: string, authorData: { fullname: string, name: string, img: string, description: string, id: string }, date: string }[] }[]` | 根據 MoreInfo.json 中的信息獲取更多文章的元數據 |
+| getPostsByFilter.ts | `req.query: { type: string, author: string, tag: string, mode: string }` | `res: { title: string, authorData: { fullname?: string, name?: string, img?: string, description?: string, id: string }, date: string, description: string, link: string }[]` | 根據篩選條件獲取符合條件的文章 |
+| getRelatedPosts.ts | `req.query: { tag: string, exclude: string, mode: string }` | `res: { title: string, authorData: { id: string }, date: string, description: string, link: string }[]` | 根據標籤和排除的文章 ID 獲取相關文章 |
+| getAuthorPostCount.ts | `req.query: { author: string }` | `res: { author: string, postCount: number }` | 根據作者ID返回該作者的文章數量 |
+| getAuthorsByDescription.ts | `req.query: { text: string }` | `res: { fullname: string, name: string, description: string, image: string, id: string }[]` | 根據描述字段中的文本篩選作者 |
+
+
+
+### 外部API
 | Price | Hash Rate | Block High |
 | -------- | -------- | -------- |
 | CoinMarketCap(暫定) | Blockchain.com(暫定) | Blockchain.com(暫定) |
