@@ -147,16 +147,16 @@ const MoreInfos = (props: MoreInfoData) => {
   return (
     <>
       <Head>
-        <title>{category? props.ArticalName: category} - {SEO.MoreInfo.title}</title>
-        <meta name="description" content={SEO.MoreInfo.description} />
-        <meta property="og:title" content={`${category? props.ArticalName: category} - ${SEO.MoreInfo.title}`} />
-        <meta property="og:description" content={SEO.MoreInfo.description} />
+        <title>{props.post.frontMatter.title} - {SEO.MoreInfo.title}</title>
+        <meta name="description" content={props.post.frontMatter.description} />
+        <meta property="og:title" content={`${props.post.frontMatter.title} - ${SEO.MoreInfo.title}`} />
+        <meta property="og:description" content={props.post.frontMatter.description} />
         <meta property="og:image" content={SEO.MoreInfo.image} />
         {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
         <meta property="og:type" content={SEO.MoreInfo.type} />
         {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={`${category? props.ArticalName: category} - ${SEO.MoreInfo.title}`} />
-        <meta name="twitter:description" content={SEO.MoreInfo.description} />
+        <meta name="twitter:title" content={`${props.post.frontMatter.title} - ${SEO.MoreInfo.title}`} />
+        <meta name="twitter:description" content={props.post.frontMatter.description} />
         <meta name="twitter:image" content={SEO.MoreInfo.image} />
       </Head>
 
