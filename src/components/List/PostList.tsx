@@ -30,8 +30,10 @@ const PostList = ({ data }: PostListData) => {
       {currentPosts.map((post: PostProps, index) => (
         <Post
           key={index}
+          idx={index}
           onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
           {...post}
+          className='px-5 sm:px-0'
         />
       ))}
 

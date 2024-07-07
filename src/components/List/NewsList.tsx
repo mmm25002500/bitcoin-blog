@@ -5,15 +5,34 @@ import Button from '../Button/Button';
 import { useRouter } from "next/router";
 import { PostProps } from '@/types/List/PostData';
 import postListConfig from '@/config/SiteConfig.json';
+import { parse, isValid } from 'date-fns';
 
-const PostList = (props: PostListData) => {
+const PostList = ({ data }: PostListData) => {
   const [postsToShow, setPostsToShow] = useState(3);
   const postsPerPage = postListConfig.HomePageNewsListPerpage;
 
   const router = useRouter();
 
+  // 解析日期字符串
+  const parseDate = (dateString: string): Date => {
+    if (typeof dateString !== 'string') {
+      console.error(`Invalid date format: ${dateString}`);
+      return new Date(); // 回傳當前日期作為預設值
+    }
+    const date = parse(dateString, 'yyyy-MM-dd HH:mm', new Date());
+    if (!isValid(date)) {
+      console.error(`Invalid date format: ${dateString}`);
+      return new Date(); // 回傳當前日期作為預設值
+    }
+    return date;
+  };
+
   // 以日期排序
-  const sortedData = props.data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const sortedData = data.sort((a, b) => {
+    const dateA = parseDate(a.date);
+    const dateB = parseDate(b.date);
+    return dateB.getTime() - dateA.getTime();
+  });
 
   // 顯示的帖子數量
   const displayedPosts = sortedData.slice(0, postsToShow);
@@ -25,21 +44,24 @@ const PostList = (props: PostListData) => {
 
   return (
     <>
-      {displayedPosts.map((post: PostProps, index) => (
-        <Post
-          key={index}
-          onClick={() => router.push(`/News/${post.authorData?.id}/${post.id}`)}
-          title={post.title}
-          description={post.description}
-          tags={post.tags}
-          idx={index}
-          date={post.date}
-          type={["News"]}
-          image={post.image}
-          img={post.img}
-          authorData={post.authorData}
-        />
-      ))}
+      {displayedPosts.map((post: PostProps, index) => {
+        const parsedDate = parseDate(post.date); // 解析日期
+        return (
+          <Post
+            key={index}
+            onClick={() => router.push(`/News/${post.authorData?.id}/${post.id}`)}
+            title={post.title}
+            description={post.description}
+            tags={post.tags}
+            idx={index}
+            date={parsedDate.toISOString()}
+            type={["News"]}
+            image={post.image}
+            img={post.img}
+            authorData={post.authorData}
+          />
+        );
+      })}
 
       {/* 查看更多按鈕 */}
       {postsToShow < sortedData.length && (

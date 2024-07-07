@@ -2,7 +2,7 @@ export interface PostProps {
   image: any;
   title: string;
   description: string;
-  date: string | number;
+  date: string;
   type: ['Post' | 'News'];
   authorData: {
     fullname: string;

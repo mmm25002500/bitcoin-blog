@@ -59,13 +59,8 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
       <Navbar />
       <div className="mx-auto px-6 sm:px-28">
         <div className="my-5">
-          {/* 標題 */}
-          <p className="text-center font-bold text-2xl leading-[24.38px] sm:text-[28px] sm:leading-[42px]">
-            {currentSelection}
-          </p>
-
           {/* 標籤 */}
-          <div className="relative w-full h-7 mt-4">
+          <div className="relative w-full h-7 mb-4">
             <Swiper
               slidesPerView={"auto"}
               spaceBetween={20}
@@ -122,10 +117,15 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
               />
             </div>
           </div>
+
+          {/* 標題 */}
+          <p className="text-center font-bold text-2xl leading-[24.38px] sm:text-[28px] sm:leading-[42px]">
+            {currentSelection}
+          </p>
         </div>
-        <div>
-          <NewsListAll data={filteredPosts} />
-        </div>
+      </div>
+      <div className="mx-auto sm:px-28">
+        <NewsListAll data={filteredPosts} />
       </div>
     </>
   );

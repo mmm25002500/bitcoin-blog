@@ -8,7 +8,7 @@ export interface PostProps {
   img?: string | StaticImageData;
   image?: string | undefined;
   authorData?: AuthorData;
-  date: number;
+  date: string;
   type: ['Post' | 'News'];
   id?: string;
   idx?: number;

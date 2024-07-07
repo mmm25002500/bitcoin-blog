@@ -118,27 +118,28 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
             </div>
           </div>
         </div>
-        <div>
-          <PostList
-            data={posts.map((post) => ({
-              title: post.frontMatter.title,
-              description: post.frontMatter.description,
-              tags: post.frontMatter.tags,
-              date: typeof post.frontMatter.date === 'string' ? Date.parse(post.frontMatter.date) : post.frontMatter.date,
-              authorData: {
-                fullname: author.fullname,
-                name: author.name,
-                description: author.description,
-                img: author.image,
-                id: author.id,
-              },
-              type: post.frontMatter.type,
-              img: post.frontMatter.img,
-              image: post.frontMatter.image,
-              id: post.frontMatter.id,
-            }))}
-          />
-        </div>
+        <HorizontalLine />
+      </div>
+      <div className="mx-auto sm:px-28">
+        <PostList
+          data={posts.map((post) => ({
+            title: post.frontMatter.title,
+            description: post.frontMatter.description,
+            tags: post.frontMatter.tags,
+            date: post.frontMatter.date,
+            authorData: {
+              fullname: author.fullname,
+              name: author.name,
+              description: author.description,
+              img: author.image,
+              id: author.id,
+            },
+            type: post.frontMatter.type,
+            img: post.frontMatter.img,
+            image: post.frontMatter.image,
+            id: post.frontMatter.id,
+          }))}
+        />
       </div>
     </>
   );

@@ -124,9 +124,9 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
             </div>
           </div>
         </div>
-        <div>
-          <NewsListAll data={filteredPosts} />
-        </div>
+      </div>
+      <div className="mx-auto sm:px-28">
+        <NewsListAll data={filteredPosts} />
       </div>
     </>
   );

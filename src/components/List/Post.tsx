@@ -4,7 +4,7 @@ import { PostProps } from '@/types/List/PostData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 
-const formatDate = (date: number) => {
+const formatDate = (date: string) => {
   const d = new Date(date);
   const year = d.getFullYear();
   const month = d.getMonth() + 1; // Months are zero-indexed
@@ -22,7 +22,7 @@ const Post = (props: PostProps) => {
 
   return (
     <div
-      className={`pt-6 pb-3 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.idx != 0 ? 'border-t-[1px]' : ''}`}
+      className={`pt-6 pb-3 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.className} ${props.idx != 0 ? 'border-t-[1px]' : ''}`}
     >
       {/* 標籤與日期 */}
       <div className="mb-5 text-gray-500">
@@ -105,7 +105,7 @@ const Post = (props: PostProps) => {
           <img
             src={props.image}
             alt={props.title}
-            className="ml-3 sm:ml-0 h-[78px] sm:h-[152px] rounded-md"
+            className="h-[78px] sm:h-[152px] rounded-md"
           />
         </div>
       </div>
