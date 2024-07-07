@@ -1,4 +1,7 @@
 import CreateButton from "@/components/Card/CreateButton";
+import { ButtonSectionProps } from "@/types/HomePage/ButtonSection";
+import CreateButton2 from "../Card/CreateButton2";
+import { useRouter } from "next/router";
 
 // Light Mode
 import Bitcoin_V2 from "@/icons/HomePage/biitcoin_v2.svg";
@@ -23,10 +26,9 @@ import Social_Dark from "@/icons/HomePage/social_dark.svg";
 import UseBTC_Dark from "@/icons/HomePage/use_btc_dark.svg";
 
 
-import { ButtonSectionProps } from "@/types/HomePage/ButtonSection";
-import CreateButton2 from "../Card/CreateButton2";
-
 const ButtonSection = (props: ButtonSectionProps) => {
+  const router = useRouter();
+
   return (
     <>
       <div className={`sm:flex sm:gap-4 ${props.classname}`}>
@@ -36,7 +38,7 @@ const ButtonSection = (props: ButtonSectionProps) => {
             description="About BTC"
             photo_dark={Bitcoin_V2}
             photo_light={Bitcoin_V2_Dark}
-            onClick={() => console.log("About BTC")}
+            onClick={() => router.push("/")}
           />
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 justify-items-center gap-3 sm:gap-4 w-full">
@@ -45,56 +47,56 @@ const ButtonSection = (props: ButtonSectionProps) => {
             description="CreateWallet"
             photo_dark={CryptoWallet}
             photo_light={CryptoWallet_Dark}
-            onClick={() => console.log("CreateWallet")}
+            onClick={() => router.push("/")}
           />
           <CreateButton
             title="購買比特幣"
             description="Purchase BTC"
             photo_dark={BuyBic}
             photo_light={BuyBic_Dark}
-            onClick={() => console.log("Purchase BTC")}
+            onClick={() => router.push("/")}
           />
           <CreateButton
             title="比特幣挖礦"
             description="BTC Mining"
             photo_dark={Mining}
             photo_light={Mining_Dark}
-            onClick={() => console.log("BTC Mining")}
+            onClick={() => router.push("/")}
           />
           <CreateButton
             title="使用比特幣"
             description="Used BTC"
             photo_dark={UseBTC}
             photo_light={UseBTC_Dark}
-            onClick={() => console.log("Used BTC")}
+            onClick={() => router.push("/")}
           />
           <CreateButton
             title="加入社群"
             description="Join Community"
             photo_dark={Social}
             photo_light={Social_Dark}
-            onClick={() => console.log("Join Community")}
+            onClick={() => router.push("/")}
           />
           <CreateButton
             title="支持我們"
             description="Support us"
             photo_dark={coffee}
             photo_light={coffee_Dark}
-            onClick={() => console.log("Support us")}
+            onClick={() => router.push("/")}
           />
           <CreateButton
             title="更多比特幣資訊"
             description="About BTC"
             photo_dark={BicNews}
             photo_light={BicNews_Dark}
-            onClick={() => console.log("About BTC")}
+            onClick={() => router.push("/")}
           />
           <CreateButton
             title="其他區塊鏈資訊"
             description="About Blockchain"
             photo_dark={blockchain}
             photo_light={blockchain_Dark}
-            onClick={() => console.log("About Blockchain")}
+            onClick={() => router.push("/")}
           />
         </div>
       </div>
