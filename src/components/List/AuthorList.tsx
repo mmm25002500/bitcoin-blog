@@ -29,10 +29,10 @@ const AuthorList = ({ data }: AuthorListProps) => {
     <>
       {currentAuthors.map((author: LawAuthorData, index) => (
         <div
+          key={index}
           onClick={() => router.push(`/Author/${author.id}`)}
         >
           <Author
-            key={index}
             idx={index}
             {...author}
           />
