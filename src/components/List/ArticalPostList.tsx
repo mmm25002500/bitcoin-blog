@@ -49,18 +49,19 @@ const ArticalPostList = ({ data }: PostListData) => {
     <>
       {currentPosts.map((post: PostProps, index) => {
         const parsedDate = parseDate(post.date); // 解析日期
-        <Post
-          key={index}
-          idx={index}
-          onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
-          title={post.title}
-          description={post.description}
-          tags={post.tags}
-          date={parsedDate.toISOString()}
-          type={post.type}
-          image={post.image}
-          className=''
-        />
+        return (
+          <Post
+            key={index}
+            idx={index}
+            onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
+            title={post.title}
+            description={post.description}
+            tags={post.tags}
+            date={parsedDate.toISOString()}
+            type={post.type}
+            image={post.image}
+          />
+        )
       })}
 
       <HorizontalLine className="" />
