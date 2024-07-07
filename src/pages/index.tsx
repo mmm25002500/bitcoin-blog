@@ -13,10 +13,26 @@ import { join } from "path";
 import AuthorData from '@/config/Author.json';
 import { PostProps } from '@/types/List/PostData';
 import { NewsPostProps } from "@/types/HomePage/NewsSection";
+import Head from "next/head";
+import SEO from "@/config/SEO.json";
 
 const Home = (props: NewsPostProps) => {
   return (
     <>
+      <Head>
+        <title>{SEO.Index.title}</title>
+        <meta name="description" content={SEO.Index.description} />
+        <meta property="og:title" content={SEO.Index.title} />
+        <meta property="og:description" content={SEO.Index.description} />
+        <meta property="og:image" content={SEO.Index.image} />
+        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+        <meta property="og:type" content={SEO.Index.type} />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:title" content={SEO.Index.title} />
+        <meta name="twitter:description" content={SEO.Index.description} />
+        <meta name="twitter:image" content={SEO.Index.image} />
+      </Head>
+
       <Header></Header>
       <Navbar />
       <SwiperSection />

@@ -21,6 +21,8 @@ import { FreeMode, Navigation } from 'swiper/modules';
 import right from '@/icons/right.svg';
 import left from '@/icons/left.svg';
 import Image from 'next/image';
+import Head from "next/head";
+import SEO from "@/config/SEO.json";
 
 // 文章列表頁面
 const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
@@ -53,6 +55,20 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
 
   return (
     <>
+      <Head>
+        <title>{SEO.Tag.title}</title>
+        <meta name="description" content={SEO.Tag.description} />
+        <meta property="og:title" content={SEO.Tag.title} />
+        <meta property="og:description" content={SEO.Tag.description} />
+        <meta property="og:image" content={SEO.Tag.image} />
+        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+        <meta property="og:type" content={SEO.Tag.type} />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:title" content={SEO.Tag.title} />
+        <meta name="twitter:description" content={SEO.Tag.description} />
+        <meta name="twitter:image" content={SEO.Tag.image} />
+      </Head>
+
       <div className="sm:hidden">
         <Header />
       </div>

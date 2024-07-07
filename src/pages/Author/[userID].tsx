@@ -20,6 +20,8 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { GetStaticProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import { MarkDownsProps } from '@/types/User/UserID';
+import Head from "next/head";
+import SEO from "@/config/SEO.json";
 
 // 通過使用者ID 獲取使用者資料
 const getAuthorData = (userID: string) => {
@@ -52,6 +54,20 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
 
   return (
     <>
+      <Head>
+        <title>{author.name} - {SEO.Author.title}</title>
+        <meta name="description" content={SEO.Author.description} />
+        <meta property="og:title" content={`${author.name} - ${SEO.Author.title}`} />
+        <meta property="og:description" content={SEO.Author.description} />
+        <meta property="og:image" content={SEO.Author.image} />
+        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+        <meta property="og:type" content={SEO.Author.type} />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:title" content={`${author.name} - ${SEO.Author.title}`} />
+        <meta name="twitter:description" content={SEO.Author.description} />
+        <meta name="twitter:image" content={SEO.Author.image} />
+      </Head>
+
       <div className="sm:hidden">
         <Header />
       </div>

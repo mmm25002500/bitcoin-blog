@@ -7,6 +7,8 @@ import MD from '@/components/MD'
 import ContactSection from '@/components/Page/ContactSection';
 import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from '@/icons/illustation/Privacy Policy.svg';
+import Head from 'next/head';
+import SEO from '@/config/SEO.json';
 
 const PrivacyPolicyPage = () => {
   const markdown = " \
@@ -18,6 +20,20 @@ const PrivacyPolicyPage = () => {
 
   return (
     <>
+      <Head>
+        <title>{SEO.PrivacyPolicy.title}</title>
+        <meta name="description" content={SEO.PrivacyPolicy.description} />
+        <meta property="og:title" content={SEO.PrivacyPolicy.title} />
+        <meta property="og:description" content={SEO.PrivacyPolicy.description} />
+        <meta property="og:image" content={SEO.PrivacyPolicy.image} />
+        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+        <meta property="og:type" content={SEO.PrivacyPolicy.type} />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:title" content={SEO.PrivacyPolicy.title} />
+        <meta name="twitter:description" content={SEO.PrivacyPolicy.description} />
+        <meta name="twitter:image" content={SEO.PrivacyPolicy.image} />
+      </Head>
+
       <div className="sm:hidden">
         <Header />
       </div>

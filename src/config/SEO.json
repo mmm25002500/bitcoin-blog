@@ -1,0 +1,87 @@
+{
+    "default": {
+      "title": "比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "Index": {
+      "title": "首頁 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "Post": {
+      "title": "比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是文章",
+      "image": "/favicon.ico",
+      "type": "article"
+    },
+    "News": {
+      "title": "比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是新聞",
+      "image": "/favicon.ico",
+      "type": "article"
+    },
+    "NotFound": {
+      "title": "404頁面找不到 - 比特幣中文網站",
+      "description": "找不到頁面",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "About": {
+      "title": "關於我們 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是關於我們",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "Disclamier": {
+      "title": "免責聲明 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是免責聲明",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "PrivacyPolicy": {
+      "title": "隱私權政策 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是隱私權政策",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "MoreInfo": {
+      "title": "更多資訊 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是更多資訊",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "Author": {
+      "title": "比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是作者",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "Search": {
+      "title": "搜尋 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是搜尋",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "Tag": {
+      "title": "標籤 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是標籤",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "TagPost": {
+      "title": "標籤 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是標籤文章",
+      "image": "/favicon.ico",
+      "type": "website"
+    },
+    "TagNews": {
+      "title": "標籤 - 比特幣中文網站",
+      "description": "歡迎來到比特幣中文網站，這是標籤新聞",
+      "image": "/favicon.ico",
+      "type": "website"
+    }
+  }
+  

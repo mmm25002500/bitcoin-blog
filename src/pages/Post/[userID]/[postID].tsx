@@ -16,6 +16,8 @@ import HorizontalLine from "@/components/HorizontalLine";
 import ArticalPostList from "@/components/List/ArticalPostList";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Head from "next/head";
+import SEO from "@/config/SEO.json";
 
 const PostPage = ({ post }: MarkDownProps) => {
   // 如果 postID 沒有是 undefined，就出現 404 頁面
@@ -56,50 +58,65 @@ const PostPage = ({ post }: MarkDownProps) => {
     const date = new Date(post.frontMatter.date);
 
     return (
-      <article>
-        <Navbar></Navbar>
-        <div className="mx-auto sm:px-28">
-          <ArticalLayout className='pt-10 px-5 sm:px-0'>
-            {/* 標題 */}
-            <h1 className="mb-2 text-xl leading-[30px] sm:text-[32px] sm:leading-[48px] font-bold">{post.frontMatter.title}</h1>
+      <>
+      <Head>
+        <title>{post.frontMatter.title} - { SEO.Post.title }</title>
+        <meta name="description" content={post.frontMatter.description} />
+        <meta property="og:title" content={`${post.frontMatter.title} - ${SEO.Post.title}`} />
+        <meta property="og:description" content={post.frontMatter.description} />
+        <meta property="og:image" content={post.frontMatter.image} />
+        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+        <meta property="og:type" content={ SEO.Post.type } />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:title" content={`${post.frontMatter.description} - ${SEO.Post.title}`}  />
+        <meta name="twitter:description" content={post.frontMatter.description} />
+        <meta name="twitter:image" content={post.frontMatter.image} />
+      </Head>
+        <article>
+          <Navbar></Navbar>
+          <div className="mx-auto sm:px-28">
+            <ArticalLayout className='pt-10 px-5 sm:px-0'>
+              {/* 標題 */}
+              <h1 className="mb-2 text-xl leading-[30px] sm:text-[32px] sm:leading-[48px] font-bold">{post.frontMatter.title}</h1>
 
-            {/* 描述 */}
-            <p className="mb-3 text-sm leading-[22px] sm:text-xl sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{post.frontMatter.description}</p>
+              {/* 描述 */}
+              <p className="mb-3 text-sm leading-[22px] sm:text-xl sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{post.frontMatter.description}</p>
 
-            {/* 內容 */}
-            <MD>
-              {post.source}
-            </MD>
+              {/* 內容 */}
+              <MD>
+                {post.source}
+              </MD>
 
-            {/* TAG */}
-            <div className="mt-2 mb-5 flex gap-2">
-              {
-                post.frontMatter.tags.map((item, index) => (
-                  <Tag
-                    key={index}
-                    text={item}
-                    type={["Post"]}
-                    className="text-xs py-1 px-3"
-                  />
-                ))
-              }
-            </div>
+              {/* TAG */}
+              <div className="mt-2 mb-5 flex gap-2">
+                {
+                  post.frontMatter.tags.map((item, index) => (
+                    <Tag
+                      key={index}
+                      text={item}
+                      type={["Post"]}
+                      className="text-xs py-1 px-3"
+                    />
+                  ))
+                }
+              </div>
 
-            {/* 日期 */}
-            <div className="text-sm font-medium leading-5 dark:text-neutral-white">
-              {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}
-              &nbsp;
-              {date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:{date.getMinutes()}
-              &nbsp;
-              {date.getHours() > 12 ? 'PM' : 'AM'}
-            </div>
+              {/* 日期 */}
+              <div className="text-sm font-medium leading-5 dark:text-neutral-white">
+                {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}
+                &nbsp;
+                {date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:{date.getMinutes()}
+                &nbsp;
+                {date.getHours() > 12 ? 'PM' : 'AM'}
+              </div>
 
-            <HorizontalLine className="my-5" />
-            <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More Posts</p>
-            <ArticalPostList data={relatedPosts} />
-          </ArticalLayout>
-        </div>
-      </article>
+              <HorizontalLine className="my-5" />
+              <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More Posts</p>
+              <ArticalPostList data={relatedPosts} />
+            </ArticalLayout>
+          </div>
+        </article>
+      </>
     );
   }
 };

@@ -12,6 +12,8 @@ import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
 import Tags from "@/config/Tags.json";
 import PostListAll from "@/components/List/PostListAll";
+import Head from "next/head";
+import SEO from "@/config/SEO.json";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -53,6 +55,20 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
 
   return (
     <>
+      <Head>
+        <title>{SEO.TagPost.title}</title>
+        <meta name="description" content={SEO.TagPost.description} />
+        <meta property="og:title" content={SEO.TagPost.title} />
+        <meta property="og:description" content={SEO.TagPost.description} />
+        <meta property="og:image" content={SEO.TagPost.image} />
+        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+        <meta property="og:type" content={SEO.TagPost.type} />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:title" content={SEO.TagPost.title} />
+        <meta name="twitter:description" content={SEO.TagPost.description} />
+        <meta name="twitter:image" content={SEO.TagPost.image} />
+      </Head>
+
       <div className="sm:hidden">
         <Header />
       </div>

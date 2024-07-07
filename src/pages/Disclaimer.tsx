@@ -7,6 +7,8 @@ import MD from '@/components/MD'
 import ContactSection from '@/components/Page/ContactSection';
 import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from '@/icons/illustation/Disclaimer.svg';
+import Head from 'next/head';
+import SEO from '@/config/SEO.json';
 
 const DisclaimerPage = () => {
   const markdown = " \
@@ -17,6 +19,20 @@ const DisclaimerPage = () => {
 
   return (
     <>
+      <Head>
+        <title>{SEO.Disclamier.title}</title>
+        <meta name="description" content={SEO.Disclamier.description} />
+        <meta property="og:title" content={SEO.Disclamier.title} />
+        <meta property="og:description" content={SEO.Disclamier.description} />
+        <meta property="og:image" content={SEO.Disclamier.image} />
+        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+        <meta property="og:type" content={SEO.Disclamier.type} />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:title" content={SEO.Disclamier.title} />
+        <meta name="twitter:description" content={SEO.Disclamier.description} />
+        <meta name="twitter:image" content={SEO.Disclamier.image} />
+      </Head>
+
       <div className="sm:hidden">
         <Header />
       </div>

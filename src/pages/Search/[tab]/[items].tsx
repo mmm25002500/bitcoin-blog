@@ -14,6 +14,8 @@ import axios from "axios";
 import { LawAuthorData } from "@/types/List/Author";
 import Author from "@/components/List/Author";
 import AuthorList from "@/components/List/AuthorList";
+import Head from "next/head";
+import SEO from "@/config/SEO.json";
 
 const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
   const router = useRouter();
@@ -151,6 +153,19 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
 
   return (
     <>
+      <Head>
+        <title>{ SEO.Search.title }</title>
+        <meta name="description" content={ SEO.Search.description } />
+        <meta property="og:title" content={ SEO.Search.title } />
+        <meta property="og:description" content={ SEO.Search.description } />
+        <meta property="og:image" content={ SEO.Search.image }  />
+        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+        <meta property="og:type" content={ SEO.Search.type } />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:title" content={SEO.Search.title} />
+        <meta name="twitter:description" content={SEO.Search.description} />
+        <meta name="twitter:image" content={SEO.Search.image} />
+      </Head>
       <Navbar />
       <div className="sm:mx-auto sm:px-16 mx-8">
         {/* Search Bar */}
