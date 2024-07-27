@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
 import axios from "axios";
-import matter from 'gray-matter';
 import { MarkDownProps } from "@/types/User/UserID";
 import { PostProps } from '@/types/List/PostData';
 import Navbar from "@/components/Layout/Navbar";
@@ -100,7 +99,7 @@ const PostPage = ({ post, seo, authorData, ArticleNewsListMorePostPerclick }: Ma
               <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More Posts</p>
               <ArticleNewsList
                 data={relatedPosts}
-                ArticleNewsListMorePostPerclick={ArticleNewsListMorePostPerclick}
+                increment={ArticleNewsListMorePostPerclick}
               />
             </ArticleLayout>
           </div>

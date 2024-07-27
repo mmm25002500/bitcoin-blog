@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const bucket = app.storage().bucket();
     const [files] = await bucket.getFiles({ prefix: `Article/${author}/`, delimiter: '/' });
 
-    const authorFiles = files.filter(file => file.name.endsWith('.mdx'));
+    const authorFiles = files.filter((file: { name: string }) => file.name.endsWith('.mdx'));
     const postCount = authorFiles.length;
 
     return res.status(200).json({ author, postCount });

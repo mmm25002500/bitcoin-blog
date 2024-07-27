@@ -20,7 +20,7 @@ import right from '@/icons/right.svg';
 import left from '@/icons/left.svg';
 
 // 文章列表頁面
-const All = ({ initialPosts, initialSelection, seo, tags }: { initialPosts: PostProps[], initialSelection: string, seo: any, tags: string[] }) => {
+const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initialPosts: PostProps[], initialSelection: string, seo: any, tags: string[], SiteConfig: any }) => {
   const router = useRouter();
   const { selection } = router.query;
 
@@ -134,7 +134,10 @@ const All = ({ initialPosts, initialSelection, seo, tags }: { initialPosts: Post
         </div>
       </div>
       <div className="mx-auto sm:px-28">
-        <PostListAll data={filteredPosts} />
+        <PostListAll
+          data={filteredPosts}
+          postsPerPage={SiteConfig.PostListAllPerpage}
+        />
       </div>
     </>
   );
@@ -178,9 +181,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const seoFileContents = (await seoFile.download())[0].toString('utf8');
   const seoData = JSON.parse(seoFileContents);
 
+  // 獲取Tag配置
   const tagsFile = bucket.file('config/Tags.json');
   const tagsFileContents = (await tagsFile.download())[0].toString('utf8');
   const tagsData = JSON.parse(tagsFileContents);
+
+  // 獲取SiteConfig配置
+  const siteConfigFile = bucket.file('config/SiteConfig.json');
+  const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
+  const siteConfigData = JSON.parse(siteConfigFileContents);
 
   return {
     props: {
@@ -188,6 +197,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       initialSelection: selection,
       seo: seoData,
       tags: tagsData.Post,
+      SiteConfig: siteConfigData,
     },
   };
 };

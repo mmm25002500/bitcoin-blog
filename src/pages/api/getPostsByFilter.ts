@@ -9,6 +9,10 @@ interface FilteredPostsProps extends PostProps {
   url: string;
 }
 
+interface FileType {
+  name: string;
+}
+
 // 動態設置 API URL
 const getApiUrl = (req: NextApiRequest) => {
   const host = req.headers.host;
@@ -59,8 +63,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const bucket = app.storage().bucket();
     const [files] = await bucket.getFiles({ prefix: 'Article/' });
 
-    // 过滤掉无效的路径
-    const validFiles = files.filter(file => file.name.split('/').length >= 3 && file.name.endsWith('.mdx'));
+    // 過濾掉無效的路徑
+    const validFiles = files.filter((file: FileType) => file.name.split('/').length >= 3 && file.name.endsWith('.mdx'));
 
     let filteredPosts: FilteredPostsProps[] = [];
 

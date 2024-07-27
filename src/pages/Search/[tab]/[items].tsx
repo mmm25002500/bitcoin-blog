@@ -16,7 +16,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { initAdmin } from "lib/firebaseAdmin";
 import { TabDataType } from "@/types/Tab/Tab";
 
-const SearchPage = ({ initialPosts, initialSelection, seoData, tabData }: { initialPosts: PostProps[], initialSelection: string, seoData: any, tabData: TabDataType[]}) => {
+const SearchPage = ({ initialPosts, initialSelection, seoData, tabData, SiteConfig }: { initialPosts: PostProps[], initialSelection: string, seoData: any, tabData: TabDataType[], SiteConfig: any }) => {
   const router = useRouter();
   const [searchText, setSearchText] = useState<string>(router.query.items as string);
   const [selectedTab, setSelectedTab] = useState<string>(initialSelection);
@@ -193,7 +193,11 @@ const SearchPage = ({ initialPosts, initialSelection, seoData, tabData }: { init
           selectedTab === 'Posters' || selectedTab === 'News' ?
             <>
               {
-                filteredPosts && <PostListAll data={filteredPosts}></PostListAll>
+                filteredPosts &&
+                <PostListAll
+                  data={filteredPosts}
+                  postsPerPage={SiteConfig.PostListAllPerpage}
+                />
               }
             </>
             :
@@ -232,20 +236,28 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   try {
+    // 獲取SEO配置
     const app = await initAdmin();
     const bucket = app.storage().bucket();
     const seoFile = bucket.file('config/SEO.json');
     const seoFileContents = (await seoFile.download())[0].toString('utf8');
     const seoData = JSON.parse(seoFileContents);
 
+    // 獲取Tab配置
     const tabFile = bucket.file('config/SearchTab.json');
     const tabFileContents = (await tabFile.download())[0].toString('utf8');
     const tabData = JSON.parse(tabFileContents);
+
+    // 獲取SiteConfig配置
+    const siteConfigFile = bucket.file('config/SiteConfig.json');
+    const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
+    const siteConfigData = JSON.parse(siteConfigFileContents);
 
     return {
       props: {
         seoData,
         tabData,
+        SiteConfig: siteConfigData,
       },
     };
   } catch (error) {

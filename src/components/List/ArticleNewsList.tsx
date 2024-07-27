@@ -9,9 +9,8 @@ import Icon from '../Icon';
 import right from '@/icons/right.svg';
 import { parse, isValid } from 'date-fns';
 
-const ArticlePostList = ({ data, ArticleNewsListMorePostPerclick }: PostListData & {ArticleNewsListMorePostPerclick: number}) => {
+const ArticlePostList = ({ data, increment }: PostListData & {increment: number}) => {
   const [visibleCount, setVisibleCount] = useState(3); // 初始顯示的文章數量
-  const increment =ArticleNewsListMorePostPerclick // 每次增加的文章數量
 
   const router = useRouter();
 
