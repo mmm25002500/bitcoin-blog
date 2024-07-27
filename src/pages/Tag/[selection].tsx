@@ -165,9 +165,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
   const selection = params?.selection;
 
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const host = process.env.HOST || 'localhost:3000';
-  const apiUrl = `${protocol}://${host}/api/getPostsByFilter?type=both&author=all&tag=${selection}`;
+  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+  const apiUrl = `${host}/api/getPostsByFilter?type=both&author=all&tag=${selection}`;
 
   // 獲取初始文章
   const res = await fetch(apiUrl);

@@ -14,10 +14,12 @@ interface FileType {
 }
 
 // 動態設置 API URL
-const getApiUrl = (req: NextApiRequest) => {
-  const host = req.headers.host;
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  return `${protocol}://${host}`;
+const getApiUrl = (req: NextApiRequest): string => {
+  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+  if (!host) {
+    throw new Error('Host URL is not defined');
+  }
+  return host;
 };
 
 // 根據 userID 獲取作者資料

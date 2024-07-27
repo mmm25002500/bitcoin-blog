@@ -152,8 +152,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   try {
-    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-    const host = process.env.HOST || 'localhost:3000';
+    const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
 
     const app = await initAdmin();
     const bucket = app.storage().bucket();
@@ -161,7 +160,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const seoFileContents = (await seoFile.download())[0].toString('utf8');
     const seoData = JSON.parse(seoFileContents);
 
-    const markdownApiUrl = `${protocol}://${host}/api/getPostsByFilter?type=both&author=${userID}&tag=all`;
+    const markdownApiUrl = `${host}/api/getPostsByFilter?type=both&author=${userID}&tag=all`;
     const markdownRes = await fetch(markdownApiUrl);
     if (!markdownRes.ok) {
       return { notFound: true };

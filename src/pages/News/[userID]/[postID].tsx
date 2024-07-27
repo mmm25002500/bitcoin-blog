@@ -110,9 +110,8 @@ const PostPage = ({ post, seo, authorData, ArticleNewsListMorePostPerclick }: Ma
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const host = process.env.HOST || 'localhost:3000';
-  const apiUrl = `${protocol}://${host}/api/getPostsByFilter?type=News&author=all&tag=all`;
+  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+  const apiUrl = `${host}/api/getPostsByFilter?type=News&author=all&tag=all`;
 
   const res = await fetch(apiUrl);
   const posts = await res.json();
@@ -133,10 +132,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return { notFound: true };
   }
 
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const host = process.env.HOST || 'localhost:3000';
-  const articleApiUrl = `${protocol}://${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
-  const authorApiUrl = `${protocol}://${host}/api/getAuthorConfig`;
+  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+  const articleApiUrl = `${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
+  const authorApiUrl = `${host}/api/getAuthorConfig`;
 
   try {
     // 獲取文章內容

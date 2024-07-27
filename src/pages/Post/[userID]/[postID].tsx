@@ -95,9 +95,8 @@ const PostPage = ({ post, seo, ArticlePostListMorePostPerclick }: MarkDownProps 
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const host = process.env.HOST || 'localhost:3000';
-  const apiUrl = `${protocol}://${host}/api/getPostsByFilter?type=Post&author=all&tag=all`;
+  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+  const apiUrl = `${host}/api/getPostsByFilter?type=Post&author=all&tag=all`;
 
   const res = await fetch(apiUrl);
   const posts = await res.json();
@@ -118,9 +117,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return { notFound: true };
   }
 
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const host = process.env.HOST || 'localhost:3000';
-  const apiUrl = `${protocol}://${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
+  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+  const apiUrl = `${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
 
   try {
     // 獲取文章內容

@@ -58,9 +58,7 @@ const Home = (props: HomeProps) => {
 // 獲取首頁的初始數據
 export const getStaticProps: GetStaticProps = async () => {
   // 獲取首頁的新聞文章
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const host = process.env.HOST || 'localhost:3000'; // 確保 host 正確
-  const apiUrl = `${protocol}://${host}/api/getPostsByFilter?type=News&author=all&tag=all`;
+  const apiUrl = `/api/getPostsByFilter?type=News&author=all&tag=all`;
 
   const res = await fetch(apiUrl);
   const initialPosts: PostProps[] = await res.json();
