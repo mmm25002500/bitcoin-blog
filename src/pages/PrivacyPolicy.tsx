@@ -1,6 +1,6 @@
 import HorizontalLine from '@/components/HorizontalLine';
-import ArticalLayout from '@/components/Layout/Artical/AriticalLayout';
-import ArticalHeader from '@/components/Layout/Artical/ArticalHeader';
+import ArticleLayout from '@/components/Layout/Article/ArticleLayout';
+import ArticleHeader from '@/components/Layout/Article/ArticleHeader';
 import Header from '@/components/Layout/Header';
 import Navbar from '@/components/Layout/Navbar';
 import MD from '@/components/MD'
@@ -8,9 +8,10 @@ import ContactSection from '@/components/Page/ContactSection';
 import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from '@/icons/illustation/Privacy Policy.svg';
 import Head from 'next/head';
-import SEO from '@/config/SEO.json';
+import { GetStaticProps } from 'next';
+import { initAdmin } from 'lib/firebaseAdmin';
 
-const PrivacyPolicyPage = () => {
+const PrivacyPolicyPage = ({ SEO }: {SEO?: any}) => {
   const markdown = " \
   我們非常重視您的隱私。我們的網站不收集任何有關您的個人信息，如姓名、地址、電子郵件地址或電話號碼等。我們不會通過 cookie 或其他技術跟踪您的網絡活動。 \n\n \
   儘管我們不收集任何個人信息，但我們可能會通過網站日誌收集一些匿名數據，例如您的瀏覽器類型和操作系統等信息。這些信息只用於統計和分析我們網站的流量，以及提高網站的性能和用戶體驗。 \n\n \
@@ -38,15 +39,15 @@ const PrivacyPolicyPage = () => {
         <Header />
       </div>
       <Navbar />
-      <ArticalHeader
+      <ArticleHeader
         title="Privacy Policy"
         subtitle="隱私政策聲明"
         icon={IconLight}
       />
       <div className="mx-auto px-5 sm:px-28">
-        <ArticalLayout className='pt-10'>
+        <ArticleLayout className='pt-10'>
           <MD>{markdown}</MD>
-        </ArticalLayout>
+        </ArticleLayout>
         <HorizontalLine className='sm:hidden' />
         <ContactSection className="py-16" />
         <HorizontalLine />
@@ -56,5 +57,25 @@ const PrivacyPolicyPage = () => {
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    // 獲取SEO配置
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const seoFile = bucket.file('config/SEO.json');
+    const seoFileContents = (await seoFile.download())[0].toString('utf8');
+    const seoData = JSON.parse(seoFileContents);
+
+    return {
+      props: {
+        SEO: seoData,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching article content or SEO/author data:', error);
+    return { notFound: true };
+  }
+};
 
 export default PrivacyPolicyPage;

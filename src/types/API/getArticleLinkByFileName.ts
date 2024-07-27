@@ -1,6 +1,6 @@
 import { AuthorData } from "../List/Author";
 
-export interface GetArticalLinkByFileName {
+export interface GetArticleLinkByFileName {
   title: string;
   date: string;
   description: string;

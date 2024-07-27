@@ -1,33 +1,34 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
+import { initAdmin } from '../../../lib/firebaseAdmin'; // 確保路徑正確
 import matter from 'gray-matter';
-import AuthorData from '@/config/Author.json';
-import MoreInfo from '@/config/MoreInfo.json';
+import { LawAuthorData } from '@/types/List/Author';
 import { PostProps } from '@/types/List/PostData';
 
 // 根據 userID 獲取作者資料
-const getAuthorData = (userID: string) => {
-  return AuthorData.find((author) => author.id === userID);
-}
+const getAuthorData = async (userID: string): Promise<LawAuthorData | undefined> => {
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const file = bucket.file('config/Author.json');
+  const fileContentsArray = await file.download();
+  const fileContents = fileContentsArray[0];
+  const authorData: LawAuthorData[] = JSON.parse(fileContents.toString('utf8'));
+  return authorData.find((author: LawAuthorData) => author.id === userID);
+};
 
 // 根據文件名獲取文章的元數據
-const getPostsMetadata = (filename: string) => {
-  const basePath = join(process.cwd(), 'src/Articals'); // 設定文章資料夾的基準路徑
-  const authorDirs = readdirSync(basePath); // 讀取基準路徑下所有作者目錄
+const getPostsMetadata = async (filename: string) => {
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const [files] = await bucket.getFiles({ prefix: 'Article/' });
 
-  for (const userID of authorDirs) { // 遍歷每個作者目錄
-    const userDir = join(basePath, userID); // 獲取每個作者的目錄路徑
-    const userFiles = readdirSync(userDir); // 讀取每個作者目錄下的文件
+  for (const file of files) {
+    if (file.name.endsWith(`${filename}.mdx`)) {
+      const userID = file.name.split('/')[1];
+      const fileContentsArray = await file.download();
+      const fileContents = fileContentsArray[0].toString('utf8');
+      const { data } = matter(fileContents);
+      const postAuthor = await getAuthorData(userID);
 
-    // 檢查當前作者目錄下是否包含指定的文件名
-    if (userFiles.includes(`${filename}.mdx`)) {
-      const filePath = join(userDir, `${filename}.mdx`); // 獲取文件的完整路徑
-      const fileContents = readFileSync(filePath, 'utf8'); // 讀取文件內容
-      const { data } = matter(fileContents); // 解析文件的元數據
-      const postAuthor = getAuthorData(userID); // 獲取作者資料
-
-      // 返回包含文章元數據和作者資料的對象
       return {
         title: data.title || '',
         authorData: postAuthor ? {
@@ -45,25 +46,43 @@ const getPostsMetadata = (filename: string) => {
       };
     }
   }
-  return null; // 如果未找到文件，返回 null
-}
+  return null;
+};
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  // 遍歷 MoreInfo.json 中的每個類別
-  const result = MoreInfo.map(category => {
-    // 對每個類別中的每篇文章進行處理
-    const posts = category.post.map(post => {
-      const metadata = getPostsMetadata(post.filename); // 獲取文章的元數據
+// 獲取 MoreInfo.json 文件
+const getMoreInfo = async () => {
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const file = bucket.file('config/MoreInfo.json');
+  const fileContentsArray = await file.download();
+  const fileContents = fileContentsArray[0];
+  const moreInfo = JSON.parse(fileContents.toString('utf8'));
+  return moreInfo;
+};
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const moreInfo = await getMoreInfo(); // 從 Firebase 獲取 MoreInfo.json
+
+    // 遍歷 MoreInfo.json 中的每個類別
+    const result = await Promise.all(moreInfo.map(async (category: any) => {
+      // 對每個類別中的每篇文章進行處理
+      const posts = await Promise.all(category.post.map(async (post: any) => {
+        const metadata = await getPostsMetadata(post.filename); // 獲取文章的元數據
+        return {
+          ...post,
+          ...metadata
+        };
+      }));
       return {
-        ...post,
-        ...metadata
+        ...category,
+        post: posts.filter((post: any) => post.title) // 過濾掉未找到的文章
       };
-    }).filter(post => post.title); // 過濾掉未找到的文章
-    return {
-      ...category,
-      post: posts
-    };
-  });
+    }));
 
-  res.status(200).json(result); // 返回結果
+    res.status(200).json(result); // 返回結果
+  } catch (error) {
+    console.error('Error accessing Firebase Storage:', error);
+    res.status(500).json({ error: 'Error accessing Firebase Storage' });
+  }
 }

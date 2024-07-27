@@ -1,51 +1,73 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
+import { initAdmin } from '../../../lib/firebaseAdmin'; // 確保路徑正確
 import matter from 'gray-matter';
-import AuthorData from '@/config/Author.json';
+import fetch from 'node-fetch';
+import { LawAuthorData } from '@/types/List/Author';
 
-// 根据 userID 获取作者资料
-const getAuthorData = (userID: string) => {
-  return AuthorData.find((author) => author.id === userID);
-}
+// 動態設置 API URL
+const getApiUrl = (req: NextApiRequest) => {
+  const host = req.headers.host;
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  return `${protocol}://${host}`;
+};
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+// 根據 userID 獲取作者資料
+const getAuthorData = async (userID: string, apiUrl: string): Promise<LawAuthorData | undefined> => {
+  const res = await fetch(`${apiUrl}/api/getAuthorConfig`);
+  if (!res.ok) {
+    console.error('Error fetching author data:', res.statusText);
+    throw new Error('Failed to fetch author data');
+  }
+  const authorData: LawAuthorData[] = await res.json() as LawAuthorData[];
+  return authorData.find((author: LawAuthorData) => author.id === userID);
+};
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { filename } = req.query;
 
+  // 檢查 filename 是否有效
   if (!filename || typeof filename !== 'string') {
     return res.status(400).json({ error: 'Invalid filename' });
   }
 
-  const basePath = join(process.cwd(), 'src/Articals');
-  const authorDirs = readdirSync(basePath);
+  try {
+    const apiUrl = getApiUrl(req);
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
 
-  for (const userID of authorDirs) {
-    const userDir = join(basePath, userID);
-    const userFiles = readdirSync(userDir);
+    const [files] = await bucket.getFiles({ prefix: 'Article/' });
 
-    if (userFiles.includes(`${filename}.mdx`)) {
-      const filePath = join(userDir, `${filename}.mdx`);
-      const fileContents = readFileSync(filePath, 'utf8');
-      const { data } = matter(fileContents);
-      const postAuthor = getAuthorData(userID);
+    // 遍歷文件，查找匹配的文件名
+    for (const file of files) {
+      if (file.name.endsWith(`${filename}.mdx`)) {
+        const userID = file.name.split('/')[1];
+        const fileContents = (await file.download())[0].toString('utf8');
+        const { data } = matter(fileContents);
+        const postAuthor = await getAuthorData(userID, apiUrl);
 
-      return res.status(200).json({
-        title: data.title || '',
-        authorData: postAuthor ? {
-          fullname: postAuthor.fullname,
-          name: postAuthor.name,
-          img: postAuthor.image,
-          description: postAuthor.description,
-          id: userID,
-        } : {
-          id: userID,
-        },
-        date: data.date || '',
-        description: data.description || '',
-        link: `${userID}/${filename}`
-      });
+        // 返回文章數據和作者資料
+        return res.status(200).json({
+          title: data.title || '',
+          authorData: postAuthor ? {
+            fullname: postAuthor.fullname,
+            name: postAuthor.name,
+            img: postAuthor.image,
+            description: postAuthor.description,
+            id: userID,
+          } : {
+            id: userID,
+          },
+          date: data.date || '',
+          description: data.description || '',
+          link: `${userID}/${filename}`
+        });
+      }
     }
-  }
 
-  return res.status(404).json({ error: 'Article not found' });
+    // 如果未找到文件，返回 404 錯誤
+    return res.status(404).json({ error: 'Article not found' });
+  } catch (error) {
+    console.error('Error accessing Firebase Storage:', error);
+    return res.status(500).json({ error: 'Error accessing Firebase Storage' });
+  }
 }

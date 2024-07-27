@@ -1,19 +1,15 @@
 import Navbar from "@/components/Layout/Navbar";
 import { useRouter } from "next/router";
-import AuthorData from '@/config/Author.json';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Header from "@/components/Layout/Header";
-import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
-import matter from 'gray-matter';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
-import Tags from "@/config/Tags.json";
 import PostListAll from "@/components/List/PostListAll";
+import { initAdmin } from '../../../../lib/firebaseAdmin';
 import Head from "next/head";
-import SEO from "@/config/SEO.json";
+import Image from 'next/image';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -22,10 +18,9 @@ import { FreeMode, Navigation } from 'swiper/modules';
 
 import right from '@/icons/right.svg';
 import left from '@/icons/left.svg';
-import Image from 'next/image';
 
 // 文章列表頁面
-const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
+const All = ({ initialPosts, initialSelection, seo, tags }: { initialPosts: PostProps[], initialSelection: string, seo: any, tags: string[] }) => {
   const router = useRouter();
   const { selection } = router.query;
 
@@ -56,17 +51,15 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
   return (
     <>
       <Head>
-        <title>{SEO.TagPost.title}</title>
-        <meta name="description" content={SEO.TagPost.description} />
-        <meta property="og:title" content={SEO.TagPost.title} />
-        <meta property="og:description" content={SEO.TagPost.description} />
-        <meta property="og:image" content={SEO.TagPost.image} />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
-        <meta property="og:type" content={SEO.TagPost.type} />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={SEO.TagPost.title} />
-        <meta name="twitter:description" content={SEO.TagPost.description} />
-        <meta name="twitter:image" content={SEO.TagPost.image} />
+        <title>{seo.TagPost.title}</title>
+        <meta name="description" content={seo.TagPost.description} />
+        <meta property="og:title" content={seo.TagPost.title} />
+        <meta property="og:description" content={seo.TagPost.description} />
+        <meta property="og:image" content={seo.TagPost.image} />
+        <meta property="og:type" content={seo.TagPost.type} />
+        <meta name="twitter:title" content={seo.TagPost.title} />
+        <meta name="twitter:description" content={seo.TagPost.description} />
+        <meta name="twitter:image" content={seo.TagPost.image} />
       </Head>
 
       <div className="sm:hidden">
@@ -104,7 +97,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
                 />
               </SwiperSlide>
 
-              {Tags.Post.map((tag, idx) => (
+              {tags.map((tag, idx) => (
                 <SwiperSlide key={idx} className="!w-auto">
                   <Radio.Btn
                     text={tag}
@@ -149,7 +142,13 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
 
 // 設置靜態路徑
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = Tags.Post.map(tag => ({
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const tagsFile = bucket.file('config/Tags.json');
+  const tagsFileContents = (await tagsFile.download())[0].toString('utf8');
+  const tagsData = JSON.parse(tagsFileContents);
+
+  const paths = tagsData.Post.map((tag: string) => ({
     params: { selection: tag }
   }));
 
@@ -164,49 +163,31 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
   const selection = params?.selection;
 
-  const basePath = join(process.cwd(), 'src/Articals');
-  const authorDirs = readdirSync(basePath);
-  let initialPosts: PostProps[] = [];
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const host = process.env.HOST || 'localhost:3000';
+  const apiUrl = `${protocol}://${host}/api/getPostsByFilter?type=Post&author=all&tag=${selection}`;
 
-  authorDirs.forEach((userID) => {
-    const articlesDirectory = join(basePath, userID);
-    const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
+  // 獲取初始文章
+  const res = await fetch(apiUrl);
+  const initialPosts = await res.json();
 
-    fileNames.forEach((fileName) => {
-      const filePath = join(articlesDirectory, fileName);
-      const fileContents = readFileSync(filePath, 'utf8');
-      const { content, data } = matter(fileContents);
+  // 獲取SEO配置
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const seoFile = bucket.file('config/SEO.json');
+  const seoFileContents = (await seoFile.download())[0].toString('utf8');
+  const seoData = JSON.parse(seoFileContents);
 
-      const author = AuthorData.find(author => author.id === userID);
-
-      const post: PostProps = {
-        title: data.title || '',
-        description: data.description || '',
-        tags: data.tags || [],
-        date: typeof data.date === 'string' ? Date.parse(data.date) : data.date,
-        type: data.type || 'Post',
-        id: fileName.replace(/\.mdx$/, ''),
-        authorData: {
-          id: userID,
-          fullname: author?.fullname || '',
-          name: author?.name || '',
-          img: author?.image || '',
-          description: author?.description || '',
-        },
-        img: data.img || undefined,
-        image: data.image || undefined,
-      };
-
-      if (selection === 'all' || data.tags.includes(selection)) {
-        initialPosts.push(post);
-      }
-    });
-  });
+  const tagsFile = bucket.file('config/Tags.json');
+  const tagsFileContents = (await tagsFile.download())[0].toString('utf8');
+  const tagsData = JSON.parse(tagsFileContents);
 
   return {
     props: {
       initialPosts,
       initialSelection: selection,
+      seo: seoData,
+      tags: tagsData.Post,
     },
   };
 };

@@ -11,7 +11,7 @@ export interface MoreInfoData {
       tags: string[];
     };
   };
-  ArticalName: string;
+  ArticleName: string;
 }
 
 export interface categoryData {

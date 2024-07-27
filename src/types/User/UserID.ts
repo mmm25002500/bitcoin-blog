@@ -1,5 +1,5 @@
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { PostProps } from "../Articals/Post";
+import { PostProps } from "../Article/Post";
 
 // 多個文章
 export interface MarkDownsProps {

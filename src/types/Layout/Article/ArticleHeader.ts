@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-export interface ArticalHeaderProps {
+export interface ArticleHeaderProps {
   className?: string;
   title: string;
   subtitle: string;

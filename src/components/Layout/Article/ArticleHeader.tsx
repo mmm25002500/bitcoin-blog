@@ -1,8 +1,7 @@
 import Icon from "@/components/Icon";
-import { ArticalHeaderProps } from "@/types/Layout/Artical/ArticalHeader";
-import IconLight from '@/icons/illustation/about us.svg';
+import { ArticleHeaderProps } from "@/types/Layout/Article/ArticleHeader";
 
-const ArticalHeader = (props: ArticalHeaderProps) => {
+const ArticleHeader = (props: ArticleHeaderProps) => {
   return (
     <div className="pl-7 sm:px-28 bg-primary-black-500 dark:bg-neutral-900 flex">
       <div className="flex-none place-self-center">
@@ -20,4 +19,4 @@ const ArticalHeader = (props: ArticalHeaderProps) => {
   );
 }
 
-export default ArticalHeader;
+export default ArticleHeader;

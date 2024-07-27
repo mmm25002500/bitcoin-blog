@@ -4,20 +4,19 @@ import Tab from "@/components/Tab/Tab";
 import searchBtn from '@/icons/SearchBtn.svg';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import TabData from "@/config/SearchTab.json";
 import HorizontalLine from "@/components/HorizontalLine";
-import { TabDataType } from "@/types/Tab/Tab";
 import InputText from "@/components/Input/InputText";
 import PostListAll from "@/components/List/PostListAll";
 import { PostProps } from '@/types/List/PostData';
 import axios from "axios";
 import { LawAuthorData } from "@/types/List/Author";
-import Author from "@/components/List/Author";
 import AuthorList from "@/components/List/AuthorList";
 import Head from "next/head";
-import SEO from "@/config/SEO.json";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { initAdmin } from "lib/firebaseAdmin";
+import { TabDataType } from "@/types/Tab/Tab";
 
-const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
+const SearchPage = ({ initialPosts, initialSelection, seoData, tabData }: { initialPosts: PostProps[], initialSelection: string, seoData: any, tabData: TabDataType[]}) => {
   const router = useRouter();
   const [searchText, setSearchText] = useState<string>(router.query.items as string);
   const [selectedTab, setSelectedTab] = useState<string>(initialSelection);
@@ -44,13 +43,8 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
   }, [tab]);
 
   // 傳到後端拿資料，用TAG篩選文章
-  // Type = Post or News
-  // Author = all
-  // Tag = searchList2
-  // mode = all
   useEffect(() => {
     const fetchFilteredPosts = async () => {
-      // 確保 currentType, currentAuthor 和 mode 不為空
       if (selectedTab && currentAuthor && mode !== undefined) {
         try {
           const response = await axios.get('/api/getPostsByFilter', {
@@ -60,8 +54,7 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
                 News: 'News'
               }[selectedTab], author: currentAuthor, tag: searchText, mode: mode
             }
-          }
-          );
+          });
           setFilteredPosts(response.data);
         } catch (error) {
           console.error("Error fetching filtered posts:", error);
@@ -74,9 +67,7 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
     }
   }, [selectedTab, currentAuthor, mode, searchText]);
 
-
   // 傳到後端拿資料，用 searchText 篩選作者
-  // text = searchText
   useEffect(() => {
     const fetchFilteredAuthors = async () => {
       if (selectedTab && searchText) {
@@ -86,7 +77,6 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
           });
           const authors = response.data;
 
-          // 取得作者的文章數量
           const authorsWithPostCount = await Promise.all(authors.map(async (author: LawAuthorData) => {
             const postCountResponse = await axios.get('/api/getAuthorPostCount', {
               params: { author: author.id }
@@ -109,7 +99,6 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
 
   // 處理搜尋欄位改變
   const handleSearchChange = (searchText: string[]) => {
-    // redirect(tabName, searchText);
     setSearchText(searchText.join(','));
   };
 
@@ -121,22 +110,20 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
   // 重新導向 帶有陣列字串的搜尋
   const redirect = (tabName: string, searchText: string | string[]) => {
     switch (typeof searchText) {
-      case 'string':
-        {
-          const newPath = `/Search/${tabName}/${searchText}`;
-          if (router.asPath !== newPath) {
-            router.push(newPath);
-          }
+      case 'string': {
+        const newPath = `/Search/${tabName}/${searchText}`;
+        if (router.asPath !== newPath) {
+          router.push(newPath);
         }
         break;
-      case 'object':
-        {
-          const newPath = `/Search/${tabName}/${searchText.join(',')}`;
-          if (router.asPath !== newPath) {
-            router.push(newPath);
-          }
+      }
+      case 'object': {
+        const newPath = `/Search/${tabName}/${searchText.join(',')}`;
+        if (router.asPath !== newPath) {
+          router.push(newPath);
         }
         break;
+      }
     }
   }
 
@@ -145,8 +132,7 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
     setSelectedTab(tabName);
     if (selectedTab === 'Creators') {
       redirect(tabName, searchText);
-    }
-    else {
+    } else {
       redirect(tabName, searchText);
     }
   };
@@ -154,17 +140,15 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
   return (
     <>
       <Head>
-        <title>{ SEO.Search.title }</title>
-        <meta name="description" content={ SEO.Search.description } />
-        <meta property="og:title" content={ SEO.Search.title } />
-        <meta property="og:description" content={ SEO.Search.description } />
-        <meta property="og:image" content={ SEO.Search.image }  />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
-        <meta property="og:type" content={ SEO.Search.type } />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={SEO.Search.title} />
-        <meta name="twitter:description" content={SEO.Search.description} />
-        <meta name="twitter:image" content={SEO.Search.image} />
+        <title>{seoData.Search.title}</title>
+        <meta name="description" content={seoData.Search.description} />
+        <meta property="og:title" content={seoData.Search.title} />
+        <meta property="og:description" content={seoData.Search.description} />
+        <meta property="og:image" content={seoData.Search.image} />
+        <meta property="og:type" content={seoData.Search.type} />
+        <meta name="twitter:title" content={seoData.Search.title} />
+        <meta name="twitter:description" content={seoData.Search.description} />
+        <meta name="twitter:image" content={seoData.Search.image} />
       </Head>
       <Navbar />
       <div className="sm:mx-auto sm:px-16 mx-8">
@@ -192,12 +176,11 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
         }
       </div>
 
-
       <div className="sm:mx-auto sm:px-16">
 
         {/* Tab */}
         <Tab
-          data={TabData}
+          data={tabData}
           className="mt-8"
           selectedTab={selectedTab}
           onChange={(tabName: string) => handleTabChange(tabName)}
@@ -227,5 +210,50 @@ const SearchPage = ({ initialPosts, initialSelection }: { initialPosts: PostProp
     </>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const moreInfoFile = bucket.file('config/MoreInfo.json');
+    const moreInfoFileContents = (await moreInfoFile.download())[0].toString('utf8');
+    const moreInfoData = JSON.parse(moreInfoFileContents);
+
+    const paths = moreInfoData.map((item: { link: string }) => ({
+      params: { ArticleName: item.link.split('/').pop() }
+    }));
+
+    return { paths, fallback: 'blocking' };
+  } catch (error) {
+    console.error('Error fetching paths:', error);
+    return { paths: [], fallback: 'blocking' };
+  }
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  try {
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const seoFile = bucket.file('config/SEO.json');
+    const seoFileContents = (await seoFile.download())[0].toString('utf8');
+    const seoData = JSON.parse(seoFileContents);
+
+    const tabFile = bucket.file('config/SearchTab.json');
+    const tabFileContents = (await tabFile.download())[0].toString('utf8');
+    const tabData = JSON.parse(tabFileContents);
+
+    return {
+      props: {
+        seoData,
+        tabData,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return {
+      notFound: true,
+    };
+  }
+};
 
 export default SearchPage;

@@ -4,12 +4,10 @@ import Post from "./Post";
 import Button from '../Button/Button';
 import { useRouter } from "next/router";
 import { PostProps } from '@/types/List/PostData';
-import postListConfig from '@/config/SiteConfig.json';
 import { parse, isValid } from 'date-fns';
 
-const PostList = ({ data }: PostListData) => {
+const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number}) => {
   const [postsToShow, setPostsToShow] = useState(3);
-  const postsPerPage = postListConfig.HomePageNewsListPerpage;
 
   const router = useRouter();
 

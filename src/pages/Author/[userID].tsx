@@ -1,8 +1,6 @@
 import HorizontalLine from "@/components/HorizontalLine";
 import Navbar from "@/components/Layout/Navbar";
 import Avater from "@/components/User/Avater";
-import { useRouter } from "next/router";
-import AuthorData from '@/config/Author.json';
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
 import Icon from "@/components/Icon";
@@ -12,60 +10,50 @@ import UpIcon from '@/icons/up.svg';
 import Header from "@/components/Layout/Header";
 import PostList from "@/components/List/PostList";
 
-// import ArticalsData from '@/Articals/JohnCarter/Articals.json';
-import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
-import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, GetStaticPaths } from 'next';
 import { PostProps } from '@/types/List/PostData';
-import { MarkDownsProps } from '@/types/User/UserID';
 import Head from "next/head";
-import SEO from "@/config/SEO.json";
+import { initAdmin } from "lib/firebaseAdmin";
 
-// 通過使用者ID 獲取使用者資料
-const getAuthorData = (userID: string) => {
-  return AuthorData.filter((author) => author.id === userID);
-}
+// 获取作者数据
+const getAuthorData = async () => {
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const authorFile = bucket.file('config/Author.json');
+  const authorFileContents = (await authorFile.download())[0].toString('utf8');
+  return JSON.parse(authorFileContents);
+};
 
-const AuthorPage = ({ posts }: MarkDownsProps) => {
+const AuthorPage = (props: {posts: PostProps[], seo: any, author: any}) => {
 
-  const router = useRouter();
-  const { userID } = router.query;
-
-  const [author, setAuthor] = useState({ fullname: '', name: '', description: '', image: '', id: '' });
   const [postQuantity, setPostQuantity] = useState(0);
-
   const [collaspe, setCollaspe] = useState(true);
-
-  useEffect(() => {
-    setAuthor(getAuthorData(userID as string)[0]);
-  }, [userID]);
 
   // 計算文章數量
   useEffect(() => {
-    setPostQuantity(posts.length);
-  }, [posts]);
+    setPostQuantity(props.posts.length);
+  }, [props.posts]);
 
-  // 以日期排序文章
-  posts.sort((a, b) => {
-    return new Date(b.frontMatter.date).getTime() - new Date(a.frontMatter.date).getTime();
+  console.log(props.posts);
+
+  // 按照日期排序
+  props.posts.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
   return (
     <>
       <Head>
-        <title>{author.name} - {SEO.Author.title}</title>
-        <meta name="description" content={SEO.Author.description} />
-        <meta property="og:title" content={`${author.name} - ${SEO.Author.title}`} />
-        <meta property="og:description" content={SEO.Author.description} />
-        <meta property="og:image" content={SEO.Author.image} />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
-        <meta property="og:type" content={SEO.Author.type} />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={`${author.name} - ${SEO.Author.title}`} />
-        <meta name="twitter:description" content={SEO.Author.description} />
-        <meta name="twitter:image" content={SEO.Author.image} />
+        <title>{props.author.name} - {props.seo.Author.title}</title>
+        <meta name="description" content={props.seo.Author.description} />
+        <meta property="og:title" content={`${props.author.name} - ${props.seo.Author.title}`} />
+        <meta property="og:description" content={props.seo.Author.description} />
+        <meta property="og:image" content={props.seo.Author.image} />
+        <meta property="og:type" content={props.seo.Author.type} />
+        <meta name="twitter:title" content={`${props.author.name} - ${props.seo.Author.title}`} />
+        <meta name="twitter:description" content={props.seo.Author.description} />
+        <meta name="twitter:image" content={props.seo.Author.image} />
       </Head>
 
       <div className="sm:hidden">
@@ -76,16 +64,13 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
       <div className="mx-auto px-6 sm:px-28">
         <div className="flex gap-10 my-5">
           <div className="flex-none">
-            <Avater
-              src={author?.image}
-              className=""
-            />
+            <Avater src={props.author?.image} className="" />
           </div>
           <div className="w-full">
             <div className="flex flex-wrap sm:flex-nowrap sm:grid sm:grid-cols-1 gap-1">
               {/* 名字 */}
               <div className="flex-none font-semibold text-base leading-6 sm:font-bold sm:text-[28px] sm:leading-[42px] text-neutral-black dark:text-neutral-white">
-                {author?.fullname}
+                {props.author?.fullname}
               </div>
               <div className="flex-grow"></div>
 
@@ -99,36 +84,24 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
               {/* 描述 */}
               <div className="flex-none col-span-2 sm:col-span-1 font-normal text-sm leading-6 text-neutral-900 dark:text-neutral-300 overflow-hidden">
                 <p className={collaspe ? 'line-clamp-2' : ''}>
-                  {author?.description}
+                  {props.author?.description}
                 </p>
               </div>
 
               {/* 查看更多 按鈕 */}
               <div>
-                <Button
-                  onClick={() => setCollaspe(!collaspe)}
-                  type={"large"}
-                  className="dark:!border-neutral-white flex items-center gap-2">
-                  {
-                    collaspe ? (
-                      <>
-                        查看更多
-                        <Icon
-                          icon_light={DownIcon}
-                          className="invert-0 dark:invert"
-                        />
-                      </>
-                    ) : (
-                      <>
-                        收合
-                        <Icon
-                          icon_light={UpIcon}
-                          className="invert-0 dark:invert"
-                        />
-                      </>
-                    )
-                  }
-
+                <Button onClick={() => setCollaspe(!collaspe)} type={"large"} className="dark:!border-neutral-white flex items-center gap-2">
+                  {collaspe ? (
+                    <>
+                      查看更多
+                      <Icon icon_light={DownIcon} className="invert-0 dark:invert" />
+                    </>
+                  ) : (
+                    <>
+                      收合
+                      <Icon icon_light={UpIcon} className="invert-0 dark:invert" />
+                    </>
+                  )}
                 </Button>
               </div>
             </div>
@@ -138,36 +111,36 @@ const AuthorPage = ({ posts }: MarkDownsProps) => {
       </div>
       <div className="mx-auto sm:px-28">
         <PostList
-          data={posts.map((post) => ({
-            title: post.frontMatter.title,
-            description: post.frontMatter.description,
-            tags: post.frontMatter.tags,
-            date: post.frontMatter.date,
+          data={props.posts.map((post) => ({
+            title: post.title,
+            description: post.description,
+            tags: post.tags,
+            date: post.date,
             authorData: {
-              fullname: author.fullname,
-              name: author.name,
-              description: author.description,
-              img: author.image,
-              id: author.id,
+              fullname: props.author.fullname,
+              name: props.author.name,
+              description: props.author.description,
+              img: props.author.image,
+              id: props.author.id,
             },
-            type: post.frontMatter.type,
-            img: post.frontMatter.img,
-            image: post.frontMatter.image,
-            id: post.frontMatter.id,
+            type: post.type,
+            img: post.img,
+            image: post.image,
+            id: post.id,
           }))}
         />
       </div>
     </>
   );
-}
+};
 
-export async function getStaticPaths() {
-  const paths = AuthorData.map(author => ({ params: { userID: author.id } }));
+export const getStaticPaths: GetStaticPaths = async () => {
+  const authorData = await getAuthorData();
+  const paths = authorData.map((author: any) => ({ params: { userID: author.id } }));
 
   return { paths, fallback: 'blocking' };
-}
+};
 
-// getStaticProps讀取目錄下所有 mdx 文件
 export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
   const userID = params?.userID;
@@ -179,36 +152,34 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   try {
-    const articlesDirectory = join(process.cwd(), `src/Articals/${userID}`);
-    const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+    const host = process.env.HOST || 'localhost:3000';
 
-    // 遍歷所有文件獲取內容
-    const posts = await Promise.all(fileNames.map(async (fileName) => {
-      const filePath = join(articlesDirectory, fileName);
-      const fileContents = readFileSync(filePath, 'utf8');
-      const { content, data } = matter(fileContents);
-      const mdxSource = await serialize(content, { scope: data });
-      const articleID = fileName.replace(/\.mdx$/, '');
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const seoFile = bucket.file('config/SEO.json');
+    const seoFileContents = (await seoFile.download())[0].toString('utf8');
+    const seoData = JSON.parse(seoFileContents);
 
-      return {
-        id: articleID,
-        source: mdxSource,
-        frontMatter: {
-          ...data as PostProps,
-          id: articleID
-        }
-      };
-    }));
+    const markdownApiUrl = `${protocol}://${host}/api/getPostsByFilter?type=both&author=${userID}&tag=all`;
+    const markdownRes = await fetch(markdownApiUrl);
+    if (!markdownRes.ok) {
+      return { notFound: true };
+    }
+    const posts = await markdownRes.json();
+    const authorData = await getAuthorData();
+    const author = authorData.find((author: any) => author.id === userID);
 
     return {
       props: {
         posts,
+        seo: seoData,
+        author,
       },
     };
   } catch (error) {
-    console.error('Error reading files:', error);
+    console.error('Error fetching data:', error);
 
-    // 回傳錯誤頁面或 fallback props
     return {
       notFound: true,
     };

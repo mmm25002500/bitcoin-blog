@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
-import Tags from "@/config/Tags.json";
 import { NewsPostProps } from "@/types/HomePage/NewsSection";
 
 // Import Swiper React components
@@ -14,10 +13,15 @@ import right from '@/icons/right.svg';
 import left from '@/icons/left.svg';
 import Image from 'next/image';
 import NewsList from "../List/NewsList";
+import { TagsProps } from "@/types/Tag/Tag";
 
-const NewsSection = (props: NewsPostProps) => {
-  const [currentSelection, setCurrentSelection] = useState<string>(props.initialSelection);
-  const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(props.initialPosts);
+interface NewsSectionProps extends NewsPostProps {
+  tags: any;
+}
+
+const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPerpage }: { initialPosts: PostProps[], initialSelection: string, tags: TagsProps, HomePageNewsListPerpage: number }) => {
+  const [currentSelection, setCurrentSelection] = useState<string>(initialSelection);
+  const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
   const [currentType, setCurrentType] = useState<string>('News');
   const [currentAuthor, setCurrentAuthor] = useState<string>('all');
 
@@ -59,7 +63,7 @@ const NewsSection = (props: NewsPostProps) => {
             />
           </SwiperSlide>
 
-          {Tags.News.map((tag, idx) => (
+          {tags.News.map((tag: any, idx: number) => (
             <SwiperSlide key={idx} className="!w-auto">
               <Radio.Btn
                 text={tag}
@@ -95,7 +99,10 @@ const NewsSection = (props: NewsPostProps) => {
         </div>
       </div>
 
-      <NewsList data={filteredPosts} />
+      <NewsList
+        data={filteredPosts}
+        postsPerPage={HomePageNewsListPerpage}
+      />
     </>
   );
 }

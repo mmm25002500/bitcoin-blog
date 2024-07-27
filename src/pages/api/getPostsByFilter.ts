@@ -1,46 +1,88 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
+import fetch from 'node-fetch';
 import matter from 'gray-matter';
 import { PostProps } from '@/types/List/PostData';
-import AuthorData from '@/config/Author.json';
+import { LawAuthorData } from '@/types/List/Author';
+import { initAdmin } from '../../../lib/firebaseAdmin'; // 確保路徑正確
 
-// 根據 userID 獲取作者資料
-const getAuthorData = (userID: string) => {
-  return AuthorData.find((author) => author.id === userID);
+interface FilteredPostsProps extends PostProps {
+  url: string;
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+// 動態設置 API URL
+const getApiUrl = (req: NextApiRequest) => {
+  const host = req.headers.host;
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  return `${protocol}://${host}`;
+};
+
+// 根據 userID 獲取作者資料
+const getAuthorData = async (apiUrl: string): Promise<LawAuthorData[]> => {
+  const res = await fetch(`${apiUrl}/api/getAuthorConfig`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch author data: ${res.statusText}`);
+  }
+  return res.json() as Promise<LawAuthorData[]>;
+};
+
+// 根據文件名獲取文章的元數據
+const getPostsMetadata = async (filename: string, userID: string) => {
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const file = bucket.file(`Article/${userID}/${filename}.mdx`);
+  const fileContentsArray = await file.download();
+  const fileContents = fileContentsArray[0].toString('utf8');
+  const { content, data } = matter(fileContents);
+
+  return { content, data };
+};
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { type, author, tag, mode } = req.query;
 
-  if (!type || !author || !tag) {
-    res.status(400).json({ error: "缺少 type, author 或 tag 參數" });
+  // 檢查參數是否有效
+  if (
+    typeof type !== 'string' ||
+    (type !== 'Post' && type !== 'News' && type !== 'both') ||
+    !author ||
+    !tag
+  ) {
+    res.status(400).json({ error: '缺少或無效的 type, author 或 tag 參數' });
     return;
   }
 
-  const basePath = join(process.cwd(), 'src/Articals');
-  const authorDirs = readdirSync(basePath);
-  let filteredPosts: PostProps[] = [];
+  try {
+    const apiUrl = getApiUrl(req);
+    const authorData = await getAuthorData(apiUrl); // 從 API 獲取 Author.json
 
-  // 如果 tag 是 all，則不進行標籤篩選
-  const isAllTags = tag === 'all';
-  const tagsArray: string[] = isAllTags ? [] : (tag as string).split(',');
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const [files] = await bucket.getFiles({ prefix: 'Article/' });
 
-  // 遍歷每個作者目錄
-  authorDirs.forEach((userID) => {
-    if (author !== 'all' && userID !== author) {
-      return;
-    }
+    // 过滤掉无效的路径
+    const validFiles = files.filter(file => file.name.split('/').length >= 3 && file.name.endsWith('.mdx'));
 
-    const articlesDirectory = join(basePath, userID);
-    const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
+    let filteredPosts: FilteredPostsProps[] = [];
+
+    // 如果 tag 是 all，則不進行標籤篩選
+    const isAllTags = tag === 'all';
+    const tagsArray: string[] = isAllTags ? [] : (tag as string).split(',');
 
     // 遍歷每篇文章文件
-    fileNames.forEach((fileName) => {
-      const filePath = join(articlesDirectory, fileName);
-      const fileContents = readFileSync(filePath, 'utf8');
-      const { content, data } = matter(fileContents);
-      const postAuthor = getAuthorData(userID);
+    for (const file of validFiles) {
+      const parts = file.name.split('/');
+      const userID = parts[1];
+      const filenameWithExt = parts[2];
+      const filename = filenameWithExt.replace('.mdx', '');
+
+      if (author !== 'all' && userID !== author) {
+        continue;
+      }
+
+      const { content, data } = await getPostsMetadata(filename, userID);
+
+      // 獲取作者資料
+      const postAuthor = authorData.find((author) => author.id === userID);
 
       // 篩選符合條件的文章
       const hasAllTags = tagsArray.every((tag) => data.tags.includes(tag));
@@ -52,29 +94,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       ) {
         filteredPosts.push({
           ...data,
-          id: fileName.replace(/\.mdx$/, ''),
+          id: filename,
           authorData: postAuthor ? {
             ...postAuthor,
             id: userID,
           } : {
             id: userID,
           },
-        } as PostProps);
+          url: `/${type === 'News' ? 'News' : 'Post'}/${userID}/${filename}`
+        } as FilteredPostsProps);
       }
-    });
-  });
-
-  // 根據 type 動態生成 URL
-  filteredPosts = filteredPosts.map(post => {
-    let urlType = 'Post';
-    if (type === 'News') {
-      urlType = 'News';
     }
-    return {
-      ...post,
-      url: `/${urlType}/${post.authorData?.id}/${post.id}`
-    };
-  });
 
-  res.status(200).json(filteredPosts);
+    res.status(200).json(filteredPosts);
+  } catch (error) {
+    console.error('Error accessing Firebase Storage:', error);
+    res.status(500).json({ error: 'Error accessing Firebase Storage' });
+  }
 }

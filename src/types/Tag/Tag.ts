@@ -9,3 +9,9 @@ export interface TagTabProps {
   className?: string;
   onClick?: () => void;
 }
+
+export interface TagsProps {
+  News: string[];
+  Post: string[];
+  Programming: string[];
+}

@@ -7,12 +7,11 @@ import { PostProps } from '@/types/List/PostData';
 import Button from '../Button/Button';
 import Icon from '../Icon';
 import right from '@/icons/right.svg';
-import SiteConfig from '@/config/SiteConfig.json';
 import { parse, isValid } from 'date-fns';
 
-const ArticalPostList = ({ data }: PostListData) => {
+const ArticlePostList = ({ data, ArticlePostListMorePostPerclick }: PostListData & {ArticlePostListMorePostPerclick: number}) => {
   const [visibleCount, setVisibleCount] = useState(3); // 初始顯示的文章數量
-  const increment = SiteConfig.ArticalPostListMorePostPerclick; // 每次增加的文章數量
+  const increment = ArticlePostListMorePostPerclick; // 每次增加的文章數量
 
   const router = useRouter();
 
@@ -85,4 +84,4 @@ const ArticalPostList = ({ data }: PostListData) => {
   );
 }
 
-export default ArticalPostList;
+export default ArticlePostList;

@@ -3,9 +3,10 @@ import Header from "@/components/Layout/Header";
 import Navbar from "@/components/Layout/Navbar";
 import NotFound from "@/components/NotFound/NotFound";
 import Head from "next/head";
-import SEO from "@/config/SEO.json";
+import { initAdmin } from "lib/firebaseAdmin";
+import { GetStaticProps } from "next";
 
-const NotFoundPage = () => {
+const NotFoundPage = ({ SEO }: {SEO?: any}) => {
   return (
     <>
       <Head>
@@ -31,5 +32,25 @@ const NotFoundPage = () => {
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    // 獲取SEO配置
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const seoFile = bucket.file('config/SEO.json');
+    const seoFileContents = (await seoFile.download())[0].toString('utf8');
+    const seoData = JSON.parse(seoFileContents);
+
+    return {
+      props: {
+        SEO: seoData,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching article content or SEO/author data:', error);
+    return { notFound: true };
+  }
+};
 
 export default NotFoundPage;

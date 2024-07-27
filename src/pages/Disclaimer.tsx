@@ -1,6 +1,6 @@
 import HorizontalLine from '@/components/HorizontalLine';
-import ArticalLayout from '@/components/Layout/Artical/AriticalLayout';
-import ArticalHeader from '@/components/Layout/Artical/ArticalHeader';
+import ArticleLayout from '@/components/Layout/Article/ArticleLayout';
+import ArticleHeader from '@/components/Layout/Article/ArticleHeader';
 import Header from '@/components/Layout/Header';
 import Navbar from '@/components/Layout/Navbar';
 import MD from '@/components/MD'
@@ -8,9 +8,10 @@ import ContactSection from '@/components/Page/ContactSection';
 import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from '@/icons/illustation/Disclaimer.svg';
 import Head from 'next/head';
-import SEO from '@/config/SEO.json';
+import { GetStaticProps } from 'next';
+import { initAdmin } from 'lib/firebaseAdmin';
 
-const DisclaimerPage = () => {
+const DisclaimerPage = ({ SEO }: {SEO?: any}) => {
   const markdown = " \
   網站的所有內容旨在提供一般性信息和觀點，不應視為投資建議或其他形式的專業意見。 \n\n \
   網站不保證網站上提供的信息的準確性、完整性、及時性或可靠性，也不對因使用或依賴此等信息所引致的任何損失或損害負責。任何投資或其他決策應基於經過詳細研究和諮詢專業人士後做出，並自行承擔風險。 本網站可能包含第三方網站的連結，但我們不對這些網站的內容、政策或做法負責。使用這些連結時，請查看相關網站的使用條款和隱私政策。 \n\n \
@@ -37,15 +38,15 @@ const DisclaimerPage = () => {
         <Header />
       </div>
       <Navbar />
-      <ArticalHeader
+      <ArticleHeader
         title="Disclaimer"
         subtitle="免責聲明"
         icon={IconLight}
       />
       <div className="mx-auto px-5 sm:px-28">
-        <ArticalLayout className='pt-10'>
+        <ArticleLayout className='pt-10'>
           <MD>{markdown}</MD>
-        </ArticalLayout>
+        </ArticleLayout>
         <HorizontalLine className='sm:hidden' />
         <ContactSection className="py-16" />
         <HorizontalLine />
@@ -55,5 +56,25 @@ const DisclaimerPage = () => {
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    // 獲取SEO配置
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const seoFile = bucket.file('config/SEO.json');
+    const seoFileContents = (await seoFile.download())[0].toString('utf8');
+    const seoData = JSON.parse(seoFileContents);
+
+    return {
+      props: {
+        SEO: seoData,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching article content or SEO/author data:', error);
+    return { notFound: true };
+  }
+};
 
 export default DisclaimerPage;

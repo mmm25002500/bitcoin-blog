@@ -4,12 +4,10 @@ import Post from "./Post";
 import Pagination from '../Pagination/Pagination';
 import { useRouter } from "next/router";
 import { PostProps } from '@/types/List/PostData';
-import postListConfig from '@/config/SiteConfig.json';
 import { parse, isValid } from 'date-fns';
 
-const PostList = ({ data }: PostListData) => {
+const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number}) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = postListConfig.NewsListAllPerpage;
 
   const router = useRouter();
 

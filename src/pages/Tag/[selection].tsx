@@ -1,17 +1,13 @@
 import Navbar from "@/components/Layout/Navbar";
 import { useRouter } from "next/router";
-import AuthorData from '@/config/Author.json';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Header from "@/components/Layout/Header";
-import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
-import matter from 'gray-matter';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
-import Tags from "@/config/Tags.json";
 import NewsListAll from "@/components/List/NewsListAll";
+import { initAdmin } from '../../../lib/firebaseAdmin';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -22,10 +18,9 @@ import right from '@/icons/right.svg';
 import left from '@/icons/left.svg';
 import Image from 'next/image';
 import Head from "next/head";
-import SEO from "@/config/SEO.json";
 
 // 文章列表頁面
-const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], initialSelection: string }) => {
+const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initialPosts: PostProps[], initialSelection: string, seo: any, tags: string[], SiteConfig: any }) => {
   const router = useRouter();
   const { selection } = router.query;
 
@@ -56,17 +51,15 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
   return (
     <>
       <Head>
-        <title>{SEO.Tag.title}</title>
-        <meta name="description" content={SEO.Tag.description} />
-        <meta property="og:title" content={SEO.Tag.title} />
-        <meta property="og:description" content={SEO.Tag.description} />
-        <meta property="og:image" content={SEO.Tag.image} />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
-        <meta property="og:type" content={SEO.Tag.type} />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={SEO.Tag.title} />
-        <meta name="twitter:description" content={SEO.Tag.description} />
-        <meta name="twitter:image" content={SEO.Tag.image} />
+        <title>{seo.Tag.title}</title>
+        <meta name="description" content={seo.Tag.description} />
+        <meta property="og:title" content={seo.Tag.title} />
+        <meta property="og:description" content={seo.Tag.description} />
+        <meta property="og:image" content={seo.Tag.image} />
+        <meta property="og:type" content={seo.Tag.type} />
+        <meta name="twitter:title" content={seo.Tag.title} />
+        <meta name="twitter:description" content={seo.Tag.description} />
+        <meta name="twitter:image" content={seo.Tag.image} />
       </Head>
 
       <div className="sm:hidden">
@@ -99,7 +92,7 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
                 />
               </SwiperSlide>
 
-              {Tags.News.map((tag, idx) => (
+              {tags.map((tag, idx) => (
                 <SwiperSlide key={idx} className="!w-auto">
                   <Radio.Btn
                     text={tag}
@@ -141,7 +134,10 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
         </div>
       </div>
       <div className="mx-auto sm:px-28">
-        <NewsListAll data={filteredPosts} />
+        <NewsListAll
+          data={filteredPosts}
+          postsPerPage={SiteConfig.NewsListAllPerpage}
+        />
       </div>
     </>
   );
@@ -149,11 +145,16 @@ const All = ({ initialPosts, initialSelection }: { initialPosts: PostProps[], in
 
 // 設置靜態路徑
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = Tags.News.map(tag => ({
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const tagsFile = bucket.file('config/Tags.json');
+  const tagsFileContents = (await tagsFile.download())[0].toString('utf8');
+  const tagsData = JSON.parse(tagsFileContents);
+
+  const paths = tagsData.News.map((tag: string) => ({
     params: { selection: tag }
   }));
 
-  // 添加默認路徑
   paths.push({ params: { selection: 'all' } });
 
   return { paths, fallback: 'blocking' };
@@ -164,49 +165,37 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
   const selection = params?.selection;
 
-  const basePath = join(process.cwd(), 'src/Articals');
-  const authorDirs = readdirSync(basePath);
-  let initialPosts: PostProps[] = [];
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const host = process.env.HOST || 'localhost:3000';
+  const apiUrl = `${protocol}://${host}/api/getPostsByFilter?type=both&author=all&tag=${selection}`;
 
-  authorDirs.forEach((userID) => {
-    const articlesDirectory = join(basePath, userID);
-    const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
+  // 獲取初始文章
+  const res = await fetch(apiUrl);
+  const initialPosts = await res.json();
 
-    fileNames.forEach((fileName) => {
-      const filePath = join(articlesDirectory, fileName);
-      const fileContents = readFileSync(filePath, 'utf8');
-      const { content, data } = matter(fileContents);
+  // 獲取SEO配置
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const seoFile = bucket.file('config/SEO.json');
+  const seoFileContents = (await seoFile.download())[0].toString('utf8');
+  const seoData = JSON.parse(seoFileContents);
 
-      const author = AuthorData.find(author => author.id === userID);
+  const tagsFile = bucket.file('config/Tags.json');
+  const tagsFileContents = (await tagsFile.download())[0].toString('utf8');
+  const tagsData = JSON.parse(tagsFileContents);
 
-      const post: PostProps = {
-        title: data.title || '',
-        description: data.description || '',
-        tags: data.tags || [],
-        date: typeof data.date === 'string' ? Date.parse(data.date) : data.date,
-        type: data.type || 'News',
-        id: fileName.replace(/\.mdx$/, ''),
-        authorData: {
-          id: userID,
-          fullname: author?.fullname || '',
-          name: author?.name || '',
-          img: author?.image || '',
-          description: author?.description || '',
-        },
-        img: data.img || undefined,
-        image: data.image || undefined,
-      };
-
-      if (data.tags.includes(selection)) {
-        initialPosts.push(post);
-      }
-    });
-  });
+  // 獲取 SiteConfig 配置
+  const siteConfigFile = bucket.file('config/SiteConfig.json');
+  const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
+  const siteConfigData = JSON.parse(siteConfigFileContents);
 
   return {
     props: {
       initialPosts,
       initialSelection: selection,
+      seo: seoData,
+      tags: tagsData.News,
+      SiteConfig: siteConfigData,
     },
   };
 };

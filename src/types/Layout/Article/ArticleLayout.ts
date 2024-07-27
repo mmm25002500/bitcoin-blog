@@ -1,4 +1,4 @@
-export interface AriticalLayout {
+export interface ArticleLayout {
   children?: React.ReactNode;
   className?: string;
 }

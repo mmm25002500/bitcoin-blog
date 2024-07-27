@@ -2,15 +2,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import axios from 'axios';
-import { readdirSync } from 'fs';
-import { join } from 'path';
 import { serialize } from 'next-mdx-remote/serialize';
-import matter from 'gray-matter';
-import { readFileSync } from 'fs';
 
 // components
 import Navbar from "@/components/Layout/Navbar";
-import ArticalLayout from "@/components/Layout/Artical/AriticalLayout";
+import ArticleLayout from "@/components/Layout/Article/ArticleLayout";
 import Sidebar from '@/components/Sidebar/MoreInfoSidebar';
 import MD from "@/components/MD";
 import Tag from "@/components/Tag/Tag";
@@ -20,7 +16,7 @@ import MoreInfoDrawer from "@/components/Drawer/MoreInfoDrawer";
 import IconWithTextBtn from "@/components/Button/IconWithTextBtn";
 
 // types
-import { GetArticalLinkByFileName } from "@/types/API/getArticalLinkByFileName";
+import { GetArticleLinkByFileName } from "@/types/API/getArticleLinkByFileName";
 import { categoryData } from "@/types/MoreInfo/MoreInfo";
 import { MoreInfoData } from '@/types/MoreInfo/MoreInfo';
 
@@ -30,18 +26,22 @@ import DownIcon from '@/icons/down.svg';
 import ArrowLeft from '@/icons/arrow-left.svg';
 import Head from "next/head";
 
-import SEO from "@/config/SEO.json";
+import { initAdmin } from "lib/firebaseAdmin";
+import { PostProps } from "@/types/List/PostData";
 
-const MoreInfos = (props: MoreInfoData) => {
+const MoreInfos = (props: MoreInfoData & { seo: any }) => {
   const router = useRouter();
-  const { ArticalName: queryArticalName } = router.query;
+  const { ArticleName: queryArticleName } = router.query;
   const [category, setCategory] = useState<categoryData[]>();
 
-  const [currentSelection, setCurrentSelection] = useState<string>(props.ArticalName);
+  const [currentSelection, setCurrentSelection] = useState<string>(props.ArticleName);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  const date = new Date(props.post.frontMatter.date);
+  const { seo } = props;
+
   // 得到作者資訊
-  const [postData, setpostData] = useState<GetArticalLinkByFileName>();
+  const [postData, setpostData] = useState<GetArticleLinkByFileName>();
 
   useEffect(() => {
     const fetchAuthorData = async () => {
@@ -63,7 +63,6 @@ const MoreInfos = (props: MoreInfoData) => {
     fetchAuthorData();
   }, [currentSelection]);
 
-
   // 類別 要放到 Sidebar 裡面
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -76,88 +75,101 @@ const MoreInfos = (props: MoreInfoData) => {
 
   if (!props.post) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <div className="sm:flex">
+      <>
+        <Head>
+          <title>找不到頁面 - {seo.MoreInfo.title}</title>
+          <meta name="description" content={seo.MoreInfo.description} />
+          <meta property="og:title" content={`找不到頁面 - ${seo.MoreInfo.title}`} />
+          <meta property="og:description" content={seo.MoreInfo.description} />
+          <meta property="og:image" content={seo.MoreInfo.image} />
+          {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
+          <meta property="og:type" content={seo.MoreInfo.type} />
+          {/* <meta name="twitter:card" content="summary_large_image" /> */}
+          <meta name="twitter:title" content={`找不到頁面 - ${seo.MoreInfo.title}`} />
+          <meta name="twitter:description" content={seo.MoreInfo.description} />
+          <meta name="twitter:image" content={seo.MoreInfo.image} />
+        </Head>
+        <div className="min-h-screen flex flex-col">
+          <Navbar />
+          <div className="sm:flex">
 
-          {/* Sidebar */}
-          <div>
-            {
-              category &&
-              <>
-                {/* 電腦版 Sidebar */}
-                <div className="border-r-[1px] border-[#E7E6F2] dark:border-neutral-800 hidden sm:block">
-                  <Sidebar
-                    data={category}
-                    path={props.ArticalName}
-                    onChange={(value: string) => setCurrentSelection(value)}
-                    className="w-80"
-                  />
-                </div>
+            {/* Sidebar */}
+            <div>
+              {
+                category &&
+                <>
+                  {/* 電腦版 Sidebar */}
+                  <div className="border-r-[1px] border-[#E7E6F2] dark:border-neutral-800 hidden sm:block">
+                    <Sidebar
+                      data={category}
+                      path={props.ArticleName}
+                      onChange={(value: string) => setCurrentSelection(value)}
+                      className="w-80"
+                    />
+                  </div>
 
-                {/* 手機版目錄 */}
-                <div className="relative mx-5 sm:hidden">
-                  <IconWithTextBtn
-                    onClick={() => setIsDrawerOpen(true)}
-                    icon={DownIcon}
-                    className="flex"
-                  >
-                    <div className="flex grow">
-                      目錄
-                      <div className="text-neutral-500 mx-2">
-                        ｜
+                  {/* 手機版目錄 */}
+                  <div className="relative mx-5 sm:hidden">
+                    <IconWithTextBtn
+                      onClick={() => setIsDrawerOpen(true)}
+                      icon={DownIcon}
+                      className="flex"
+                    >
+                      <div className="flex grow">
+                        目錄
+                        <div className="text-neutral-500 mx-2">
+                          ｜
+                        </div>
+                        尚未選取文章
+                        {/* 箭頭 */}
                       </div>
-                      尚未選取文章
-                      {/* 箭頭 */}
-                    </div>
-                    <div className="self-center">
-                      <Image
-                        src={DownIcon}
-                        alt="Icon Dark"
-                        className={`transition-transform duration-200 dark:invert`}
-                      ></Image>
-                    </div>
-                  </IconWithTextBtn>
-                </div>
-              </>
-            }
+                      <div className="self-center">
+                        <Image
+                          src={DownIcon}
+                          alt="Icon Dark"
+                          className={`transition-transform duration-200 dark:invert`}
+                        ></Image>
+                      </div>
+                    </IconWithTextBtn>
+                  </div>
+                </>
+              }
+            </div>
+
+            {/* 404 */}
+            <NotFound></NotFound>
           </div>
 
-          {/* 404 */}
-          <NotFound></NotFound>
+          {/* 手機版目錄 */}
+          {
+            category && <MoreInfoDrawer
+              isDrawerOpen={isDrawerOpen}
+              setIsDrawerOpen={setIsDrawerOpen}
+              data={category}
+              path={props.ArticleName}
+              onChange={(value: string) => setCurrentSelection(value)}
+            ></MoreInfoDrawer>
+          }
+
         </div>
-
-        {/* 手機版目錄 */}
-        {
-          category && <MoreInfoDrawer
-            isDrawerOpen={isDrawerOpen}
-            setIsDrawerOpen={setIsDrawerOpen}
-            data={category}
-            path={props.ArticalName}
-            onChange={(value: string) => setCurrentSelection(value)}
-          ></MoreInfoDrawer>
-        }
-
-      </div>
+      </>
     )
   }
-
-  const date = new Date(props.post.frontMatter.date);
 
   return (
     <>
       <Head>
-        <title>{props.post.frontMatter.title} - {SEO.MoreInfo.title}</title>
+        <title>{props.post.frontMatter.title} - {seo.MoreInfo.title}</title>
         <meta name="description" content={props.post.frontMatter.description} />
-        <meta property="og:title" content={`${props.post.frontMatter.title} - ${SEO.MoreInfo.title}`} />
+        <meta property="og:title" content={`${props.post.frontMatter.title} - ${seo.MoreInfo.title}`} />
         <meta property="og:description" content={props.post.frontMatter.description} />
-        <meta property="og:image" content={SEO.MoreInfo.image} />
+        <meta property="og:image" content={seo.MoreInfo.image} />
         {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
-        <meta property="og:type" content={SEO.MoreInfo.type} />
+        <meta property="og:type" content={seo.MoreInfo.type} />
         {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={`${props.post.frontMatter.title} - ${SEO.MoreInfo.title}`} />
+        <meta name="twitter:title" content={`${props.post.frontMatter.title} - ${seo.MoreInfo.title}`} />
         <meta name="twitter:description" content={props.post.frontMatter.description} />
-        <meta name="twitter:image" content={SEO.MoreInfo.image} />
+        <meta name="twitter:image" content={seo.MoreInfo.image} />
       </Head>
 
       <div className="min-h-screen flex flex-col">
@@ -170,7 +182,7 @@ const MoreInfos = (props: MoreInfoData) => {
               category &&
               <Sidebar
                 data={category}
-                path={props.ArticalName}
+                path={props.ArticleName}
                 onChange={(value: string) => setCurrentSelection(value)}
                 className="w-80"
               />
@@ -215,7 +227,7 @@ const MoreInfos = (props: MoreInfoData) => {
 
           {/* 內文 */}
           <div className="flex-grow mx-auto sm:px-28 mb-10">
-            <ArticalLayout className='pt-3 sm:pt-10 px-5 sm:px-0'>
+            <ArticleLayout className='pt-3 sm:pt-10 px-5 sm:px-0'>
 
               {/* 標題 */}
               <h1 className="mb-2 text-xl leading-[30px] sm:text-[32px] sm:leading-[48px] font-bold">{props.post.frontMatter.title}</h1>
@@ -272,7 +284,7 @@ const MoreInfos = (props: MoreInfoData) => {
                 </div>
               </div>
 
-            </ArticalLayout>
+            </ArticleLayout>
           </div>
         </div>
 
@@ -282,7 +294,7 @@ const MoreInfos = (props: MoreInfoData) => {
             isDrawerOpen={isDrawerOpen}
             setIsDrawerOpen={setIsDrawerOpen}
             data={category}
-            path={props.ArticalName}
+            path={props.ArticleName}
             onChange={(value: string) => setCurrentSelection(value)}
           ></MoreInfoDrawer>
         }
@@ -292,67 +304,77 @@ const MoreInfos = (props: MoreInfoData) => {
   );
 };
 
-// 設置靜態路徑
 export const getStaticPaths: GetStaticPaths = async () => {
-  const basePath = join(process.cwd(), 'src/Articals');
-  const authorDirs = readdirSync(basePath);
+  try {
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const moreInfoFile = bucket.file('config/MoreInfo.json');
+    const moreInfoFileContents = (await moreInfoFile.download())[0].toString('utf8');
+    const moreInfoData = JSON.parse(moreInfoFileContents);
 
-  const paths = authorDirs.flatMap((userID) => {
-    const articlesDirectory = join(basePath, userID);
-    return readdirSync(articlesDirectory)
-      .filter((file) => file.endsWith('.mdx'))
-      .map((fileName) => ({
-        params: { ArticalName: fileName.replace(/\.mdx$/, '') },
-      }));
-  });
+    const paths = moreInfoData.map((item: { link: string }) => ({
+      params: { ArticleName: item.link.split('/').pop() }
+    }));
 
-  return { paths, fallback: 'blocking' };
-}
+    return { paths, fallback: 'blocking' };
+  } catch (error) {
+    console.error('Error fetching paths:', error);
+    return { paths: [], fallback: 'blocking' };
+  }
+};
 
-// 獲取靜態頁面所需的數據
 export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
-  const ArticalName = params?.ArticalName as string;
+  const ArticleName = params?.ArticleName as string;
 
-  // 獲取文章內容
-  const basePath = join(process.cwd(), 'src/Articals');
-  const authorDirs = readdirSync(basePath);
-  let filePath = '';
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const host = process.env.HOST || 'localhost:3000';
+  const linkApiUrl = `${protocol}://${host}/api/getArticleLinkByFilename?filename=${ArticleName}`;
+  console.log('seoData:', ArticleName);
 
-  for (const userID of authorDirs) {
-    const userDir = join(basePath, userID);
-    const userFiles = readdirSync(userDir);
-
-    if (userFiles.includes(`${ArticalName}.mdx`)) {
-      filePath = join(userDir, `${ArticalName}.mdx`);
-      break;
+  try {
+    // 獲取文章連結
+    const linkRes = await fetch(linkApiUrl);
+    if (!linkRes.ok) {
+      return { notFound: true };
     }
-  }
+    const linkData = await linkRes.json();
+    const { link, authorData } = linkData;
+    const [userID, postID] = link.split('/');
 
-  if (!filePath) {
+    // 獲取文章內容
+    const markdownApiUrl = `${protocol}://${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
+    const markdownRes = await fetch(markdownApiUrl);
+    if (!markdownRes.ok) {
+      return { notFound: true };
+    }
+    const { content, data } = await markdownRes.json();
+    const mdxSource = await serialize(content);
+
+    // 獲取SEO資料
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const seoFile = bucket.file('config/SEO.json');
+    const seoFileContents = (await seoFile.download())[0].toString('utf8');
+    const seoData = JSON.parse(seoFileContents);
+
     return {
       props: {
-        post: null,
-        ArticalName,
-      }
-    };
-  }
-
-  const fileContents = readFileSync(filePath, 'utf8');
-  const { content, data } = matter(fileContents);
-  const mdxSource = await serialize(content);
-
-  return {
-    props: {
-      post: {
-        source: mdxSource,
-        frontMatter: {
-          ...data,
+        post: {
+          source: mdxSource,
+          frontMatter: {
+            ...data,
+            authorData: authorData,
+          } as PostProps,
         },
+        seo: seoData,
+        ArticleName,
       },
-      ArticalName,
-    },
-  };
+    };
+  } catch (error) {
+    console.error('Error fetching article content or SEO data:', error);
+    return { notFound: true };
+  }
 };
 
 export default MoreInfos;

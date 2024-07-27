@@ -6,31 +6,32 @@ import Header from "@/components/Layout/Header";
 import Navbar from "@/components/Layout/Navbar";
 import ContactSection from "@/components/Page/ContactSection";
 import SubscribeSection from "@/components/Page/SubscribeSection";
-import { readFileSync, readdirSync } from "fs";
-import matter from "gray-matter";
+import Head from "next/head";
 import { GetStaticProps } from 'next';
-import { join } from "path";
-import AuthorData from '@/config/Author.json';
 import { PostProps } from '@/types/List/PostData';
 import { NewsPostProps } from "@/types/HomePage/NewsSection";
-import Head from "next/head";
-import SEO from "@/config/SEO.json";
+import { initAdmin } from "lib/firebaseAdmin";
+import { TagsProps } from "@/types/Tag/Tag";
 
-const Home = (props: NewsPostProps) => {
+interface HomeProps extends NewsPostProps {
+  SEO: any;
+  Tags: TagsProps;
+  SiteConfig: any;
+}
+
+const Home = (props: HomeProps) => {
   return (
     <>
       <Head>
-        <title>{SEO.Index.title}</title>
-        <meta name="description" content={SEO.Index.description} />
-        <meta property="og:title" content={SEO.Index.title} />
-        <meta property="og:description" content={SEO.Index.description} />
-        <meta property="og:image" content={SEO.Index.image} />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
-        <meta property="og:type" content={SEO.Index.type} />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={SEO.Index.title} />
-        <meta name="twitter:description" content={SEO.Index.description} />
-        <meta name="twitter:image" content={SEO.Index.image} />
+        <title>{props.SEO.Index.title}</title>
+        <meta name="description" content={props.SEO.Index.description} />
+        <meta property="og:title" content={props.SEO.Index.title} />
+        <meta property="og:description" content={props.SEO.Index.description} />
+        <meta property="og:image" content={props.SEO.Index.image} />
+        <meta property="og:type" content={props.SEO.Index.type} />
+        <meta name="twitter:title" content={props.SEO.Index.title} />
+        <meta name="twitter:description" content={props.SEO.Index.description} />
+        <meta name="twitter:image" content={props.SEO.Index.image} />
       </Head>
 
       <Header></Header>
@@ -41,63 +42,53 @@ const Home = (props: NewsPostProps) => {
         <HorizontalLine />
         <NewsSection
           initialPosts={props.initialPosts}
-          initialSelection={props.initialSelection} />
+          initialSelection={props.initialSelection}
+          tags={props.Tags}
+          HomePageNewsListPerpage={props.SiteConfig.HomePageNewsListPerpage}
+        />
         <HorizontalLine />
         <ContactSection className="py-16" />
         <HorizontalLine />
         <SubscribeSection className="py-16" />
       </div>
     </>
-  )
-}
+  );
+};
 
-// 獲取靜態頁面所需的數據
-export const getStaticProps: GetStaticProps = async (context) => {
-  const selection = context.params?.selection || "all";
+// 獲取首頁的初始數據
+export const getStaticProps: GetStaticProps = async () => {
+  // 獲取首頁的新聞文章
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const host = process.env.HOST || 'localhost:3000'; // 確保 host 正確
+  const apiUrl = `${protocol}://${host}/api/getPostsByFilter?type=News&author=all&tag=all`;
 
-  const basePath = join(process.cwd(), 'src/Articals');
-  const authorDirs = readdirSync(basePath);
-  let initialPosts: PostProps[] = [];
+  const res = await fetch(apiUrl);
+  const initialPosts: PostProps[] = await res.json();
 
-  authorDirs.forEach((userID) => {
-    const articlesDirectory = join(basePath, userID);
-    const fileNames = readdirSync(articlesDirectory).filter(file => file.endsWith('.mdx'));
+  // 獲取SEO配置
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const seoFile = bucket.file('config/SEO.json');
+  const seoFileContents = (await seoFile.download())[0].toString('utf8');
+  const seoData = JSON.parse(seoFileContents);
 
-    fileNames.forEach((fileName) => {
-      const filePath = join(articlesDirectory, fileName);
-      const fileContents = readFileSync(filePath, 'utf8');
-      const { content, data } = matter(fileContents);
+  // 獲取Tag配置
+  const tagFile = bucket.file('config/Tags.json');
+  const tagFileContents = (await tagFile.download())[0].toString('utf8');
+  const tagData = JSON.parse(tagFileContents);
 
-      const author = AuthorData.find(author => author.id === userID);
-
-      const post: PostProps = {
-        title: data.title || '',
-        description: data.description || '',
-        tags: data.tags || [],
-        date: typeof data.date === 'string' ? Date.parse(data.date) : data.date,
-        type: data.type || 'News',
-        id: fileName.replace(/\.mdx$/, ''),
-        authorData: {
-          id: userID,
-          fullname: author?.fullname || '',
-          name: author?.name || '',
-          img: author?.image || '',
-          description: author?.description || '',
-        },
-        img: data.img || undefined,
-        image: data.image || undefined,
-      };
-
-      if (data.tags.includes(selection)) {
-        initialPosts.push(post);
-      }
-    });
-  });
+  //獲取SiteConfig配置
+  const siteConfigFile = bucket.file('config/SiteConfig.json');
+  const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
+  const siteConfigData = JSON.parse(siteConfigFileContents);
 
   return {
     props: {
       initialPosts,
-      initialSelection: selection,
+      initialSelection: "all",
+      SEO: seoData,
+      Tags: tagData,
+      SiteConfig: siteConfigData,
     },
   };
 };
