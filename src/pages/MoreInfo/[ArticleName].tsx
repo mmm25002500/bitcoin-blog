@@ -312,9 +312,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const moreInfoFileContents = (await moreInfoFile.download())[0].toString('utf8');
     const moreInfoData = JSON.parse(moreInfoFileContents);
 
-    const paths = moreInfoData.map((item: { link: string }) => ({
-      params: { ArticleName: item.link.split('/').pop() }
-    }));
+    const paths = moreInfoData.flatMap((item: { folder: string, post: { filename: string }[] }) =>
+      item.post.map(post => ({
+        params: { ArticleName: post.filename }
+      }))
+    );
 
     return { paths, fallback: 'blocking' };
   } catch (error) {
@@ -329,7 +331,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
   const linkApiUrl = `${host}/api/getArticleLinkByFilename?filename=${ArticleName}`;
-  console.log('seoData:', ArticleName);
 
   try {
     // 獲取文章連結
