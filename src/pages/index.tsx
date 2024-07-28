@@ -58,7 +58,9 @@ const Home = (props: HomeProps) => {
 // 獲取首頁的初始數據
 export const getStaticProps: GetStaticProps = async () => {
   // 獲取首頁的新聞文章
-  const apiUrl = `/api/getPostsByFilter?type=News&author=all&tag=all`;
+  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+
+  const apiUrl = `${host}/api/getPostsByFilter?type=News&author=all&tag=all`;
 
   const res = await fetch(apiUrl);
   const initialPosts: PostProps[] = await res.json();
