@@ -4,19 +4,19 @@ import Avater from "@/components/User/Avater";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
 import Icon from "@/components/Icon";
+import useSWR from 'swr';
 
 import DownIcon from '@/icons/down.svg';
 import UpIcon from '@/icons/up.svg';
 import Header from "@/components/Layout/Header";
 import PostList from "@/components/List/PostList";
 
-import { serialize } from 'next-mdx-remote/serialize';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import Head from "next/head";
 import { initAdmin } from "lib/firebaseAdmin";
 
-// 获取作者数据
+// 獲取作者數據
 const getAuthorData = async () => {
   const app = await initAdmin();
   const bucket = app.storage().bucket();
@@ -25,35 +25,41 @@ const getAuthorData = async () => {
   return JSON.parse(authorFileContents);
 };
 
-const AuthorPage = (props: {posts: PostProps[], seo: any, author: any}) => {
+// fetcher 函數
+const fetcher = (url: string) => fetch(url).then(res => res.json());
 
+const AuthorPage = (props: {
+  initialPosts: any; initialSEO: any, initialAuthor: any
+}) => {
   const [postQuantity, setPostQuantity] = useState(0);
   const [collaspe, setCollaspe] = useState(true);
 
+  const { data: posts, error } = useSWR(`/api/getPostsByFilter?type=both&author=${props.initialAuthor.id}&tag=all`, fetcher, { fallbackData: props.initialPosts });
+
   // 計算文章數量
   useEffect(() => {
-    setPostQuantity(props.posts.length);
-  }, [props.posts]);
-
-  console.log(props.posts);
+    if (posts) {
+      setPostQuantity(posts.length);
+    }
+  }, [posts]);
 
   // 按照日期排序
-  props.posts.sort((a, b) => {
+  posts && posts.sort((a: PostProps, b: PostProps) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
   return (
     <>
       <Head>
-        <title>{props.author.name} - {props.seo.Author.title}</title>
-        <meta name="description" content={props.seo.Author.description} />
-        <meta property="og:title" content={`${props.author.name} - ${props.seo.Author.title}`} />
-        <meta property="og:description" content={props.seo.Author.description} />
-        <meta property="og:image" content={props.seo.Author.image} />
-        <meta property="og:type" content={props.seo.Author.type} />
-        <meta name="twitter:title" content={`${props.author.name} - ${props.seo.Author.title}`} />
-        <meta name="twitter:description" content={props.seo.Author.description} />
-        <meta name="twitter:image" content={props.seo.Author.image} />
+        <title>{props.initialAuthor.name} - {props.initialSEO.Author.title}</title>
+        <meta name="description" content={props.initialSEO.Author.description} />
+        <meta property="og:title" content={`${props.initialAuthor.name} - ${props.initialSEO.Author.title}`} />
+        <meta property="og:description" content={props.initialSEO.Author.description} />
+        <meta property="og:image" content={props.initialSEO.Author.image} />
+        <meta property="og:type" content={props.initialSEO.Author.type} />
+        <meta name="twitter:title" content={`${props.initialAuthor.name} - ${props.initialSEO.Author.title}`} />
+        <meta name="twitter:description" content={props.initialSEO.Author.description} />
+        <meta name="twitter:image" content={props.initialSEO.Author.image} />
       </Head>
 
       <div className="sm:hidden">
@@ -64,13 +70,13 @@ const AuthorPage = (props: {posts: PostProps[], seo: any, author: any}) => {
       <div className="mx-auto px-6 sm:px-28">
         <div className="flex gap-10 my-5">
           <div className="flex-none">
-            <Avater src={props.author?.image} className="" />
+            <Avater src={props.initialAuthor?.image} className="" />
           </div>
           <div className="w-full">
             <div className="flex flex-wrap sm:flex-nowrap sm:grid sm:grid-cols-1 gap-1">
               {/* 名字 */}
               <div className="flex-none font-semibold text-base leading-6 sm:font-bold sm:text-[28px] sm:leading-[42px] text-neutral-black dark:text-neutral-white">
-                {props.author?.fullname}
+                {props.initialAuthor?.fullname}
               </div>
               <div className="flex-grow"></div>
 
@@ -84,7 +90,7 @@ const AuthorPage = (props: {posts: PostProps[], seo: any, author: any}) => {
               {/* 描述 */}
               <div className="flex-none col-span-2 sm:col-span-1 font-normal text-sm leading-6 text-neutral-900 dark:text-neutral-300 overflow-hidden">
                 <p className={collaspe ? 'line-clamp-2' : ''}>
-                  {props.author?.description}
+                  {props.initialAuthor?.description}
                 </p>
               </div>
 
@@ -110,25 +116,27 @@ const AuthorPage = (props: {posts: PostProps[], seo: any, author: any}) => {
         <HorizontalLine />
       </div>
       <div className="mx-auto sm:px-28">
-        <PostList
-          data={props.posts.map((post) => ({
-            title: post.title,
-            description: post.description,
-            tags: post.tags,
-            date: post.date,
-            authorData: {
-              fullname: props.author.fullname,
-              name: props.author.name,
-              description: props.author.description,
-              img: props.author.image,
-              id: props.author.id,
-            },
-            type: post.type,
-            img: post.img,
-            image: post.image,
-            id: post.id,
-          }))}
-        />
+        {
+          posts && <PostList
+            data={posts.map((post: PostProps) => ({
+              title: post.title,
+              description: post.description,
+              tags: post.tags,
+              date: post.date,
+              authorData: {
+                fullname: props.initialAuthor.fullname,
+                name: props.initialAuthor.name,
+                description: props.initialAuthor.description,
+                img: props.initialAuthor.image,
+                id: props.initialAuthor.id,
+              },
+              type: post.type,
+              img: post.img,
+              image: post.image,
+              id: post.id,
+            }))}
+          />
+        }
       </div>
     </>
   );
@@ -152,28 +160,19 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   try {
-    const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
-
     const app = await initAdmin();
     const bucket = app.storage().bucket();
     const seoFile = bucket.file('config/SEO.json');
     const seoFileContents = (await seoFile.download())[0].toString('utf8');
     const seoData = JSON.parse(seoFileContents);
 
-    const markdownApiUrl = `${host}/api/getPostsByFilter?type=both&author=${userID}&tag=all`;
-    const markdownRes = await fetch(markdownApiUrl);
-    if (!markdownRes.ok) {
-      return { notFound: true };
-    }
-    const posts = await markdownRes.json();
     const authorData = await getAuthorData();
     const author = authorData.find((author: any) => author.id === userID);
 
     return {
       props: {
-        posts,
-        seo: seoData,
-        author,
+        initialSEO: seoData,
+        initialAuthor: author,
       },
     };
   } catch (error) {

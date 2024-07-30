@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import useSWR from 'swr';
 import ButtonSection from "@/components/HomePage/ButtonSection";
 import NewsSection from "@/components/HomePage/NewsSection";
 import SwiperSection from "@/components/HomePage/SwiperSection";
@@ -13,25 +15,31 @@ import { NewsPostProps } from "@/types/HomePage/NewsSection";
 import { initAdmin } from "lib/firebaseAdmin";
 import { TagsProps } from "@/types/Tag/Tag";
 
-interface HomeProps extends NewsPostProps {
-  SEO: any;
-  Tags: TagsProps;
-  SiteConfig: any;
+interface HomeProps {
+  initialPosts: PostProps[] | undefined;
+  initialSEO: any;
+  initialTags: TagsProps;
+  initialSiteConfig: any;
 }
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Home = (props: HomeProps) => {
+  const { data: initialPosts, error } = useSWR<PostProps[]>('/api/getPostsByFilter?type=News&author=all&tag=all', fetcher, { fallbackData: props.initialPosts });
+  const [selection, setSelection] = useState('all');
+
   return (
     <>
       <Head>
-        <title>{props.SEO.Index.title}</title>
-        <meta name="description" content={props.SEO.Index.description} />
-        <meta property="og:title" content={props.SEO.Index.title} />
-        <meta property="og:description" content={props.SEO.Index.description} />
-        <meta property="og:image" content={props.SEO.Index.image} />
-        <meta property="og:type" content={props.SEO.Index.type} />
-        <meta name="twitter:title" content={props.SEO.Index.title} />
-        <meta name="twitter:description" content={props.SEO.Index.description} />
-        <meta name="twitter:image" content={props.SEO.Index.image} />
+        <title>{props.initialSEO.Index.title}</title>
+        <meta name="description" content={props.initialSEO.Index.description} />
+        <meta property="og:title" content={props.initialSEO.Index.title} />
+        <meta property="og:description" content={props.initialSEO.Index.description} />
+        <meta property="og:image" content={props.initialSEO.Index.image} />
+        <meta property="og:type" content={props.initialSEO.Index.type} />
+        <meta name="twitter:title" content={props.initialSEO.Index.title} />
+        <meta name="twitter:description" content={props.initialSEO.Index.description} />
+        <meta name="twitter:image" content={props.initialSEO.Index.image} />
       </Head>
 
       <Header></Header>
@@ -40,12 +48,15 @@ const Home = (props: HomeProps) => {
       <div className="sm:mx-auto sm:px-16 mx-8">
         <ButtonSection classname="py-8" />
         <HorizontalLine />
-        <NewsSection
-          initialPosts={props.initialPosts}
-          initialSelection={props.initialSelection}
-          tags={props.Tags}
-          HomePageNewsListPerpage={props.SiteConfig.HomePageNewsListPerpage}
-        />
+        {
+          initialPosts && <NewsSection
+            initialPosts={initialPosts}
+            initialSelection={selection}
+            tags={props.initialTags}
+            HomePageNewsListPerpage={props.initialSiteConfig.HomePageNewsListPerpage}
+          />
+
+        }
         <HorizontalLine />
         <ContactSection className="py-16" />
         <HorizontalLine />
@@ -57,14 +68,6 @@ const Home = (props: HomeProps) => {
 
 // 獲取首頁的初始數據
 export const getStaticProps: GetStaticProps = async () => {
-  // 獲取首頁的新聞文章
-  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
-
-  const apiUrl = `${host}/api/getPostsByFilter?type=News&author=all&tag=all`;
-
-  const res = await fetch(apiUrl);
-  const initialPosts: PostProps[] = await res.json();
-
   // 獲取SEO配置
   const app = await initAdmin();
   const bucket = app.storage().bucket();
@@ -77,18 +80,16 @@ export const getStaticProps: GetStaticProps = async () => {
   const tagFileContents = (await tagFile.download())[0].toString('utf8');
   const tagData = JSON.parse(tagFileContents);
 
-  //獲取SiteConfig配置
+  // 獲取SiteConfig配置
   const siteConfigFile = bucket.file('config/SiteConfig.json');
   const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
   const siteConfigData = JSON.parse(siteConfigFileContents);
 
   return {
     props: {
-      initialPosts,
-      initialSelection: "all",
-      SEO: seoData,
-      Tags: tagData,
-      SiteConfig: siteConfigData,
+      initialSEO: seoData,
+      initialTags: tagData,
+      initialSiteConfig: siteConfigData,
     },
   };
 };
