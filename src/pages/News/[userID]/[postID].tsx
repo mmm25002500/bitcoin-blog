@@ -50,6 +50,8 @@ const PostPage = ({ post, seo, authorData, ArticleNewsListMorePostPerclick }: Ma
 
     return (
       <>
+        <p>test</p>
+        {/*
         <Head>
           <title>{post.frontMatter.title} - { seo.News.title }</title>
           <meta name="description" content={post.frontMatter.description} />
@@ -104,86 +106,87 @@ const PostPage = ({ post, seo, authorData, ArticleNewsListMorePostPerclick }: Ma
             </ArticleLayout>
           </div>
         </article>
+        */}
       </>
     );
   }
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
-  const apiUrl = `${host}/api/getPostsByFilter?type=News&author=all&tag=all`;
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+//   const apiUrl = `${host}/api/getPostsByFilter?type=News&author=all&tag=all`;
 
-  const res = await fetch(apiUrl);
-  const posts = await res.json();
+//   const res = await fetch(apiUrl);
+//   const posts = await res.json();
 
-  const paths = posts.map((post: PostProps) => ({
-    params: { userID: post.authorData?.id, postID: post.id }
-  }));
+//   const paths = posts.map((post: PostProps) => ({
+//     params: { userID: post.authorData?.id, postID: post.id }
+//   }));
 
-  return { paths, fallback: 'blocking' };
-};
+//   return { paths, fallback: 'blocking' };
+// };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { params } = context;
-  const userID = params?.userID;
-  const postID = params?.postID;
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   // const { params } = context;
+//   // const userID = params?.userID;
+//   // const postID = params?.postID;
 
-  if (!userID || !postID) {
-    return { notFound: true };
-  }
+//   // if (!userID || !postID) {
+//   //   return { notFound: true };
+//   // }
 
-  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
-  const articleApiUrl = `${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
-  const authorApiUrl = `${host}/api/getAuthorConfig`;
+//   // const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+//   // const articleApiUrl = `${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
+//   // const authorApiUrl = `${host}/api/getAuthorConfig`;
 
-  try {
-    // 獲取文章內容
-    const articleRes = await fetch(articleApiUrl);
-    if (!articleRes.ok) {
-      return { notFound: true };
-    }
-    const { content, data } = await articleRes.json();
-    const mdxSource = await serialize(content);
+//   // try {
+//   //   // 獲取文章內容
+//   //   const articleRes = await fetch(articleApiUrl);
+//   //   if (!articleRes.ok) {
+//   //     return { notFound: true };
+//   //   }
+//   //   const { content, data } = await articleRes.json();
+//   //   const mdxSource = await serialize(content);
 
-    // 獲取SEO配置
-    const app = await initAdmin();
-    const bucket = app.storage().bucket();
-    const seoFile = bucket.file('config/SEO.json');
-    const seoFileContents = (await seoFile.download())[0].toString('utf8');
-    const seoData = JSON.parse(seoFileContents);
+//   //   // 獲取SEO配置
+//   //   const app = await initAdmin();
+//   //   const bucket = app.storage().bucket();
+//   //   const seoFile = bucket.file('config/SEO.json');
+//   //   const seoFileContents = (await seoFile.download())[0].toString('utf8');
+//   //   const seoData = JSON.parse(seoFileContents);
 
-    // 獲取作者資料
-    const authorRes = await fetch(authorApiUrl);
-    if (!authorRes.ok) {
-      return { notFound: true };
-    }
-    const authorData = await authorRes.json();
-    const author = authorData.find((author: any) => author.id === userID);
+//   //   // 獲取作者資料
+//   //   const authorRes = await fetch(authorApiUrl);
+//   //   if (!authorRes.ok) {
+//   //     return { notFound: true };
+//   //   }
+//   //   const authorData = await authorRes.json();
+//   //   const author = authorData.find((author: any) => author.id === userID);
 
-    // 獲取 SiteConfig
-    const siteConfigFile = bucket.file('config/SiteConfig.json');
-    const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
-    const siteConfigData = JSON.parse(siteConfigFileContents);
-    const ArticleNewsListMorePostPerclick = siteConfigData.ArticleNewsListMorePostPerclick;
+//   //   // 獲取 SiteConfig
+//   //   const siteConfigFile = bucket.file('config/SiteConfig.json');
+//   //   const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
+//   //   const siteConfigData = JSON.parse(siteConfigFileContents);
+//   //   const ArticleNewsListMorePostPerclick = siteConfigData.ArticleNewsListMorePostPerclick;
 
-    return {
-      props: {
-        post: {
-          source: mdxSource,
-          frontMatter: {
-            ...data,
-            authorData: { id: userID, ...data.authorData }
-          } as PostProps,
-        },
-        seo: seoData,
-        authorData: author,
-        ArticleNewsListMorePostPerclick
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching article content or SEO/author data:', error);
-    return { notFound: true };
-  }
-};
+//   //   return {
+//   //     props: {
+//   //       post: {
+//   //         source: mdxSource,
+//   //         frontMatter: {
+//   //           ...data,
+//   //           authorData: { id: userID, ...data.authorData }
+//   //         } as PostProps,
+//   //       },
+//   //       seo: seoData,
+//   //       authorData: author,
+//   //       ArticleNewsListMorePostPerclick
+//   //     },
+//   //   };
+//   // } catch (error) {
+//   //   console.error('Error fetching article content or SEO/author data:', error);
+//   //   return { notFound: true };
+//   // }
+// };
 
 export default PostPage;

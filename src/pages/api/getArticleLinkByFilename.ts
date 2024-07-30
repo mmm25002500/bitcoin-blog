@@ -6,11 +6,16 @@ import { LawAuthorData } from '@/types/List/Author';
 
 // 動態設置 API URL
 const getApiUrl = (req: NextApiRequest): string => {
-  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
+  const host = req.headers.host;
   if (!host) {
     throw new Error('Host URL is not defined');
   }
-  return host;
+  // 使用 HTTP 為本地開發環境
+  if (host.includes('localhost') || host.includes('127.0.0.1')) {
+    return `http://${host}`;
+  }
+  // 使用 HTTPS 為生產環境
+  return `https://${host}`;
 };
 
 // 根據 userID 獲取作者資料
