@@ -32,7 +32,7 @@ const ButtonSection = (props: ButtonSectionProps) => {
   return (
     <>
       <div className={`sm:flex sm:gap-4 ${props.classname}`}>
-        <div className="mb-3 md:mb-0">
+        {/* <div className="mb-3 md:mb-0">
           <CreateButton2
             title="關於比特幣"
             description="About BTC"
@@ -40,8 +40,15 @@ const ButtonSection = (props: ButtonSectionProps) => {
             photo_light={Bitcoin_V2_Dark}
             onClick={() => router.push("/")}
           />
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 justify-items-center gap-3 sm:gap-4 w-full">
+        </div> */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 justify-items-center gap-3 w-full">
+          <CreateButton
+            title="關於比特幣"
+            description="About BTC"
+            photo_dark={Bitcoin_V2}
+            photo_light={Bitcoin_V2_Dark}
+            onClick={() => router.push("/")}
+          />
           <CreateButton
             title="創建錢包"
             description="CreateWallet"
