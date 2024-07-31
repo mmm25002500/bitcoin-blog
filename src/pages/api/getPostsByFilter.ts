@@ -28,12 +28,14 @@ const getApiUrl = (req: NextApiRequest): string => {
 };
 
 // 根據 userID 獲取作者資料
-const getAuthorData = async (apiUrl: string): Promise<LawAuthorData[]> => {
+const getAuthorData = async (userID: string, apiUrl: string): Promise<LawAuthorData | undefined> => {
   const res = await fetch(`${apiUrl}/api/getAuthorConfig`);
   if (!res.ok) {
-    throw new Error(`Failed to fetch author data: ${res.statusText}`);
+    console.error('Error fetching author data:', res.statusText);
+    throw new Error('Failed to fetch author data');
   }
-  return res.json() as Promise<LawAuthorData[]>;
+  const authorData: LawAuthorData[] = await res.json() as LawAuthorData[];
+  return authorData.find((author: LawAuthorData) => author.id === userID);
 };
 
 // 根據文件名獲取文章的元數據
@@ -64,7 +66,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const apiUrl = getApiUrl(req);
-    const authorData = await getAuthorData(apiUrl); // 從 API 獲取 Author.json
 
     const app = await initAdmin();
     const bucket = app.storage().bucket();
@@ -93,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { content, data } = await getPostsMetadata(filename, userID);
 
       // 獲取作者資料
-      const postAuthor = authorData.find((author) => author.id === userID);
+        const postAuthor = await getAuthorData(userID, apiUrl);
 
       // 篩選符合條件的文章
       const hasAllTags = tagsArray.every((tag) => data.tags.includes(tag));
