@@ -1,12 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import matter from 'gray-matter';
 import { PostProps } from '@/types/List/PostData';
-import { initAdmin } from '../../../lib/firebaseAdmin'; // 確保路徑正確
+import { initAdmin } from '../../../lib/firebaseAdmin';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { tag, exclude, mode } = req.query;
 
-  // 檢查 tag 參數是否有效
   if (!tag || typeof tag !== 'string') {
     return res.status(400).json({ error: '缺少或無效的 tag 參數' });
   }
@@ -16,56 +15,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const bucket = app.storage().bucket();
 
   try {
-    // 獲取所有文章文件
     const [files] = await bucket.getFiles({ prefix: 'Article/' });
 
-    let relatedPosts: PostProps[] = [];
-
-    // 遍歷每個文章文件
-    for (const file of files) {
+    const filteredFiles = files.filter(file => {
       const parts = file.name.split('/');
-      // 過濾掉無效的文件路徑
       if (parts.length < 3 || !parts[2].endsWith('.mdx')) {
-        continue;
+        return false;
       }
       const userID = parts[1];
       const filenameWithExt = parts[2];
       const filename = filenameWithExt.replace('.mdx', '');
+      return `${userID}/${filename}` !== exclude;
+    });
 
-      // 過濾掉被排除的文章
-      if (`${userID}/${filename}` === exclude) {
-        continue;
-      }
+    // 限制处理的文件数量
+    const limitedFiles = filteredFiles.slice(0, 100);
 
-      // 下載文章文件內容
+    const promises = limitedFiles.map(async file => {
       const fileContentsArray = await file.download();
       const fileContents = fileContentsArray[0].toString('utf8');
-      // 使用 gray-matter 解析文章內容中的元數據
       const { data } = matter(fileContents);
+      const userID = file.name.split('/')[1];
+      const filename = file.name.split('/')[2].replace('.mdx', '');
 
-      // 如果標籤數組不為空，則根據標籤篩選文章
-      if (tagsArray.length > 0) {
-        const hasAllTags = tagsArray.every((tag) => data.tags.includes(tag));
-        const hasAnyTag = tagsArray.some((tag) => data.tags.includes(tag));
+      return {
+        ...data,
+        id: filename,
+        authorData: { id: userID }
+      } as PostProps;
+    });
 
-        if ((mode === 'all' && hasAllTags) || (mode !== 'all' && hasAnyTag)) {
-          relatedPosts.push({
-            ...data,
-            id: filename,
-            authorData: { id: userID }
-          } as PostProps);
-        }
-      } else {
-        relatedPosts.push({
-          ...data,
-          id: filename,
-          authorData: { id: userID }
-        } as PostProps);
-      }
-    }
+    const relatedPosts = await Promise.all(promises);
 
-    // 返回相關文章的 JSON 響應
-    res.status(200).json(relatedPosts);
+    const filteredPosts = relatedPosts.filter(post => {
+      const hasAllTags = tagsArray.every(tag => post.tags.includes(tag));
+      const hasAnyTag = tagsArray.some(tag => post.tags.includes(tag));
+      return (mode === 'all' && hasAllTags) || (mode !== 'all' && hasAnyTag);
+    });
+
+    res.status(200).json(filteredPosts);
   } catch (error) {
     console.error('Error accessing Firebase Storage:', error);
     res.status(500).json({ error: 'Error accessing Firebase Storage' });
