@@ -24,7 +24,7 @@ const SwiperSection = () => {
     >
       <SwiperSlide>
         <div className="relative">
-          <div className="absolute pt-28 px-12 sm:px-28 sm:pt-20">
+          <div className="absolute pt-28 px-12 sm:pl-28 sm:pt-20">
             <p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px]">
               A dedicated team to <br />
               grow your company
