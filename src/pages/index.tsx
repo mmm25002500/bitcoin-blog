@@ -57,8 +57,8 @@ const Home = (props: HomeProps) => {
         )}
         <HorizontalLine />
         <ContactSection className="py-16" />
-        <HorizontalLine />
-        <SubscribeSection className="py-16" />
+        {/* <HorizontalLine />
+        <SubscribeSection className="py-16" /> */}
       </div>
     </>
   );
