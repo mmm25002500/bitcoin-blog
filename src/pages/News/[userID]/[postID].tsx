@@ -17,8 +17,6 @@ import { initAdmin } from '../../../../lib/firebaseAdmin';
 import matter from 'gray-matter';
 import Image from 'next/image';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, authorData: any, ArticleNewsListMorePostPerclick: number }) => {
   const router = useRouter();
   const { postID, userID } = router.query;
@@ -70,6 +68,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
         <Navbar />
         <div className="mx-auto sm:px-28">
           <ArticleLayout className='pt-10 px-5 sm:px-0'>
+            {/* 內文 */}
             <h1 className="mb-2 text-xl leading-[30px] sm:text-[32px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
             <p className="mb-3 text-sm leading-[22px] sm:text-xl sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
             <MD>{initialPost.source}</MD>
@@ -78,7 +77,11 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
                 <Tag key={index} text={item} type={["News"]} className="text-xs py-1 px-3" />
               ))}
             </div>
-            <div className="flex gap-2 items-center">
+            {/* 作者 */}
+            <button
+              onClick={() => router.push(`/Author/${authorData.id}`)}
+              className="flex gap-2 items-center">
+              {/* 頭貼 */}
               <div>
                 <Image
                   src={authorData.image}
@@ -88,10 +91,12 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
                   className="rounded-full w-10 h-10"
                 />
               </div>
+              {/* 名字 */}
               <div className="text-sm font-medium leading-5 dark:text-neutral-white">
                 {authorData.name}
               </div>
               <div className="text-neutral-300">﹒</div>
+              {/* 日期 */}
               <div className="text-sm font-medium leading-5 dark:text-neutral-white">
                 {date && (
                   <div className="text-sm font-medium leading-5 dark:text-neutral-white">
@@ -103,7 +108,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
                   </div>
                 )}
               </div>
-            </div>
+            </button>
             <HorizontalLine className="my-5" />
             <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More News</p>
             <ArticleNewsList

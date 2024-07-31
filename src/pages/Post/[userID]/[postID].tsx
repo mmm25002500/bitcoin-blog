@@ -17,8 +17,6 @@ import useSWR from "swr";
 import { initAdmin } from '../../../../lib/firebaseAdmin';
 import matter from 'gray-matter';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, ArticlePostListMorePostPerclick: number }) => {
   const router = useRouter();
   const { postID, userID } = router.query;
