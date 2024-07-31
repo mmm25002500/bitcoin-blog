@@ -7,7 +7,7 @@ const CreateWallet = (props: CreateWalletData) => {
     <Card
       className="
       grid grid-cols-1 sm:flex sm:items-center content-center py-2
-      max-w-[248px] sm:max-w-xs gap-8 w-full rounded-lg border justify-between
+      max-w-[248px] sm:max-w-xs gap-8 w-full rounded-lg border-[1px] justify-between
 
       /*h-[150px] sm:h-full
       sm:items-center*/
@@ -17,13 +17,11 @@ const CreateWallet = (props: CreateWalletData) => {
       border-neutral-200
       hover:bg-[#F8F9FB]
       hover:border-black
-      hover:border-2
 
       /* Dark Mode */
       dark:bg-neutral-900
-      dark:border-0
-      dark:hover:border-[1px]
-      dark:hover:border-white
+      dark:border-neutral-900
+      dark:hover:border-neutral-200
       dark:hover:bg-black
       "
       onClick={() => props.onClick}
