@@ -59,7 +59,7 @@ const Post = (props: PostProps) => {
         </div>
       </div>
       {/* 左邊文章，右邊圖片 */}
-      <div className='flex' onClick={props.onClick}>
+      <div className='flex gap-2' onClick={props.onClick}>
         {/* 文章 */}
         <div className='flex-grow basis-3/4 flex flex-col justify-between'>
           <div>
