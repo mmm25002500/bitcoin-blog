@@ -18,6 +18,9 @@ import { FreeMode, Navigation } from 'swiper/modules';
 
 import right from '@/icons/right.svg';
 import left from '@/icons/left.svg';
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 // 文章列表頁面
 const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initialPosts: PostProps[], initialSelection: string, seo: any, tags: string[], SiteConfig: any }) => {
@@ -25,21 +28,15 @@ const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initia
   const { selection } = router.query;
 
   const [currentSelection, setCurrentSelection] = useState<string>(initialSelection);
-  const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
   const [currentType, setCurrentType] = useState<string>('Post');
   const [currentAuthor, setCurrentAuthor] = useState<string>('all');
 
-  // 傳到後端拿資料，用TAG篩選文章
-  useEffect(() => {
-    const fetchFilteredPosts = async () => {
-      const response = await axios.get('/api/getPostsByFilter', {
-        params: { type: currentType, author: currentAuthor, tag: currentSelection }
-      });
-      setFilteredPosts(response.data);
-    };
-
-    fetchFilteredPosts();
-  }, [currentSelection, currentType, currentAuthor]);
+  // 使用 useSWR 獲取篩選後的文章
+  const { data: filteredPosts, error } = useSWR<PostProps[]>(
+    `/api/getPostsByFilter?type=${currentType}&author=${currentAuthor}&tag=${currentSelection}`,
+    fetcher,
+    { fallbackData: initialPosts }
+  );
 
   // 當 currentSelection 改變時更新 URL
   useEffect(() => {
@@ -134,10 +131,12 @@ const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initia
         </div>
       </div>
       <div className="mx-auto sm:px-28">
-        <PostListAll
-          data={filteredPosts}
-          postsPerPage={SiteConfig.PostListAllPerpage}
-        />
+        {
+          filteredPosts && <PostListAll
+            data={filteredPosts}
+            postsPerPage={SiteConfig.PostListAllPerpage}
+          />
+        }
       </div>
     </>
   );
@@ -166,13 +165,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
   const selection = params?.selection;
 
-  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
-  const apiUrl = `${host}/api/getPostsByFilter?type=Post&author=all&tag=${selection}`;
-
-  // 獲取初始文章
-  const res = await fetch(apiUrl);
-  const initialPosts = await res.json();
-
   // 獲取SEO配置
   const app = await initAdmin();
   const bucket = app.storage().bucket();
@@ -192,7 +184,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      initialPosts,
       initialSelection: selection,
       seo: seoData,
       tags: tagsData.Post,

@@ -7,20 +7,29 @@ import { initAdmin } from "lib/firebaseAdmin";
 import { GetStaticProps } from "next";
 
 const NotFoundPage = ({ SEO }: {SEO?: any}) => {
+  const defaultSEO = {
+    NotFound: {
+      title: "Page Not Found",
+      description: "The page you are looking for does not exist.",
+      image: "/default-image.png",
+      type: "website"
+    }
+  };
+
+  const seo = SEO || defaultSEO;
+
   return (
     <>
       <Head>
-        <title>{SEO.NotFound.title}</title>
-        <meta name="description" content={SEO.NotFound.description} />
-        <meta property="og:title" content={SEO.NotFound.title} />
-        <meta property="og:description" content={SEO.NotFound.description} />
-        <meta property="og:image" content={SEO.NotFound.image} />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
-        <meta property="og:type" content={SEO.NotFound.type} />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={SEO.NotFound.title} />
-        <meta name="twitter:description" content={SEO.NotFound.description} />
-        <meta name="twitter:image" content={SEO.NotFound.image} />
+        <title>{seo?.NotFound?.title}</title>
+        <meta name="description" content={seo?.NotFound?.description} />
+        <meta property="og:title" content={seo?.NotFound?.title} />
+        <meta property="og:description" content={seo?.NotFound?.description} />
+        <meta property="og:image" content={seo?.NotFound?.image} />
+        <meta property="og:type" content={seo?.NotFound?.type} />
+        <meta name="twitter:title" content={seo?.NotFound?.title} />
+        <meta name="twitter:description" content={seo?.NotFound?.description} />
+        <meta name="twitter:image" content={seo?.NotFound?.image} />
       </Head>
 
       <div className="sm:hidden">
@@ -49,7 +58,7 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   } catch (error) {
     console.error('Error fetching article content or SEO/author data:', error);
-    return { notFound: true };
+    return { props: {} }; // 确保即使出错也能返回空的props
   }
 };
 

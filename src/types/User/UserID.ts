@@ -16,6 +16,11 @@ export interface MarkDownProps {
   };
 }
 
+export interface MarkDownDataProps {
+  source: MDXRemoteSerializeResult;
+  frontMatter: PostProps;
+}
+
 export interface NewsPostProps {
   id: string;
   title: string;

@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
 import axios from "axios";
-import matter from 'gray-matter';
-import { MarkDownProps } from "@/types/User/UserID";
+import { MarkDownDataProps, MarkDownProps } from "@/types/User/UserID";
 import { PostProps } from '@/types/List/PostData';
 import Navbar from "@/components/Layout/Navbar";
 import ArticleLayout from "@/components/Layout/Article/ArticleLayout";
@@ -14,26 +13,25 @@ import HorizontalLine from "@/components/HorizontalLine";
 import ArticlePostList from "@/components/List/ArticlePostList";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import useSWR from "swr";
 import { initAdmin } from '../../../../lib/firebaseAdmin';
+import matter from 'gray-matter';
 
-const PostPage = ({ post, seo, ArticlePostListMorePostPerclick }: MarkDownProps & { seo: any, ArticlePostListMorePostPerclick: number }) => {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, ArticlePostListMorePostPerclick: number }) => {
   const router = useRouter();
-  const { postID } = router.query;
+  const { postID, userID } = router.query;
 
   const [relatedPosts, setRelatedPosts] = useState<PostProps[]>([]);
 
   useEffect(() => {
-    if (!post.frontMatter.type.includes('Post'))
-      router.push(`/News/${post.frontMatter.authorData.id}/${postID}`);
-  }, [post.frontMatter.type, postID, router, post.frontMatter.authorData.id]);
-
-  useEffect(() => {
-    if (post.frontMatter.tags && postID) {
+    if (initialPost?.frontMatter?.tags && postID) {
       const fetchRelatedPosts = async () => {
         const response = await axios.get('/api/getRelatedPosts', {
           params: {
-            tag: JSON.stringify(post.frontMatter.tags),
-            exclude: `${post.frontMatter.authorData.id}/${postID}`
+            tag: JSON.stringify(initialPost.frontMatter.tags),
+            exclude: `${userID}/${postID}`
           }
         });
         setRelatedPosts(response.data);
@@ -41,39 +39,46 @@ const PostPage = ({ post, seo, ArticlePostListMorePostPerclick }: MarkDownProps 
 
       fetchRelatedPosts();
     }
-  }, [postID, post.frontMatter.tags, post.frontMatter.authorData.id]);
+  }, [postID, initialPost?.frontMatter?.tags, userID]);
 
-  if (postID === 'undefined' || postID === undefined) {
+  // 如果是新聞
+  useEffect(() => {
+    if (!initialPost?.frontMatter?.type.includes('Post'))
+      router.push(`/News/${userID}/${postID}`);
+  }, [initialPost?.frontMatter?.type, postID, router, userID]);
+
+  if (!initialPost || postID === 'undefined' || postID === undefined) {
     return <NotFoundPage />;
-  } else {
-    const date = new Date(post.frontMatter.date);
+  }
 
-    return (
-      <>
-        {/*
-        <Head>
-          <title>{post.frontMatter.title} - { seo.Post.title }</title>
-          <meta name="description" content={post.frontMatter.description} />
-          <meta property="og:title" content={`${post.frontMatter.title} - ${seo.Post.title}`} />
-          <meta property="og:description" content={post.frontMatter.description} />
-          <meta property="og:image" content={post.frontMatter.image} />
-          <meta property="og:type" content={ seo.Post.type } />
-          <meta name="twitter:title" content={`${post.frontMatter.description} - ${seo.Post.title}`} />
-          <meta name="twitter:description" content={post.frontMatter.description} />
-          <meta name="twitter:image" content={post.frontMatter.image} />
-        </Head>
-        <article>
-          <Navbar />
-          <div className="mx-auto sm:px-28">
-            <ArticleLayout className='pt-10 px-5 sm:px-0'>
-              <h1 className="mb-2 text-xl leading-[30px] sm:text-[32px] sm:leading-[48px] font-bold">{post.frontMatter.title}</h1>
-              <p className="mb-3 text-sm leading-[22px] sm:text-xl sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{post.frontMatter.description}</p>
-              <MD>{post.source}</MD>
-              <div className="mt-2 mb-5 flex gap-2">
-                {post.frontMatter.tags.map((item, index) => (
+  const date = initialPost?.frontMatter?.date ? new Date(initialPost.frontMatter.date) : null;
+
+  return (
+    <>
+      <Head>
+        <title>{initialPost.frontMatter.title} - {seo.Post.title}</title>
+        <meta name="description" content={initialPost.frontMatter.description} />
+        <meta property="og:title" content={`${initialPost.frontMatter.title} - ${seo.Post.title}`} />
+        <meta property="og:description" content={initialPost.frontMatter.description} />
+        <meta property="og:image" content={initialPost.frontMatter.image} />
+        <meta property="og:type" content={seo.Post.type} />
+        <meta name="twitter:title" content={`${initialPost.frontMatter.description} - ${seo.Post.title}`} />
+        <meta name="twitter:description" content={initialPost.frontMatter.description} />
+        <meta name="twitter:image" content={initialPost.frontMatter.image} />
+      </Head>
+      <article>
+        <Navbar />
+        <div className="mx-auto sm:px-28">
+          <ArticleLayout className='pt-10 px-5 sm:px-0'>
+            <h1 className="mb-2 text-xl leading-[30px] sm:text-[32px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
+            <p className="mb-3 text-sm leading-[22px] sm:text-xl sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
+            <MD>{initialPost.source}</MD>
+            <div className="mt-2 mb-5 flex gap-2">
+              {initialPost.frontMatter.tags.map((item: string, index: number) => (
                   <Tag key={index} text={item} type={["Post"]} className="text-xs py-1 px-3" />
                 ))}
-              </div>
+            </div>
+            {date && (
               <div className="text-sm font-medium leading-5 dark:text-neutral-white">
                 {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}
                 &nbsp;
@@ -81,86 +86,91 @@ const PostPage = ({ post, seo, ArticlePostListMorePostPerclick }: MarkDownProps 
                 &nbsp;
                 {date.getHours() > 12 ? 'PM' : 'AM'}
               </div>
-              <HorizontalLine className="my-5" />
-              <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More Posts</p>
-              <ArticlePostList
-                data={relatedPosts}
-                ArticlePostListMorePostPerclick={ArticlePostListMorePostPerclick}
-              />
-            </ArticleLayout>
-          </div>
-        </article>
-        */}
-      </>
-    );
+            )}
+            <HorizontalLine className="my-5" />
+            <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More Posts</p>
+            <ArticlePostList
+              data={relatedPosts}
+              ArticlePostListMorePostPerclick={ArticlePostListMorePostPerclick}
+            />
+          </ArticleLayout>
+        </div>
+      </article>
+    </>
+  );
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
+  const seoFile = bucket.file('config/SEO.json');
+  const seoFileContents = (await seoFile.download())[0].toString('utf8');
+
+  let seoData;
+  try {
+    seoData = JSON.parse(seoFileContents);
+  } catch (error) {
+    console.error('Error parsing SEO file:', error);
+    return { paths: [], fallback: 'blocking' };
   }
+
+  if (!seoData.posts || !Array.isArray(seoData.posts)) {
+    console.error('SEO data does not contain posts or posts is not an array');
+    return { paths: [], fallback: 'blocking' };
+  }
+
+  const paths = seoData.posts.map((post: PostProps) => ({
+    params: { userID: post.authorData?.id, postID: post.id }
+  }));
+
+  return { paths, fallback: 'blocking' };
 };
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
-//   const apiUrl = `${host}/api/getPostsByFilter?type=Post&author=all&tag=all`;
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { params } = context;
+  const userID = params?.userID;
+  const postID = params?.postID;
 
-//   const res = await fetch(apiUrl);
-//   const posts = await res.json();
+  if (!userID || !postID) {
+    return { notFound: true };
+  }
 
-//   const paths = posts.map((post: PostProps) => ({
-//     params: { userID: post.authorData?.id, postID: post.id }
-//   }));
+  const app = await initAdmin();
+  const bucket = app.storage().bucket();
 
-//   return { paths, fallback: 'blocking' };
-// };
+  // Fetch SEO data
+  const seoFile = bucket.file('config/SEO.json');
+  const seoFileContents = (await seoFile.download())[0].toString('utf8');
+  const seoData = JSON.parse(seoFileContents);
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const { params } = context;
-//   const userID = params?.userID;
-//   const postID = params?.postID;
+  // Fetch SiteConfig data
+  const siteConfigFile = bucket.file('config/SiteConfig.json');
+  const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
+  const siteConfigData = JSON.parse(siteConfigFileContents);
+  const ArticlePostListMorePostPerclick = siteConfigData.ArticlePostListMorePostPerclick;
 
-//   if (!userID || !postID) {
-//     return { notFound: true };
-//   }
+  // Fetch initial post data
+  const postFile = bucket.file(`Article/${userID}/${postID}.mdx`);
+  const [exists] = await postFile.exists();
 
-//   const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
-//   const apiUrl = `${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
+  if (!exists) {
+    return { notFound: true };
+  }
 
-//   try {
-//     // 獲取文章內容
-//     const res = await fetch(apiUrl);
-//     if (!res.ok) {
-//       return { notFound: true };
-//     }
-//     const { content, data } = await res.json();
-//     const mdxSource = await serialize(content);
+  const postFileContents = (await postFile.download())[0].toString('utf8');
+  const { content, data } = matter(postFileContents);
+  const mdxSource = await serialize(content);
 
-//     // 獲取作者資料
-//     const app = await initAdmin();
-//     const bucket = app.storage().bucket();
-//     const seoFile = bucket.file('config/SEO.json');
-//     const seoFileContents = (await seoFile.download())[0].toString('utf8');
-//     const seoData = JSON.parse(seoFileContents);
-
-//     // 獲取SiteConfig
-//     const siteConfigFile = bucket.file('config/SiteConfig.json');
-//     const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
-//     const siteConfigData = JSON.parse(siteConfigFileContents);
-//     const ArticlePostListMorePostPerclick = siteConfigData.ArticlePostListMorePostPerclick
-
-//     return {
-//       props: {
-//         post: {
-//           source: mdxSource,
-//           frontMatter: {
-//             ...data,
-//             authorData: { id: userID, ...data.authorData }
-//           } as PostProps,
-//         },
-//         seo: seoData,
-//         ArticlePostListMorePostPerclick
-//       },
-//     };
-//   } catch (error) {
-//     console.error('Error fetching article content or SEO data:', error);
-//     return { notFound: true };
-//   }
-// };
+  return {
+    props: {
+      initialPost: {
+        source: mdxSource,
+        frontMatter: data,
+      },
+      seo: seoData,
+      ArticlePostListMorePostPerclick,
+    },
+  };
+};
 
 export default PostPage;

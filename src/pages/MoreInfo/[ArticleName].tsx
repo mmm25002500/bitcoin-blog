@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from 'react';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { serialize } from 'next-mdx-remote/serialize';
 
@@ -27,7 +27,6 @@ import ArrowLeft from '@/icons/arrow-left.svg';
 import Head from "next/head";
 
 import { initAdmin } from "lib/firebaseAdmin";
-import { PostProps } from "@/types/List/PostData";
 
 const MoreInfos = (props: MoreInfoData & { seo: any }) => {
   const router = useRouter();
@@ -304,51 +303,27 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const app = await initAdmin();
-    const bucket = app.storage().bucket();
-    const moreInfoFile = bucket.file('config/MoreInfo.json');
-    const moreInfoFileContents = (await moreInfoFile.download())[0].toString('utf8');
-    const moreInfoData = JSON.parse(moreInfoFileContents);
-
-    const paths = moreInfoData.flatMap((item: { folder: string, post: { filename: string }[] }) =>
-      item.post.map(post => ({
-        params: { ArticleName: post.filename }
-      }))
-    );
-
-    return { paths, fallback: 'blocking' };
-  } catch (error) {
-    console.error('Error fetching paths:', error);
-    return { paths: [], fallback: 'blocking' };
-  }
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { params } = context;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { params, req } = context;
   const ArticleName = params?.ArticleName as string;
 
-  const host = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_LOCAL_URL;
-  const linkApiUrl = `${host}/api/getArticleLinkByFilename?filename=${ArticleName}`;
-
   try {
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers['host'];
+    const apiUrl = `${protocol}://${host}`;
+
+    const linkApiUrl = `${apiUrl}/api/getArticleLinkByFilename?filename=${ArticleName}`;
+
     // 獲取文章連結
-    const linkRes = await fetch(linkApiUrl);
-    if (!linkRes.ok) {
-      return { notFound: true };
-    }
-    const linkData = await linkRes.json();
+    const linkRes = await axios.get(linkApiUrl);
+    const linkData = linkRes.data;
     const { link, authorData } = linkData;
     const [userID, postID] = link.split('/');
 
     // 獲取文章內容
-    const markdownApiUrl = `${host}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
-    const markdownRes = await fetch(markdownApiUrl);
-    if (!markdownRes.ok) {
-      return { notFound: true };
-    }
-    const { content, data } = await markdownRes.json();
+    const markdownApiUrl = `${apiUrl}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
+    const markdownRes = await axios.get(markdownApiUrl);
+    const { content, data } = markdownRes.data;
     const mdxSource = await serialize(content);
 
     // 獲取SEO資料
@@ -365,7 +340,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
           frontMatter: {
             ...data,
             authorData: authorData,
-          } as PostProps,
+          },
         },
         seo: seoData,
         ArticleName,
@@ -376,5 +351,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return { notFound: true };
   }
 };
+
 
 export default MoreInfos;
