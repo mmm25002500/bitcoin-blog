@@ -89,13 +89,15 @@ const Navbar = () => {
           <div className="relative flex h-16 items-center justify-between">
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
-              <div className="flex flex-shrink-0 items-center">
+              <button
+                onClick={() => router.push("/")}
+                className="flex flex-shrink-0 items-center">
                 <Icon
                   icon_light={IconLight}
                   icon_dark={IconDark}
                   className="h-8 w-auto"
                 />
-              </div>
+              </button>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {/* 切換主題 */}

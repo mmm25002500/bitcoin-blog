@@ -38,8 +38,8 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
   }, [currentSelection, currentType, currentAuthor]);
 
   return (
-    <>
-      <p className="font-bold text-xl leading-6 sm:text-[28px] sm:leading-[42px] text-center py-8">NEWS</p>
+    <div className="mt-8">
+      {/* <p className="font-bold text-xl leading-6 sm:text-[28px] sm:leading-[42px] text-center py-8">NEWS</p> */}
       <div className="relative w-full h-7">
         <Swiper
           slidesPerView={"auto"}
@@ -103,7 +103,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
         data={filteredPosts}
         postsPerPage={HomePageNewsListPerpage}
       />
-    </>
+    </div>
   );
 }
 
