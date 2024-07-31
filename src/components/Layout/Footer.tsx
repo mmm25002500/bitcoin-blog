@@ -15,7 +15,7 @@ const Footer = () => {
         <Icon
           icon_light={btc_icon_dark}
           icon_dark={btc_icon_light}
-          className='mr-auto ml-auto'
+          className='mr-auto ml-auto mt-2'
         />
 
         {/* Link */}
