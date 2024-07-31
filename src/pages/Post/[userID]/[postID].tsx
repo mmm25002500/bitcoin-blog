@@ -1,6 +1,6 @@
 import NotFoundPage from "@/pages/404";
 import { useRouter } from "next/router";
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
 import axios from "axios";
 import { MarkDownDataProps, MarkDownProps } from "@/types/User/UserID";
@@ -100,33 +100,7 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const app = await initAdmin();
-  const bucket = app.storage().bucket();
-  const seoFile = bucket.file('config/SEO.json');
-  const seoFileContents = (await seoFile.download())[0].toString('utf8');
-
-  let seoData;
-  try {
-    seoData = JSON.parse(seoFileContents);
-  } catch (error) {
-    console.error('Error parsing SEO file:', error);
-    return { paths: [], fallback: 'blocking' };
-  }
-
-  if (!seoData.posts || !Array.isArray(seoData.posts)) {
-    console.error('SEO data does not contain posts or posts is not an array');
-    return { paths: [], fallback: 'blocking' };
-  }
-
-  const paths = seoData.posts.map((post: PostProps) => ({
-    params: { userID: post.authorData?.id, postID: post.id }
-  }));
-
-  return { paths, fallback: 'blocking' };
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
   const userID = params?.userID;
   const postID = params?.postID;

@@ -9,11 +9,10 @@ import Navbar from "@/components/Layout/Navbar";
 import ContactSection from "@/components/Page/ContactSection";
 import SubscribeSection from "@/components/Page/SubscribeSection";
 import Head from "next/head";
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
-import { NewsPostProps } from "@/types/HomePage/NewsSection";
-import { initAdmin } from "lib/firebaseAdmin";
 import { TagsProps } from "@/types/Tag/Tag";
+import { initAdmin } from "lib/firebaseAdmin";
 
 interface HomeProps {
   initialPosts: PostProps[] | undefined;
@@ -42,21 +41,20 @@ const Home = (props: HomeProps) => {
         <meta name="twitter:image" content={props.initialSEO.Index.image} />
       </Head>
 
-      <Header></Header>
+      <Header />
       <Navbar />
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16 mx-8">
         <ButtonSection classname="py-8" />
         <HorizontalLine />
-        {
-          initialPosts && <NewsSection
+        {initialPosts && (
+          <NewsSection
             initialPosts={initialPosts}
             initialSelection={selection}
             tags={props.initialTags}
             HomePageNewsListPerpage={props.initialSiteConfig.HomePageNewsListPerpage}
           />
-
-        }
+        )}
         <HorizontalLine />
         <ContactSection className="py-16" />
         <HorizontalLine />
@@ -67,31 +65,52 @@ const Home = (props: HomeProps) => {
 };
 
 // 獲取首頁的初始數據
-export const getStaticProps: GetStaticProps = async () => {
-  // 獲取SEO配置
-  const app = await initAdmin();
-  const bucket = app.storage().bucket();
-  const seoFile = bucket.file('config/SEO.json');
-  const seoFileContents = (await seoFile.download())[0].toString('utf8');
-  const seoData = JSON.parse(seoFileContents);
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    // 獲取SEO配置
+    const app = await initAdmin();
+    const bucket = app.storage().bucket();
+    const seoFile = bucket.file('config/SEO.json');
+    const seoFileContents = (await seoFile.download())[0].toString('utf8');
+    const seoData = JSON.parse(seoFileContents);
 
-  // 獲取Tag配置
-  const tagFile = bucket.file('config/Tags.json');
-  const tagFileContents = (await tagFile.download())[0].toString('utf8');
-  const tagData = JSON.parse(tagFileContents);
+    // 獲取Tag配置
+    const tagFile = bucket.file('config/Tags.json');
+    const tagFileContents = (await tagFile.download())[0].toString('utf8');
+    const tagData = JSON.parse(tagFileContents);
 
-  // 獲取SiteConfig配置
-  const siteConfigFile = bucket.file('config/SiteConfig.json');
-  const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
-  const siteConfigData = JSON.parse(siteConfigFileContents);
+    // 獲取SiteConfig配置
+    const siteConfigFile = bucket.file('config/SiteConfig.json');
+    const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
+    const siteConfigData = JSON.parse(siteConfigFileContents);
 
-  return {
-    props: {
-      initialSEO: seoData,
-      initialTags: tagData,
-      initialSiteConfig: siteConfigData,
-    },
-  };
+    // 獲取Posts數據
+    const posts = await fetch('https://yourdomain.com/api/getPostsByFilter?type=News&author=all&tag=all')
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+        return [];
+      });
+
+    return {
+      props: {
+        initialSEO: seoData,
+        initialTags: tagData,
+        initialSiteConfig: siteConfigData,
+        initialPosts: posts,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching initial data:', error);
+    return {
+      props: {
+        initialSEO: null,
+        initialTags: null,
+        initialSiteConfig: null,
+        initialPosts: null,
+      },
+    };
+  }
 };
 
 export default Home;

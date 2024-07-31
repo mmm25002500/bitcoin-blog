@@ -8,10 +8,10 @@ import ContactSection from '@/components/Page/ContactSection';
 import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from '@/icons/illustation/Disclaimer.svg';
 import Head from 'next/head';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { initAdmin } from 'lib/firebaseAdmin';
 
-const DisclaimerPage = ({ SEO }: {SEO?: any}) => {
+const DisclaimerPage = ({ SEO }: { SEO?: any }) => {
   const markdown = " \
   網站的所有內容旨在提供一般性信息和觀點，不應視為投資建議或其他形式的專業意見。 \n\n \
   網站不保證網站上提供的信息的準確性、完整性、及時性或可靠性，也不對因使用或依賴此等信息所引致的任何損失或損害負責。任何投資或其他決策應基於經過詳細研究和諮詢專業人士後做出，並自行承擔風險。 本網站可能包含第三方網站的連結，但我們不對這些網站的內容、政策或做法負責。使用這些連結時，請查看相關網站的使用條款和隱私政策。 \n\n \
@@ -21,17 +21,15 @@ const DisclaimerPage = ({ SEO }: {SEO?: any}) => {
   return (
     <>
       <Head>
-        <title>{SEO.Disclamier.title}</title>
-        <meta name="description" content={SEO.Disclamier.description} />
-        <meta property="og:title" content={SEO.Disclamier.title} />
-        <meta property="og:description" content={SEO.Disclamier.description} />
-        <meta property="og:image" content={SEO.Disclamier.image} />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
-        <meta property="og:type" content={SEO.Disclamier.type} />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
-        <meta name="twitter:title" content={SEO.Disclamier.title} />
-        <meta name="twitter:description" content={SEO.Disclamier.description} />
-        <meta name="twitter:image" content={SEO.Disclamier.image} />
+        <title>{SEO.Disclaimer.title}</title>
+        <meta name="description" content={SEO.Disclaimer.description} />
+        <meta property="og:title" content={SEO.Disclaimer.title} />
+        <meta property="og:description" content={SEO.Disclaimer.description} />
+        <meta property="og:image" content={SEO.Disclaimer.image} />
+        <meta property="og:type" content={SEO.Disclaimer.type} />
+        <meta name="twitter:title" content={SEO.Disclaimer.title} />
+        <meta name="twitter:description" content={SEO.Disclaimer.description} />
+        <meta name="twitter:image" content={SEO.Disclaimer.image} />
       </Head>
 
       <div className="sm:hidden">
@@ -57,7 +55,7 @@ const DisclaimerPage = ({ SEO }: {SEO?: any}) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // 獲取SEO配置
     const app = await initAdmin();

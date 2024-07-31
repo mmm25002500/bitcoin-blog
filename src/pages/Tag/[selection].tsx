@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Header from "@/components/Layout/Header";
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
 import NewsListAll from "@/components/List/NewsListAll";
@@ -142,25 +142,8 @@ const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initia
   );
 }
 
-// 設置靜態路徑
-export const getStaticPaths: GetStaticPaths = async () => {
-  const app = await initAdmin();
-  const bucket = app.storage().bucket();
-  const tagsFile = bucket.file('config/Tags.json');
-  const tagsFileContents = (await tagsFile.download())[0].toString('utf8');
-  const tagsData = JSON.parse(tagsFileContents);
-
-  const paths = tagsData.News.map((tag: string) => ({
-    params: { selection: tag }
-  }));
-
-  paths.push({ params: { selection: 'all' } });
-
-  return { paths, fallback: 'blocking' };
-}
-
 // 獲取靜態頁面所需的數據
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
   const selection = params?.selection || 'all';
 

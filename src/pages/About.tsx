@@ -3,15 +3,15 @@ import ArticleLayout from '@/components/Layout/Article/ArticleLayout';
 import ArticleHeader from '@/components/Layout/Article/ArticleHeader';
 import Header from '@/components/Layout/Header';
 import Navbar from '@/components/Layout/Navbar';
-import MD from '@/components/MD'
+import MD from '@/components/MD';
 import ContactSection from '@/components/Page/ContactSection';
 import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from '@/icons/illustation/about us.svg';
 import Head from 'next/head';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { initAdmin } from 'lib/firebaseAdmin';
 
-const AboutPage = ({ SEO }: {SEO?: any}) => {
+const AboutPage = ({ SEO }: { SEO?: any }) => {
   const markdown = " \
   比特幣是一個共識網絡，是一種支付系統並且完全數位化的一種貨幣．是第一個由用戶建立並維護的點對點交易支付網路，去中心化並且不依賴於中央機構或中介人驗證。 \n\n \
   ## 關於 比特幣 ( Bitcoin ) \n \
@@ -35,9 +35,7 @@ const AboutPage = ({ SEO }: {SEO?: any}) => {
         <meta property="og:title" content={SEO.About.title} />
         <meta property="og:description" content={SEO.About.description} />
         <meta property="og:image" content={SEO.About.image} />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
         <meta property="og:type" content={SEO.About.type} />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
         <meta name="twitter:title" content={SEO.About.title} />
         <meta name="twitter:description" content={SEO.About.description} />
         <meta name="twitter:image" content={SEO.About.image} />
@@ -66,7 +64,7 @@ const AboutPage = ({ SEO }: {SEO?: any}) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // 獲取SEO配置
     const app = await initAdmin();

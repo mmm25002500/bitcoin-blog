@@ -3,12 +3,12 @@ import ArticleLayout from '@/components/Layout/Article/ArticleLayout';
 import ArticleHeader from '@/components/Layout/Article/ArticleHeader';
 import Header from '@/components/Layout/Header';
 import Navbar from '@/components/Layout/Navbar';
-import MD from '@/components/MD'
+import MD from '@/components/MD';
 import ContactSection from '@/components/Page/ContactSection';
 import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from '@/icons/illustation/Privacy Policy.svg';
 import Head from 'next/head';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { initAdmin } from 'lib/firebaseAdmin';
 
 const PrivacyPolicyPage = ({ SEO }: {SEO?: any}) => {
@@ -27,9 +27,7 @@ const PrivacyPolicyPage = ({ SEO }: {SEO?: any}) => {
         <meta property="og:title" content={SEO.PrivacyPolicy.title} />
         <meta property="og:description" content={SEO.PrivacyPolicy.description} />
         <meta property="og:image" content={SEO.PrivacyPolicy.image} />
-        {/* <meta property="og:url" content={`https://yourdomain.com/post/${post.frontMatter.id}`} /> */}
         <meta property="og:type" content={SEO.PrivacyPolicy.type} />
-        {/* <meta name="twitter:card" content="summary_large_image" /> */}
         <meta name="twitter:title" content={SEO.PrivacyPolicy.title} />
         <meta name="twitter:description" content={SEO.PrivacyPolicy.description} />
         <meta name="twitter:image" content={SEO.PrivacyPolicy.image} />
@@ -58,7 +56,7 @@ const PrivacyPolicyPage = ({ SEO }: {SEO?: any}) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // 獲取SEO配置
     const app = await initAdmin();

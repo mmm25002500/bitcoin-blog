@@ -11,7 +11,7 @@ import UpIcon from '@/icons/up.svg';
 import Header from "@/components/Layout/Header";
 import PostList from "@/components/List/PostList";
 
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetServerSideProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import Head from "next/head";
 import { initAdmin } from "lib/firebaseAdmin";
@@ -142,14 +142,7 @@ const AuthorPage = (props: {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const authorData = await getAuthorData();
-  const paths = authorData.map((author: any) => ({ params: { userID: author.id } }));
-
-  return { paths, fallback: 'blocking' };
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
   const userID = params?.userID;
 
@@ -169,10 +162,19 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const authorData = await getAuthorData();
     const author = authorData.find((author: any) => author.id === userID);
 
+    // 獲取Posts數據
+    const posts = await fetch(`https://yourdomain.com/api/getPostsByFilter?type=both&author=${userID}&tag=all`)
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+        return [];
+      });
+
     return {
       props: {
         initialSEO: seoData,
         initialAuthor: author,
+        initialPosts: posts,
       },
     };
   } catch (error) {
