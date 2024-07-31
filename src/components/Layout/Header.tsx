@@ -104,7 +104,7 @@ const Header = () => {
                     <Icon
                       icon_light={btcIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p className='text-black dark:text-white'>BTC {btc !== null ? btc : 'Loading...'}</p>
+                    <p className='text-black dark:text-white'>Price {btc !== null ? btc : 'Loading...'} USD</p>
                   </div>
                 </SwiperSlide>
               </Swiper>

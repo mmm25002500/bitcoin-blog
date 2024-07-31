@@ -43,7 +43,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
       <div className="relative w-full h-7">
         <Swiper
           slidesPerView={"auto"}
-          spaceBetween={20} // 调整间距
+          spaceBetween={20} // 調整間距
           freeMode={true}
           navigation={{
             nextEl: '.swiper-button-next',

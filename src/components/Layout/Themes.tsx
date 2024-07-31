@@ -12,7 +12,7 @@ const Themes = () => {
   useEffect(() => setMounted(true), [])
 
   return (
-    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-[6.125rem] h-[2.5rem] rounded-full p-1 bg-neutral-white dark:bg-[#6B6B6B] relative transition-colors duration-500 ease-in">
+    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-[6.125rem] h-[2.5rem] rounded-full border-[1px] dark:border-0 p-1 bg-neutral-white border-neutral-200 dark:bg-[#6B6B6B] relative transition-colors duration-500 ease-in">
       {
         // 如果是 dark mode
         theme === 'dark' ? (
