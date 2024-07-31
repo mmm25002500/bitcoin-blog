@@ -214,7 +214,7 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
           </div>
 
           {/* 手機版返回箭頭 */}
-          <div className="px-4 mt-8">
+          <div className="sm:hidden px-4 mt-8">
             <button onClick={() => router.push('/MoreInfo')}>
               <Image
                 src={ArrowLeft}
