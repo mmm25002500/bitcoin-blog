@@ -81,20 +81,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const tagsArray: string[] = isAllTags ? [] : (tag as string).split(',');
 
     // 遍歷每篇文章文件
-    for (const file of validFiles) {
+    const postPromises = validFiles.map(async (file) => {
       const parts = file.name.split('/');
       const userID = parts[1];
       const filenameWithExt = parts[2];
       const filename = filenameWithExt.replace('.mdx', '');
 
       if (author !== 'all' && userID !== author) {
-        continue;
+        return null;
       }
 
       const { content, data } = await getPostsMetadata(filename, userID);
 
       // 獲取作者資料
-        const postAuthor = await getAuthorData(userID, apiUrl);
+      const postAuthor = await getAuthorData(userID, apiUrl);
 
       // 篩選符合條件的文章
       const hasAllTags = tagsArray.every((tag) => data.tags.includes(tag));
@@ -104,7 +104,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         (type === 'both' || data.type.includes(type)) &&
         (isAllTags || (mode === 'all' && hasAllTags) || (mode === 'any' && hasAnyTag) || (!mode && hasAnyTag))
       ) {
-        filteredPosts.push({
+        return {
           ...data,
           id: filename,
           authorData: postAuthor ? {
@@ -114,9 +114,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             id: userID,
           },
           url: `/${type === 'News' ? 'News' : 'Post'}/${userID}/${filename}`
-        } as FilteredPostsProps);
+        } as FilteredPostsProps;
       }
-    }
+      return null;
+    });
+
+    const results = await Promise.all(postPromises);
+    filteredPosts = results.filter(post => post !== null) as FilteredPostsProps[];
 
     res.status(200).json(filteredPosts);
   } catch (error) {
