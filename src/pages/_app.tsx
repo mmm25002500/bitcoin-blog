@@ -31,7 +31,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <ThemeProvider attribute="class">
       <ThemeInitializer />
       <Layout>
-        <NextNProgress />
+        <NextNProgress color='#F7931A'/>
         <Component {...pageProps} />
       </Layout>
     </ThemeProvider>

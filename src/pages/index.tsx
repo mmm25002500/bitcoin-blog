@@ -84,20 +84,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
     const siteConfigData = JSON.parse(siteConfigFileContents);
 
-    // 獲取Posts數據
-    const posts = await fetch('https://yourdomain.com/api/getPostsByFilter?type=News&author=all&tag=all')
-      .then((res) => res.json())
-      .catch((error) => {
-        console.error('Error fetching posts:', error);
-        return [];
-      });
-
     return {
       props: {
         initialSEO: seoData,
         initialTags: tagData,
-        initialSiteConfig: siteConfigData,
-        initialPosts: posts,
+        initialSiteConfig: siteConfigData
       },
     };
   } catch (error) {
@@ -106,8 +97,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       props: {
         initialSEO: null,
         initialTags: null,
-        initialSiteConfig: null,
-        initialPosts: null,
+        initialSiteConfig: null
       },
     };
   }
