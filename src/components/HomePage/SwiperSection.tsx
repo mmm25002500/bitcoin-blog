@@ -40,6 +40,8 @@ const SwiperSection = () => {
               <p>Get Started</p>
               <Icon
                 icon_light={Right}
+                icon_dark={Right}
+                className="dark:invert"
               />
             </Button>
           </div>
