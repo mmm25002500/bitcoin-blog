@@ -11,6 +11,8 @@ const Themes = () => {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
+  if (!mounted) return null;
+
   return (
     <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-[6.125rem] h-[2.5rem] rounded-full border-[1px] dark:border-0 p-1 bg-neutral-white border-neutral-200 dark:bg-[#6B6B6B] relative transition-colors duration-500 ease-in">
       {
