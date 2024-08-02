@@ -38,45 +38,46 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
   }, [currentSelection, currentType, currentAuthor]);
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 my-2">
       {/* <p className="font-bold text-xl leading-6 sm:text-[28px] sm:leading-[42px] text-center py-8">NEWS</p> */}
-      <div className="relative w-full h-7">
-        <Swiper
-          slidesPerView={"auto"}
-          spaceBetween={20} // 調整間距
-          freeMode={true}
-          navigation={{
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          }}
-          modules={[FreeMode, Navigation]}
-          className="w-full h-7"
-        >
-          <SwiperSlide key={"all"} className="!w-auto">
-            <Radio.Btn
-              text="All"
-              value="all"
-              id="All"
-              selectedValue={currentSelection}
-              onChange={(value: string) => setCurrentSelection(value)}
-              className={`text-xs py-1 px-3 ${currentSelection === "all" ? 'bg-black text-white' : ''}`}
-            />
-          </SwiperSlide>
-
-          {tags.News.map((tag: any, idx: number) => (
-            <SwiperSlide key={idx} className="!w-auto">
+      <div className="relative my-4">
+        <div className="relative w-auto h-7 mx-5">
+          <Swiper
+            slidesPerView={"auto"}
+            spaceBetween={20} // 調整間距
+            freeMode={true}
+            navigation={{
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }}
+            modules={[FreeMode, Navigation]}
+            className="w-full h-7"
+          >
+            <SwiperSlide key={"all"} className="!w-auto">
               <Radio.Btn
-                text={tag}
-                value={tag}
-                id={tag}
+                text="All"
+                value="all"
+                id="All"
                 selectedValue={currentSelection}
                 onChange={(value: string) => setCurrentSelection(value)}
-                className={`text-xs py-1 px-3 ${currentSelection === tag ? 'bg-black text-white' : ''}`}
+                className={`text-xs py-1 px-3 ${currentSelection === "all" ? 'bg-black text-white' : ''}`}
               />
             </SwiperSlide>
-          ))}
-        </Swiper>
 
+            {tags.News.map((tag: any, idx: number) => (
+              <SwiperSlide key={idx} className="!w-auto">
+                <Radio.Btn
+                  text={tag}
+                  value={tag}
+                  id={tag}
+                  selectedValue={currentSelection}
+                  onChange={(value: string) => setCurrentSelection(value)}
+                  className={`text-xs py-1 px-3 ${currentSelection === tag ? 'bg-black text-white' : ''}`}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
         {/* 左右箭頭 */}
         <div className="swiper-button-prev absolute left-0 top-1/2 transform -translate-y-1/2 z-10">

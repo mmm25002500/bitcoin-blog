@@ -6,7 +6,7 @@ const ContactUS = (props: ContactUSData) => {
   return (
     <Card
       className="
-       px-7 gap-8 w-full sm:w-full rounded-lg border items-center justify-between
+       px-7 sm:px-2 lg:px-7 gap-8 w-full sm:w-full rounded-lg border items-center justify-between
 
       /* Light Mode */
       bg-neutral-white

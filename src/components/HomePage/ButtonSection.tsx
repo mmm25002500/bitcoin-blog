@@ -41,7 +41,7 @@ const ButtonSection = (props: ButtonSectionProps) => {
             onClick={() => router.push("/")}
           />
         </div> */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-center gap-3 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 justify-items-center gap-3 w-full">
           <CreateButton
             title="關於比特幣"
             description="About BTC"

@@ -4,6 +4,7 @@ import Layout from '@/components/Layout/Layout';
 import type { AppProps } from 'next/app';
 import NextNProgress from 'nextjs-progressbar';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -27,13 +28,38 @@ const ThemeInitializer = () => {
 };
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setIsTransitioning(true);
+    };
+
+    const handleRouteChangeComplete = () => {
+      setIsTransitioning(false);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+    router.events.on('routeChangeError', handleRouteChangeComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+      router.events.off('routeChangeError', handleRouteChangeComplete);
+    };
+  }, [router]);
+
   return (
     <ThemeProvider attribute="class">
       <ThemeInitializer />
-      <Layout>
-        <NextNProgress color='#F7931A'/>
-        <Component {...pageProps} />
-      </Layout>
+      <div className={`transition-opacity duration-500 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
+        <Layout>
+          <NextNProgress color='#F7931A' />
+          <Component {...pageProps} />
+        </Layout>
+      </div>
     </ThemeProvider>
   );
 };

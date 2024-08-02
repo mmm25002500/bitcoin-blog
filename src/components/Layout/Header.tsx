@@ -54,10 +54,10 @@ const Header = () => {
   return (
     <>
       <nav className="bg-white dark:bg-neutral-black">
-        <div className="mx-auto px-2 sm:px-6 lg:px-5">
+        <div className="mx-auto px-2 sm:px-6 md:pr-0 lg:px-5">
           <div className="flex h-16 items-center">
             {/* 日期 */}
-            <div className='w-full flex items-center sm:grow sm:w-auto'>
+            <div className='w-full flex items-center sm:grow sm:w-[50%]'>
               <Icon
                 icon_light={calendarIcon}
                 className="h-5 block w-auto dark:invert" />
@@ -104,7 +104,7 @@ const Header = () => {
                     <Icon
                       icon_light={btcIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p className='text-black dark:text-white'>Price {btc !== null ? btc : 'Loading...'} USD</p>
+                    <p className='bg-gradient-to-r dark:from-white to-transparent inline-block text-transparent bg-clip-text lg:bg-none lg:text-black lg:dark:text-white'>Price {btc !== null ? btc : 'Loading...'} USD</p>
                   </div>
                 </SwiperSlide>
               </Swiper>
