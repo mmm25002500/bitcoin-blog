@@ -74,6 +74,7 @@ const config = withMT({
   },
   plugins: [
     require('@tailwindcss/typography'),
+    require("tailwind-gradient-mask-image")
   ],
 })
 export default config

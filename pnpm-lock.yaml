@@ -65,6 +65,9 @@ dependencies:
   swr:
     specifier: ^2.2.5
     version: 2.2.5(react@18.0.0)
+  tailwind-gradient-mask-image:
+    specifier: ^1.2.0
+    version: 1.2.0
   to-vfile:
     specifier: ^8.0.0
     version: 8.0.0
@@ -5567,6 +5570,10 @@ packages:
 
   /tabbable@6.2.0:
     resolution: {integrity: sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==}
+    dev: false
+
+  /tailwind-gradient-mask-image@1.2.0:
+    resolution: {integrity: sha512-tUJaGhvqbJFiVKJu6EU5n//KvGdVvY3L3VOFNqjztk13+ifAk00pcSNHBTgHfUiBGOEzDn0gFRbSmsftUV1lXA==}
     dev: false
 
   /tailwind-merge@1.8.1:

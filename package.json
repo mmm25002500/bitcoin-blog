@@ -29,6 +29,7 @@
     "react-markdown": "^9.0.1",
     "swiper": "^11.0.6",
     "swr": "^2.2.5",
+    "tailwind-gradient-mask-image": "^1.2.0",
     "to-vfile": "^8.0.0",
     "vfile-matter": "^5.0.0"
   },

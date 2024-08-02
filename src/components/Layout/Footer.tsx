@@ -58,7 +58,6 @@ const Footer = () => {
             <span className='ml-4'>2140</span>
           </p>
         </div>
-          <p className='flex text-neutral-600 dark:text-neutral-300 justify-center sm:hidden'>All Rights Reserved</p>
       </div>
     </>
   )

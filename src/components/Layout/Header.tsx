@@ -71,7 +71,7 @@ const Header = () => {
                 spaceBetween={0}
                 freeMode={true}
                 modules={[FreeMode]}
-                className="bg-gradient-to-r from-black to-white inline-block text-transparent bg-clip-text"
+                className="gradient-mask-r-[rgba(255,255,255)_40%,transparent_100%] xl:gradient-mask-r-[rgba(0,0,0)_100%]"
               >
                 {/* BTC HashRate */}
                 <SwiperSlide className="!w-auto">
@@ -79,7 +79,7 @@ const Header = () => {
                     <Icon
                       icon_light={shovelIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p className='text-neutral-800 dark:text-neutral-200'>
+                    <p className='text-black dark:text-white'>
                       Hash Rate
                       <span className='text-black dark:text-white ml-2'>{hashRate !== null ? formatHashRate(hashRate) : 'Loading...'}</span>
                     </p>
@@ -104,7 +104,7 @@ const Header = () => {
                     <Icon
                       icon_light={btcIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
-                    <p className='bg-gradient-to-r dark:from-white to-transparent inline-block text-transparent bg-clip-text lg:bg-none lg:text-black lg:dark:text-white'>Price {btc !== null ? btc : 'Loading...'} USD</p>
+                    <p className='text-black dark:text-white'>Price {btc !== null ? btc : 'Loading...'} USD</p>
                   </div>
                 </SwiperSlide>
               </Swiper>
