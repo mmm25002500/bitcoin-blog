@@ -15,7 +15,7 @@ const Sidebar = (props: MoreInfoSidebarProps) => {
   };
 
   return (
-    <div className={`${props.className}`}>
+    <div className={`border-t-[1px] border-[#E7E6F2] dark:border-neutral-800 ${props.className}`}>
       {props.data.map((category: categoryData, index: number) => (
         <div key={index} className="border-b-[1px] border-[#E7E6F2] dark:border-neutral-800 p-2">
 

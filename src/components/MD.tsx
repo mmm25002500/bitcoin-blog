@@ -21,12 +21,12 @@ const MD = (props: MarkDownProperties) => {
       prose-p:text-neutral-black
       prose-p:dark:text-neutral-white
       prose-p:font-normal
-      prose-p:text-sm
+      prose-p:text-base
       prose-p:leading-6
 
       /* h1 tag*/
       prose-h1:font-medium
-      prose-h1:text-xl
+      prose-h1:text-[22px]
       prose-h1:leading-[30px]
 
       prose-img:rounded-lg

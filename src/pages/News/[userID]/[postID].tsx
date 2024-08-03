@@ -69,8 +69,8 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
         <div className="mx-auto sm:px-28">
           <ArticleLayout className='pt-10 px-5 sm:px-0'>
             {/* 內文 */}
-            <h1 className="mb-2 text-xl leading-[30px] sm:text-[32px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
-            <p className="mb-3 text-sm leading-[22px] sm:text-xl sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
+            <h1 className="mb-2 text-[22px] leading-[30px] sm:text-[34px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
+            <p className="mb-3 text-base leading-[22px] sm:text-[22px] sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
             <MD>{initialPost.source}</MD>
             <div className="mt-2 mb-5 flex gap-2">
               {initialPost.frontMatter.tags.map((item: string, index: number) => (
@@ -80,7 +80,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
             {/* 作者 */}
             <button
               onClick={() => router.push(`/Author/${authorData.id}`)}
-              className="flex gap-2 items-center">
+              className="flex gap-2 items-center my-4">
               {/* 頭貼 */}
               <div>
                 <Image
