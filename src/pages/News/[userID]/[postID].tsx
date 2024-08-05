@@ -109,7 +109,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
                 )}
               </div>
             </button>
-            <HorizontalLine className="my-5" />
+            <HorizontalLine className="my-9" />
             <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More News</p>
             <ArticleNewsList
               data={relatedPosts}

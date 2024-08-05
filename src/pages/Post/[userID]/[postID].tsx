@@ -85,7 +85,7 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
                 {date.getHours() > 12 ? 'PM' : 'AM'}
               </div>
             )}
-            <HorizontalLine className="my-5" />
+            <HorizontalLine className="my-9" />
             <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More Posts</p>
             <ArticlePostList
               data={relatedPosts}
