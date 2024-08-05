@@ -6,7 +6,7 @@ const ContactUS = (props: ContactUSData) => {
   return (
     <Card
       className="
-       px-7 sm:px-2 lg:px-7 gap-8 w-full sm:w-full rounded-lg border items-center justify-between
+      px-7 sm:px-2 lg:px-7 gap-8 w-full sm:w-full rounded-lg border-2 items-center justify-between
 
       /* Light Mode */
       bg-neutral-white
@@ -16,7 +16,8 @@ const ContactUS = (props: ContactUSData) => {
 
       /* Dark Mode */
       dark:bg-neutral-900
-      dark:border-0
+      dark:border-neutral-900
+      dark:hover:border-black
       dark:hover:bg-black
       "
       onClick={() => props.onClick}
