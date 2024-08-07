@@ -96,7 +96,7 @@ const ButtonSection = (props: ButtonSectionProps) => {
             description="About BTC"
             photo_dark={BicNews}
             photo_light={BicNews_Dark}
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/MoreInfo/WhatIsBTC")}
           />
           <CreateButton
             title="其他區塊鏈資訊"
