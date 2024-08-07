@@ -130,7 +130,7 @@ const AuthorPage = (props: {
                 img: props.initialAuthor.image,
                 id: props.initialAuthor.id,
               },
-              type: post.type,
+              type: post.type[0],
               img: post.img,
               image: post.image,
               id: post.id,
