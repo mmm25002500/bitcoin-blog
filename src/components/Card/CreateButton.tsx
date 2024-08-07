@@ -23,7 +23,7 @@ const CreateWallet = (props: CreateWalletData) => {
       dark:hover:border-neutral-200
       dark:hover:bg-black
       "
-      onClick={() => props.onClick}
+      onClick={props.onClick}
     >
       <Card.Infomation
         className="leading-normal flex flex-col items-start text-left px-5"
