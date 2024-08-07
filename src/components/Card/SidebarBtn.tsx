@@ -15,7 +15,7 @@ const SidearBtn = (props: CreateWalletData) => {
       /* Dark Mode */
       dark:hover:bg-black
       "
-      onClick={() => props.onClick}
+      onClick={props.onClick}
     >
       <Icon
         icon_light={props.photo_light}
