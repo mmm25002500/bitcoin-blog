@@ -55,7 +55,7 @@ const Header = () => {
     <>
       <nav className="bg-white dark:bg-neutral-black">
         <div className="mx-auto px-2 sm:px-6 md:pr-0 lg:px-5">
-          <div className="flex h-16 items-center">
+          <div className="flex h-16 items-center gap-6 md:gap-0">
             {/* 日期 */}
             <div className='w-full flex items-center sm:grow sm:w-[50%]'>
               <Icon
