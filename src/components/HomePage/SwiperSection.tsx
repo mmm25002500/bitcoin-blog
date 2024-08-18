@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from 'swiper/modules';
-import IMG from '@/icons/examplePhoto/S__4964438.jpg';
+import IMG from '@/icons/examplePhoto/S__4964469.jpg';
+import IMG2 from '@/icons/examplePhoto/S__4964468.jpg';
 import Right from '@/icons/right.svg';
 import Icon from "../Icon";
 import Button from "../Button/Button";
@@ -69,7 +70,7 @@ const SwiperSection = () => {
           </div>
           <div
             style={{
-              backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
+              backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG2.src}')`,
               backgroundAttachment: 'fixed',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
