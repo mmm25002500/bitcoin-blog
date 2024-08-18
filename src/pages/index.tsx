@@ -45,7 +45,7 @@ const Home = (props: HomeProps) => {
       <Navbar />
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16 mx-8">
-        <ButtonSection classname="py-9" />
+        <ButtonSection classname="py-12" />
         <HorizontalLine />
         {initialPosts && (
           <NewsSection

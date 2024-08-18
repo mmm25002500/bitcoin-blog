@@ -38,7 +38,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
   return (
     <div className="mt-8 my-2">
       {/* <p className="font-bold text-xl leading-6 sm:text-[28px] sm:leading-[42px] text-center py-8">NEWS</p> */}
-      <div className="relative my-6">
+      <div className="relative my-10">
         <div className="relative w-auto h-7 mx-5">
           <Swiper
             slidesPerView={"auto"}
