@@ -23,6 +23,7 @@ const MD = (props: MarkDownProperties) => {
       prose-p:font-normal
       prose-p:text-base
       prose-p:leading-6
+      prose-p:whitespace-pre-wrap
 
       /* h1 tag*/
       prose-h1:font-medium

@@ -47,7 +47,7 @@ const ButtonSection = (props: ButtonSectionProps) => {
             description="About BTC"
             photo_dark={Bitcoin_V2}
             photo_light={Bitcoin_V2_Dark}
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/Post/編輯室/AboutBTC")}
           />
           <CreateButton
             title="創建錢包"
@@ -89,7 +89,7 @@ const ButtonSection = (props: ButtonSectionProps) => {
             description="Support us"
             photo_dark={coffee}
             photo_light={coffee_Dark}
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/Post/編輯室/SupportUS")}
           />
           <CreateButton
             title="更多比特幣資訊"
