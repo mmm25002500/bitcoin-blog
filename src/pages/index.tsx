@@ -45,7 +45,7 @@ const Home = (props: HomeProps) => {
       <Navbar />
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16 mx-8">
-        <p className='my-3 mb-5 font-medium text-[13px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300 text-center'>
+        <p className='mb-7 mt-1 font-medium text-[10px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300 text-center'>
         <a href="https://pin.it/2mH0q5Frj">@bitcoinzh</a> photo from ©copyright Pinterest
         </p>
         <ButtonSection classname="pb-6" />
