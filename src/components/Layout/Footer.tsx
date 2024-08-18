@@ -14,7 +14,7 @@ const Footer = () => {
 
         {/* Link */}
         {/* figma: gap-6 */}
-        <div className='flex gap-6 justify-center pt-10'>
+        <div className='flex gap-6 justify-center pt-16'>
           <Link
             href='/Disclaimer'
             prefetch={false}
@@ -50,16 +50,16 @@ const Footer = () => {
           <Icon
             icon_light={btc_icon_dark}
             icon_dark={btc_icon_light}
-            className='mr-auto ml-auto mt-6'
+            className='mr-auto ml-auto mt-20'
           />
         </div>
 
         {/* Copyright */}
-        <div className='flex flex-col gap-3 justify-center pt-8'>
+        <div className='flex flex-col gap-9 justify-center pt-10 pb-20'>
           <p className='text-neutral-600 dark:text-neutral-300 text-center'>
             © Bitcoin.zh <br />
           </p>
-          <p className='ml-4 text-neutral-600 dark:text-neutral-300 text-center'>
+          <p className='ml-5 text-neutral-600 dark:text-neutral-300 text-center'>
             2140
           </p>
         </div>
