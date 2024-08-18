@@ -73,7 +73,7 @@ const Header = () => {
               >
                 {/* BTC HashRate */}
                 <SwiperSlide className="!w-auto">
-                  <div className="flex items-center w-full">
+                  <div className="flex items-center w-full h-full">
                     <Icon
                       icon_light={shovelIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
@@ -87,7 +87,7 @@ const Header = () => {
 
                 {/* Block Height */}
                 <SwiperSlide className="!w-auto">
-                  <div className="flex items-center ">
+                  <div className="flex items-center h-full">
                     <Icon
                       icon_light={boxIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
@@ -99,9 +99,9 @@ const Header = () => {
                 {/* Price */}
                 <SwiperSlide className="!w-auto">
                   <div className="flex items-center">
-                    <Icon
-                      icon_light={btcIcon}
-                      className="h-5 w-auto mr-2 dark:invert" />
+                    <p className='font-medium mr-2 text-lg'>
+                      ฿
+                    </p>
                     <p className='text-black dark:text-white'>Price {btc !== null ? btc : 'Loading...'} USD</p>
                   </div>
                 </SwiperSlide>
