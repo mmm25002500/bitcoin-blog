@@ -11,12 +11,6 @@ const Footer = () => {
       <hr className='border-[#E7E6F2] dark:border-1' />
       {/* figma: px-10 pt-10 */}
       <div className="h-[15.75rem] dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
-        {/* Icon */}
-        <Icon
-          icon_light={btc_icon_dark}
-          icon_dark={btc_icon_light}
-          className='mr-auto ml-auto mt-6'
-        />
 
         {/* Link */}
         {/* figma: gap-6 */}
@@ -26,36 +20,45 @@ const Footer = () => {
             prefetch={false}
             className=""
           >
-            <p>免責聲明</p>
+            <p>聲明</p>
           </Link>
           <Link
             href='/PrivacyPolicy'
             prefetch={false}
             className=""
           >
-            <p>隱私權政策</p>
+            <p>隱私權</p>
           </Link>
           <Link
             href='/About'
             prefetch={false}
             className=""
           >
-            <p>關於我們</p>
+            <p>關於</p>
           </Link>
           <Link
             href='/'
             prefetch={false}
             className=""
           >
-            <p>支持我們</p>
+            <p>支持</p>
           </Link>
         </div>
 
+        {/* Icon */}
+        <Icon
+          icon_light={btc_icon_dark}
+          icon_dark={btc_icon_light}
+          className='mr-auto ml-auto mt-6'
+        />
+
         {/* Copyright */}
-        <div className='flex gap-3 justify-center pt-8'>
+        <div className='flex flex-col gap-3 justify-center pt-8'>
           <p className='text-neutral-600 dark:text-neutral-300 text-center'>
             © Bitcoin.zh <br />
-            <span className='ml-4 text-center'>2140</span>
+          </p>
+          <p className='ml-4 text-neutral-600 dark:text-neutral-300 text-center'>
+            2140
           </p>
         </div>
       </div>

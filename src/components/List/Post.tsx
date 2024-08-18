@@ -37,7 +37,7 @@ const Post = (props: PostProps) => {
           <div className='flex gap-2 relative overflow-hidden'>
             <Swiper
               slidesPerView={"auto"}
-              spaceBetween={8} // 调整间距
+              spaceBetween={8} // 調整間距
               freeMode={true}
               modules={[FreeMode]}
               className="h-8"
