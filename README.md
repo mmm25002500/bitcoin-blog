@@ -14,6 +14,15 @@
 > img: "/Author/JohnCarter/author.png"（必須放在本地，其位置於`public/Author/${name}/author.png`） <br>
 > image: "https://網址/圖片檔名.副檔名" <br>
 
+#### 關於我們
+位置：`WebsiteArticle/About.mdx`
+
+#### 隱私權政策
+位置：`WebsiteArticle/PrivacyPolicy.mdx`
+
+#### 免責聲明
+位置：`WebsiteArticle/Disclaimer.mdx`
+
 ### 搜尋頁面
 1. Creators 以純文字搜索。
 2. Posters 及 News 以標籤方式搜索。

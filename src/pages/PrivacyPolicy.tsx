@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const seoData = JSON.parse(seoFileContents);
 
     // 獲取文章內容
-    const postFile = bucket.file(`WebsiteArtical/PrivacyPolicy.mdx`);
+    const postFile = bucket.file(`WebsiteArticle/PrivacyPolicy.mdx`);
     const [exists] = await postFile.exists();
 
     if (!exists) {
