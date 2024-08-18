@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from 'swiper/modules';
-import IMG from '@/icons/examplePhoto/Image Container.png';
+import IMG from '@/icons/examplePhoto/S__4964438.jpg';
 import Right from '@/icons/right.svg';
 import Icon from "../Icon";
 import Button from "../Button/Button";
