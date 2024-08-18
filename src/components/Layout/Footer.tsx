@@ -4,6 +4,7 @@ import btc_icon_dark from '@/icons/btc_footer_dark.svg';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import IMG from '@/icons/examplePhoto/S__4964449.jpg';
 
 const Footer = () => {
   return (
@@ -63,6 +64,11 @@ const Footer = () => {
             2140
           </p>
         </div>
+
+        <Image
+          src={IMG}
+          alt={''}
+        />
       </div>
     </>
   )
