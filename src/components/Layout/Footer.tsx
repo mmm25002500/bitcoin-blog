@@ -22,20 +22,6 @@ const Footer = () => {
         {/* figma: gap-6 */}
         <div className='flex gap-6 justify-center pt-10'>
           <Link
-            href='/About'
-            prefetch={false}
-            className=""
-          >
-            <p>關於我們</p>
-          </Link>
-          <Link
-            href='/'
-            prefetch={false}
-            className=""
-          >
-            <p>合作夥伴</p>
-          </Link>
-          <Link
             href='/Disclaimer'
             prefetch={false}
             className=""
@@ -49,13 +35,27 @@ const Footer = () => {
           >
             <p>隱私權政策</p>
           </Link>
+          <Link
+            href='/About'
+            prefetch={false}
+            className=""
+          >
+            <p>關於我們</p>
+          </Link>
+          <Link
+            href='/'
+            prefetch={false}
+            className=""
+          >
+            <p>支持我們</p>
+          </Link>
         </div>
 
         {/* Copyright */}
-        <div className='flex gap-3 justify-center pt-6'>
-          <p className='text-neutral-600 dark:text-neutral-300'>
-            © Bitcoin.zh
-            <span className='ml-4'>2140</span>
+        <div className='flex gap-3 justify-center pt-8'>
+          <p className='text-neutral-600 dark:text-neutral-300 text-center'>
+            © Bitcoin.zh <br />
+            <span className='ml-4 text-center'>2140</span>
           </p>
         </div>
       </div>
