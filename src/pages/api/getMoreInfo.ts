@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { initAdmin } from '../../../lib/firebaseAdmin'; // 確保路徑正確
+import { initAdmin } from '../../../lib/firebaseAdmin';
 import matter from 'gray-matter';
 import { LawAuthorData } from '@/types/List/Author';
-import { PostProps } from '@/types/List/PostData';
 
-// 根據 userID 獲取作者資料
+// 根據 userID 取得作者資料
 const getAuthorData = async (userID: string): Promise<LawAuthorData | undefined> => {
   const app = await initAdmin();
   const bucket = app.storage().bucket();
@@ -15,7 +14,7 @@ const getAuthorData = async (userID: string): Promise<LawAuthorData | undefined>
   return authorData.find((author: LawAuthorData) => author.id === userID);
 };
 
-// 根據文件名獲取文章的元數據
+// 根據檔案名取得文章的元數據
 const getPostsMetadata = async (filename: string) => {
   const app = await initAdmin();
   const bucket = app.storage().bucket();
@@ -49,7 +48,7 @@ const getPostsMetadata = async (filename: string) => {
   return null;
 };
 
-// 獲取 MoreInfo.json 文件
+// 取得 MoreInfo.json 檔案
 const getMoreInfo = async () => {
   const app = await initAdmin();
   const bucket = app.storage().bucket();
@@ -62,13 +61,13 @@ const getMoreInfo = async () => {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const moreInfo = await getMoreInfo(); // 從 Firebase 獲取 MoreInfo.json
+    const moreInfo = await getMoreInfo(); // 從 Firebase 取得 MoreInfo.json
 
     // 遍歷 MoreInfo.json 中的每個類別
     const result = await Promise.all(moreInfo.map(async (category: any) => {
       // 對每個類別中的每篇文章進行處理
       const posts = await Promise.all(category.post.map(async (post: any) => {
-        const metadata = await getPostsMetadata(post.filename); // 獲取文章的元數據
+        const metadata = await getPostsMetadata(post.filename); // 取得文章的元數據
         return {
           ...post,
           ...metadata
@@ -80,7 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       };
     }));
 
-    res.status(200).json(result); // 返回結果
+    res.status(200).json(result); // 回傳結果
   } catch (error) {
     console.error('Error accessing Firebase Storage:', error);
     res.status(500).json({ error: 'Error accessing Firebase Storage' });

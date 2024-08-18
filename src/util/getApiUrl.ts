@@ -1,4 +1,3 @@
-// utils/getApiUrl.ts
 import { IncomingMessage } from 'http';
 
 export function getApiUrl(req?: IncomingMessage) {

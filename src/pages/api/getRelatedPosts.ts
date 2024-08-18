@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return `${userID}/${filename}` !== exclude;
     });
 
-    // 限制处理的文件数量
+    // 限制最多只能取 100 筆資料
     const limitedFiles = filteredFiles.slice(0, 100);
 
     const promises = limitedFiles.map(async file => {

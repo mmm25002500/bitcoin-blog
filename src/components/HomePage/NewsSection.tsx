@@ -4,9 +4,7 @@ import { PostProps } from '@/types/List/PostData';
 import Radio from "@/components/Radio/Radio";
 import { NewsPostProps } from "@/types/HomePage/NewsSection";
 
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import required modules
 import { FreeMode, Navigation } from 'swiper/modules';
 
 import right from '@/icons/right.svg';

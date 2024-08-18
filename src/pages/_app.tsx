@@ -6,7 +6,6 @@ import NextNProgress from 'nextjs-progressbar';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';

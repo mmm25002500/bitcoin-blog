@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import matter from 'gray-matter';
 import { PostProps } from '@/types/List/PostData';
 import { LawAuthorData } from '@/types/List/Author';
-import { initAdmin } from '../../../lib/firebaseAdmin'; // 確保路徑正確
+import { initAdmin } from '../../../lib/firebaseAdmin';
 
 interface FilteredPostsProps extends PostProps {
   url: string;
@@ -27,7 +27,7 @@ const getApiUrl = (req: NextApiRequest): string => {
   return `https://${host}`;
 };
 
-// 根據 userID 獲取作者資料
+// 根據 userID 取得作者資料
 const getAuthorData = async (userID: string, apiUrl: string): Promise<LawAuthorData | undefined> => {
   const res = await fetch(`${apiUrl}/api/getAuthorConfig`);
   if (!res.ok) {
@@ -38,7 +38,7 @@ const getAuthorData = async (userID: string, apiUrl: string): Promise<LawAuthorD
   return authorData.find((author: LawAuthorData) => author.id === userID);
 };
 
-// 根據文件名獲取文章的元數據
+// 根據檔案名取得文章的元數據
 const getPostsMetadata = async (filename: string, userID: string) => {
   const app = await initAdmin();
   const bucket = app.storage().bucket();
@@ -80,7 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const isAllTags = tag === 'all';
     const tagsArray: string[] = isAllTags ? [] : (tag as string).split(',');
 
-    // 遍歷每篇文章文件
+    // 遍歷每篇文章檔案
     const postPromises = validFiles.map(async (file) => {
       const parts = file.name.split('/');
       const userID = parts[1];
@@ -93,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const { content, data } = await getPostsMetadata(filename, userID);
 
-      // 獲取作者資料
+      // 取得作者資料
       const postAuthor = await getAuthorData(userID, apiUrl);
 
       // 篩選符合條件的文章

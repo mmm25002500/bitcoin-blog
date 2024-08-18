@@ -46,11 +46,13 @@ const Footer = () => {
         </div>
 
         {/* Icon */}
-        <Icon
-          icon_light={btc_icon_dark}
-          icon_dark={btc_icon_light}
-          className='mr-auto ml-auto mt-6'
-        />
+        <div className='ml-5'>
+          <Icon
+            icon_light={btc_icon_dark}
+            icon_dark={btc_icon_light}
+            className='mr-auto ml-auto mt-6'
+          />
+        </div>
 
         {/* Copyright */}
         <div className='flex flex-col gap-3 justify-center pt-8'>

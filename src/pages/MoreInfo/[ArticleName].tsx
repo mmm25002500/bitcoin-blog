@@ -213,7 +213,7 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
             </IconWithTextBtn>
           </div>
 
-          {/* 手機版返回箭頭 */}
+          {/* 手機版回傳箭頭 */}
           <div className="sm:hidden px-4 mt-8">
             <button onClick={() => router.push('/MoreInfo')}>
               <Image
@@ -314,19 +314,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const linkApiUrl = `${apiUrl}/api/getArticleLinkByFilename?filename=${ArticleName}`;
 
-    // 獲取文章連結
+    // 取得文章連結
     const linkRes = await axios.get(linkApiUrl);
     const linkData = linkRes.data;
     const { link, authorData } = linkData;
     const [userID, postID] = link.split('/');
 
-    // 獲取文章內容
+    // 取得文章內容
     const markdownApiUrl = `${apiUrl}/api/getArticleMarkdown?userID=${userID}&postID=${postID}`;
     const markdownRes = await axios.get(markdownApiUrl);
     const { content, data } = markdownRes.data;
     const mdxSource = await serialize(content);
 
-    // 獲取SEO資料
+    // 取得SEO資料
     const app = await initAdmin();
     const bucket = app.storage().bucket();
     const seoFile = bucket.file('config/SEO.json');

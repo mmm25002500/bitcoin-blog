@@ -15,7 +15,7 @@ const ArticlePostList = ({ data, ArticlePostListMorePostPerclick }: PostListData
 
   const router = useRouter();
 
-  // 解析日期字符串
+  // 解析日期字串
   const parseDate = (dateString: string): Date => {
     if (typeof dateString !== 'string') {
       console.error(`Invalid date format: ${dateString}`);

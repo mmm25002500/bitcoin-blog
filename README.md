@@ -56,15 +56,15 @@
 #### 功能表
 | API | Input | Output | 簡介 |
 | --- | --- | --- | --- |
-| getArticleLinkByFilename | req.query: { filename: string } | res: { title: string, authorData: { fullname?: string, name?: string, img?: string, description?: string, id: string }, date: string, description: string, link: string } | 根據文件名獲取文章的相關鏈接和信息 |
-| getMoreInfo | NONE | res: { category: string, post: { title: string, filename: string, description?: string, link: string, authorData: { fullname: string, name: string, img: string, description: string, id: string }, date: string }[] }[] | 根據 MoreInfo.json 中的信息獲取更多文章的元數據 |
-| getPostsByFilter | req.query: { type: string, author: string, tag: string, mode: string } | res: { title: string, authorData: { fullname?: string, name?: string, img?: string, description?: string, id: string }, date: string, description: string, link: string }[] | 根據篩選條件獲取符合條件的文章 |
-| getRelatedPosts | req.query: { tag: string, exclude: string, mode: string } | res: { title: string, authorData: { id: string }, date: string, description: string, link: string }[] | 根據標籤和排除的文章 ID 獲取相關文章 |
-| getAuthorPostCount | req.query: { author: string<> } | res: { author: string, postCount: number } | 根據作者ID返回該作者的文章數量 |
+| getArticleLinkByFilename | req.query: { filename: string } | res: { title: string, authorData: { fullname?: string, name?: string, img?: string, description?: string, id: string }, date: string, description: string, link: string } | 根據檔案名取得文章的相關鏈接和信息 |
+| getMoreInfo | NONE | res: { category: string, post: { title: string, filename: string, description?: string, link: string, authorData: { fullname: string, name: string, img: string, description: string, id: string }, date: string }[] }[] | 根據 MoreInfo.json 中的信息取得更多文章的元數據 |
+| getPostsByFilter | req.query: { type: string, author: string, tag: string, mode: string } | res: { title: string, authorData: { fullname?: string, name?: string, img?: string, description?: string, id: string }, date: string, description: string, link: string }[] | 根據篩選條件取得符合條件的文章 |
+| getRelatedPosts | req.query: { tag: string, exclude: string, mode: string } | res: { title: string, authorData: { id: string }, date: string, description: string, link: string }[] | 根據標籤和排除的文章 ID 取得相關文章 |
+| getAuthorPostCount | req.query: { author: string<> } | res: { author: string, postCount: number } | 根據作者ID回傳該作者的文章數量 |
 | getAuthorsByDescription | req.query: { text: string } | res: { fullname: string, name: string, description: string, image: string, id: string }[] | 根據描述字段中的文本篩選作者 |
-| getBitcoinStats | NONE | JSON 格式的比特幣統計數據 | 使用 Blockchair API 獲取比特幣統計數據並返回 |
-| getAuthorConfig | NONE | res: { [authorID: string]: { fullname: string, name: string, img: string, description: string } } | 獲取所有作者的配置信息 |
-| getArticleMarkdown | req.query: { userID: string, postID: string } | res: { content: string, data: { [key: string]: any } } | 根據用戶ID和文章ID獲取文章的Markdown內容 |
+| getBitcoinStats | NONE | JSON 格式的比特幣統計資料 | 使用 Blockchair API 取得比特幣統計資料並回傳 |
+| getAuthorConfig | NONE | res: { [authorID: string]: { fullname: string, name: string, img: string, description: string } } | 取得所有作者的設定信息 |
+| getArticleMarkdown | req.query: { userID: string, postID: string } | res: { content: string, data: { [key: string]: any } } | 根據用戶ID和文章ID取得文章的Markdown內容 |
 
 ### 外部API
 | Hash Rate | Block Height | Price |

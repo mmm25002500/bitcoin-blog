@@ -10,9 +10,7 @@ import { initAdmin } from '../../../../lib/firebaseAdmin';
 import Head from "next/head";
 import Image from 'next/image';
 
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import required modules
 import { FreeMode, Navigation } from 'swiper/modules';
 
 import right from '@/icons/right.svg';
@@ -30,7 +28,7 @@ const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initia
   const [currentType, setCurrentType] = useState<string>('Post');
   const [currentAuthor, setCurrentAuthor] = useState<string>('all');
 
-  // 使用 useSWR 獲取篩選後的文章
+  // 使用 useSWR 取得篩選後的文章
   const { data: filteredPosts, error } = useSWR<PostProps[]>(
     `/api/getPostsByFilter?type=${currentType}&author=${currentAuthor}&tag=${currentSelection}`,
     fetcher,
@@ -144,24 +142,24 @@ const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initia
   );
 }
 
-// 獲取靜態頁面所需的數據
+// 取得靜態頁面所需的資料
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
   const selection = params?.selection;
 
-  // 獲取SEO配置
+  // 取得SEO設定
   const app = await initAdmin();
   const bucket = app.storage().bucket();
   const seoFile = bucket.file('config/SEO.json');
   const seoFileContents = (await seoFile.download())[0].toString('utf8');
   const seoData = JSON.parse(seoFileContents);
 
-  // 獲取Tag配置
+  // 取得Tag設定
   const tagsFile = bucket.file('config/Tags.json');
   const tagsFileContents = (await tagsFile.download())[0].toString('utf8');
   const tagsData = JSON.parse(tagsFileContents);
 
-  // 獲取SiteConfig配置
+  // 取得SiteConfig設定
   const siteConfigFile = bucket.file('config/SiteConfig.json');
   const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
   const siteConfigData = JSON.parse(siteConfigFileContents);

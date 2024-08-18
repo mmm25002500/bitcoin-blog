@@ -64,22 +64,22 @@ const Home = (props: HomeProps) => {
   );
 };
 
-// 獲取首頁的初始數據
+// 取得首頁的初始資料
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    // 獲取SEO配置
+    // 取得SEO設定
     const app = await initAdmin();
     const bucket = app.storage().bucket();
     const seoFile = bucket.file('config/SEO.json');
     const seoFileContents = (await seoFile.download())[0].toString('utf8');
     const seoData = JSON.parse(seoFileContents);
 
-    // 獲取Tag配置
+    // 取得Tag設定
     const tagFile = bucket.file('config/Tags.json');
     const tagFileContents = (await tagFile.download())[0].toString('utf8');
     const tagData = JSON.parse(tagFileContents);
 
-    // 獲取SiteConfig配置
+    // 取得SiteConfig設定
     const siteConfigFile = bucket.file('config/SiteConfig.json');
     const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
     const siteConfigData = JSON.parse(siteConfigFileContents);

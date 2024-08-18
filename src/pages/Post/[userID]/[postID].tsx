@@ -110,18 +110,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const app = await initAdmin();
   const bucket = app.storage().bucket();
 
-  // Fetch SEO data
+  // 取得 SEO 資料
   const seoFile = bucket.file('config/SEO.json');
   const seoFileContents = (await seoFile.download())[0].toString('utf8');
   const seoData = JSON.parse(seoFileContents);
 
-  // Fetch SiteConfig data
+  // 取得 SiteConfig 資料
   const siteConfigFile = bucket.file('config/SiteConfig.json');
   const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
   const siteConfigData = JSON.parse(siteConfigFileContents);
   const ArticlePostListMorePostPerclick = siteConfigData.ArticlePostListMorePostPerclick;
 
-  // Fetch initial post data
+  // 取得文章資料
   const postFile = bucket.file(`Article/${userID}/${postID}.mdx`);
   const [exists] = await postFile.exists();
 

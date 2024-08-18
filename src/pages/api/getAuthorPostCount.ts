@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { initAdmin } from '../../../lib/firebaseAdmin'; // 确保路径正确
+import { initAdmin } from '../../../lib/firebaseAdmin';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { author } = req.query;

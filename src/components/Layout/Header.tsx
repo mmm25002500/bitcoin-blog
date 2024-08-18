@@ -5,11 +5,9 @@ import btcIcon from '@/icons/btc.svg';
 import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
 
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// import required modules
 import { FreeMode } from 'swiper/modules';
+
 import axios from 'axios';
 
 const Header = () => {

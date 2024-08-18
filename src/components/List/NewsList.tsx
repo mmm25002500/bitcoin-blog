@@ -32,7 +32,7 @@ const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number})
     return dateB.getTime() - dateA.getTime();
   });
 
-  // 顯示的帖子數量
+  // 顯示的文章數量
   const displayedPosts = sortedData.slice(0, postsToShow);
 
   // 處理按下按鈕時顯示更多文章

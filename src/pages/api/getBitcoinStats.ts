@@ -1,13 +1,12 @@
-// pages/api/getBitcoinStats.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    // 使用 Blockchair API 獲取比特幣統計數據
+    // 使用 Blockchair API 取得比特幣統計資料
     const response = await axios.get('https://api.blockchair.com/bitcoin/stats');
 
-    // 從響應中提取所需的數據
+    // 從響應中提取所需的資料
     const data = response.data?.data;
 
     if (data) {

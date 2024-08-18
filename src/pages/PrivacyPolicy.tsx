@@ -58,12 +58,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const app = await initAdmin();
     const bucket = app.storage().bucket();
 
-    // 獲取SEO配置
+    // 取得SEO設定
     const seoFile = bucket.file('config/SEO.json');
     const seoFileContents = (await seoFile.download())[0].toString('utf8');
     const seoData = JSON.parse(seoFileContents);
 
-    // 獲取文章內容
+    // 取得文章內容
     const postFile = bucket.file(`WebsiteArticle/PrivacyPolicy.mdx`);
     const [exists] = await postFile.exists();
 

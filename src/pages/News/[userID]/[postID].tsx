@@ -134,18 +134,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const app = await initAdmin();
   const bucket = app.storage().bucket();
 
-  // Fetch SEO data
+  // 取得SEO設定
   const seoFile = bucket.file('config/SEO.json');
   const seoFileContents = (await seoFile.download())[0].toString('utf8');
   const seoData = JSON.parse(seoFileContents);
 
-  // Fetch SiteConfig data
+  // 取得SiteConfig設定
   const siteConfigFile = bucket.file('config/SiteConfig.json');
   const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
   const siteConfigData = JSON.parse(siteConfigFileContents);
   const ArticleNewsListMorePostPerclick = siteConfigData.ArticleNewsListMorePostPerclick;
 
-  // Fetch initial post data
+  // 取得文章內容
   const postFile = bucket.file(`Article/${userID}/${postID}.mdx`);
   const [exists] = await postFile.exists();
 
@@ -157,7 +157,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { content, data } = matter(postFileContents);
   const mdxSource = await serialize(content);
 
-  // Fetch author data
+  // 取得作者資料
   const authorFile = bucket.file('config/Author.json');
   const authorFileContents = (await authorFile.download())[0].toString('utf8');
   const authorData = JSON.parse(authorFileContents);

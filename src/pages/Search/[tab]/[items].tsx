@@ -236,19 +236,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   try {
-    // 獲取SEO配置
+    // 取得SEO設定
     const app = await initAdmin();
     const bucket = app.storage().bucket();
     const seoFile = bucket.file('config/SEO.json');
     const seoFileContents = (await seoFile.download())[0].toString('utf8');
     const seoData = JSON.parse(seoFileContents);
 
-    // 獲取Tab配置
+    // 取得Tab設定
     const tabFile = bucket.file('config/SearchTab.json');
     const tabFileContents = (await tabFile.download())[0].toString('utf8');
     const tabData = JSON.parse(tabFileContents);
 
-    // 獲取SiteConfig配置
+    // 取得SiteConfig設定
     const siteConfigFile = bucket.file('config/SiteConfig.json');
     const siteConfigFileContents = (await siteConfigFile.download())[0].toString('utf8');
     const siteConfigData = JSON.parse(siteConfigFileContents);

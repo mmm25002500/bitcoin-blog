@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { initAdmin } from '../../../lib/firebaseAdmin'; // 確保路徑正確
+import { initAdmin } from '../../../lib/firebaseAdmin';
 import matter from 'gray-matter';
 import fetch from 'node-fetch';
 import { LawAuthorData } from '@/types/List/Author';
@@ -18,7 +18,7 @@ const getApiUrl = (req: NextApiRequest): string => {
   return `https://${host}`;
 };
 
-// 根據 userID 獲取作者資料
+// 根據 userID 取得作者資料
 const getAuthorData = async (userID: string, apiUrl: string): Promise<LawAuthorData | undefined> => {
   const res = await fetch(`${apiUrl}/api/getAuthorConfig`);
   if (!res.ok) {
@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const [files] = await bucket.getFiles({ prefix: 'Article/' });
 
-    // 遍歷文件，查找匹配的文件名
+    // 遍歷檔案，查找匹配的檔案名
     for (const file of files) {
       if (file.name.endsWith(`${filename}.mdx`)) {
         const userID = file.name.split('/')[1];
@@ -52,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { data } = matter(fileContents);
         const postAuthor = await getAuthorData(userID, apiUrl);
 
-        // 返回文章數據和作者資料
+        // 回傳文章資料和作者資料
         return res.status(200).json({
           title: data.title || '',
           authorData: postAuthor ? {
@@ -71,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     }
 
-    // 如果未找到文件，返回 404 錯誤
+    // 如果未找到檔案，回傳 404 錯誤
     return res.status(404).json({ error: 'Article not found' });
   } catch (error) {
     console.error('Error accessing Firebase Storage:', error);
