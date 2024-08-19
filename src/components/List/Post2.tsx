@@ -36,7 +36,7 @@ const Post2 = (props: PostProps) => {
               <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-4">
                   <Image
-                    src={authorData.img}
+                    src={authorData.image}
                     alt={authorData.name + ' avater'}
                     width={28}
                     height={28}

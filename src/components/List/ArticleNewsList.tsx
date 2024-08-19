@@ -59,6 +59,7 @@ const ArticlePostList = ({ data, increment }: PostListData & {increment: number}
             type={post.type}
             image={post.image}
             className=''
+            authorData={post.authorData}
           />
         )
       })}

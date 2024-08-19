@@ -59,6 +59,7 @@ const ArticlePostList = ({ data, ArticlePostListMorePostPerclick }: PostListData
             date={parsedDate.toISOString()}
             type={post.type}
             image={post.image}
+            authorData={post.authorData}
           />
         )
       })}

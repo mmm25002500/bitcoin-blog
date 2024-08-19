@@ -61,6 +61,7 @@ const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number})
                 type={["Post"]}
                 image={post.image}
                 className='px-5 sm:px-0'
+                authorData={post.authorData}
               />
             </React.Fragment>
           );
