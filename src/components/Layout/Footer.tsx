@@ -56,12 +56,9 @@ const Footer = () => {
           </div>
 
           {/* Copyright */}
-          <div className='flex flex-col gap-14 justify-center pt-10 pb-28'>
+          <div className='flex gap-14 justify-center pt-10 pb-28'>
             <p className='text-neutral-600 dark:text-neutral-300 text-center'>
-              © Bitcoin.zh <br />
-            </p>
-            <p className='ml-5 text-neutral-600 dark:text-neutral-300 text-center'>
-              2140
+              © Bitcoin.zh 2140
             </p>
           </div>
 
