@@ -53,19 +53,19 @@ const Footer = () => {
         </div>
 
         {/* Icon */}
-        <div className='ml-5'>
+        <div className=''>
           <Icon
             icon_light={btc_icon_dark}
             icon_dark={btc_icon_light}
-            className='mr-auto ml-auto mt-24 w-16'
+            className='mr-auto ml-auto mt-24 w-12'
           />
         </div>
 
         {/* Copyright */}
-        <div className='flex gap-14 justify-center pt-20 pb-20'>
-          <p className='text-neutral-600 dark:text-neutral-300 text-center'>
-            © Bitcoin.zh 2140
-          </p>
+        <div className='flex flex-col gap-7 justify-center pt-20 mb-20'>
+            <p className='text-neutral-600 dark:text-neutral-300 text-center'>@Bitcoin.zh</p>
+            <p className='text-neutral-600 dark:text-neutral-300 text-center'>2024 - 2140</p>
+            <p className='text-neutral-600 dark:text-neutral-300 text-center'>V 1.8.20a</p>
         </div>
 
       </div>

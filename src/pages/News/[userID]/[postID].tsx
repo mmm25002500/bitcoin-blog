@@ -17,6 +17,8 @@ import { initAdmin } from '../../../../lib/firebaseAdmin';
 import matter from 'gray-matter';
 import Image from 'next/image';
 import defalutPostImage from '@/icons/examplePhoto/defaultPostImage.jpg';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation } from "swiper/modules";
 
 const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, authorData: any, ArticleNewsListMorePostPerclick: number }) => {
   const router = useRouter();
@@ -68,22 +70,45 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
       </Head>
       <article>
         <Navbar />
-        <div className="mx-auto sm:px-28">
+        <div className="mx-auto sm:px-28 w-full lg:w-[60%]">
           <ArticleLayout className='pt-10 px-5 sm:px-0'>
             {/* 內文 */}
             <h1 className="mb-2 text-[22px] leading-[30px] sm:text-[34px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
             <p className="mb-3 text-base leading-[22px] sm:text-[22px] sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
-            <Image
-              // src={initialPost.frontMatter.image}
-              src={defalutPostImage}
-              alt="Post Image"
-              className="w-full"
-            />
+            <div className="flex justify-center">
+              <Image
+                // src={initialPost.frontMatter.image}
+                src={defalutPostImage}
+                alt="Post Image"
+              />
+            </div>
             <MD>{initialPost.source}</MD>
             <div className="mt-2 mb-5 flex gap-2">
-              {initialPost.frontMatter.tags.map((item: string, index: number) => (
+
+            {/* 標籤 */}
+            <div className="relative w-full h-10">
+              <Swiper
+                slidesPerView={"auto"}
+                spaceBetween={20}
+                freeMode={true}
+                navigation={{
+                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-button-prev',
+                }}
+                modules={[FreeMode, Navigation]}
+                className="w-full h-8"
+              >
+                {initialPost.frontMatter.tags.map((tag, idx) => (
+                  <SwiperSlide key={idx} className="!w-auto">
+                    <Tag key={idx} text={tag} type={["News"]} className="text-xs py-1 px-3" />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              </div>
+
+              {/* {initialPost.frontMatter.tags.map((item: string, index: number) => (
                 <Tag key={index} text={item} type={["News"]} className="text-xs py-1 px-3" />
-              ))}
+              ))} */}
             </div>
             {/* 作者 */}
             <button
