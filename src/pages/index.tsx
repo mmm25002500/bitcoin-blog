@@ -7,7 +7,7 @@ import HorizontalLine from "@/components/HorizontalLine";
 import Header from "@/components/Layout/Header";
 import Navbar from "@/components/Layout/Navbar";
 import ContactSection from "@/components/Page/ContactSection";
-import SubscribeSection from "@/components/Page/SubscribeSection";
+// import SubscribeSection from "@/components/Page/SubscribeSection";
 import Head from "next/head";
 import { GetServerSideProps } from 'next';
 import { PostProps } from '@/types/List/PostData';

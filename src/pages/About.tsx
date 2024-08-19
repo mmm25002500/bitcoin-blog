@@ -5,7 +5,7 @@ import Header from '@/components/Layout/Header';
 import Navbar from '@/components/Layout/Navbar';
 import MD from '@/components/MD';
 import ContactSection from '@/components/Page/ContactSection';
-import SubscribeSection from '@/components/Page/SubscribeSection';
+// import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from '@/icons/illustation/about us.svg';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
@@ -45,9 +45,9 @@ const AboutPage = ({ initialPost, SEO } : { initialPost: MarkDownDataProps, SEO?
         </ArticleLayout>
         <HorizontalLine className='sm:hidden' />
         <ContactSection className="py-16" />
-        <HorizontalLine />
-        <SubscribeSection className="py-16" />
-        <HorizontalLine />
+        {/* <HorizontalLine /> */}
+        {/* <SubscribeSection className="py-16" /> */}
+        {/* <HorizontalLine /> */}
       </div>
     </>
   )
