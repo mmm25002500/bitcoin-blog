@@ -10,44 +10,28 @@ import { useEffect, useState } from 'react';
 
 const Footer = () => {
   const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
+
   return (
     <>
       <hr className='border-[#E7E6F2] dark:border-1' />
-      {/* figma: px-10 pt-10 */}
       <div className="dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
 
         {/* Link */}
         <div className='flex gap-6 justify-center pt-20'>
-          <Link
-            href='/Disclaimer'
-            prefetch={false}
-            className=""
-          >
+          <Link href='/Disclaimer' prefetch={false}>
             <p>聲明</p>
           </Link>
-          <Link
-            href='/PrivacyPolicy'
-            prefetch={false}
-            className=""
-          >
+          <Link href='/PrivacyPolicy' prefetch={false}>
             <p>隱私權</p>
           </Link>
-          <Link
-            href='/About'
-            prefetch={false}
-            className=""
-          >
+          <Link href='/About' prefetch={false}>
             <p>關於</p>
           </Link>
-          <Link
-            href='/Post/編輯室/SupportUS'
-            prefetch={false}
-            className=""
-          >
+          <Link href='/Post/編輯室/SupportUS' prefetch={false}>
             <p>支持</p>
           </Link>
         </div>
@@ -63,28 +47,31 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className='flex flex-col gap-7 justify-center pt-20 mb-20'>
-            <p className='text-neutral-600 dark:text-neutral-300 text-center'>@Bitcoin.zh</p>
-            <p className='text-neutral-600 dark:text-neutral-300 text-center'>2024 - 2140</p>
-            <p className='text-neutral-600 dark:text-neutral-300 text-center'>V 1.8.20a</p>
+          <p className='text-neutral-600 dark:text-neutral-300 text-center'>@Bitcoin.zh</p>
+          <p className='text-neutral-600 dark:text-neutral-300 text-center'>2024 - 2140</p>
+          <p className='text-neutral-600 dark:text-neutral-300 text-center'>V 1.8.20b</p>
         </div>
 
       </div>
-      {
-        theme === 'dark' ?
-          <Image
-            src={IMG_dark}
-            alt={''}
-            className='w-full h-full'
-          />
-          :
-          <Image
-            src={IMG}
-            alt={''}
-            className='w-full h-full'
-          />
-      }
+
+        <div className="pb-20 bg-primary-black-300 dark:bg-white md:pb-0">
+          {
+            theme === 'dark' ?
+              <Image
+                src={IMG_dark}
+                alt={''}
+                className='w-full h-full'
+              />
+              :
+              <Image
+                src={IMG}
+                alt={''}
+                className='w-full h-full'
+              />
+          }
+      </div>
     </>
-  )
+  );
 }
 
 export default Footer;

@@ -11,19 +11,19 @@ const Layout = ({ children }: LayoutData) => {
     <>
       {/* HEAD */}
       <Head>
-        <title>比特幣中文標題</title>
-        <meta name="description" content="比特幣中文" />
+        {/* <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#1c1c1c" media="(prefers-color-scheme: light)" /> */}
         {
           theme === 'dark' ?
-            <meta name="theme-color" content="#ffffff" />
+            <meta name="theme-color" content="white" />
             :
             <meta name="theme-color" content="#1c1c1c" />
         }
       </Head>
 
       {/* Body */}
-      <div className="min-h-screen flex flex-col">
-        <main className="flex-grow z-0">
+      <div id="body" className="overflow-y-auto h-[100vh] bg-white dark:bg-primary-black-300">
+        <main className="z-0">
           {children}
         </main>
         <Footer />
