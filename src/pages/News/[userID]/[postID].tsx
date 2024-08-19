@@ -88,7 +88,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
                   alt="Author Image"
                   width={1000}
                   height={1000}
-                  className="rounded-full w-10 h-10"
+                  className="rounded-full w-6 h-6"
                 />
               </div>
               {/* 名字 */}
@@ -110,7 +110,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
               </div>
             </button>
             <HorizontalLine className="my-9" />
-            <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More News</p>
+            <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5 pt-4">More News</p>
             <ArticleNewsList
               data={relatedPosts}
               increment={ArticleNewsListMorePostPerclick}
