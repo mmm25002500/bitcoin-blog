@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Drawer } from "@material-tailwind/react";
+import { Card, Drawer } from "@material-tailwind/react";
 import { useRouter } from 'next/navigation';
 import { HomePageSidebarProps } from "@/types/Sidebar/HomePageSidebar";
 import Close from "../Button/Close";
@@ -40,17 +40,22 @@ const HomePageSidebar = (props: HomePageSidebarProps) => {
           onClick: closeDrawer
         }}
       >
-        <p className="mt-2 sm:mt-3 sm:mr-5 sm:mb-2 text-right font-medium text-sm leading-[22px]">
-          <Close
-            className=""
-            onClick={closeDrawer}
-          />
-        </p>
-        {/* 類別 */}
+        <Card
+          color="transparent"
+          shadow={false}
+          className="h-full w-full p-4 overflow-y-auto" nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+          <p className="mt-2 sm:mt-3 sm:mr-5 sm:mb-2 text-right font-medium text-sm leading-[22px]">
+            <Close
+              className=""
+              onClick={closeDrawer}
+            />
+          </p>
+          {/* 類別 */}
 
-        <div className={`mx-5 ${props.className}`}>
-          { props.children }
-        </div>
+          <div className={`mx-5 ${props.className}`}>
+            {props.children}
+          </div>
+        </Card>
       </Drawer>
     </>
   );

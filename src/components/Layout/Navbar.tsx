@@ -148,7 +148,6 @@ const Navbar = () => {
           className=''
         >
           {/* List */}
-          <div className='overflow-y-auto'>
             <SidebarBtn
               title="關於比特幣"
               description="About BTC"
@@ -212,10 +211,9 @@ const Navbar = () => {
               photo_light={blockchain_Dark}
               onClick={() => router.push("/Tag/News/all")}
             />
-          </div>
 
           {/* Social Media */}
-          <div className='absolute bottom-7 left-0 w-full'>
+          <div className='w-full'>
             <div className='flex justify-center space-x-6'>
               {SocialMedia.map((item, index) => (
                 <a
