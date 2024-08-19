@@ -99,7 +99,23 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
       </div>
 
       <NewsList
-        data={filteredPosts}
+        data={filteredPosts.map((post: PostProps) => ({
+          title: post.title,
+          description: post.description,
+          tags: post.tags,
+          date: post.date,
+          authorData: {
+            fullname: post.authorData.fullname,
+            name: post.authorData.name,
+            description: post.authorData.description,
+            img: post.authorData.image,
+            id: post.authorData.id,
+          },
+          type: post.type[0],
+          img: post.authorData.image,
+          image: post.image,
+          id: post.id,
+        })) as any}
         postsPerPage={HomePageNewsListPerpage}
       />
     </div>
