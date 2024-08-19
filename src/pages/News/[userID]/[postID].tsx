@@ -110,7 +110,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
               </div>
             </button>
             <HorizontalLine className="my-9" />
-            <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5 pt-4">More News</p>
+            <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5 pt-8">More News</p>
             <ArticleNewsList
               data={relatedPosts}
               increment={ArticleNewsListMorePostPerclick}
