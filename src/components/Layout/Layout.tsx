@@ -15,9 +15,9 @@ const Layout = ({ children }: LayoutData) => {
         <meta name="description" content="比特幣中文" />
         {
           theme === 'dark' ?
-            <meta name="theme-color" content="#1c1c1c" />
-            :
             <meta name="theme-color" content="#ffffff" />
+            :
+            <meta name="theme-color" content="#1c1c1c" />
         }
       </Head>
 
