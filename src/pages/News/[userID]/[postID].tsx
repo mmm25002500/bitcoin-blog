@@ -16,6 +16,7 @@ import Head from "next/head";
 import { initAdmin } from '../../../../lib/firebaseAdmin';
 import matter from 'gray-matter';
 import Image from 'next/image';
+import defalutPostImage from '@/icons/examplePhoto/defaultPostImage.jpg';
 
 const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, authorData: any, ArticleNewsListMorePostPerclick: number }) => {
   const router = useRouter();
@@ -51,6 +52,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
 
   const date = initialPost?.frontMatter?.date ? new Date(initialPost.frontMatter.date) : null;
 
+  console.log('initialPost', initialPost);
   return (
     <>
       <Head>
@@ -71,6 +73,12 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
             {/* 內文 */}
             <h1 className="mb-2 text-[22px] leading-[30px] sm:text-[34px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
             <p className="mb-3 text-base leading-[22px] sm:text-[22px] sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
+            <Image
+              // src={initialPost.frontMatter.image}
+              src={defalutPostImage}
+              alt="Post Image"
+              className="w-full"
+            />
             <MD>{initialPost.source}</MD>
             <div className="mt-2 mb-5 flex gap-2">
               {initialPost.frontMatter.tags.map((item: string, index: number) => (
