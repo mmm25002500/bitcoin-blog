@@ -10,6 +10,7 @@ import SidebarBtn from '../Card/SidebarBtn';
 import HomePageSearchDrawer from '../Drawer/HomePageSearchDrawer';
 
 // Light Mode
+import Bitcoin_V2 from "@/icons/HomePage/biitcoin_v2.svg";
 import CryptoWallet from "@/icons/HomePage/crypto_wallet.svg";
 import BicNews from "@/icons/HomePage/bic-news.svg";
 import blockchain from "@/icons/HomePage/blockchain.svg";
@@ -21,6 +22,7 @@ import UseBTC from "@/icons/HomePage/use_btc.svg";
 import searchBtn from '@/icons/SearchBtn.svg';
 
 // Dark Mode
+import Bitcoin_V2_Dark from "@/icons/HomePage/biitcoin_v2_dark.svg";
 import CryptoWallet_Dark from "@/icons/HomePage/crypto_wallet_dark.svg";
 import BicNews_Dark from "@/icons/HomePage/bic-news_dark.svg";
 import blockchain_Dark from "@/icons/HomePage/blockchain_dark.svg";
@@ -148,6 +150,13 @@ const Navbar = () => {
           {/* List */}
           <div className='overflow-y-auto'>
             <SidebarBtn
+              title="關於比特幣"
+              description="About BTC"
+              photo_dark={Bitcoin_V2}
+              photo_light={Bitcoin_V2_Dark}
+              onClick={() => router.push("/Post/編輯室/AboutBTC")}
+            />
+            <SidebarBtn
               title="創建錢包"
               description="CreateWallet"
               photo_dark={CryptoWallet}
@@ -194,14 +203,14 @@ const Navbar = () => {
               description="About BTC"
               photo_dark={BicNews}
               photo_light={BicNews_Dark}
-              onClick={() => router.push("/MoreInfo/WhatIsBTC")}
+              onClick={() => router.push("/Tag/Post/all")}
             />
             <SidebarBtn
               title="其他區塊鏈資訊"
               description="About Blockchain"
               photo_dark={blockchain}
               photo_light={blockchain_Dark}
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/Tag/News/all")}
             />
           </div>
 

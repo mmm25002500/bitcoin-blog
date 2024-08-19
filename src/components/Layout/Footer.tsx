@@ -21,7 +21,6 @@ const Footer = () => {
       <div className="dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
 
         {/* Link */}
-        {/* figma: gap-6 */}
         <div className='flex gap-6 justify-center pt-20'>
           <Link
             href='/Disclaimer'
@@ -45,7 +44,7 @@ const Footer = () => {
             <p>關於</p>
           </Link>
           <Link
-            href='/'
+            href='/Post/編輯室/SupportUS'
             prefetch={false}
             className=""
           >

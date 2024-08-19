@@ -96,14 +96,14 @@ const ButtonSection = (props: ButtonSectionProps) => {
             description="About BTC"
             photo_dark={BicNews}
             photo_light={BicNews_Dark}
-            onClick={() => router.push("/MoreInfo/WhatIsBTC")}
+            onClick={() => router.push("/Tag/Post/all")}
           />
           <CreateButton
             title="其他區塊鏈資訊"
             description="About Blockchain"
             photo_dark={blockchain}
             photo_light={blockchain_Dark}
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/Tag/News/all")}
           />
         </div>
       </div>
