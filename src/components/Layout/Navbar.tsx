@@ -40,6 +40,8 @@ import Youtube from "@/icons/HomePage/yt.svg";
 import Discord from "@/icons/HomePage/dc.svg";
 import InputLabel from '../Input/InputLable';
 import { useRouter } from 'next/router';
+import { Card } from '@material-tailwind/react';
+import Close from '../Button/Close';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -147,73 +149,87 @@ const Navbar = () => {
           setIsDrawerOpen={setIsSidebarOpen}
           className=''
         >
-          {/* List */}
-            <SidebarBtn
-              title="關於"
-              description="About Bitcoin"
-              photo_dark={Bitcoin_V2}
-              photo_light={Bitcoin_V2_Dark}
-              onClick={() => router.push("/Post/編輯室/AboutBTC")}
-            />
-            <SidebarBtn
-              title="錢包"
-              description="Wallet"
-              photo_dark={CryptoWallet}
-              photo_light={CryptoWallet_Dark}
-              onClick={() => router.push("/")}
-            />
-            <SidebarBtn
-              title="購買 比特幣"
-              description="Purchase bitcoin"
-              photo_dark={BuyBic}
-              photo_light={BuyBic_Dark}
-              onClick={() => router.push("/")}
-            />
-            <SidebarBtn
-              title="比特幣 挖礦"
-              description="Bitcoin Mining"
-              photo_dark={Mining}
-              photo_light={Mining_Dark}
-              onClick={() => router.push("/")}
-            />
-            <SidebarBtn
-              title="使用"
-              description="Use bitcoin"
-              photo_dark={UseBTC}
-              photo_light={UseBTC_Dark}
-              onClick={() => router.push("/")}
-            />
-            <SidebarBtn
-              title="加入社群"
-              description="Join Community"
-              photo_dark={Social}
-              photo_light={Social_Dark}
-              onClick={() => router.push("/")}
-            />
-            <SidebarBtn
-              title="支持我們"
-              description="Support us"
-              photo_dark={coffee}
-              photo_light={coffee_Dark}
-              onClick={() => router.push("/")}
-            />
-            <SidebarBtn
-              title="比特幣 更多資訊"
-              description="About more BTC"
-              photo_dark={BicNews}
-              photo_light={BicNews_Dark}
-              onClick={() => router.push("/Tag/Post/all")}
-            />
-            <SidebarBtn
-              title="其他新聞資訊"
-              description="More info & news"
-              photo_dark={blockchain}
-              photo_light={blockchain_Dark}
-              onClick={() => router.push("/Tag/News/all")}
-            />
+          <Card
+            color="transparent"
+            shadow={false}
+            className="h-full w-full p-4 overflow-y-auto" nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+            <p className="mt-2 sm:mt-3 sm:mr-5 sm:mb-2 text-right font-medium text-sm leading-[22px]">
+              <Close
+                className=""
+                onClick={() => setIsSidebarOpen(false)}
+              />
+            </p>
 
+            {/* 類別 */}
+            <div className={`mx-5 `}>
+              {/* List */}
+              <SidebarBtn
+                title="關於"
+                description="About Bitcoin"
+                photo_dark={Bitcoin_V2}
+                photo_light={Bitcoin_V2_Dark}
+                onClick={() => router.push("/Post/編輯室/AboutBTC")}
+              />
+              <SidebarBtn
+                title="錢包"
+                description="Wallet"
+                photo_dark={CryptoWallet}
+                photo_light={CryptoWallet_Dark}
+                onClick={() => router.push("/")}
+              />
+              <SidebarBtn
+                title="購買 比特幣"
+                description="Purchase bitcoin"
+                photo_dark={BuyBic}
+                photo_light={BuyBic_Dark}
+                onClick={() => router.push("/")}
+              />
+              <SidebarBtn
+                title="比特幣 挖礦"
+                description="Bitcoin Mining"
+                photo_dark={Mining}
+                photo_light={Mining_Dark}
+                onClick={() => router.push("/")}
+              />
+              <SidebarBtn
+                title="使用"
+                description="Use bitcoin"
+                photo_dark={UseBTC}
+                photo_light={UseBTC_Dark}
+                onClick={() => router.push("/")}
+              />
+              <SidebarBtn
+                title="加入社群"
+                description="Join Community"
+                photo_dark={Social}
+                photo_light={Social_Dark}
+                onClick={() => router.push("/")}
+              />
+              <SidebarBtn
+                title="支持我們"
+                description="Support us"
+                photo_dark={coffee}
+                photo_light={coffee_Dark}
+                onClick={() => router.push("/")}
+              />
+              <SidebarBtn
+                title="比特幣 更多資訊"
+                description="About more BTC"
+                photo_dark={BicNews}
+                photo_light={BicNews_Dark}
+                onClick={() => router.push("/Tag/Post/all")}
+              />
+              <SidebarBtn
+                title="其他新聞資訊"
+                description="More info & news"
+                photo_dark={blockchain}
+                photo_light={blockchain_Dark}
+                onClick={() => router.push("/Tag/News/all")}
+              />
+            </div>
+          </Card>
           {/* Social Media */}
-          <div className='w-full'>
+          <div className='absolute bottom-0 pb-5 py-2 left-0 w-full dark:bg-neutral-black'>
             <div className='flex justify-center space-x-6'>
               {SocialMedia.map((item, index) => (
                 <a

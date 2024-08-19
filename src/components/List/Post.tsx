@@ -3,6 +3,7 @@ import Tag from '../Tag/Tag';
 import { PostProps } from '@/types/List/PostData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
+import defalutPostImage from '@/icons/examplePhoto/defaultPostImage.jpg';
 
 const formatDate = (date: string) => {
   const d = new Date(date);
@@ -102,11 +103,21 @@ const Post = (props: PostProps) => {
         </div>
         {/* 圖片 */}
         <div className='inline-flex items-center relative w-[120px] sm:w-[236px]'>
-          <img
-            src={props.image}
-            alt={props.title}
-            className="h-[78px] sm:h-[152px] rounded-md"
-          />
+          {
+            props.image && props.image !== '' ? (
+              <img
+                src={props.image}
+                alt="圖片載入失敗，請檢查網址"
+                className="h-[78px] sm:h-[152px] rounded-md"
+              />
+            ) : (
+              <Image
+                src={defalutPostImage}
+                alt="圖片載入失敗，請檢查網址"
+                className="h-[78px] sm:h-[152px] rounded-md"
+              />
+            )
+          }
         </div>
       </div>
     </div>
