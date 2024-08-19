@@ -6,10 +6,14 @@ import Link from 'next/link';
 import Icon from '@/components/Icon';
 import IMG from '@/icons/examplePhoto/S__4964483.jpg';
 import IMG_dark from '@/icons/examplePhoto/S__4964504.jpg';
+import { useEffect, useState } from 'react';
 
 const Footer = () => {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
+  if (!mounted) return null;
   return (
     <>
       <hr className='border-[#E7E6F2] dark:border-1' />
