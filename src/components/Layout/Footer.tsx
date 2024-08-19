@@ -54,7 +54,7 @@ const Footer = () => {
           <Icon
             icon_light={btc_icon_dark}
             icon_dark={btc_icon_light}
-            className='mr-auto ml-auto mt-24'
+            className='mr-auto ml-auto mt-24 w-14'
           />
         </div>
 
