@@ -1,7 +1,7 @@
-import { LawAuthorData } from "@/types/List/Author";
+import { AuthorPageProps } from "@/types/List/Author";
 import Avater from "../User/Avater";
 
-const Author = (props: LawAuthorData) => {
+const Author = (props: AuthorPageProps) => {
 
   return (
     <div className={`flex gap-10 px-6 sm:px-0 my-5 pt-6 pb-3 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.idx != 0 ? 'border-t-[1px]' : ''}`}>

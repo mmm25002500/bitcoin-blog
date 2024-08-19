@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { AuthorData } from "./Author";
+import { LawAuthorData } from "./Author";
 
 export interface PostProps {
   title: string;
@@ -7,7 +7,7 @@ export interface PostProps {
   tags: string[];
   img?: string | StaticImageData;
   image?: string | undefined;
-  authorData?: AuthorData;
+  authorData: LawAuthorData;
   date: string;
   type: ['Post' | 'News'];
   id?: string;

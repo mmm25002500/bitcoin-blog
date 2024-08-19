@@ -131,7 +131,7 @@ const AuthorPage = (props: {
                 id: props.initialAuthor.id,
               },
               type: post.type[0],
-              img: post.img,
+              img: props.initialAuthor.image,
               image: post.image,
               id: post.id,
             }))}
@@ -161,6 +161,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const authorData = await getAuthorData();
     const author = authorData.find((author: any) => author.id === userID);
+
+    if (!author) {
+      return {
+        notFound: true,
+      };
+    }
 
     return {
       props: {

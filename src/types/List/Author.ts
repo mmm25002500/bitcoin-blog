@@ -12,13 +12,23 @@ export interface AuthorData {
 
 // Law Author Data
 export interface LawAuthorData {
-  fullname?: string;
-  name?: string;
+  fullname: string;
+  name: string;
   image: string | StaticImageData;
-  description?: string;
-  posts?: number;
+  description: string;
+  posts: number;
   id: string;
-  idx?: number;
+}
+
+// Author Page Props
+export interface AuthorPageProps {
+  fullname: string;
+  name: string;
+  image: string | StaticImageData;
+  description: string;
+  posts: number;
+  id: string;
+  idx: number;
 }
 
 export interface AuthorNameProps {
