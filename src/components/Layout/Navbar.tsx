@@ -149,36 +149,36 @@ const Navbar = () => {
         >
           {/* List */}
             <SidebarBtn
-              title="關於比特幣"
-              description="About BTC"
+              title="關於"
+              description="About Bitcoin"
               photo_dark={Bitcoin_V2}
               photo_light={Bitcoin_V2_Dark}
               onClick={() => router.push("/Post/編輯室/AboutBTC")}
             />
             <SidebarBtn
-              title="創建錢包"
-              description="CreateWallet"
+              title="錢包"
+              description="Wallet"
               photo_dark={CryptoWallet}
               photo_light={CryptoWallet_Dark}
               onClick={() => router.push("/")}
             />
             <SidebarBtn
-              title="購買比特幣"
-              description="Purchase BTC"
+              title="購買 比特幣"
+              description="Purchase bitcoin"
               photo_dark={BuyBic}
               photo_light={BuyBic_Dark}
               onClick={() => router.push("/")}
             />
             <SidebarBtn
-              title="比特幣挖礦"
-              description="BTC Mining"
+              title="比特幣 挖礦"
+              description="Bitcoin Mining"
               photo_dark={Mining}
               photo_light={Mining_Dark}
               onClick={() => router.push("/")}
             />
             <SidebarBtn
-              title="使用比特幣"
-              description="Used BTC"
+              title="使用"
+              description="Use bitcoin"
               photo_dark={UseBTC}
               photo_light={UseBTC_Dark}
               onClick={() => router.push("/")}
@@ -198,15 +198,15 @@ const Navbar = () => {
               onClick={() => router.push("/")}
             />
             <SidebarBtn
-              title="更多比特幣資訊"
-              description="About BTC"
+              title="比特幣 更多資訊"
+              description="About more BTC"
               photo_dark={BicNews}
               photo_light={BicNews_Dark}
               onClick={() => router.push("/Tag/Post/all")}
             />
             <SidebarBtn
-              title="其他區塊鏈資訊"
-              description="About Blockchain"
+              title="其他新聞資訊"
+              description="More info & news"
               photo_dark={blockchain}
               photo_light={blockchain_Dark}
               onClick={() => router.push("/Tag/News/all")}

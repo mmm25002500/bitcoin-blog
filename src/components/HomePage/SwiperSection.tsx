@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from 'swiper/modules';
 import IMG from '@/icons/examplePhoto/S__4964469.jpg';
 import IMG2 from '@/icons/examplePhoto/S__4964468.jpg';
-import IMG3 from '@/icons/examplePhoto/S__4988942.jpg';
+import IMG3 from '@/icons/examplePhoto/S__4988942.png';
 import Right from '@/icons/right.svg';
 import Icon from "../Icon";
 import Button from "../Button/Button";

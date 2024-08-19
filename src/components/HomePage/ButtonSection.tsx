@@ -43,43 +43,43 @@ const ButtonSection = (props: ButtonSectionProps) => {
         </div> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 justify-items-center gap-3 w-full">
           <CreateButton
-            title="關於比特幣"
-            description="About BTC"
+            title="關於"
+            description="About Bitcoin"
             photo_dark={Bitcoin_V2}
             photo_light={Bitcoin_V2_Dark}
             onClick={() => router.push("/Post/編輯室/AboutBTC")}
           />
           <CreateButton
-            title="創建錢包"
-            description="CreateWallet"
+            title="錢包"
+            description="Wallet"
             photo_dark={CryptoWallet}
             photo_light={CryptoWallet_Dark}
             onClick={() => router.push("/")}
           />
           <CreateButton
-            title="購買比特幣"
-            description="Purchase BTC"
+            title="購買 比特幣"
+            description="Purchase bitcoin"
             photo_dark={BuyBic}
             photo_light={BuyBic_Dark}
             onClick={() => router.push("/")}
           />
           <CreateButton
-            title="比特幣挖礦"
-            description="BTC Mining"
+            title="比特幣 挖礦"
+            description="Bitcoin Mining"
             photo_dark={Mining}
             photo_light={Mining_Dark}
             onClick={() => router.push("/")}
           />
           <CreateButton
-            title="使用比特幣"
-            description="Used BTC"
+            title="使用"
+            description="Use bitcoin"
             photo_dark={UseBTC}
             photo_light={UseBTC_Dark}
             onClick={() => router.push("/")}
           />
           <CreateButton
             title="加入社群"
-            description="Join Community"
+            description="Join Bitcoin"
             photo_dark={Social}
             photo_light={Social_Dark}
             onClick={() => router.push("/")}
@@ -92,15 +92,15 @@ const ButtonSection = (props: ButtonSectionProps) => {
             onClick={() => router.push("/Post/編輯室/SupportUS")}
           />
           <CreateButton
-            title="更多比特幣資訊"
-            description="About BTC"
+            title="比特幣 更多資訊"
+            description="About more BTC"
             photo_dark={BicNews}
             photo_light={BicNews_Dark}
             onClick={() => router.push("/Tag/Post/all")}
           />
           <CreateButton
-            title="其他區塊鏈資訊"
-            description="About Blockchain"
+            title="其他新聞資訊"
+            description="More info & news"
             photo_dark={blockchain}
             photo_light={blockchain_Dark}
             onClick={() => router.push("/Tag/News/all")}
