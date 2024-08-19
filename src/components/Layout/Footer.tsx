@@ -69,20 +69,20 @@ const Footer = () => {
         </div>
 
       </div>
-      <div className='w-full bg-white h-full'>
-        {
-          theme === 'dark' ?
-            <Image
-              src={IMG_dark}
-              alt={''}
-            />
-            :
-            <Image
-              src={IMG}
-              alt={''}
-            />
-        }
-      </div>
+      {
+        theme === 'dark' ?
+          <Image
+            src={IMG_dark}
+            alt={''}
+            className='w-full h-full'
+          />
+          :
+          <Image
+            src={IMG}
+            alt={''}
+            className='w-full h-full'
+          />
+      }
     </>
   )
 }
