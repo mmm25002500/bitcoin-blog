@@ -70,13 +70,12 @@ const Footer = () => {
         </div>
 
       </div>
-      <div className='w-[101%] md:w-full'>
+      <div className='w-full bg-white h-full'>
         {
           theme === 'dark' ?
             <Image
               src={IMG_dark}
               alt={''}
-              className='border-0'
             />
             :
             <Image
