@@ -15,9 +15,9 @@ const Document = () => {
   , []);
 
   return (
-    <Html lang="en">
+    <Html lang="en" className='overflow-hidden h-full'>
       <Head />
-      <body className='overflow-hidden text-black dark:text-white m-0 p-0'>
+      <body className='overflow-auto h-full text-black dark:text-white m-0 p-0'>
         <Main />
         <NextScript />
       </body>

@@ -22,7 +22,7 @@ const Layout = ({ children }: LayoutData) => {
       </Head>
 
       {/* Body */}
-      <div id="body" className="overflow-y-auto h-[100vh] bg-white dark:bg-primary-black-300">
+      <div id="body" className=" bg-white dark:bg-primary-black-300">
         <main className="z-0">
           {children}
         </main>

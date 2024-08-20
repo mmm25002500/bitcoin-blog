@@ -46,15 +46,17 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className='flex flex-col gap-7 justify-center pt-20 mb-20'>
+        <div className='flex flex-col gap-7 justify-center pt-20 mb-0'>
           <p className='text-neutral-600 dark:text-neutral-300 text-center'>@Bitcoin.zh</p>
-          <p className='text-neutral-600 dark:text-neutral-300 text-center'>2024 - 2140</p>
-          <p className='text-neutral-600 dark:text-neutral-300 text-center'>V 1.8.20b</p>
+          <div className='flex gap-6 text-neutral-600 dark:text-neutral-300 justify-center'>
+            <p>2024</p>
+            <p>2140</p>
+          </div>
+          <p className='text-neutral-600 dark:text-neutral-300 text-center'>V 1.8.21a</p>
         </div>
-
       </div>
 
-        <div className="pb-20 bg-primary-black-300 dark:bg-white md:pb-0">
+        <div className="w-full h-full pb-20 bg-primary-black-300 dark:bg-white md:pb-0">
           {
             theme === 'dark' ?
               <Image

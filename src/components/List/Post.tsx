@@ -65,7 +65,7 @@ const Post = (props: PostProps) => {
         <div className='flex-grow basis-3/4 flex flex-col justify-between'>
           <div>
             {/* 標題 */}
-            <h2 className="mb-2 text-base sm:text-2xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black">
+            <h2 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black">
               <a href="#">{props.title}</a>
             </h2>
             {/* 描述 */}
@@ -86,13 +86,13 @@ const Post = (props: PostProps) => {
                       alt={props.authorData.name + ' avatar'}
                       width={28}
                       height={28}
-                      className="w-7 h-7 rounded-full"
+                      className="w-5 h-5 sm:w-7 sm:h-7 rounded-full"
                     />
                   )
                 }
                 {
                   props.authorData.name && (
-                    <span className="font-medium dark:text-white">
+                    <span className="font-medium dark:text-white text-xs sm:text-base">
                       {props.authorData.name}
                     </span>
                   )
@@ -102,19 +102,19 @@ const Post = (props: PostProps) => {
           }
         </div>
         {/* 圖片 */}
-        <div className='inline-flex items-center relative w-[120px] sm:w-[236px]'>
+        <div className='inline-flex items-center relative w-auto h-auto max-w-[120px] sm:max-w-[236px]'>
           {
             props.image && props.image !== '' ? (
               <img
                 src={props.image}
                 alt="圖片載入失敗，請檢查網址"
-                className="h-[78px] sm:h-[152px] rounded-md"
+                className="w-auto h-auto max-h-[78px] sm:max-h-[152px] rounded-md"
               />
             ) : (
               <Image
                 src={defalutPostImage}
                 alt="圖片載入失敗，請檢查網址"
-                className="h-[78px] sm:h-[152px] rounded-md"
+                className="w-auto h-auto max-h-[78px] max-sm:h-[152px] rounded-md"
               />
             )
           }
