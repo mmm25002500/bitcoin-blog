@@ -229,7 +229,7 @@ const Navbar = () => {
             </div>
           </Card>
           {/* Social Media */}
-          <div className='absolute bottom-0 pb-5 py-2 left-0 w-full dark:bg-neutral-black'>
+          <div className='absolute bottom-0 pb-5 py-2 left-0 w-full bg-neutral-white dark:bg-neutral-black'>
             <div className='flex justify-center space-x-6'>
               {SocialMedia.map((item, index) => (
                 <a
