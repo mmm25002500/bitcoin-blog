@@ -50,9 +50,9 @@ const Footer = () => {
           <p className='text-neutral-600 dark:text-neutral-300 text-center'>@Bitcoin.zh</p>
           <div className='flex gap-6 text-neutral-600 dark:text-neutral-300 justify-center'>
             <p>2024</p>
+            <p>v1.8.21.b.z</p>
             <p>2140</p>
           </div>
-          <p className='text-neutral-600 dark:text-neutral-300 text-center'>V 1.8.21b</p>
         </div>
       </div>
 
