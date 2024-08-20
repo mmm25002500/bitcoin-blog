@@ -1,6 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 import { useTheme } from 'next-themes';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Document = () => {
   const { theme } = useTheme();
@@ -12,12 +12,12 @@ const Document = () => {
     }
   }, { passive: false });
   }
-  , []);
+    , []);
 
   return (
-    <Html lang="en" className='overflow-hidden h-full'>
+    <Html lang="en" className=''>
       <Head />
-      <body className='overflow-auto h-full text-black dark:text-white m-0 p-0'>
+      <body className={`text-black dark:text-white m-0 p-0`}>
         <Main />
         <NextScript />
       </body>

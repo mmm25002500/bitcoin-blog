@@ -37,11 +37,11 @@ const Footer = () => {
         </div>
 
         {/* Icon */}
-        <div className=''>
+        <div className='mt-24'>
           <Icon
             icon_light={btc_icon_dark}
             icon_dark={btc_icon_light}
-            className='mr-auto ml-auto mt-24 w-12'
+            className='mr-auto ml-auto w-[47px]'
           />
         </div>
 
@@ -56,7 +56,7 @@ const Footer = () => {
         </div>
       </div>
 
-        <div className="w-full h-full pb-20 bg-primary-black-300 dark:bg-white md:pb-0">
+        <div className="w-full h-full bg-primary-black-300 dark:bg-white md:pb-0">
           {
             theme === 'dark' ?
               <Image
