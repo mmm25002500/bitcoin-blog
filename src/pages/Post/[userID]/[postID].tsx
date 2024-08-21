@@ -59,7 +59,7 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
   return (
     <>
       <Head>
-        <title>={seo.Post.title}</title>
+        <title>{seo.Post.title}</title>
         <meta name="description" content={initialPost.frontMatter.description} />
         <meta property="og:title" content={`${seo.Post.title}`} />
         <meta property="og:description" content={initialPost.frontMatter.description} />
