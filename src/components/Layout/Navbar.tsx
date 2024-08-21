@@ -34,10 +34,12 @@ import UseBTC_Dark from "@/icons/HomePage/use_btc_dark.svg";
 
 // Social Media
 import Facebook from "@/icons/HomePage/fb.svg";
-import Twitter from "@/icons/HomePage/twitter.svg";
+// import Twitter from "@/icons/HomePage/twitter.svg";
 import Instagram from "@/icons/HomePage/ig.svg";
-import Youtube from "@/icons/HomePage/yt.svg";
-import Discord from "@/icons/HomePage/dc.svg";
+import { faLine } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import Youtube from "@/icons/HomePage/yt.svg";
+// import Discord from "@/icons/HomePage/dc.svg";
 import InputLabel from '../Input/InputLable';
 import { useRouter } from 'next/router';
 import { Card } from '@material-tailwind/react';
@@ -61,29 +63,20 @@ const Navbar = () => {
   const SocialMedia = [
     {
       title: "Facebook",
-      link: "",
+      link: "https://www.facebook.com/groups/bitcoin.zh",
       icon: Facebook
     },
     {
-      title: "Twitter",
-      link: "",
-      icon: Twitter
-    },
-    {
       title: "Instagram",
-      link: "",
+      link: "https://www.instagram.com/btc.org.tw?igsh=Y3N0M2FwczlmdWNi",
       icon: Instagram
     },
     {
-      title: "Youtube",
-      link: "",
-      icon: Youtube
+      title: "Instagram",
+      link: "https://www.instagram.com/btc.org.tw?igsh=Y3N0M2FwczlmdWNi",
+      icon: faLine,
+      fontAwesome: true
     },
-    {
-      title: "Discord",
-      link: "",
-      icon: Discord
-    }
   ];
 
   return (
@@ -237,11 +230,17 @@ const Navbar = () => {
                   href={item.link}
                   target="_blank"
                 >
-                  <Icon
-                    icon_light={item.icon}
-                    icon_dark={item.icon}
-                    className="h-6 w-6 invert dark:invert-0"
-                  />
+                  {
+                    item.fontAwesome
+                      ?
+                      <FontAwesomeIcon icon={item.icon} className="h-6 w-6 invert dark:invert-0" />
+
+                      : <Icon
+                        icon_light={item.icon}
+                        icon_dark={item.icon}
+                        className="h-6 w-6 invert dark:invert-0"
+                      />
+                  }
                 </a>
               ))}
             </div>

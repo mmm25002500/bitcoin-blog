@@ -7,7 +7,6 @@ import { categoryData } from "@/types/MoreInfo/MoreInfo";
 import DownIcon from '@/icons/down.svg';
 
 const MoreInfoDrawer = (props: SidebarProps) => {
-  const [open, setOpen] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(props.isDrawerOpen);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const router = useRouter();

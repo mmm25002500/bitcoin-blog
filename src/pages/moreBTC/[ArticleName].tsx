@@ -215,7 +215,7 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
 
           {/* 手機版回傳箭頭 */}
           <div className="sm:hidden px-4 mt-8">
-            <button onClick={() => router.push('/MoreInfo')}>
+            <button onClick={() => setIsDrawerOpen(true)}>
               <Image
                 src={ArrowLeft}
                 alt="Icon Dark"
