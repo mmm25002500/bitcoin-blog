@@ -28,7 +28,7 @@ const Footer = () => {
           <Link href='/PrivacyPolicy' prefetch={false}>
             <p>隱私權</p>
           </Link>
-          <Link href='/About' prefetch={false}>
+          <Link href='/aboutus' prefetch={false}>
             <p>關於</p>
           </Link>
           <Link href='/Post/編輯室/SupportUS' prefetch={false}>
@@ -72,6 +72,7 @@ const Footer = () => {
               />
           }
       </div>
+      <div className='bg-gradient-to-b from-primary-black-300 to-neutral-white dark:from-neutral-white dark:to-primary-black-300 h-32 lg:hidden' />
     </>
   );
 }

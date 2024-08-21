@@ -167,7 +167,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       initialSelection: selection,
       seo: seoData,
-      tags: tagsData.News,
+      tags: tagsData.all,
       SiteConfig: siteConfigData,
     },
   };
