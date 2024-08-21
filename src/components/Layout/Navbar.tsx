@@ -217,7 +217,7 @@ const Navbar = () => {
                 description="more BTC"
                 photo_dark={BicNews}
                 photo_light={BicNews_Dark}
-                onClick={() => router.push("/MoreInfo/WhatIsBTC")}
+                onClick={() => router.push("/moreBTC/about")}
               />
               <SidebarBtn
                 title="其他新聞資訊"
