@@ -108,7 +108,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
             fullname: post.authorData.fullname,
             name: post.authorData.name,
             description: post.authorData.description,
-            img: post.authorData.image,
+            image: post.authorData.image,
             id: post.authorData.id,
           },
           type: post.type[0],

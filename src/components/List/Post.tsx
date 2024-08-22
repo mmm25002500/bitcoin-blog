@@ -80,9 +80,9 @@ const Post = (props: PostProps) => {
             props.authorData && (
               <div className="flex items-center space-x-4 mt-auto">
                 {
-                  props.img && (
+                  props.authorData.image && (
                     <Image
-                      src={props.img}
+                      src={props.authorData.image}
                       alt={props.authorData.name + ' avatar'}
                       width={28}
                       height={28}
@@ -106,7 +106,7 @@ const Post = (props: PostProps) => {
           {
             props.image && props.image !== '' ? (
               <img
-                src={props.image}
+                src={props.image as string}
                 alt="圖片載入失敗，請檢查網址"
                 className="w-auto h-auto max-h-[78px] sm:max-h-[152px] rounded-md"
               />

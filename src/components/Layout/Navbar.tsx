@@ -161,49 +161,49 @@ const Navbar = () => {
                 description="About Bitcoin"
                 photo_dark={Bitcoin_V2}
                 photo_light={Bitcoin_V2_Dark}
-                onClick={() => router.push("/Post/編輯室/about")}
+                onClick={() => router.push("/Post/Editor/about")}
               />
               <SidebarBtn
                 title="錢包"
                 description="Wallet"
                 photo_dark={CryptoWallet}
                 photo_light={CryptoWallet_Dark}
-                onClick={() => router.push("/Post/編輯室/Wallet")}
+                onClick={() => router.push("/Post/Editor/Wallet")}
               />
               <SidebarBtn
                 title="購買 比特幣"
                 description="Purchase bitcoin"
                 photo_dark={BuyBic}
                 photo_light={BuyBic_Dark}
-                onClick={() => router.push("/Post/編輯室/Buy")}
+                onClick={() => router.push("/Post/Editor/Buy")}
               />
               <SidebarBtn
                 title="比特幣 挖礦"
                 description="Bitcoin Mining"
                 photo_dark={Mining}
                 photo_light={Mining_Dark}
-                onClick={() => router.push("/Post/編輯室/Mining")}
+                onClick={() => router.push("/Post/Editor/Mining")}
               />
               <SidebarBtn
                 title="使用"
                 description="Use bitcoin"
                 photo_dark={UseBTC}
                 photo_light={UseBTC_Dark}
-                onClick={() => router.push("/Post/編輯室/Use")}
+                onClick={() => router.push("/Post/Editor/Use")}
               />
               <SidebarBtn
                 title="加入社群"
                 description="Join Community"
                 photo_dark={Social}
                 photo_light={Social_Dark}
-                onClick={() => router.push("/Post/編輯室/Join")}
+                onClick={() => router.push("/Post/Editor/Join")}
               />
               <SidebarBtn
                 title="支持我們"
                 description="Support us"
                 photo_dark={coffee}
                 photo_light={coffee_Dark}
-                onClick={() => router.push("/Post/編輯室/Support")}
+                onClick={() => router.push("/Post/Editor/Support")}
               />
               <SidebarBtn
                 title="比特幣 更多資訊"
