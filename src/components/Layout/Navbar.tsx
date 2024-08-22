@@ -72,8 +72,8 @@ const Navbar = () => {
       icon: Instagram
     },
     {
-      title: "Instagram",
-      link: "https://www.instagram.com/btc.org.tw?igsh=Y3N0M2FwczlmdWNi",
+      title: "Line",
+      link: "https://line.me/ti/g2/c_YhO-3X27xkIUHZyuzQDOJ4Czcdp7YLYUWYVw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default",
       icon: faLine,
       fontAwesome: true
     },
