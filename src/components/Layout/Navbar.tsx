@@ -36,7 +36,7 @@ import UseBTC_Dark from "@/icons/HomePage/use_btc_dark.svg";
 import Facebook from "@/icons/HomePage/fb.svg";
 // import Twitter from "@/icons/HomePage/twitter.svg";
 import Instagram from "@/icons/HomePage/ig.svg";
-import { faLine } from "@fortawesome/free-brands-svg-icons";
+import { faLine, faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Youtube from "@/icons/HomePage/yt.svg";
 // import Discord from "@/icons/HomePage/dc.svg";
@@ -77,6 +77,13 @@ const Navbar = () => {
       icon: faLine,
       fontAwesome: true
     },
+    {
+      title: "Spotify",
+      link: "https://open.spotify.com/playlist/6KzP4Uh9UGq9Y6J1ePajMd?si=Zs2mHjz6R7yjYJzZ-TgjBg&pi=a--j0SIoEfTVic",
+      icon: faSpotify,
+      fontAwesome: true
+    },
+
   ];
 
   return (
