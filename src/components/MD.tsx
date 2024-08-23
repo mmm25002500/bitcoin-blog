@@ -25,6 +25,9 @@ const MD = (props: MarkDownProperties) => {
       prose-p:leading-6
       prose-p:whitespace-pre-wrap
 
+      /* li tag */
+      prose-li:break-all
+
       /* h1 tag*/
       prose-h1:font-medium
       prose-h1:text-[22px]
