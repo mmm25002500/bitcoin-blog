@@ -17,11 +17,13 @@ const MD = (props: MarkDownProperties) => {
       w-full max-w-none
       prose dark:prose-invert
 
+      text-lg
+
       /* p tag */
       prose-p:text-neutral-black
       prose-p:dark:text-neutral-white
       prose-p:font-normal
-      prose-p:text-base
+      prose-p:text-lg
       prose-p:leading-6
       prose-p:whitespace-pre-wrap
 

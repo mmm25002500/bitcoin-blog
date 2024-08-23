@@ -13,14 +13,13 @@ import HorizontalLine from "@/components/HorizontalLine";
 import ArticlePostList from "@/components/List/ArticlePostList";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import useSWR from "swr";
 import { initAdmin } from '../../../../lib/firebaseAdmin';
 import matter from 'gray-matter';
 import defalutPostImage from '@/icons/examplePhoto/defaultPostImage.jpg';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
-import Radio from "@/components/Radio/Radio";
+import blockImg from '@/icons/examplePhoto/block.jpg';
 
 const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, ArticlePostListMorePostPerclick: number }) => {
   const router = useRouter();
@@ -73,8 +72,8 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
         <Navbar />
         <div className="mx-auto sm:px-28 w-full lg:w-[60%]">
           <ArticleLayout className='pt-10 px-5 sm:px-0'>
-            <h1 className="mb-2 text-[22px] leading-[30px] sm:text-[34px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
-            <p className="mb-3 text-base leading-[22px] sm:text-[22px] sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
+            <h1 className="mb-2 text-3xl sm:text-[45px] leading-[30px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
+            <p className="mb-3 text-base sm:text-2xl leading-[22px] sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
             <div className="flex justify-center">
               <Image
                 // src={initialPost.frontMatter.image}
@@ -121,7 +120,12 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
               </div>
             )}
             <HorizontalLine className="my-9" />
-            <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">More Posts</p>
+            <Image
+              src={blockImg}
+              alt={""}
+            />
+            <HorizontalLine className="my-9" />
+            <p className="text-xl leading-[24.38px] sm:text-2xl sm:leading-9 font-semibold mb-5">更多文章</p>
             <ArticlePostList
               data={relatedPosts}
               ArticlePostListMorePostPerclick={ArticlePostListMorePostPerclick}

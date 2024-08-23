@@ -28,6 +28,28 @@ const SwiperSection = () => {
         <div className="relative">
           <div className="absolute pt-28 sm:pt-10 md:pt-20 px-12 sm:px-10 md:px-12 sm:pl-14 md:pl-28">
             <p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
+              🚧 網站施工測試中
+            </p>
+            <p className="text-white font-normal text-sm leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
+              🚧 網站施工測試中
+            </p>
+          </div>
+          <div
+            style={{
+              backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
+              backgroundAttachment: 'fixed',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+            className="h-[500px]"
+          />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="relative">
+          <div className="absolute pt-28 sm:pt-10 md:pt-20 px-12 sm:px-10 md:px-12 sm:pl-14 md:pl-28">
+            <p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
               比特幣 改變金融的貨幣
             </p>
             <p className="text-white font-normal text-sm leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
