@@ -36,7 +36,8 @@ import UseBTC_Dark from "@/icons/HomePage/use_btc_dark.svg";
 import Facebook from "@/icons/HomePage/fb.svg";
 // import Twitter from "@/icons/HomePage/twitter.svg";
 import Instagram from "@/icons/HomePage/ig.svg";
-import { faLine, faSpotify } from "@fortawesome/free-brands-svg-icons";
+import Line from "@/icons/HomePage/line.svg";
+import Spotify from "@/icons/HomePage/spotify.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Youtube from "@/icons/HomePage/yt.svg";
 // import Discord from "@/icons/HomePage/dc.svg";
@@ -74,14 +75,12 @@ const Navbar = () => {
     {
       title: "Line",
       link: "https://line.me/ti/g2/c_YhO-3X27xkIUHZyuzQDOJ4Czcdp7YLYUWYVw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default",
-      icon: faLine,
-      fontAwesome: true
+      icon: Line
     },
     {
       title: "Spotify",
       link: "https://open.spotify.com/playlist/6KzP4Uh9UGq9Y6J1ePajMd?si=Zs2mHjz6R7yjYJzZ-TgjBg&pi=a--j0SIoEfTVic",
-      icon: faSpotify,
-      fontAwesome: true
+      icon: Spotify
     },
 
   ];
@@ -237,17 +236,11 @@ const Navbar = () => {
                   href={item.link}
                   target="_blank"
                 >
-                  {
-                    item.fontAwesome
-                      ?
-                      <FontAwesomeIcon icon={item.icon} className="h-6 w-6 invert dark:invert-0" />
-
-                      : <Icon
-                        icon_light={item.icon}
-                        icon_dark={item.icon}
-                        className="h-6 w-6 invert dark:invert-0"
-                      />
-                  }
+                  <Icon
+                    icon_light={item.icon}
+                    icon_dark={item.icon}
+                    className="h-6 w-6 invert dark:invert-0"
+                  />
                 </a>
               ))}
             </div>
