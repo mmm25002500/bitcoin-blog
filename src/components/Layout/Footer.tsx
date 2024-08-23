@@ -72,7 +72,7 @@ const Footer = () => {
               />
           }
       </div>
-      <div className='bg-gradient-to-b from-primary-black-300 to-neutral-white dark:from-neutral-white dark:to-primary-black-300 h-32 lg:hidden' />
+      <div className='bg-gradient-to-b from-primary-black-300 via-neutral-white to-neutral-white dark:from-neutral-white dark:via-primary-black-300 dark:to-primary-black-300 from-5% via-50% to-95% h-32 lg:hidden' />
     </>
   );
 }
