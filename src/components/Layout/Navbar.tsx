@@ -88,7 +88,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="relative bg-white dark:bg-neutral-black">
-        <div className="mx-auto px-2 sm:px-6 lg:px-5 z-20">
+        <div className="relative mx-auto px-2 sm:px-6 lg:px-5 z-40 bg-white dark:bg-neutral-black">
           <div className="relative flex h-16 items-center justify-between">
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
@@ -123,14 +123,19 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* <div
+          className={`fixed h-full z-50 inset-0 bg-black opacity-50 transition-opacity duration-300 ease-in-out ${isSearchOpen ? 'opacity-50' : 'opacity-0 pointer-events-none hidden'}`}
+          onClick={() => setIsSearchOpen(false)}
+        /> */}
         {/* Search Drawer */}
-        <div className='absolute top-full left-0 right-0 z-10'>
+        <div className='absolute top-full left-0 right-0'>
           <HomePageSearchDrawer
             isDrawerOpen={isSearchOpen}
             setIsDrawerOpen={setIsSearchOpen}
             className='bg-white dark:bg-neutral-black p-5'
           >
-            <div>
+          {/* className={`fixed top-0 left-0 right-0 z-10 transform transition-transform duration-300 ease-in-out ${isSearchOpen ? 'translate-y-0' : '-translate-y-full'}`} */}
+            {/* <div className={`w-full bg-white dark:bg-neutral-black p-5 transform transition-transform ease-in-out  ${isSearchOpen ? 'translate-y-0' : '-translate-y-full'}`}> */}
               <InputLabel
                 placeholder={'請輸入內容'}
                 icon={searchBtn}
@@ -138,7 +143,7 @@ const Navbar = () => {
                 onClick={handleSearch}
                 onChange={(searchText: string[]) => setSearchList(searchText)}
               />
-            </div>
+            {/* </div> */}
           </HomePageSearchDrawer>
         </div>
 
