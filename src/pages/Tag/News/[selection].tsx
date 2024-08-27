@@ -73,7 +73,9 @@ const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initia
               <Swiper
                 slidesPerView={"auto"}
                 spaceBetween={20}
+                loop={true}
                 freeMode={true}
+                slidesPerGroup={2}
                 navigation={{
                   nextEl: '.swiper-button-next',
                   prevEl: '.swiper-button-prev',

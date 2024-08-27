@@ -69,6 +69,8 @@ const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initia
               <Swiper
                 slidesPerView={"auto"}
                 spaceBetween={20}
+                loop={true}
+                slidesPerGroup={2}
                 freeMode={true}
                 modules={[FreeMode, Navigation]}
                 navigation={{
