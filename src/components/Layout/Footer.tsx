@@ -31,7 +31,7 @@ const Footer = () => {
           <Link href='/aboutus' prefetch={false}>
             <p>關於</p>
           </Link>
-          <Link href='/Post/Editor/SupportUS' prefetch={false}>
+          <Link href='/Post/Editor/Support' prefetch={false}>
             <p>支持</p>
           </Link>
         </div>
