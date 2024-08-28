@@ -59,13 +59,13 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
   return (
     <>
       <Head>
-        <title>{initialPost.frontMatter.title} - {seo.News.title}</title>
+        <title>{initialPost.frontMatter.title}</title>
         <meta name="description" content={initialPost.frontMatter.description} />
-        <meta property="og:title" content={`${initialPost.frontMatter.title} - ${seo.News.title}`} />
+        <meta property="og:title" content={`${initialPost.frontMatter.title}`} />
         <meta property="og:description" content={initialPost.frontMatter.description} />
         <meta property="og:image" content={initialPost.frontMatter.image} />
         <meta property="og:type" content={seo.News.type} />
-        <meta name="twitter:title" content={`${initialPost.frontMatter.description} - ${seo.News.title}`} />
+        <meta name="twitter:title" content={`${initialPost.frontMatter.description}`} />
         <meta name="twitter:description" content={initialPost.frontMatter.description} />
         <meta name="twitter:image" content={initialPost.frontMatter.image} />
       </Head>

@@ -128,7 +128,7 @@ const Navbar = () => {
           onClick={() => setIsSearchOpen(false)}
         /> */}
         {/* Search Drawer */}
-        <div className='absolute top-full left-0 right-0'>
+        <div className={`${isSearchOpen ? 'absolute' : 'block'} top-full left-0 right-0`}>
           <HomePageSearchDrawer
             isDrawerOpen={isSearchOpen}
             setIsDrawerOpen={setIsSearchOpen}
