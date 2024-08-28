@@ -143,7 +143,7 @@ const All = ({ initialPosts, initialSelection, seo, tags, SiteConfig }: { initia
                 fullname: post.authorData.fullname,
                 name: post.authorData.name,
                 description: post.authorData.description,
-                img: post.authorData.image,
+                image: post.authorData.image,
                 id: post.authorData.id,
               },
               type: post.type[0],
