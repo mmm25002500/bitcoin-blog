@@ -33,7 +33,8 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
         const response = await axios.get('/api/getRelatedPosts', {
           params: {
             tag: JSON.stringify(initialPost.frontMatter.tags),
-            exclude: `${userID}/${postID}`
+            exclude: `${userID}/${postID}`,
+            mode: 'News'
           }
         });
         setRelatedPosts(response.data);

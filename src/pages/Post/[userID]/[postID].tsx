@@ -33,7 +33,8 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
         const response = await axios.get('/api/getRelatedPosts', {
           params: {
             tag: JSON.stringify(initialPost.frontMatter.tags),
-            exclude: `${userID}/${postID}`
+            exclude: `${userID}/${postID}`,
+            mode: 'Post'
           }
         });
         setRelatedPosts(response.data);

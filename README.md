@@ -79,6 +79,11 @@
 | Frontend Server | Vercel |
 | BTC info Provider | BlockChair |
 
+### 擷取 Tags
+```sh
+grep -r 'tags' . | sed -n 's/.*tags: \(.*\)/\1/p' | tr -d '[]' | tr ',' '\n' | sed 's/^ *//;s/ *$//' | tr -d '"' | tr -d "'" | sort -u | uniq | sed 's/^/"/;s/$/"/' | sed 's/$/,/'
+```
+
 ## Hot Reloading & Deployment
 ### pnpm (recommendation)
 ```bash

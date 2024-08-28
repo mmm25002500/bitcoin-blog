@@ -4,7 +4,7 @@ import { PostProps } from '@/types/List/PostData';
 import { initAdmin } from '../../../lib/firebaseAdmin';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { tag, exclude, mode } = req.query;
+  const { tag, exclude, mode = 'all' } = req.query;
 
   if (!tag || typeof tag !== 'string') {
     return res.status(400).json({ error: '缺少或無效的 tag 參數' });
@@ -50,7 +50,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const filteredPosts = relatedPosts.filter(post => {
       const hasAllTags = tagsArray.every(tag => post.tags.includes(tag));
       const hasAnyTag = tagsArray.some(tag => post.tags.includes(tag));
-      return (mode === 'all' && hasAllTags) || (mode !== 'all' && hasAnyTag);
+
+      // 過濾文章類型
+      const typeMatches = mode === 'all' ||
+        (mode === 'Post' && post.type.includes('Post')) ||
+        (mode === 'News' && post.type.includes('News'));
+
+      return typeMatches && ((mode === 'all' && hasAllTags) || (mode !== 'all' && hasAnyTag));
     });
 
     res.status(200).json(filteredPosts);
