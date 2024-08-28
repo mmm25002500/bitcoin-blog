@@ -157,7 +157,7 @@ const Navbar = () => {
             color="transparent"
             shadow={false}
             className="h-full w-full p-4 overflow-y-auto" nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-            <p className="mt-2 sm:mt-3 sm:mr-5 sm:mb-2 text-right font-medium text-sm leading-[22px]">
+            <p className="fixed z-40 right-5 bg-neutral-white dark:bg-neutral-black mt-2 sm:mt-3 sm:mr-5 sm:mb-2 text-right font-medium text-sm leading-[22px]">
               <Close
                 className=""
                 onClick={() => setIsSidebarOpen(false)}

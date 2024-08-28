@@ -29,7 +29,7 @@ const getAuthorData = async () => {
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 const AuthorPage = (props: {
-  initialPosts: any; initialSEO: any, initialAuthor: any
+  initialPosts: PostProps[]; initialSEO: any, initialAuthor: any
 }) => {
   const [postQuantity, setPostQuantity] = useState(0);
   const [collaspe, setCollaspe] = useState(true);
@@ -124,17 +124,17 @@ const AuthorPage = (props: {
               tags: post.tags,
               date: post.date,
               authorData: {
-                fullname: props.initialAuthor.fullname,
-                name: props.initialAuthor.name,
-                description: props.initialAuthor.description,
-                img: props.initialAuthor.image,
-                id: props.initialAuthor.id,
+                fullname: post.authorData.fullname,
+                name: post.authorData.name,
+                description: post.authorData.description,
+                image: post.authorData.image,
+                id: post.authorData.id,
               },
               type: post.type[0],
               img: props.initialAuthor.image,
               image: post.image,
               id: post.id,
-            }))}
+            })) as any}
           />
         }
       </div>

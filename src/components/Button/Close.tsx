@@ -6,7 +6,7 @@ const CloseBtn = (props: CloseProps) => {
   return (
     <>
       <button className="
-      border focus:outline-none focus:ring-4 font-medium rounded-xl text-xl me-2 p-2 h-[40px] w-[40px]
+      border focus:outline-none focus:ring-4 font-medium rounded-xl text-xl  p-2 h-[40px] w-[40px]
 
       /* Light Mode */
       border-neutral-200

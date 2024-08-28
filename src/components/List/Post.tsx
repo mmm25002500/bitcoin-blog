@@ -4,6 +4,7 @@ import { PostProps } from '@/types/List/PostData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 import defalutPostImage from '@/icons/examplePhoto/defaultPostImage.jpg';
+import { useRouter } from 'next/router';
 
 const formatDate = (date: string) => {
   const d = new Date(date);
@@ -20,6 +21,7 @@ const formatDate = (date: string) => {
 
 const Post = (props: PostProps) => {
   const formattedDate = formatDate(props.date);
+  const router = useRouter();
 
   return (
     <div
@@ -78,7 +80,10 @@ const Post = (props: PostProps) => {
           {/* 作者 */}
           {
             props.authorData && (
-              <div className="flex items-center space-x-4 mt-auto">
+              <div
+                onClick={() => { router.push(`/Author/${props.authorData.id}`) }}
+                className="flex items-center space-x-4 mt-auto"
+              >
                 {
                   props.authorData.image && (
                     <Image

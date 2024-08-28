@@ -50,7 +50,7 @@ const Footer = () => {
           <p className='text-neutral-600 dark:text-neutral-300 text-center'>©Bitcoin.zh</p>
           <div className='flex gap-6 text-neutral-600 dark:text-neutral-300 justify-center'>
             <p>2024</p>
-            <p>v1.8.23.a2</p>
+            <p>v1.8.28.a1</p>
             <p>2140</p>
           </div>
         </div>
@@ -72,7 +72,7 @@ const Footer = () => {
               />
           }
       </div>
-      <div className='bg-gradient-to-b from-primary-black-300 via-neutral-white to-neutral-white dark:from-neutral-white dark:via-primary-black-300 dark:to-primary-black-300 from-5% via-50% to-95% h-32 lg:hidden' />
+      {/* <div className='bg-gradient-to-b from-primary-black-300 via-neutral-white to-neutral-white dark:from-neutral-white dark:via-primary-black-300 dark:to-primary-black-300 from-5% via-50% to-95% h-32 lg:hidden' /> */}
     </>
   );
 }

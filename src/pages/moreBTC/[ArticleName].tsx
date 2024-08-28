@@ -27,6 +27,8 @@ import ArrowLeft from '@/icons/arrow-left.svg';
 import Head from "next/head";
 
 import { initAdmin } from "lib/firebaseAdmin";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode } from "swiper/modules";
 
 const MoreInfos = (props: MoreInfoData & { seo: any }) => {
   const router = useRouter();
@@ -243,30 +245,52 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
               <HorizontalLine className="hidden sm:block my-5" />
 
               {/* 標籤 */}
-              <div className="mt-2 mb-5 flex gap-2">
-                {props.post.frontMatter.tags.map((item, index) => (
-                  <Tag key={index} text={item} type={["Post"]} className="text-xs py-1 px-3" />
-                ))}
+              <div className='flex mt-2 mb-5 gap-2 relative overflow-hidden'>
+                <Swiper
+                  slidesPerView={"auto"}
+                  spaceBetween={8} // 調整間距
+                  freeMode={true}
+                  modules={[FreeMode]}
+                  className="h-8"
+                >
+                  {
+                    props.post.frontMatter.tags.map((item, index) => (
+                      <SwiperSlide key={index} className="!w-auto max-w-full">
+                        <Tag
+                          key={index}
+                          text={item}
+                          type={['Post']}
+                          className="text-xs py-1 px-3"
+                        />
+                      </SwiperSlide>
+                    ))
+                  }
+                </Swiper>
               </div>
 
               <div className="flex gap-2 items-center">
                 {/* 作者頭貼 */}
-                {
-                  postData?.authorData.img &&
-                  <div>
-                    <Image
-                      src={postData?.authorData.img}
-                      alt="Icon Dark"
-                      width={1000}
-                      height={1000}
-                      className="rounded-full w-10 h-10"
-                    />
-                  </div>
-                }
+                <div
+                  onClick={() => { router.push(`/Author/${postData?.authorData.id}`) }}
+                  className="flex gap-2 items-center"
+                >
+                  {
+                    postData?.authorData.img &&
+                    <div>
+                      <Image
+                        src={postData?.authorData.img}
+                        alt="Icon Dark"
+                        width={1000}
+                        height={1000}
+                        className="rounded-full w-10 h-10"
+                      />
+                    </div>
+                  }
 
-                {/* 作者 */}
-                <div className="text-sm font-medium leading-5 dark:text-neutral-white">
-                  {postData?.authorData.name}
+                  {/* 作者 */}
+                  <div className="text-sm font-medium leading-5 dark:text-neutral-white">
+                    {postData?.authorData.name}
+                  </div>
                 </div>
 
                 <div className="text-neutral-300">
