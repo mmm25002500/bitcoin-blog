@@ -35,7 +35,7 @@ const InputLabel = (props: InputLabelProps) => {
 
   return (
     <div className={`
-        rounded-full
+        ${content.length > 2 ? 'rounded-3xl' : 'rounded-full'}
         border-0
         relative flex items-center
         focus:border-[1px]
@@ -67,7 +67,7 @@ const InputLabel = (props: InputLabelProps) => {
       }
 
       {/* 標籤 */}
-      <div className='flex-grow flex flex-wrap items-center gap-2'>
+      <div className='flex-grow flex flex-wrap items-center p-1'>
         <div className='flex flex-wrap items-center gap-2 ml-2'>
           {content.map((item, index) => (
             <Label
@@ -86,7 +86,7 @@ const InputLabel = (props: InputLabelProps) => {
           value={contentTemp}
           onChange={(e) => {setContentTemp(e.target.value) }}
           onKeyPress={(e) => { if (e.key === 'Enter') addContent(); }}
-          className={`flex-grow outline-none p-2.5 dark:bg-neutral-900 rounded-full`}
+          className={`flex-grow outline-none p-2.5 bg-transparent rounded-full w-[60%]`}
         />
       </div>
 
