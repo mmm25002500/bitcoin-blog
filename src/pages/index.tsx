@@ -13,6 +13,7 @@ import { GetServerSideProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import { TagsProps } from "@/types/Tag/Tag";
 import { initAdmin } from "lib/firebaseAdmin";
+import HeaderInfo from '@/components/Layout/HeaderInfo';
 
 interface HomeProps {
   initialPosts: PostProps[] | undefined;
@@ -41,6 +42,7 @@ const Home = (props: HomeProps) => {
         <meta name="twitter:image" content={props.initialSEO.Index.image} />
       </Head>
 
+      <HeaderInfo />
       <Header />
       <Navbar />
       <SwiperSection />
