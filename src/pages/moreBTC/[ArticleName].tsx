@@ -268,44 +268,46 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
                 </Swiper>
               </div>
 
-              <div className="flex gap-2 items-center">
-                {/* 作者頭貼 */}
-                <div
-                  onClick={() => { router.push(`/Author/${postData?.authorData.id}`) }}
-                  className="flex gap-2 items-center"
-                >
-                  {
-                    postData?.authorData.img &&
-                    <div>
-                      <Image
-                        src={postData?.authorData.img}
-                        alt="Icon Dark"
-                        width={1000}
-                        height={1000}
-                        className="rounded-full w-10 h-10"
-                      />
-                    </div>
-                  }
+              {
+                // <div className="flex gap-2 items-center">
+                // {/* 作者頭貼 */}
+                // <div
+                //   onClick={() => { router.push(`/Author/${postData?.authorData.id}`) }}
+                //   className="flex gap-2 items-center"
+                // >
+                //   {
+                //     postData?.authorData.img &&
+                //     <div>
+                //       <Image
+                //         src={postData?.authorData.img}
+                //         alt="Icon Dark"
+                //         width={1000}
+                //         height={1000}
+                //         className="rounded-full w-10 h-10"
+                //       />
+                //     </div>
+                //   }
 
-                  {/* 作者 */}
-                  <div className="text-sm font-medium leading-5 dark:text-neutral-white">
-                    {postData?.authorData.name}
-                  </div>
-                </div>
+                //   {/* 作者 */}
+                //   <div className="text-sm font-medium leading-5 dark:text-neutral-white">
+                //     {postData?.authorData.name}
+                //   </div>
+                // </div>
 
-                <div className="text-neutral-300">
-                  ﹒
-                </div>
+                // <div className="text-neutral-300">
+                //   ﹒
+                // </div>
 
-                {/* 日期 */}
-                <div className="text-sm font-medium leading-5 dark:text-neutral-white">
-                  {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}
-                  &nbsp;
-                  {date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:{date.getMinutes()}
-                  &nbsp;
-                  {date.getHours() > 12 ? 'PM' : 'AM'}
-                </div>
-              </div>
+                // {/* 日期 */}
+                // <div className="text-sm font-medium leading-5 dark:text-neutral-white">
+                //   {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}
+                //   &nbsp;
+                //   {date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:{date.getMinutes()}
+                //   &nbsp;
+                //   {date.getHours() > 12 ? 'PM' : 'AM'}
+                // </div>
+                // </div>
+              }
 
             </ArticleLayout>
           </div>
