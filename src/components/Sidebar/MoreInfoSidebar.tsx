@@ -43,10 +43,10 @@ const Sidebar = (props: MoreInfoSidebarProps) => {
                     onClick={
                       () => {
                         props.onChange(post.filename);
-                        router.push(`/MoreInfo/${post.filename}`);
+                        router.push(`/moreBTC/${post.filename}`);
                       }}
                   >
-                    <a className={`pl-4 font-normal text-sm leading-6`}>
+                    <a className={`pl-4 px-2 font-normal text-sm leading-6 break-all block text-justify`}>
                       {post.title}
                     </a>
                   </button>

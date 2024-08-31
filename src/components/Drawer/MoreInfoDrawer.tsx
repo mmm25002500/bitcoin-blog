@@ -75,7 +75,7 @@ const MoreInfoDrawer = (props: SidebarProps) => {
                         onClick={
                           () => {
                             props.onChange(post.filename);
-                            router.push(`/MoreInfo/${post.filename}`);
+                            router.push(`/moreBTC/${post.filename}`);
                             closeDrawer();
                           }}
                       >
