@@ -64,7 +64,7 @@ const Post = (props: PostProps) => {
       {/* 左邊文章，右邊圖片 */}
       <div className='flex gap-2' onClick={props.onClick}>
         {/* 文章 */}
-        <div className='flex-grow basis-3/4 flex flex-col justify-between'>
+        <div className='flex-grow basis-3/4 flex flex-col justify-between h-[70px]'>
           <div>
             {/* 標題 */}
             <h2 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black">
