@@ -27,7 +27,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
   useEffect(() => {
     const fetchFilteredPosts = async () => {
       const response = await axios.get('/api/getPostsByFilter', {
-        params: { type: 'News', author: currentAuthor, tag: currentSelection }
+        params: { type: 'both', author: currentAuthor, tag: currentSelection }
       });
       setFilteredPosts(response.data);
     };
