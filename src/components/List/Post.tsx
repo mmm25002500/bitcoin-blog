@@ -68,7 +68,7 @@ const Post = (props: PostProps) => {
           <div>
             {/* 標題 */}
             <h2 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black">
-              <a href="#">{props.title}</a>
+              <p className='line-clamp-2'>{props.title}</p>
             </h2>
             {/* 描述 */}
             <div className="mb-5 font-light text-neutral-800 dark:text-neutral-300 hidden sm:contents overflow-hidden">

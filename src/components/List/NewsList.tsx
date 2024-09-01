@@ -47,13 +47,13 @@ const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number})
         return (
           <Post
             key={index}
-            onClick={() => router.push(`/News/${post.authorData?.id}/${post.id}`)}
+            onClick={() => router.push(`/${post.type}/${post.authorData?.id}/${post.id}`)}
             title={post.title}
             description={post.description}
             tags={post.tags}
             idx={index}
             date={parsedDate.toISOString()}
-            type={["News"]}
+            type={post.type}
             image={post.image}
             img={post.img}
             authorData={post.authorData}
