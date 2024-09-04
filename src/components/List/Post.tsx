@@ -64,10 +64,10 @@ const Post = (props: PostProps) => {
       {/* 左邊文章，右邊圖片 */}
       <div className='flex gap-2' onClick={props.onClick}>
         {/* 文章 */}
-        <div className='flex-grow basis-3/4 flex flex-col justify-between h-[70px]'>
+        <div className='flex-grow basis-3/4 flex md:grid md:grid-row-2 flex-col justify-between'>
           <div>
             {/* 標題 */}
-            <h2 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black">
+            <h2 className="sm:mb-2 text-xl sm:text-2xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black">
               <p className='line-clamp-2'>{props.title}</p>
             </h2>
             {/* 描述 */}
@@ -82,7 +82,7 @@ const Post = (props: PostProps) => {
             props.authorData && (
               <div
                 onClick={() => { router.push(`/Author/${props.authorData.id}`) }}
-                className="flex items-center space-x-4 mt-auto"
+                className="flex items-center space-x-4 mt-auto "
               >
                 {
                   props.authorData.image && (
@@ -91,7 +91,7 @@ const Post = (props: PostProps) => {
                       alt={props.authorData.name + ' avatar'}
                       width={28}
                       height={28}
-                      className="w-5 h-5 sm:w-7 sm:h-7 rounded-full"
+                      className="w-[14px] h-[14px] sm:w-7 sm:h-7 rounded-full"
                     />
                   )
                 }
