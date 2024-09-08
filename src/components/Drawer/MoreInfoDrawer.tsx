@@ -50,7 +50,7 @@ const MoreInfoDrawer = (props: SidebarProps) => {
         <div className={`m-5 ${props.className}`}>
           {props.data.map((category: categoryData, index: number) => (
             <div key={index} className="border-b-[1px] border-[#E7E6F2] dark:border-neutral-800 p-2">
-
+              <p className="text-black dark:text-white">{ category.label }</p>
               {/* 類別 */}
               <button
                 className="text-neutral-black dark:text-neutral-white w-full text-left font-medium text-sm leading-[22px] px-3 py-2 cursor-pointer flex justify-between items-center"
@@ -79,9 +79,9 @@ const MoreInfoDrawer = (props: SidebarProps) => {
                             closeDrawer();
                           }}
                       >
-                        <a className={`pl-4 font-normal text-sm leading-6`}>
+                        <span className={`pl-4 font-normal text-sm leading-6 break-all block text-left`}>
                           {post.title}
-                        </a>
+                        </span>
                       </button>
                     </li>
                   ))}

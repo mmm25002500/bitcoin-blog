@@ -15,6 +15,7 @@ export interface MoreInfoData {
 }
 
 export interface categoryData {
+  label: string;
   title: string;
   folder: string;
   post: {

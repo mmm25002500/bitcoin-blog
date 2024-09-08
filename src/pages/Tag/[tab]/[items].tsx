@@ -305,10 +305,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         seoData,
         tabData,
         SiteConfig: siteConfigData,
-        tags: {
-          Post: tagsData.Post,
-          News: tagsData.News
-        }[tab],
+        tags: tagsData.all,
       },
     };
   } catch (error) {
