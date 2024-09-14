@@ -73,8 +73,8 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
       </Head>
       <article>
         <Navbar />
-        <div className="mx-auto sm:px-28 w-full lg:w-[60%]">
-          <ArticleLayout className='pt-10 px-5 sm:px-0'>
+        <div className="mx-auto md:px-28 w-full lg:w-[60%]">
+          <ArticleLayout className='pt-10 px-5 md:px-0'>
             <h1 className="mb-2 text-3xl sm:text-[45px] leading-[30px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
             <p className="mb-3 text-base sm:text-2xl leading-[22px] sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">{initialPost.frontMatter.description}</p>
             <div className="flex justify-center">
@@ -89,7 +89,7 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
             {/* 標籤 */}
             <div className="relative w-full h-10 my-5">
               <div className="relative">
-                <div className="px-8 sm:px-0">
+                <div className="px-8 md:px-0">
                   <Swiper
                     slidesPerView={"auto"}
                     spaceBetween={20}
@@ -110,7 +110,7 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
                 </div>
 
                 {/* 左右箭頭 */}
-                <div className="swiper-button-prev absolute left-0 sm:-left-8 top-1/2 transform -translate-y-1/2 z-10">
+                <div className="swiper-button-prev absolute left-0 md:-left-8 top-1/2 transform -translate-y-3 z-10">
                   <Image
                     src={left}
                     alt="Icon Dark"
@@ -119,7 +119,7 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
                     className="rounded-full w-5 h-5 dark:invert"
                   />
                 </div>
-                <div className="swiper-button-next absolute right-0 sm:-right-8 top-1/2 transform -translate-y-1/2 z-10">
+                <div className="swiper-button-next absolute right-0 md:-right-8 top-1/2 transform -translate-y-3 z-10">
                   <Image
                     src={right}
                     alt="Icon Dark"
