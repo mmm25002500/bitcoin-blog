@@ -28,9 +28,9 @@ const HomePageSearchDrawer = (props: HomePageSidebarProps) => {
         onResizeCapture={undefined}
         placement="top"
         className="absolute top-0 w-full text-white dark:bg-neutral-black !z-[10]"
-        transition={{ type: "spring", duration: 0.3 }}
+        transition={{ duration: 0.3 }}
         overlayProps={{
-          className: "fixed bg-neutral-black/50 backdrop-blur-none inset-auto !z-[10]",
+          className: "fixed bg-neutral-black/50 backdrop-blur-none  !z-[10]",
         }}
       >
         <div className={`${props.className}`}>
