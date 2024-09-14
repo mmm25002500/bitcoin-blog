@@ -13,5 +13,5 @@ export interface TagTabProps {
 export interface TagsProps {
   News: string[];
   Post: string[];
-  Programming: string[];
+  all: string[];
 }

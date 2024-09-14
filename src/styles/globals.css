@@ -62,3 +62,7 @@
 /* #body {
   -webkit-overflow-scrolling: touch;
 } */
+
+.swiper-slide-blank {
+  width: 0 !important;
+}

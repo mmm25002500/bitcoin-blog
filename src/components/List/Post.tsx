@@ -15,8 +15,36 @@ const formatDate = (date: string) => {
   const minutes = d.getMinutes().toString().padStart(2, '0');
   const ampm = hours >= 12 ? 'PM' : 'AM';
   const formattedHours = hours % 12 || 12; // Convert 24-hour time to 12-hour time
+  let date_time = "";
 
-  return `${year}/${month}/${day} ${formattedHours}:${minutes} ${ampm}`;
+  if (month < 10) {
+    date_time = `${year}/0${month}`;
+  } else {
+    date_time = `${year}/${month}`;
+  }
+
+  if (day < 10) {
+    date_time += `/0${day}`;
+  } else {
+    date_time += `/${day}`;
+  }
+
+  if (hours > 12) {
+    let formattedHours = hours % 12;
+    if (formattedHours < 10) {
+      date_time += ` 0${formattedHours}:${minutes} PM`;
+    } else {
+      date_time += ` ${formattedHours}:${minutes} PM`;
+    }
+  } else {
+    if (hours < 10) {
+      date_time += ` 0${hours}:${minutes} AM`;
+    } else {
+      date_time += ` ${hours}:${minutes} AM`;
+    }
+  }
+
+  return date_time;
 };
 
 const Post = (props: PostProps) => {
@@ -68,60 +96,62 @@ const Post = (props: PostProps) => {
       </div>
 
       {/* 作者和標籤與日期 */}
-      <div className=''>
-        {/* 標籤 */}
-        <Swiper
-          slidesPerView={"auto"}
-          spaceBetween={8} // 調整間距
-          freeMode={true}
-          modules={[FreeMode]}
-          className="h-8 my-3"
-        >
-          {
-            props.tags.map((item, index) => (
-              index < 3 && <SwiperSlide key={index} className="!w-auto max-w-full">
-                <Tag
-                  key={index}
-                  text={item}
-                  type={props.type}
-                  className="text-xs py-1 px-3 cursor-pointer"
-                />
-              </SwiperSlide>
-            ))
-          }
-        </Swiper>
-
-        {/* 作者 */}
+      {/* 標籤 */}
+      <Swiper
+        slidesPerView={"auto"}
+        spaceBetween={8} // 調整間距
+        freeMode={true}
+        modules={[FreeMode]}
+        className="h-8 my-3"
+      >
         {
-          props.authorData && (
-            <button
-              onClick={() => { router.push(`/Author/${props.authorData.id}`) }}
-              className="flex items-center space-x-4 mt-auto mb-3"
-            >
-              {
-                props.authorData.image && (
-                  <Image
-                    src={props.authorData.image}
-                    alt={props.authorData.name + ' avatar'}
-                    width={28}
-                    height={28}
-                    className="w-[14px] h-[14px] sm:w-6 sm:h-5 rounded-full"
-                  />
-                )
-              }
-              {
-                props.authorData.name && (
-                  <span className="font-medium dark:text-white text-xs sm:text-base">
-                    {props.authorData.name}
-                  </span>
-                )
-              }
-            </button>
-          )
+          props.tags.map((item, index) => (
+            index < 3 && <SwiperSlide key={index} className="!w-auto max-w-full cursor-pointer">
+              <Tag
+                key={index}
+                text={item}
+                type={props.type}
+                className="text-xs py-1 px-3 cursor-pointer"
+              />
+            </SwiperSlide>
+          ))
         }
+      </Swiper>
+
+      <div className='flex w-full items-center'>
+        <div className='grow'>
+          {/* 作者 */}
+          {
+            props.authorData && (
+              <button
+                onClick={() => { router.push(`/Author/${props.authorData.id}`) }}
+                className="flex items-center space-x-2"
+              >
+                {
+                  props.authorData.image && (
+                    <Image
+                      src={props.authorData.image}
+                      alt={props.authorData.name + ' avatar'}
+                      width={28}
+                      height={28}
+                      className="w-[14px] h-[14px] sm:w-5 sm:h-5 rounded-full"
+                    />
+                  )
+                }
+                {
+                  props.authorData.name && (
+                    <span className="font-medium dark:text-white text-xs sm:text-base">
+                      {props.authorData.name}
+                    </span>
+                  )
+                }
+              </button>
+            )
+          }
+        </div>
 
         {/* 日期 */}
-        <div className='text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium flex sm:grow w-auto mr-4 cursor-default'>
+        <div className='text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium flex w-auto mr-4 cursor-default'>
           <p className='whitespace-nowrap'>{formattedDate}</p>
         </div>
       </div>

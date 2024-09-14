@@ -39,11 +39,14 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
     <div className="mt-8 my-2">
       {/* <p className="font-bold text-xl leading-6 sm:text-[28px] sm:leading-[42px] text-center py-8">NEWS</p> */}
       <div className="relative my-14">
-        <div className="relative w-auto h-7 mx-5">
+        <div className="relative w-auto h-7 mx-8">
           <Swiper
             slidesPerView={"auto"}
             spaceBetween={20} // 調整間距
             freeMode={true}
+            slidesPerGroup={2}
+            loop={true}
+            slidesOffsetAfter={0}
             navigation={{
               nextEl: '.swiper-button-next',
               prevEl: '.swiper-button-prev',
@@ -62,8 +65,11 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
               />
             </SwiperSlide>
 
-            {tags.News.map((tag: any, idx: number) => (
-              <SwiperSlide key={idx} className="!w-auto">
+            {tags.all.map((tag: any, idx: number) => (
+              <SwiperSlide
+                key={idx}
+                className="!w-auto"
+              >
                 <Radio.Btn
                   text={tag}
                   value={tag}
