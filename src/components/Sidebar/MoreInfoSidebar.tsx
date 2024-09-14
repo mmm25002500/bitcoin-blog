@@ -18,12 +18,16 @@ const Sidebar = (props: MoreInfoSidebarProps) => {
     <div className={`border-t-[1px] border-[#E7E6F2] dark:border-neutral-800 ${props.className}`}>
       {props.data.map((category: categoryData, index: number) => (
         <div key={index} className="border-b-[1px] border-[#E7E6F2] dark:border-neutral-800 p-2">
-
+          {
+            category.label &&
+            <p className="px-3 text-black dark:text-white text-sm my-2">{category.label}</p>
+          }
           {/* 類別 */}
           <button
             className="w-full text-left font-medium text-sm leading-[22px] px-3 py-2 cursor-pointer flex justify-between items-center"
             onClick={() => handleToggle(index)}
           >
+
             {category.title}
 
             {/* 箭頭 */}

@@ -51,14 +51,17 @@ const MoreInfoDrawer = (props: SidebarProps) => {
           onResizeCapture={undefined}
         >
           <p className="my-5 text-black dark:text-white text-center font-medium text-sm leading-[22px]">
-            類別
+            目錄
           </p>
           {/* 類別 */}
 
           <div className={`m-5 ${props.className}`}>
             {props.data.map((category: categoryData, index: number) => (
               <div key={index} className="border-b-[1px] border-[#E7E6F2] dark:border-neutral-800 p-2">
-                <p className="px-3 text-black dark:text-white text-sm">{category.label}</p>
+                {
+                  category.label &&
+                  <p className="px-3 text-black dark:text-white text-sm mt-2">{category.label}</p>
+                }
                 {/* 類別 */}
                 <button
                   className="text-neutral-black dark:text-neutral-white w-full text-left font-medium text-sm leading-[22px] px-3 py-2 cursor-pointer flex justify-between items-center"
