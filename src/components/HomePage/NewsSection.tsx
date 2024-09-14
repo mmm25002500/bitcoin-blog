@@ -127,6 +127,13 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
           postsPerPage={HomePageNewsListPerpage}
         />
       </div>
+
+      {
+        !filteredPosts.length && (
+          <span className="m-5">
+          </span>
+        )
+      }
     </div>
   );
 }
