@@ -60,8 +60,8 @@ const Home = (props: HomeProps) => {
             HomePageNewsListPerpage={props.initialSiteConfig.HomePageNewsListPerpage}
           />
         )}
-        <HorizontalLine />
-        <ContactSection className="py-16" />
+        {/* <HorizontalLine /> */}
+        {/* <ContactSection className="py-16" /> */}
         {/* <HorizontalLine />
         <SubscribeSection className="py-16" /> */}
       </div>

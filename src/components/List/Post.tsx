@@ -53,27 +53,27 @@ const Post = (props: PostProps) => {
 
   return (
     <div
-      className={`py-7 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.className} ${props.idx != 0 ? 'border-t-[1px]' : ''}`}
+      className={`py-9 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.className} ${props.idx != 0 ? 'border-t-[1px]' : ''}`}
     >
       {/* 左邊文章，右邊圖片 */}
       <div className='flex gap-2'>
         {/* 文章 */}
-        <div className='flex-grow basis-3/4 flex md:grid md:grid-row-2 flex-col justify-between'>
-          <div>
-            {/* 標題 */}
-            <h2
-              className="sm:mb-2 text-xl sm:text-3xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black cursor-pointer"
-              onClick={props.onClick}
-            >
-              <p className='line-clamp-2'>{props.title}</p>
-            </h2>
-            {/* 描述 */}
-            <div className="mb-5 font-light text-neutral-800 dark:text-neutral-300 hidden sm:contents overflow-hidden sm:text-xl">
+        <div className='basis-3/4 grid grid-row-2 content-between'>
+          {/* 標題 */}
+          <h2
+            className="sm:mb-2 text-2xl sm:text-3xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black cursor-pointer"
+            onClick={props.onClick}
+          >
+            <p className='line-clamp-2'>{props.title}</p>
+          </h2>
+          {/* 描述 */}
+          <span className=''>
+            <div className="font-light text-neutral-800 dark:text-neutral-300 hidden sm:flex sm:text-xl">
               <p className="line-clamp-2">
                 {props.description}
               </p>
             </div>
-          </div>
+          </span>
         </div>
         {/* 圖片 */}
         <div className='inline-flex items-center relative w-auto h-auto max-w-[120px] sm:max-w-[236px]'>
@@ -95,28 +95,39 @@ const Post = (props: PostProps) => {
         </div>
       </div>
 
-      {/* 作者和標籤與日期 */}
-      {/* 標籤 */}
-      <Swiper
-        slidesPerView={"auto"}
-        spaceBetween={8} // 調整間距
-        freeMode={true}
-        modules={[FreeMode]}
-        className="h-8 my-3"
-      >
-        {
-          props.tags.map((item, index) => (
-            index < 3 && <SwiperSlide key={index} className="!w-auto max-w-full cursor-pointer">
-              <Tag
-                key={index}
-                text={item}
-                type={props.type}
-                className="text-xs py-1 px-3 cursor-pointer"
-              />
-            </SwiperSlide>
-          ))
-        }
-      </Swiper>
+      <span className=''>
+        <div className="my-2 font-light text-neutral-800 dark:text-neutral-300 flex sm:text-xl">
+          <p className="line-clamp-2">
+            {props.description}
+          </p>
+        </div>
+      </span>
+
+      <div className='my-3 flex justify-end'>
+        <div className='max-w-[70%]'>
+          <Swiper
+            slidesPerView={"auto"}
+            spaceBetween={8}
+            freeMode={true}
+            modules={[FreeMode]}
+            className="h-8"
+          >
+            {
+              props.tags.map((item, index) => (
+                index < 3 && <SwiperSlide key={index} className="!w-auto max-w-full cursor-pointer">
+                  <Tag
+                    key={index}
+                    text={item}
+                    type={props.type}
+                    className="!text-[11px] px-2 sm:text-xs sm:py-1 sm:px-3 cursor-pointer"
+                  />
+                </SwiperSlide>
+              ))
+            }
+          </Swiper>
+        </div>
+      </div>
+
 
       <div className='flex w-full items-center'>
         <div className='grow'>
