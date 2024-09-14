@@ -51,7 +51,7 @@ const Home = (props: HomeProps) => {
         <a target='_blank' href="https://pin.it/2mH0q5Frj">@bitcoinzh</a> photo from ©copyright Pinterest
         </p>
         <ButtonSection classname="pb-6" />
-        <HorizontalLine />
+        <HorizontalLine className='my-3' />
         {initialPosts && (
           <NewsSection
             initialPosts={initialPosts}
