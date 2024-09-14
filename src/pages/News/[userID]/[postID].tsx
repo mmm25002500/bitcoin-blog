@@ -20,6 +20,8 @@ import defalutPostImage from '@/icons/examplePhoto/defaultPostImage.jpg';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import blockImg from '@/icons/examplePhoto/block.jpg';
+import right from '@/icons/right.svg';
+import left from '@/icons/left.svg';
 
 const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, authorData: any, ArticleNewsListMorePostPerclick: number }) => {
   const router = useRouter();
@@ -89,6 +91,8 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
 
             {/* 標籤 */}
             <div className="relative w-full h-10 my-5">
+              <div className="relative">
+                <div className="px-8 sm:px-0">
               <Swiper
                 slidesPerView={"auto"}
                 spaceBetween={20}
@@ -106,7 +110,29 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
                   </SwiperSlide>
                 ))}
               </Swiper>
+                </div>
+
+                {/* 左右箭頭 */}
+                <div className="swiper-button-prev absolute left-0 sm:-left-8 top-1/2 transform -translate-y-1/2 z-10">
+                  <Image
+                    src={left}
+                    alt="Icon Dark"
+                    width={1000}
+                    height={1000}
+                    className="rounded-full w-5 h-5 dark:invert"
+                  />
+                </div>
+                <div className="swiper-button-next absolute right-0 sm:-right-8 top-1/2 transform -translate-y-1/2 z-10">
+                  <Image
+                    src={right}
+                    alt="Icon Dark"
+                    width={1000}
+                    height={1000}
+                    className="rounded-full w-5 h-5 dark:invert"
+                  />
+                </div>
               </div>
+            </div>
 
               {/* {initialPost.frontMatter.tags.map((item: string, index: number) => (
                 <Tag key={index} text={item} type={["News"]} className="text-xs py-1 px-3" />

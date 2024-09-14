@@ -38,7 +38,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
   return (
     <div className="mt-8 my-2">
       {/* <p className="font-bold text-xl leading-6 sm:text-[28px] sm:leading-[42px] text-center py-8">NEWS</p> */}
-      <div className="relative mx-auto lg:px-28 w-full 2xl:w-[65%]">
+      <div className="relative mx-auto lg:px-20 w-full 2xl:w-[65%] mb-4">
         <div className="relative">
           <div className="relative w-auto h-7 mx-8">
             <Swiper

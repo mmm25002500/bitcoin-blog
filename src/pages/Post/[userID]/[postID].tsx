@@ -20,6 +20,8 @@ import Image from 'next/image';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import blockImg from '@/icons/examplePhoto/block.jpg';
+import right from '@/icons/right.svg';
+import left from '@/icons/left.svg';
 
 const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, ArticlePostListMorePostPerclick: number }) => {
   const router = useRouter();
@@ -86,23 +88,47 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
 
             {/* 標籤 */}
             <div className="relative w-full h-10 my-5">
-              <Swiper
-                slidesPerView={"auto"}
-                spaceBetween={20}
-                freeMode={true}
-                navigation={{
-                  nextEl: '.swiper-button-next',
-                  prevEl: '.swiper-button-prev',
-                }}
-                modules={[FreeMode, Navigation]}
-                className="w-full h-8"
-              >
-                {initialPost.frontMatter.tags.map((tag, idx) => (
-                  <SwiperSlide key={idx} className="!w-auto">
-                    <Tag key={idx} text={tag} type={["Post"]} className="text-xs py-1 px-3" />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <div className="relative">
+                <div className="px-8 sm:px-0">
+                  <Swiper
+                    slidesPerView={"auto"}
+                    spaceBetween={20}
+                    freeMode={true}
+                    navigation={{
+                      nextEl: '.swiper-button-next',
+                      prevEl: '.swiper-button-prev',
+                    }}
+                    modules={[FreeMode, Navigation]}
+                    className="w-full h-8"
+                  >
+                    {initialPost.frontMatter.tags.map((tag, idx) => (
+                      <SwiperSlide key={idx} className="!w-auto">
+                        <Tag key={idx} text={tag} type={["Post"]} className="text-xs py-1 px-3" />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+
+                {/* 左右箭頭 */}
+                <div className="swiper-button-prev absolute left-0 sm:-left-8 top-1/2 transform -translate-y-1/2 z-10">
+                  <Image
+                    src={left}
+                    alt="Icon Dark"
+                    width={1000}
+                    height={1000}
+                    className="rounded-full w-5 h-5 dark:invert"
+                  />
+                </div>
+                <div className="swiper-button-next absolute right-0 sm:-right-8 top-1/2 transform -translate-y-1/2 z-10">
+                  <Image
+                    src={right}
+                    alt="Icon Dark"
+                    width={1000}
+                    height={1000}
+                    className="rounded-full w-5 h-5 dark:invert"
+                  />
+                </div>
+              </div>
             </div>
 
             {/* <div className="mt-2 mb-5 flex gap-2">
