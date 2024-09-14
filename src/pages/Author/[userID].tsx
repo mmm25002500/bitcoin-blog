@@ -67,7 +67,7 @@ const AuthorPage = (props: {
       </div>
       <Navbar />
       <HorizontalLine />
-      <div className="mx-auto px-6 sm:px-28">
+      <div className="relative mx-auto px-4 lg:px-20 w-full 2xl:w-[65%] mb-4">
         <div className="flex gap-10 my-5">
           <div className="flex-none">
             <Avater src={props.initialAuthor?.image} className="" />
@@ -86,7 +86,7 @@ const AuthorPage = (props: {
               </div>
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-3">
               {/* 描述 */}
               <div className="flex-none col-span-2 sm:col-span-1 font-normal text-sm leading-6 text-neutral-900 dark:text-neutral-300 overflow-hidden">
                 <p className={collaspe ? 'line-clamp-2' : ''}>
@@ -96,16 +96,19 @@ const AuthorPage = (props: {
 
               {/* 查看更多 按鈕 */}
               <div>
-                <Button onClick={() => setCollaspe(!collaspe)} type={"large"} className="dark:!border-neutral-white flex items-center gap-2">
+                <Button
+                  onClick={() => setCollaspe(!collaspe)}
+                  type={"small"}
+                  className="dark:!border-neutral-white flex items-center gap-2 text-[10px] px-3">
                   {collaspe ? (
                     <>
-                      查看更多
-                      <Icon icon_light={DownIcon} className="invert-0 dark:invert" />
+                      更多
+                      <Icon icon_light={DownIcon} className="w-3 h-3 invert-0 dark:invert" />
                     </>
                   ) : (
                     <>
                       收合
-                      <Icon icon_light={UpIcon} className="invert-0 dark:invert" />
+                      <Icon icon_light={UpIcon} className="w-3 h-3 invert-0 dark:invert" />
                     </>
                   )}
                 </Button>
@@ -115,7 +118,7 @@ const AuthorPage = (props: {
         </div>
         <HorizontalLine />
       </div>
-      <div className="mx-auto sm:px-28">
+      <div className="relative mx-auto px-4 lg:px-20 w-full 2xl:w-[65%] mb-4">
         {
           posts && <PostList
             data={posts.map((post: PostProps) => ({
