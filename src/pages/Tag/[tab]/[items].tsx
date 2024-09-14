@@ -151,7 +151,7 @@ const TagPage = ({ initialPosts, initialSelection, seoData, tags, tabData, SiteC
       <Navbar />
 
       {/* 標籤 */}
-      <div className="relative mx-auto lg:px-20 w-full 2xl:w-[65%] mb-4">
+      <div className="relative mx-auto px-4 lg:px-20 w-full 2xl:w-[65%] mb-4">
 
         <div className="relative my-5">
           <div className="relative w-auto h-7 mx-8">
