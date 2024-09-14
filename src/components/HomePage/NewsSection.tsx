@@ -105,7 +105,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
         </div>
       </div>
 
-      <div className="mx-auto lg:px-28 w-full 2xl:w-[65%]">
+      <div className="mx-auto lg:px-28 w-full 2xl:w-[65%] mb-5">
         <NewsList
           data={filteredPosts.map((post: PostProps) => ({
             title: post.title,
@@ -127,13 +127,6 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
           postsPerPage={HomePageNewsListPerpage}
         />
       </div>
-
-      {
-        !filteredPosts.length && (
-          <span className="m-5">
-          </span>
-        )
-      }
     </div>
   );
 }
