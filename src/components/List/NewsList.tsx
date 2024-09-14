@@ -7,7 +7,7 @@ import { PostProps } from '@/types/List/PostData';
 import { parse, isValid } from 'date-fns';
 
 const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number}) => {
-  const [postsToShow, setPostsToShow] = useState(3);
+  const [postsToShow, setPostsToShow] = useState(6);
 
   const router = useRouter();
 

@@ -95,7 +95,8 @@ const Post = (props: PostProps) => {
         </div>
       </div>
 
-      <span className=''>
+      {/* 手機版描述 */}
+      <span className='sm:hidden'>
         <div className="my-2 font-light text-neutral-800 dark:text-neutral-300 flex sm:text-xl">
           <p className="line-clamp-2">
             {props.description}
