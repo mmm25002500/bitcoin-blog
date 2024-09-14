@@ -9,12 +9,12 @@ import { useRouter } from 'next/router';
 const formatDate = (date: string) => {
   const d = new Date(date);
   const year = d.getFullYear();
-  const month = d.getMonth() + 1; // Months are zero-indexed
+  const month = d.getMonth() + 1;
   const day = d.getDate();
   const hours = d.getHours();
   const minutes = d.getMinutes().toString().padStart(2, '0');
   const ampm = hours >= 12 ? 'PM' : 'AM';
-  const formattedHours = hours % 12 || 12; // Convert 24-hour time to 12-hour time
+  const formattedHours = hours % 12 || 12;
   let date_time = "";
 
   if (month < 10) {
@@ -32,7 +32,7 @@ const formatDate = (date: string) => {
   if (hours > 12) {
     let formattedHours = hours % 12;
     if (formattedHours < 10) {
-      date_time += ` 0${formattedHours}:${minutes} PM`;
+      date_time += `&nbsp;&nbsp;&nbsp; 0${formattedHours}:${minutes} PM`;
     } else {
       date_time += ` ${formattedHours}:${minutes} PM`;
     }
@@ -120,7 +120,7 @@ const Post = (props: PostProps) => {
                     key={index}
                     text={item}
                     type={props.type}
-                    className="!text-[11px] px-2 sm:text-xs sm:py-1 sm:px-3 cursor-pointer"
+                    className="!text-[11px] sm:!text-sm px-2 py-1 sm:py-1 sm:px-3 text-xs  cursor-pointer"
                   />
                 </SwiperSlide>
               ))
@@ -164,7 +164,7 @@ const Post = (props: PostProps) => {
 
         {/* 日期 */}
         <div className='text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium flex w-auto mr-4 cursor-default'>
-          <p className='whitespace-nowrap'>{formattedDate}</p>
+          <p className='whitespace-nowrap' dangerouslySetInnerHTML={{ __html: formattedDate }} />
         </div>
       </div>
     </div>
