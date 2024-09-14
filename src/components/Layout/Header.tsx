@@ -73,7 +73,7 @@ const Header = () => {
               >
                 {/* BTC HashRate */}
                 <SwiperSlide className="!w-auto">
-                  <div className="flex items-center w-full h-full">
+                  <a href="" target="_blank" className="flex items-center w-full h-full">
                     <Icon
                       icon_light={shovelIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
@@ -82,28 +82,28 @@ const Header = () => {
                       <span className='text-black dark:text-white ml-2'>{hashRate !== null ? formatHashRate(hashRate) : 'Loading...'}</span>
                     </p>
                     <div className='text-wireframe-700 dark:text-neutral-800'>｜</div>
-                  </div>
+                  </a>
                 </SwiperSlide>
 
                 {/* Block Height */}
                 <SwiperSlide className="!w-auto">
-                  <div className="flex items-center h-full">
+                  <a href="" target="_blank" className="flex items-center h-full">
                     <Icon
                       icon_light={boxIcon}
                       className="h-5 w-auto mr-2 dark:invert" />
                     <p className='text-black dark:text-white'>Block Height {blockHeight !== null ? blockHeight : 'Loading...'}</p>
                     <div className='text-wireframe-700 dark:text-neutral-800'>｜</div>
-                  </div>
+                  </a>
                 </SwiperSlide>
 
                 {/* Price */}
                 <SwiperSlide className="!w-auto">
-                  <div className="flex items-center">
+                  <a href="" target="_blank" className="flex items-center">
                     <p className='font-medium mr-2 text-lg'>
                       ฿
                     </p>
                     <p className='text-black dark:text-white'>Price {btc !== null ? btc : 'Loading...'} USD</p>
-                  </div>
+                  </a>
                 </SwiperSlide>
               </Swiper>
             </div>

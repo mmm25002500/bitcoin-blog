@@ -39,6 +39,7 @@ const config = withMT({
         'h6': ['1.75rem', '2.625rem'],
       },
       colors: {
+        'btc': '#F7931A',
         'primary': {
           'black-100': '#000000',
           'black-200': '#373737',

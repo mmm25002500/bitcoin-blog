@@ -156,7 +156,7 @@ const Navbar = () => {
           <Card
             color="transparent"
             shadow={false}
-            className="h-full w-full p-4 overflow-y-auto" nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+            className="h-[93%] w-full p-4 overflow-y-auto" nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <p className="fixed z-40 right-5 bg-neutral-white dark:bg-neutral-black mt-2 sm:mt-3 sm:mr-5 sm:mb-2 text-right font-medium text-sm leading-[22px]">
               <Close
                 className=""
@@ -165,7 +165,7 @@ const Navbar = () => {
             </p>
 
             {/* 類別 */}
-            <div className={`mx-5 `}>
+            <div className={`mx-5 mt-10`}>
               {/* List */}
               <SidebarBtn
                 title="關於"
@@ -229,6 +229,27 @@ const Navbar = () => {
                 photo_dark={blockchain}
                 photo_light={blockchain_Dark}
                 onClick={() => router.push("/Tag/News/all")}
+              />
+              <SidebarBtn
+                title="測試"
+                description="Support us"
+                photo_dark={coffee}
+                photo_light={coffee_Dark}
+                onClick={() => router.push("/Post/Editor/Support")}
+              />
+              <SidebarBtn
+                title="測試"
+                description="Support us"
+                photo_dark={coffee}
+                photo_light={coffee_Dark}
+                onClick={() => router.push("/Post/Editor/Support")}
+              />
+              <SidebarBtn
+                title="測試"
+                description="Support us"
+                photo_dark={coffee}
+                photo_light={coffee_Dark}
+                onClick={() => router.push("/Post/Editor/Support")}
               />
             </div>
           </Card>

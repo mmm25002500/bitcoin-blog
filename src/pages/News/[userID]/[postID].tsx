@@ -88,7 +88,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
             <div className="mt-2 mb-5 flex gap-2">
 
             {/* 標籤 */}
-            <div className="relative w-full h-10">
+            <div className="relative w-full h-10 my-5">
               <Swiper
                 slidesPerView={"auto"}
                 spaceBetween={20}

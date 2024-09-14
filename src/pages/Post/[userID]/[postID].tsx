@@ -85,7 +85,7 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
             <MD>{initialPost.source}</MD>
 
             {/* 標籤 */}
-            <div className="relative w-full h-10">
+            <div className="relative w-full h-10 my-5">
               <Swiper
                 slidesPerView={"auto"}
                 spaceBetween={20}
