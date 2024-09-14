@@ -68,7 +68,7 @@ const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number})
             onClick={handleShowMore}
             type="large"
             className="dark:!border-neutral-white dark:!bg-neutral-white dark:!text-primary-black-300 flex items-center gap-2 w-44 justify-center bg-neutral-black text-neutral-white">
-            More
+            更多
           </Button>
         </div>
       )}
