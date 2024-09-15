@@ -15,6 +15,7 @@ import { GetServerSideProps } from 'next';
 import { PostProps } from '@/types/List/PostData';
 import Head from "next/head";
 import { initAdmin } from "lib/firebaseAdmin";
+import Image from 'next/image';
 
 // 取得作者資料
 const getAuthorData = async () => {
@@ -67,10 +68,16 @@ const AuthorPage = (props: {
       </div>
       <Navbar />
       <HorizontalLine />
-      <div className="mx-auto md:px-28 w-full lg:w-[60%]">
+      <div className="mx-auto px-4 md:px-28 w-full lg:w-[60%]">
         <div className="flex gap-10 my-5">
           <div className="flex-none">
-            <Avater src={props.initialAuthor?.image} className="" />
+            <Image
+              src={props.initialAuthor?.image}
+              className="rounded-full w-[50px] h-[50px]"
+              alt={""}
+              width={1000}
+              height={1000}
+            />
           </div>
           <div className="w-full">
             <div className="flex flex-wrap sm:flex-nowrap sm:grid sm:grid-cols-1 gap-1">
