@@ -48,23 +48,23 @@ const Home = (props: HomeProps) => {
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16">
         <p className='mb-9 mt-1 font-medium text-[10px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300 text-center'>
-        <a target='_blank' href="https://pin.it/2mH0q5Frj">@bitcoinzh</a> photo from ©copyright Pinterest
+          <a target='_blank' href="https://pin.it/2mH0q5Frj">@bitcoinzh</a> photo from ©copyright Pinterest
         </p>
         <ButtonSection classname="pb-6" />
-        <HorizontalLine className='my-3' />
-        {initialPosts && (
-          <NewsSection
-            initialPosts={initialPosts}
-            initialSelection={selection}
-            tags={props.initialTags}
-            HomePageNewsListPerpage={props.initialSiteConfig.HomePageNewsListPerpage}
-          />
-        )}
-        {/* <HorizontalLine /> */}
-        {/* <ContactSection className="py-16" /> */}
-        {/* <HorizontalLine />
-        <SubscribeSection className="py-16" /> */}
+        <HorizontalLine className='my-3 pb-3' />
       </div>
+      {initialPosts && (
+        <NewsSection
+          initialPosts={initialPosts}
+          initialSelection={selection}
+          tags={props.initialTags}
+          HomePageNewsListPerpage={props.initialSiteConfig.HomePageNewsListPerpage}
+        />
+      )}
+      {/* <HorizontalLine /> */}
+      {/* <ContactSection className="py-16" /> */}
+      {/* <HorizontalLine />
+        <SubscribeSection className="py-16" /> */}
     </>
   );
 };

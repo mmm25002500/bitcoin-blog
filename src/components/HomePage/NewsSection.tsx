@@ -36,7 +36,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
   }, [currentSelection, currentType, currentAuthor]);
 
   return (
-    <div className="mx-auto md:px-28 w-full lg:w-[66%]">
+    <div className="mx-auto md:px-28 w-full lg:w-[60%]">
       <div className="px-5 md:px-0 mb-4 my-5">
         <div className="relative w-full h-10">
           <div className="relative">

@@ -67,7 +67,7 @@ const AuthorPage = (props: {
       </div>
       <Navbar />
       <HorizontalLine />
-      <div className="relative mx-auto px-4 lg:px-20 w-full 2xl:w-[65%] mb-4">
+      <div className="mx-auto md:px-28 w-full lg:w-[60%]">
         <div className="flex gap-10 my-5">
           <div className="flex-none">
             <Avater src={props.initialAuthor?.image} className="" />
@@ -118,7 +118,7 @@ const AuthorPage = (props: {
         </div>
         <HorizontalLine />
       </div>
-      <div className="relative mx-auto px-4 lg:px-20 w-full 2xl:w-[65%] mb-4">
+      <div className="mx-auto md:px-28 w-full lg:w-[60%]">
         {
           posts && <PostList
             data={posts.map((post: PostProps) => ({

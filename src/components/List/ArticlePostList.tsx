@@ -73,7 +73,7 @@ const ArticlePostList = ({ data, ArticlePostListMorePostPerclick }: PostListData
             onClick={showMorePosts}
             type={"large"}
             className="font-medium text-sm leading-5 dark:!bg-neutral-white dark:!text-primary-black-300 dark:border-neutral-white flex items-center gap-2">
-            顯示更多
+            更多
             <Icon
               icon_light={right}
               className="invert dark:invert-0"
