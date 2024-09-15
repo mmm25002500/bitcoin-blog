@@ -85,7 +85,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
             </div>
 
             {/* 左右箭頭 */}
-            <div className="swiper-button-prev absolute left-0 md:-left-8 top-1/2 transform -translate-y-3 z-10">
+            <div className="swiper-button-prev absolute left-0 md:-left-8 top-1/2 transform -translate-y-3 z-0">
               <Image
                 src={left}
                 alt="Icon Dark"
@@ -94,7 +94,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
                 className="rounded-full w-5 h-5 dark:invert"
               />
             </div>
-            <div className="swiper-button-next absolute right-0 md:-right-8 top-1/2 transform -translate-y-3 z-10">
+            <div className="swiper-button-next absolute right-0 md:-right-8 top-1/2 transform -translate-y-3 z-0">
               <Image
                 src={right}
                 alt="Icon Dark"

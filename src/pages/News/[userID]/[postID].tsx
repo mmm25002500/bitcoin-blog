@@ -113,7 +113,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
                 </div>
 
                 {/* 左右箭頭 */}
-                <div className="swiper-button-prev absolute left-0 sm:-left-8 top-1/2 transform -translate-y-1/2 z-10">
+                <div className="swiper-button-prev absolute left-0 sm:-left-8 top-1/2 transform -translate-y-1/2 z-0">
                   <Image
                     src={left}
                     alt="Icon Dark"
@@ -122,7 +122,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
                     className="rounded-full w-5 h-5 dark:invert"
                   />
                 </div>
-                <div className="swiper-button-next absolute right-0 sm:-right-8 top-1/2 transform -translate-y-1/2 z-10">
+                <div className="swiper-button-next absolute right-0 sm:-right-8 top-1/2 transform -translate-y-1/2 z-0">
                   <Image
                     src={right}
                     alt="Icon Dark"
