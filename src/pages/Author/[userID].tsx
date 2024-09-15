@@ -70,7 +70,7 @@ const AuthorPage = (props: {
       <HorizontalLine />
       <div className="mx-auto px-4 md:px-28 w-full lg:w-[60%]">
         <div className="flex gap-10 my-5">
-          <div className="flex-none">
+          <div className="flex-none ml-2">
             <Image
               src={props.initialAuthor?.image}
               className="rounded-full w-[50px] h-[50px]"
@@ -88,7 +88,7 @@ const AuthorPage = (props: {
               <div className="flex-grow"></div>
 
               {/* 文章數量 */}
-              <div className="flex-none font-medium text-sm leading-5 text-neutral-800 dark:text-neutral-200">
+              <div className="flex-none font-medium text-sm leading-5 text-neutral-800 dark:text-neutral-200 mr-2">
                 {postQuantity} Posts
               </div>
             </div>
