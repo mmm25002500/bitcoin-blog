@@ -73,7 +73,9 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
         <meta name="twitter:image" content={initialPost.frontMatter.image} />
       </Head>
       <article>
-        <Navbar />
+        <div className="sm:mx-auto sm:px-16">
+          <Navbar />
+        </div>
         <div className="mx-auto sm:px-28 w-full lg:w-[60%]">
           <ArticleLayout className='pt-10 px-5 sm:px-0'>
             {/* 內文 */}
@@ -89,50 +91,50 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
             <MD>{initialPost.source}</MD>
             <div className="mt-2 mb-5 flex gap-2">
 
-            {/* 標籤 */}
-            <div className="relative w-full h-10 my-5">
-              <div className="relative">
-                <div className="px-8 sm:px-0">
-              <Swiper
-                slidesPerView={"auto"}
-                spaceBetween={20}
-                freeMode={true}
-                navigation={{
-                  nextEl: '.swiper-button-next',
-                  prevEl: '.swiper-button-prev',
-                }}
-                modules={[FreeMode, Navigation]}
-                className="w-full h-8"
-              >
-                {initialPost.frontMatter.tags.map((tag, idx) => (
-                  <SwiperSlide key={idx} className="!w-auto">
-                    <Tag key={idx} text={tag} type={["News"]} className="text-xs py-1 px-3" />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-                </div>
+              {/* 標籤 */}
+              <div className="relative w-full h-10 my-5">
+                <div className="relative">
+                  <div className="px-8 sm:px-0">
+                    <Swiper
+                      slidesPerView={"auto"}
+                      spaceBetween={20}
+                      freeMode={true}
+                      navigation={{
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                      }}
+                      modules={[FreeMode, Navigation]}
+                      className="w-full h-8"
+                    >
+                      {initialPost.frontMatter.tags.map((tag, idx) => (
+                        <SwiperSlide key={idx} className="!w-auto">
+                          <Tag key={idx} text={tag} type={["News"]} className="text-xs py-1 px-3" />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
 
-                {/* 左右箭頭 */}
-                <div className="swiper-button-prev absolute left-0 sm:-left-8 top-1/2 transform -translate-y-1/2 z-0">
-                  <Image
-                    src={left}
-                    alt="Icon Dark"
-                    width={1000}
-                    height={1000}
-                    className="rounded-full w-5 h-5 dark:invert"
-                  />
-                </div>
-                <div className="swiper-button-next absolute right-0 sm:-right-8 top-1/2 transform -translate-y-1/2 z-0">
-                  <Image
-                    src={right}
-                    alt="Icon Dark"
-                    width={1000}
-                    height={1000}
-                    className="rounded-full w-5 h-5 dark:invert"
-                  />
+                  {/* 左右箭頭 */}
+                  <div className="swiper-button-prev absolute left-0 sm:-left-8 top-1/2 transform -translate-y-1/2 z-0">
+                    <Image
+                      src={left}
+                      alt="Icon Dark"
+                      width={1000}
+                      height={1000}
+                      className="rounded-full w-5 h-5 dark:invert"
+                    />
+                  </div>
+                  <div className="swiper-button-next absolute right-0 sm:-right-8 top-1/2 transform -translate-y-1/2 z-0">
+                    <Image
+                      src={right}
+                      alt="Icon Dark"
+                      width={1000}
+                      height={1000}
+                      className="rounded-full w-5 h-5 dark:invert"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
               {/* {initialPost.frontMatter.tags.map((item: string, index: number) => (
                 <Tag key={index} text={item} type={["News"]} className="text-xs py-1 px-3" />

@@ -22,7 +22,7 @@ const More = (props: MoreProps) => {
   return (
     <>
       <button className="
-      border focus:outline-none focus:ring-4 font-medium rounded-xl text-sm px-5 py-2.5 me-2 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px]
+      border focus:outline-none focus:ring-4 font-medium rounded-xl text-sm px-5 py-2.5 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px]
 
       /* Light Mode */
       border-neutral-200

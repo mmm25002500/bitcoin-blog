@@ -14,7 +14,7 @@ import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MarkDownDataProps, MarkDownProps } from '@/types/User/UserID';
 
-const AboutPage = ({ initialPost, SEO } : { initialPost: MarkDownDataProps, SEO?: any }) => {
+const AboutPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProps, SEO?: any }) => {
 
   return (
     <>
@@ -33,7 +33,10 @@ const AboutPage = ({ initialPost, SEO } : { initialPost: MarkDownDataProps, SEO?
       <div className="sm:hidden">
         <Header />
       </div>
-      <Navbar />
+
+      <div className="sm:mx-auto sm:px-16">
+        <Navbar />
+      </div>
       <ArticleHeader
         title="ABOUT US"
         subtitle="關於我們"

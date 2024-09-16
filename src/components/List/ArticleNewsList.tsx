@@ -64,7 +64,7 @@ const ArticlePostList = ({ data, increment }: PostListData & {increment: number}
         )
       })}
 
-      <HorizontalLine className="" />
+      {/* <HorizontalLine className="" /> */}
 
       <div className='flex items-center justify-center my-9'>
         {/* 如果還有更多文章則顯示按鈕 */}

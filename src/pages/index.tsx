@@ -43,8 +43,10 @@ const Home = (props: HomeProps) => {
       </Head>
 
       <HeaderInfo />
-      <Header />
-      <Navbar />
+      <div className="sm:mx-auto sm:px-16">
+        <Header />
+        <Navbar />
+      </div>
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16">
         <p className='mb-9 mt-1 font-medium text-[10px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300 text-center'>

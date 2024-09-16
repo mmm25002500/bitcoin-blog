@@ -12,6 +12,7 @@ import left from '@/icons/left.svg';
 import Image from 'next/image';
 import NewsList from "../List/NewsList";
 import { TagsProps } from "@/types/Tag/Tag";
+import Tab from "../Tab/Tab";
 
 interface NewsSectionProps extends NewsPostProps {
   tags: any;
@@ -22,22 +23,29 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
   const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
   const [currentType, setCurrentType] = useState<string>('News');
   const [currentAuthor, setCurrentAuthor] = useState<string>('all');
+  const [selectedTab, setSelectedTab] = useState<string>('Post');
 
   // 傳到後端拿資料，用TAG篩選文章
   useEffect(() => {
     const fetchFilteredPosts = async () => {
       const response = await axios.get('/api/getPostsByFilter', {
-        params: { type: 'both', author: currentAuthor, tag: currentSelection }
+        params: { type: selectedTab, author: currentAuthor, tag: currentSelection }
       });
       setFilteredPosts(response.data);
     };
 
     fetchFilteredPosts();
-  }, [currentSelection, currentType, currentAuthor]);
+  }, [currentSelection, currentType, currentAuthor, selectedTab]);
+
+  // 處理 Tab 改變
+  const handleTabChange = (tabName: string) => {
+    setSelectedTab(tabName);
+  };
 
   return (
     <div className="mx-auto md:px-28 w-full lg:w-[60%]">
       <div className="px-5 md:px-0 mb-4 my-5">
+        {/* 標籤 */}
         <div className="relative w-full h-10">
           <div className="relative">
             <div className="px-8 md:px-0">
@@ -107,6 +115,22 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
         </div>
 
         <div className="">
+          <Tab
+            data={[
+              {
+                name: '文章',
+                link: 'Post'
+              },
+              {
+                name: '新聞',
+                link: 'News'
+              }
+            ]}
+            className="mt-8"
+            selectedTab={selectedTab}
+            onChange={(tabName: string) => handleTabChange(tabName)}
+          />
+
           <NewsList
             data={filteredPosts.map((post: PostProps) => ({
               title: post.title,

@@ -66,7 +66,9 @@ const AuthorPage = (props: {
       <div className="sm:hidden">
         <Header />
       </div>
-      <Navbar />
+      <div className="sm:mx-auto sm:px-16">
+        <Navbar />
+      </div>
       <HorizontalLine />
       <div className="mx-auto px-4 md:px-28 w-full lg:w-[60%]">
         <div className="flex gap-10 my-5">

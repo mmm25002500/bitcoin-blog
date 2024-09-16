@@ -14,7 +14,7 @@ import { MarkDownDataProps } from '@/types/User/UserID';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 
-const DisclaimerPage = ({ initialPost, SEO } : { initialPost: MarkDownDataProps, SEO?: any }) => {
+const DisclaimerPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProps, SEO?: any }) => {
 
   return (
     <>
@@ -33,7 +33,9 @@ const DisclaimerPage = ({ initialPost, SEO } : { initialPost: MarkDownDataProps,
       <div className="sm:hidden">
         <Header />
       </div>
-      <Navbar />
+      <div className="sm:mx-auto sm:px-16">
+        <Navbar />
+      </div>
       <ArticleHeader
         title="Disclaimer"
         subtitle="免責聲明"

@@ -148,11 +148,13 @@ const TagPage = ({ initialPosts, initialSelection, seoData, tags, tabData, SiteC
         <meta name="twitter:description" content={seoData.Search.description} />
         <meta name="twitter:image" content={seoData.Search.image} />
       </Head>
-      <Navbar />
+      <div className="sm:mx-auto sm:px-16">
+        <Navbar />
+      </div>
 
-      {/* 標籤 */}
       <div className="mx-auto md:px-28 w-full lg:w-[60%]">
         <div className="px-5 md:px-0 mb-4 my-5">
+          {/* 標籤 */}
           <div className="relative w-full h-10">
             <div className="relative">
               <div className="px-8 md:px-0">

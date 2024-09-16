@@ -91,7 +91,9 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
           <meta name="twitter:image" content={seo.MoreInfo.image} />
         </Head>
         <div className="min-h-screen flex flex-col">
-          <Navbar />
+          <div className="sm:mx-auto sm:px-16">
+            <Navbar />
+          </div>
           <div className="sm:flex">
 
             {/* Sidebar */}
@@ -174,7 +176,9 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
       </Head>
 
       <div className="min-h-screen flex flex-col">
-        <Navbar />
+        <div className="sm:mx-auto sm:px-16">
+          <Navbar />
+        </div>
         <div className="sm:flex">
 
           {/* Sidebar */}

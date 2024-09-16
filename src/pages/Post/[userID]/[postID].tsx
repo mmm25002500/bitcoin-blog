@@ -72,7 +72,9 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
         <meta name="twitter:image" content={initialPost.frontMatter.image} />
       </Head>
       <article>
-        <Navbar />
+        <div className="sm:mx-auto sm:px-16">
+          <Navbar />
+        </div>
         <div className="mx-auto md:px-28 w-full lg:w-[60%]">
           <ArticleLayout className='pt-10 px-5 md:px-0'>
             <h1 className="mb-2 text-3xl sm:text-[45px] leading-[30px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>
@@ -87,7 +89,7 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
             <MD>{initialPost.source}</MD>
 
             {/* 標籤 */}
-            <div className="relative w-full h-10 my-5">
+            <div className="relative w-full h-10 my-5 mt-14">
               <div className="relative">
                 <div className="px-8 md:px-0">
                   <Swiper

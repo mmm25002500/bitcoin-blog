@@ -52,7 +52,7 @@ const Header = () => {
   return (
     <>
       <nav className="relative bg-white dark:bg-neutral-black z-40">
-        <div className="mx-auto px-2 sm:px-6 md:pr-0 lg:px-5">
+        <div className="mx-auto px-2 md:pr-0 sm:px-0">
           <div className="flex h-16 items-center gap-6 md:gap-0">
             {/* 日期 */}
             <div className='w-full flex items-center sm:grow sm:w-[50%]'>

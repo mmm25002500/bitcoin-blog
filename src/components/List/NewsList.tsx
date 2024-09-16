@@ -63,7 +63,7 @@ const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number})
 
       {/* 查看更多按鈕 */}
       {postsToShow < sortedData.length && (
-        <div className='flex justify-center py-10'>
+        <div className='flex justify-center py-12'>
           <Button
             onClick={handleShowMore}
             type="large"

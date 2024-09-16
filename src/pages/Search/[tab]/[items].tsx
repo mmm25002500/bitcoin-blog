@@ -150,7 +150,9 @@ const SearchPage = ({ initialPosts, initialSelection, seoData, tabData, SiteConf
         <meta name="twitter:description" content={seoData.Search.description} />
         <meta name="twitter:image" content={seoData.Search.image} />
       </Head>
-      <Navbar />
+      <div className="sm:mx-auto sm:px-16">
+        <Navbar />
+      </div>
       <div className="sm:mx-auto sm:px-16 mx-8">
         {/* Search Bar */}
         {

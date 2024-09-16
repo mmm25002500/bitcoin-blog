@@ -6,7 +6,7 @@ import Head from "next/head";
 import { initAdmin } from "lib/firebaseAdmin";
 import { GetStaticProps } from "next";
 
-const NotFoundPage = ({ SEO }: {SEO?: any}) => {
+const NotFoundPage = ({ SEO }: { SEO?: any }) => {
   const defaultSEO = {
     NotFound: {
       title: "Page Not Found",
@@ -35,7 +35,10 @@ const NotFoundPage = ({ SEO }: {SEO?: any}) => {
       <div className="sm:hidden">
         <Header></Header>
       </div>
-      <Navbar />
+
+      <div className="sm:mx-auto sm:px-16">
+        <Navbar />
+      </div>
       <HorizontalLine />
       <NotFound></NotFound>
     </>
