@@ -90,7 +90,7 @@ const Navbar = () => {
     <>
       <nav className="relative bg-white dark:bg-neutral-black">
         <div className="relative mx-auto px-2 sm:px-0 z-40 bg-white dark:bg-neutral-black">
-          <div className="relative flex h-16 items-center justify-between">
+          <div className="relative flex h-12 items-center justify-between">
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
               <Link

@@ -153,65 +153,68 @@ const SearchPage = ({ initialPosts, initialSelection, seoData, tabData, SiteConf
       <div className="sm:mx-auto sm:px-16">
         <Navbar />
       </div>
-      <div className="sm:mx-auto sm:px-16 mx-8">
-        {/* Search Bar */}
-        {
-          // 如果是文字類型
-          selectedTab === 'Creators' ?
-            <InputText
-              placeholder={'請輸入內容'}
-              icon={searchBtn}
-              text={searchText}
-              onClick={handleSearch}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            :
-            // 如果是標籤類型
-            <InputLabel
-              placeholder={'請輸入標籤'}
-              icon={searchBtn}
-              frontIcon={false}
-              text={searchText ? searchText.split(',') : []}
-              onClick={handleSearch}
-              onChange={handleSearchChange}
-            />
-        }
-      </div>
+      <HorizontalLine />
+      <div className="mx-auto md:px-28 w-full lg:w-[1280px] mt-5">
+        <div className="sm:mx-auto sm:px-16 mx-8">
+          {/* Search Bar */}
+          {
+            // 如果是文字類型
+            selectedTab === 'Creators' ?
+              <InputText
+                placeholder={'請輸入內容'}
+                icon={searchBtn}
+                text={searchText}
+                onClick={handleSearch}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              :
+              // 如果是標籤類型
+              <InputLabel
+                placeholder={'請輸入標籤'}
+                icon={searchBtn}
+                frontIcon={false}
+                text={searchText ? searchText.split(',') : []}
+                onClick={handleSearch}
+                onChange={handleSearchChange}
+              />
+          }
+        </div>
 
-      <div className="sm:mx-auto sm:px-16">
+        <div className="sm:mx-auto sm:px-16">
 
-        {/* Tab */}
-        <Tab
-          data={tabData}
-          className="mt-8"
-          selectedTab={selectedTab}
-          onChange={(tabName: string) => handleTabChange(tabName)}
-        />
+          {/* Tab */}
+          <Tab
+            data={tabData}
+            className="mt-8"
+            selectedTab={selectedTab}
+            onChange={(tabName: string) => handleTabChange(tabName)}
+          />
 
-        <HorizontalLine />
+          <HorizontalLine />
 
-        {/* Label區域 */}
-        {
-          selectedTab === 'Posters' || selectedTab === 'News' ?
-            <>
-              {
-                filteredPosts &&
-                <PostListAll
-                  data={filteredPosts}
-                  postsPerPage={SiteConfig.PostListAllPerpage}
-                />
-              }
-            </>
-            :
-            // 如果是創作者類型
-            <>
-              {
-                filteredAuthors && <AuthorList
-                  data={filteredAuthors}
-                />
-              }
-            </>
-        }
+          {/* Label區域 */}
+          {
+            selectedTab === 'Posters' || selectedTab === 'News' ?
+              <>
+                {
+                  filteredPosts &&
+                  <PostListAll
+                    data={filteredPosts}
+                    postsPerPage={SiteConfig.PostListAllPerpage}
+                  />
+                }
+              </>
+              :
+              // 如果是創作者類型
+              <>
+                {
+                  filteredAuthors && <AuthorList
+                    data={filteredAuthors}
+                  />
+                }
+              </>
+          }
+        </div>
       </div>
     </>
   );

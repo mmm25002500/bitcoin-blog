@@ -76,7 +76,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
         <div className="sm:mx-auto sm:px-16">
           <Navbar />
         </div>
-        <div className="mx-auto sm:px-28 w-full lg:w-[60%]">
+        <div className="mx-auto sm:px-28 w-full lg:w-[1280px]">
           <ArticleLayout className='pt-10 px-5 sm:px-0'>
             {/* 內文 */}
             <h1 className="mb-2 text-3xl sm:text-[45px] leading-[30px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>

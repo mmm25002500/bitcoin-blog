@@ -6,10 +6,7 @@ const CreateWallet = (props: CreateWalletData) => {
   return (
     <Card
       className="
-      flex items-center content-center py-2 max-w-xs gap-8 w-full rounded-lg border-[1px] justify-between
-
-      /*h-[150px] sm:h-full
-      sm:items-center*/
+      flex items-center content-center py-2 max-w-xs gap-0 w-full rounded-lg border-[1px]
 
       /* Light Mode */
       bg-neutral-white
@@ -26,7 +23,7 @@ const CreateWallet = (props: CreateWalletData) => {
       onClick={props.onClick}
     >
       <Card.Infomation
-        className="leading-normal flex flex-col items-start text-left px-5"
+        className="leading-normal flex flex-col items-start text-left pl-5 grow"
       >
         <Card.Title
           text={props.title}
