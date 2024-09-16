@@ -46,8 +46,8 @@ const AboutPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProps, SEO?:
         <ArticleLayout className='pt-10'>
           <MD>{initialPost.source}</MD>
         </ArticleLayout>
-        <HorizontalLine className='sm:hidden' />
-        <ContactSection className="py-16" />
+        {/* <HorizontalLine className='sm:hidden' />
+        <ContactSection className="py-16" /> */}
         {/* <HorizontalLine /> */}
         {/* <SubscribeSection className="py-16" /> */}
         {/* <HorizontalLine /> */}
