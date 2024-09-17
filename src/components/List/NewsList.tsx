@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { PostProps } from '@/types/List/PostData';
 import { parse, isValid } from 'date-fns';
 
-const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number}) => {
+const PostList = ({ data, postsPerPage }: PostListData & { postsPerPage: number }) => {
   const [postsToShow, setPostsToShow] = useState(6);
 
   const router = useRouter();
@@ -45,19 +45,26 @@ const PostList = ({ data, postsPerPage }: PostListData & {postsPerPage: number})
       {displayedPosts.map((post: PostProps, index) => {
         const parsedDate = parseDate(post.date); // 解析日期
         return (
-          <Post
-            key={index}
-            onClick={() => router.push(`/${post.type}/${post.authorData?.id}/${post.id}`)}
-            title={post.title}
-            description={post.description}
-            tags={post.tags}
-            idx={index}
-            date={parsedDate.toISOString()}
-            type={post.type}
-            image={post.image}
-            img={post.img}
-            authorData={post.authorData}
-          />
+          <>
+            <Post
+              key={index}
+              onClick={() => router.push(`/${post.type}/${post.authorData?.id}/${post.id}`)}
+              title={post.title}
+              description={post.description}
+              tags={post.tags}
+              idx={index}
+              date={parsedDate.toISOString()}
+              type={post.type}
+              image={post.image}
+              img={post.img}
+              authorData={post.authorData}
+            />
+            {
+              index == sortedData.length - 1 && (
+                <div className="pb-20" />
+              )
+            }
+          </>
         );
       })}
 
