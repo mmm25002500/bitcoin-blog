@@ -41,7 +41,7 @@ const PrivacyPolicyPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProp
         subtitle="隱私政策聲明"
         icon={IconLight}
       />
-      <div className="mx-auto px-5 sm:px-28">
+      <div className="px-5 sm:px-28 pb-20 mx-auto md:px-28 w-full xl:w-[1280px]">
         <ArticleLayout className='pt-10'>
           <MD>{initialPost.source}</MD>
         </ArticleLayout>
