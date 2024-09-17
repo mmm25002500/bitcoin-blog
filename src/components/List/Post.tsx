@@ -130,7 +130,7 @@ const Post = (props: PostProps) => {
       </div>
 
 
-      <div className='flex w-full items-center'>
+      <div className='flex w-full items-center h-6'>
         <div className='grow'>
           {/* 作者 */}
           {

@@ -43,8 +43,8 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
   };
 
   return (
-    <div className="mx-auto md:px-28 w-full lg:w-[1280px]">
-      <div className="px-5 md:px-0 mb-4 my-5">
+    <div className="mx-auto md:px-28 w-full xl:w-[1280px]">
+      <div className="px-5 md:px-0 mt-5">
         {/* 標籤 */}
         <div className="relative w-full h-10">
           <div className="relative">

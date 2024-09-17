@@ -70,7 +70,7 @@ const AuthorPage = (props: {
         <Navbar />
       </div>
       <HorizontalLine />
-      <div className="mx-auto px-4 md:px-28 w-full lg:w-[1280px]">
+      <div className="mx-auto px-4 md:px-28 w-full 2xl:w-[1280px]">
         <div className="flex gap-10 my-5">
           <div className="flex-none ml-2">
             <Image
