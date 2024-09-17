@@ -66,7 +66,7 @@ const ArticlePostList = ({ data, ArticlePostListMorePostPerclick }: PostListData
 
       {/* <HorizontalLine className="" /> */}
 
-      <div className='flex items-center justify-center my-9'>
+      <div className='flex items-center justify-center pt-16 pb-20'>
         {/* 如果還有更多文章則顯示按鈕 */}
         {visibleCount < data.length && (
           <Button
