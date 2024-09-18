@@ -232,27 +232,6 @@ const Navbar = () => {
                 photo_light={blockchain_Dark}
                 onClick={() => router.push("/Tag/News/all")}
               />
-              <SidebarBtn
-                title="測試"
-                description="Support us"
-                photo_dark={coffee}
-                photo_light={coffee_Dark}
-                onClick={() => router.push("/Post/Editor/Support")}
-              />
-              <SidebarBtn
-                title="測試"
-                description="Support us"
-                photo_dark={coffee}
-                photo_light={coffee_Dark}
-                onClick={() => router.push("/Post/Editor/Support")}
-              />
-              <SidebarBtn
-                title="測試"
-                description="Support us"
-                photo_dark={coffee}
-                photo_light={coffee_Dark}
-                onClick={() => router.push("/Post/Editor/Support")}
-              />
             </div>
           </Card>
           {/* Social Media */}
