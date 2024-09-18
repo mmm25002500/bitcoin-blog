@@ -46,7 +46,7 @@ const NewsSection = ({ initialPosts, initialSelection, tags, HomePageNewsListPer
     <div className="mx-auto md:px-28 w-full xl:w-[1280px]">
       <div className="px-5 md:px-0 mt-5">
         {/* 標籤 */}
-        <div className="relative w-full h-10">
+        <div className="relative w-full h-8">
           <div className="relative">
             <div className="px-8 md:px-0">
               <Swiper

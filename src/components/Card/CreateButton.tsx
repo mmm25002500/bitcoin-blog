@@ -5,7 +5,7 @@ import Card from "./Card";
 const CreateWallet = (props: CreateWalletData) => {
   return (
     <Card
-      className="
+      className={`
       flex items-center content-center py-2 max-w-xs gap-0 w-full rounded-lg border-[1px]
 
       /* Light Mode */
@@ -19,7 +19,9 @@ const CreateWallet = (props: CreateWalletData) => {
       dark:border-neutral-900
       dark:hover:border-neutral-200
       dark:hover:bg-black
-      "
+
+      ${props.className}
+      `}
       onClick={props.onClick}
     >
       <Card.Infomation

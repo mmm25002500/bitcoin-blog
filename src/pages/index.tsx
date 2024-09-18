@@ -52,8 +52,8 @@ const Home = (props: HomeProps) => {
         <p className='mb-9 mt-1 font-medium text-[10px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300 text-center'>
           <a target='_blank' href="https://pin.it/2mH0q5Frj">@bitcoinzh</a> photo from ©copyright Pinterest
         </p>
-        <ButtonSection classname="pb-6" />
-        <HorizontalLine className='my-3 pb-3' />
+        <ButtonSection classname="pb-8" />
+        <HorizontalLine className='my-3 pb-5' />
       </div>
       {initialPosts && (
         <NewsSection
