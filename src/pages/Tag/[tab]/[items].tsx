@@ -148,9 +148,7 @@ const TagPage = ({ initialPosts, initialSelection, seoData, tags, tabData, SiteC
         <meta name="twitter:description" content={seoData.Search.description} />
         <meta name="twitter:image" content={seoData.Search.image} />
       </Head>
-      <div className="sm:mx-auto sm:px-16">
-        <Navbar />
-      </div>
+      <Navbar />
 
       <div className="mx-auto md:px-28 w-full lg:w-[1280px]">
         <div className="px-5 md:px-0 mb-4 my-5">

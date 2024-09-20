@@ -30,7 +30,7 @@ const SwiperSection = () => {
             <p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
               比特幣 改變金融的貨幣
             </p>
-            <p className="text-white font-normal text-sm leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
+            <p className="text-white font-normal text-lg leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
               了解比特幣 <br />以及正在改變的現代世界
             </p>
           </div>
@@ -64,7 +64,7 @@ const SwiperSection = () => {
             <p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
               比特幣 錢包
             </p>
-            <p className="text-white font-normal text-sm leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
+            <p className="text-white font-normal text-lg leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
               進入資產安全自主 <br />最重要的第一步
             </p>
           </div>
@@ -98,7 +98,7 @@ const SwiperSection = () => {
             <p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
               比特幣 購買
             </p>
-            <p className="text-white font-normal text-sm leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
+            <p className="text-white font-normal text-lg leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
               第一個比特幣 <br />選擇最安全的交易
             </p>
           </div>

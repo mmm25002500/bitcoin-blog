@@ -86,10 +86,14 @@ const Navbar = () => {
 
   ];
 
+  const closeDrawer = () => {
+    setIsSidebarOpen(false);
+  };
+
   return (
     <>
       <nav className="relative bg-white dark:bg-neutral-black py-2">
-        <div className="relative mx-auto px-2 sm:px-0 z-40 bg-white dark:bg-neutral-black">
+        <div className="relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16">
           <div className="relative flex h-12 items-center justify-between">
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
@@ -174,63 +178,63 @@ const Navbar = () => {
                 description="About Bitcoin"
                 photo_dark={Bitcoin_V2}
                 photo_light={Bitcoin_V2_Dark}
-                onClick={() => router.push("/Post/Editor/about")}
+                onClick={() => {closeDrawer(); router.push("/Post/Editor/about")}}
               />
               <SidebarBtn
                 title="錢包"
                 description="Wallet"
                 photo_dark={CryptoWallet}
                 photo_light={CryptoWallet_Dark}
-                onClick={() => router.push("/Post/Editor/Wallet")}
+                onClick={() => {closeDrawer(); router.push("/Post/Editor/Wallet")}}
               />
               <SidebarBtn
                 title="購買 比特幣"
                 description="Purchase bitcoin"
                 photo_dark={BuyBic}
                 photo_light={BuyBic_Dark}
-                onClick={() => router.push("/Post/Editor/Buy")}
+                onClick={() => {closeDrawer(); router.push("/Post/Editor/Buy")}}
               />
               <SidebarBtn
                 title="比特幣 挖礦"
                 description="Bitcoin Mining"
                 photo_dark={Mining}
                 photo_light={Mining_Dark}
-                onClick={() => router.push("/Post/Editor/Mining")}
+                onClick={() => {closeDrawer(); router.push("/Post/Editor/Mining")}}
               />
               <SidebarBtn
                 title="使用"
                 description="Use bitcoin"
                 photo_dark={UseBTC}
                 photo_light={UseBTC_Dark}
-                onClick={() => router.push("/Post/Editor/Use")}
+                onClick={() => {closeDrawer(); router.push("/Post/Editor/Use")}}
               />
               <SidebarBtn
                 title="加入社群"
                 description="Join Community"
                 photo_dark={Social}
                 photo_light={Social_Dark}
-                onClick={() => router.push("/Post/Editor/Join")}
+                onClick={() => {closeDrawer(); router.push("/Post/Editor/Join")}}
               />
               <SidebarBtn
                 title="支持我們"
                 description="Support us"
                 photo_dark={coffee}
                 photo_light={coffee_Dark}
-                onClick={() => router.push("/Post/Editor/Support")}
+                onClick={() => {closeDrawer(); router.push("/Post/Editor/Support")}}
               />
               <SidebarBtn
                 title="比特幣 更多資訊"
                 description="more BTC"
                 photo_dark={BicNews}
                 photo_light={BicNews_Dark}
-                onClick={() => router.push("/moreBTC/about")}
+                onClick={() => {closeDrawer(); router.push("/moreBTC/about")}}
               />
               <SidebarBtn
                 title="其他新聞資訊"
                 description="More info & news"
                 photo_dark={blockchain}
                 photo_light={blockchain_Dark}
-                onClick={() => router.push("/Tag/News/all")}
+                onClick={() => {closeDrawer(); router.push("/Tag/News/all")}}
               />
             </div>
           </Card>

@@ -33,9 +33,7 @@ const PrivacyPolicyPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProp
       <div className="sm:hidden">
         <Header />
       </div>
-      <div className="sm:mx-auto sm:px-16">
-        <Navbar />
-      </div>
+      <Navbar />
       <ArticleHeader
         title="Privacy Policy"
         subtitle="隱私政策聲明"

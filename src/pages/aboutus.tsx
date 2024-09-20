@@ -34,9 +34,7 @@ const AboutPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProps, SEO?:
         <Header />
       </div>
 
-      <div className="sm:mx-auto sm:px-16">
-        <Navbar />
-      </div>
+      <Navbar />
       <ArticleHeader
         title="ABOUT US"
         subtitle="關於我們"

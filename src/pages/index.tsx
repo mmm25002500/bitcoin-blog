@@ -45,11 +45,11 @@ const Home = (props: HomeProps) => {
       <HeaderInfo />
       <div className="sm:mx-auto sm:px-16">
         <Header />
-        <Navbar />
       </div>
+      <Navbar />
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16">
-        <p className='mb-9 mt-1 font-medium text-[10px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300 text-center'>
+        <p className='mb-9 mt-1 font-medium text-[10px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300 text-right'>
           <a target='_blank' href="https://pin.it/2mH0q5Frj">@bitcoinzh</a> photo from ©copyright Pinterest
         </p>
         <ButtonSection classname="pb-8" />

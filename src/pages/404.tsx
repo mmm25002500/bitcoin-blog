@@ -36,9 +36,7 @@ const NotFoundPage = ({ SEO }: { SEO?: any }) => {
         <Header></Header>
       </div>
 
-      <div className="sm:mx-auto sm:px-16">
-        <Navbar />
-      </div>
+      <Navbar />
       <HorizontalLine />
       <NotFound></NotFound>
     </>

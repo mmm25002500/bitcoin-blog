@@ -33,9 +33,7 @@ const DisclaimerPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProps, 
       <div className="sm:hidden">
         <Header />
       </div>
-      <div className="sm:mx-auto sm:px-16">
-        <Navbar />
-      </div>
+      <Navbar />
       <ArticleHeader
         title="Disclaimer"
         subtitle="免責聲明"

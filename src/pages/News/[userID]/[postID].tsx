@@ -73,9 +73,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
         <meta name="twitter:image" content={initialPost.frontMatter.image} />
       </Head>
       <article>
-        <div className="sm:mx-auto sm:px-16">
-          <Navbar />
-        </div>
+        <Navbar />
         <div className="mx-auto sm:px-28 w-full lg:w-[1280px]">
           <ArticleLayout className='pt-10 px-5 sm:px-0'>
             {/* 內文 */}

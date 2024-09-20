@@ -37,6 +37,7 @@
     "swr": "^2.2.5",
     "tailwind-gradient-mask-image": "^1.2.0",
     "to-vfile": "^8.0.0",
+    "use-clamp-text": "^1.1.1",
     "vfile-matter": "^5.0.0"
   },
   "devDependencies": {
