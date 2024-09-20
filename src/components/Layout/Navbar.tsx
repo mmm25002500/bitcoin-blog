@@ -92,8 +92,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="relative bg-white dark:bg-neutral-black py-2">
-        <div className="relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16">
+      <nav className="relative bg-white dark:bg-neutral-black">
+        <div className="relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16 py-2">
           <div className="relative flex h-12 items-center justify-between">
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">

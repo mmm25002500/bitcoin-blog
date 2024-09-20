@@ -43,9 +43,9 @@ const Home = (props: HomeProps) => {
       </Head>
 
       <HeaderInfo />
-      <div className="sm:mx-auto sm:px-16">
-        <Header />
-      </div>
+
+      <Header />
+
       <Navbar />
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16">
