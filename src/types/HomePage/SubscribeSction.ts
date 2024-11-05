@@ -1,3 +1,3 @@
-export interface SubscribeSection {
+export interface SubscribeSectionProps {
   className: string;
 }

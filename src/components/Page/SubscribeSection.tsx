@@ -1,9 +1,9 @@
 import mail_dark from "@/icons/mail_dark.svg";
 import InputText from "@/components/Input/InputText";
 import { useState } from 'react';
-import { SubscribeSection } from "@/types/HomePage/SubscribeSction";
+import { SubscribeSectionProps } from "@/types/HomePage/SubscribeSction";
 
-const SubscribeSection = (props: SubscribeSection) => {
+const SubscribeSection = (props: SubscribeSectionProps) => {
   const [email, setEmail] = useState('');
 
   return (

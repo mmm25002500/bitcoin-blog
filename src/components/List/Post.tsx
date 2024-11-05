@@ -65,7 +65,7 @@ const Post = (props: PostProps) => {
     expanded
   });
 
-  console.log(noClamp, clampedText, key)
+  // console.log(noClamp, clampedText, key)
 
   return (
     // <div
