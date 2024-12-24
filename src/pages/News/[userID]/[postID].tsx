@@ -58,7 +58,7 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
 
   const date = initialPost?.frontMatter?.date ? new Date(initialPost.frontMatter.date) : null;
 
-  console.log('initialPost', initialPost);
+  // console.log('initialPost', initialPost);
   return (
     <>
       <Head>

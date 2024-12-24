@@ -45,7 +45,7 @@ const PostList = ({ data, postsPerPage }: PostListData & { postsPerPage: number 
       {displayedPosts.map((post: PostProps, index) => {
         const parsedDate = parseDate(post.date); // 解析日期
         return (
-          <>
+          <div key={index}>
             <Post
               key={index}
               onClick={() => router.push(`/${post.type}/${post.authorData?.id}/${post.id}`)}
@@ -64,7 +64,7 @@ const PostList = ({ data, postsPerPage }: PostListData & { postsPerPage: number 
                 <div className="pb-20" />
               )
             }
-          </>
+          </div>
         );
       })}
 

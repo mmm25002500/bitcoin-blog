@@ -17,25 +17,9 @@ const Footer = () => {
   if (!mounted) return null;
 
   return (
-    <>
+    <div>
       <hr className='border-[#E7E6F2] dark:border-1' />
       <div className="dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
-
-        {/* Link */}
-        <div className='flex gap-6 justify-center pt-20'>
-          <Link href='/Disclaimer' prefetch={false}>
-            <p>聲明</p>
-          </Link>
-          <Link href='/PrivacyPolicy' prefetch={false}>
-            <p>隱私權</p>
-          </Link>
-          <Link href='/aboutus' prefetch={false}>
-            <p>關於</p>
-          </Link>
-          <Link href='/Post/Editor/Support' prefetch={false}>
-            <p>支持</p>
-          </Link>
-        </div>
 
         {/* Icon */}
         <div className='mt-24'>
@@ -56,25 +40,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-        <div className="w-full h-full bg-primary-black-300 dark:bg-white md:pb-0">
-          {
-            theme === 'dark' ?
-              <Image
-                src={IMG_dark}
-                alt={''}
-                className='w-full h-full'
-              />
-              :
-              <Image
-                src={IMG}
-                alt={''}
-                className='w-full h-full'
-              />
-          }
-      </div>
-      {/* <div className='bg-gradient-to-b from-primary-black-300 via-neutral-white to-neutral-white dark:from-neutral-white dark:via-primary-black-300 dark:to-primary-black-300 from-5% via-50% to-95% h-32 lg:hidden' /> */}
-    </>
+    </div>
   );
 }
 

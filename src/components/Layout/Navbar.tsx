@@ -5,7 +5,7 @@ import SearchBtn from '@/components/Button/SearchBtn';
 import More from '@/components/Button/More';
 import Icon from '@/components/Icon';
 import HomePageSidebar from '../Sidebar/HomePageSidebar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SidebarBtn from '../Card/SidebarBtn';
 import HomePageSearchDrawer from '../Drawer/HomePageSearchDrawer';
 
@@ -51,6 +51,23 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchList, setSearchList] = useState<string[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const router = useRouter();
 
@@ -90,10 +107,12 @@ const Navbar = () => {
     setIsSidebarOpen(false);
   };
 
+  // console.log(isScrolled)
+
   return (
     <>
-      <nav className="relative bg-white dark:bg-neutral-black">
-        <div className="relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16 py-2">
+      <nav className={`relative bg-white dark:bg-neutral-black`}>
+        <div className={`relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16 py-2  ${isScrolled? 'bg-red-500':'bg-white'}`}>
           <div className="relative flex h-12 items-center justify-between">
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
@@ -162,7 +181,7 @@ const Navbar = () => {
           <Card
             color="transparent"
             shadow={false}
-            className="h-[93%] w-full p-4 overflow-y-auto" nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+            className="h-[93%] w-full p-4 overflow-y-auto" nonce={undefined} onResize={undefined} onResizeCapture={undefined} placeholder={undefined}>
             <p className="fixed z-40 right-5 bg-neutral-white dark:bg-neutral-black mt-2 sm:mt-3 sm:mr-5 sm:mb-2 text-right font-medium text-sm leading-[22px]">
               <Close
                 className=""

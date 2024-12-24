@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import ButtonSection from "@/components/HomePage/ButtonSection";
 import NewsSection from "@/components/HomePage/NewsSection";
@@ -28,6 +28,23 @@ const Home = (props: HomeProps) => {
   const { data: initialPosts, error } = useSWR<PostProps[]>('/api/getPostsByFilter?type=News&author=all&tag=all', fetcher, { fallbackData: props.initialPosts });
   const [selection, setSelection] = useState('all');
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -43,10 +60,13 @@ const Home = (props: HomeProps) => {
       </Head>
 
       <HeaderInfo />
-
       <Header />
 
-      <Navbar />
+      <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+        <Navbar />
+      </div>
+      <div className={`${scrolled ? 'h-16' : ''}`} />
+
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16">
         <p className='mb-9 mt-1 font-medium text-[10px] leading-[15.85px] text-[#7A7E84] dark:text-neutral-300 text-center'>
@@ -55,14 +75,16 @@ const Home = (props: HomeProps) => {
         <ButtonSection classname="pb-8" />
         <HorizontalLine className='my-3 pb-5' />
       </div>
-      {initialPosts && (
-        <NewsSection
-          initialPosts={initialPosts}
-          initialSelection={selection}
-          tags={props.initialTags}
-          HomePageNewsListPerpage={props.initialSiteConfig.HomePageNewsListPerpage}
-        />
-      )}
+      {
+        initialPosts && (
+          <NewsSection
+            initialPosts={initialPosts}
+            initialSelection={selection}
+            tags={props.initialTags}
+            HomePageNewsListPerpage={props.initialSiteConfig.HomePageNewsListPerpage}
+          />
+        )
+      }
       {/* <HorizontalLine /> */}
       {/* <ContactSection className="py-16" /> */}
       {/* <HorizontalLine />

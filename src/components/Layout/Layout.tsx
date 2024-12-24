@@ -3,9 +3,35 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { LayoutData } from "@/types/Layout/Layout";
 import { useTheme } from 'next-themes';
+import { useEffect, useRef, useState } from "react";
+import FooterSmall from "./FooterSmall";
 
 const Layout = ({ children }: LayoutData) => {
   const { theme } = useTheme();
+
+  const footerRef = useRef<HTMLDivElement>(null);
+  const [footerVisible, setFooterVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (footerRef.current) {
+        const rect = footerRef.current.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // 如果 Footer 頂部進入或可見
+        if (rect.top <= windowHeight && rect.bottom >= 0) {
+          setFooterVisible(true);
+        } else {
+          setFooterVisible(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -26,7 +52,16 @@ const Layout = ({ children }: LayoutData) => {
         <main className="z-0">
           {children}
         </main>
-        <Footer />
+        {
+          <div className="md:hidden">
+            <div className={`bottom-0 w-full z-50 ${footerVisible ? 'hidden' : 'fixed bg-navbar-default'}`}>
+              <FooterSmall />
+            </div>
+          </div>
+        }
+        <div ref={footerRef}>
+          <Footer />
+        </div>
       </div>
     </>
   )

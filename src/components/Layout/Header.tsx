@@ -12,6 +12,24 @@ import axios from 'axios';
 
 const Header = () => {
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+
   // Date
   let date = new Date();
   let year = date.getFullYear();
@@ -51,7 +69,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="relative bg-white dark:bg-neutral-black z-40 w-full">
+      <nav className={`relative bg-white dark:bg-neutral-black z-40 w-full`}>
         <div className="mx-auto px-2 sm:px-16 sm:mx-auto">
           <div className="flex h-12 items-center gap-6 md:gap-0">
             {/* 日期 */}
