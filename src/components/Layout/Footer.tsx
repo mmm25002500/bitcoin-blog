@@ -35,6 +35,9 @@ const Footer = () => {
           <Link href='/Post/Editor/Support' prefetch={false}>
             <p>支持</p>
           </Link>
+          <Link href='/supporter' prefetch={false}>
+            <p>贊助頁面</p>
+          </Link>
         </div>
 
         {/* Icon */}
