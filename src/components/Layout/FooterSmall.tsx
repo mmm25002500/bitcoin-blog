@@ -19,23 +19,11 @@ const Footer = () => {
   return (
     <div>
       <hr className='border-[#E7E6F2] dark:border-1' />
-      <div className="dark:bg-primary-black-300 bg-white px-5 pt-5 pb-[3.75rem] gap-8">
-
-        {/* Icon */}
-        <div className='mt-24'>
-          <Icon
-            icon_light={btc_icon_dark}
-            icon_dark={btc_icon_light}
-            className='mr-auto ml-auto w-[47px]'
-          />
-        </div>
-
+      <div className="dark:bg-primary-black-300 bg-white px-5 gap-8">
         {/* Copyright */}
-        <div className='flex flex-col gap-7 justify-center pt-20 mb-0'>
-          <p className='text-neutral-600 dark:text-neutral-300 text-center'>© Bitcoin.zh</p>
-          <div className='flex gap-6 text-neutral-600 dark:text-neutral-300 justify-center'>
-            <p>2024</p>
-            <p>v1.12.24.a1</p>
+        <div className='flex flex-col gap-2 justify-left mb-0'>
+          <div className='flex gap-1 text-neutral-600 dark:text-neutral-300 justify-left text-[10px]'>
+            <p>© Bitcoin.zh</p>
             <p>2140</p>
           </div>
         </div>

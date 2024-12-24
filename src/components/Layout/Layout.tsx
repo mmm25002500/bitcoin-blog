@@ -19,7 +19,7 @@ const Layout = ({ children }: LayoutData) => {
         const windowHeight = window.innerHeight;
 
         // 如果 Footer 頂部進入或可見
-        if (rect.top <= windowHeight && rect.bottom >= 0) {
+        if (rect.top+15 <= windowHeight && rect.bottom >= 0) {
           setFooterVisible(true);
         } else {
           setFooterVisible(false);
