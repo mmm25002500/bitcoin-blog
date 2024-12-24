@@ -19,7 +19,7 @@ const Footer = () => {
   return (
     <div>
       <hr className='border-[#E7E6F2] dark:border-1' />
-      <div className="dark:bg-primary-black-300 px-5 pt-5 pb-[3.75rem] gap-8">
+      <div className="dark:bg-primary-black-300 bg-white px-5 pt-5 pb-[3.75rem] gap-8">
 
         {/* Icon */}
         <div className='mt-24'>
