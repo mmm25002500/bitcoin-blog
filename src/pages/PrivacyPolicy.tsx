@@ -13,8 +13,25 @@ import { initAdmin } from 'lib/firebaseAdmin';
 import { MarkDownDataProps } from '@/types/User/UserID';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
+import { useEffect, useState } from 'react';
 
 const PrivacyPolicyPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProps, SEO?: any }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -33,7 +50,15 @@ const PrivacyPolicyPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProp
       <div className="sm:hidden">
         <Header />
       </div>
-      <Navbar />
+
+      <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+        <Navbar
+          scrolled={scrolled}
+        />
+
+      </div>
+      <div className={`${scrolled ? 'h-16' : ''}`} />
+
       <ArticleHeader
         title="Privacy Policy"
         subtitle="隱私政策聲明"

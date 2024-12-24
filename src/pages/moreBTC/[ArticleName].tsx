@@ -35,6 +35,23 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
   const { ArticleName: queryArticleName } = router.query;
   const [category, setCategory] = useState<categoryData[]>();
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const [currentSelection, setCurrentSelection] = useState<string>(props.ArticleName);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -91,7 +108,15 @@ const MoreInfos = (props: MoreInfoData & { seo: any }) => {
           <meta name="twitter:image" content={seo.MoreInfo.image} />
         </Head>
         <div className="min-h-screen flex flex-col">
-          <Navbar />
+
+          <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+            <Navbar
+              scrolled={scrolled}
+            />
+
+          </div>
+          <div className={`${scrolled ? 'h-16' : ''}`} />
+
           <div className="sm:flex">
 
             {/* Sidebar */}

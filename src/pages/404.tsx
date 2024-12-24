@@ -5,6 +5,7 @@ import NotFound from "@/components/NotFound/NotFound";
 import Head from "next/head";
 import { initAdmin } from "lib/firebaseAdmin";
 import { GetStaticProps } from "next";
+import { useEffect, useState } from "react";
 
 const NotFoundPage = ({ SEO }: { SEO?: any }) => {
   const defaultSEO = {
@@ -17,6 +18,22 @@ const NotFoundPage = ({ SEO }: { SEO?: any }) => {
   };
 
   const seo = SEO || defaultSEO;
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -36,7 +53,14 @@ const NotFoundPage = ({ SEO }: { SEO?: any }) => {
         <Header></Header>
       </div>
 
-      <Navbar />
+      <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+        <Navbar
+          scrolled={scrolled}
+        />
+
+      </div>
+      <div className={`${scrolled ? 'h-16' : ''}`} />
+
       <HorizontalLine />
       <NotFound></NotFound>
     </>

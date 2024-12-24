@@ -13,8 +13,26 @@ import { initAdmin } from 'lib/firebaseAdmin';
 import { MarkDownDataProps } from '@/types/User/UserID';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
+import { useState, useEffect } from 'react';
 
 const DisclaimerPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProps, SEO?: any }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
 
   return (
     <>
@@ -33,7 +51,15 @@ const DisclaimerPage = ({ initialPost, SEO }: { initialPost: MarkDownDataProps, 
       <div className="sm:hidden">
         <Header />
       </div>
-      <Navbar />
+
+      <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+        <Navbar
+          scrolled={scrolled}
+        />
+
+      </div>
+      <div className={`${scrolled ? 'h-16' : ''}`} />
+
       <ArticleHeader
         title="Disclaimer"
         subtitle="免責聲明"

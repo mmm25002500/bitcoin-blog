@@ -35,6 +35,23 @@ const TagPage = ({ initialPosts, initialSelection, seoData, tags, tabData, SiteC
   const items = router.query.items as string;
   const tab = router.query.tab as string;
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   // 初始化資料
   useEffect(() => {
     if (items) {
@@ -148,7 +165,14 @@ const TagPage = ({ initialPosts, initialSelection, seoData, tags, tabData, SiteC
         <meta name="twitter:description" content={seoData.Search.description} />
         <meta name="twitter:image" content={seoData.Search.image} />
       </Head>
-      <Navbar />
+
+      <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+        <Navbar
+          scrolled={scrolled}
+        />
+
+      </div>
+      <div className={`${scrolled ? 'h-16' : ''}`} />
 
       <div className="mx-auto md:px-28 w-full lg:w-[1280px]">
         <div className="px-5 md:px-0 mb-4 my-5">

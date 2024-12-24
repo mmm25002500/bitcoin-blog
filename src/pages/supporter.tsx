@@ -14,8 +14,25 @@ import LogoDark from '@/icons/icon_dark.svg';
 import LogoLight from '@/icons/icon_light.svg';
 
 import Icon from '@/components/Icon';
+import { useState, useEffect } from 'react';
 
 const SupporterPage = ({ initialPost, SEO, supporterCfg }: { initialPost: MarkDownDataProps, SEO?: any, supporterCfg?: any }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -34,7 +51,15 @@ const SupporterPage = ({ initialPost, SEO, supporterCfg }: { initialPost: MarkDo
       <div className="sm:hidden">
         <Header />
       </div>
-      <Navbar />
+
+      <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+        <Navbar
+          scrolled={scrolled}
+        />
+
+      </div>
+      <div className={`${scrolled ? 'h-16' : ''}`} />
+
       <ArticleHeader
         title="Supporter"
         subtitle="贊助頁面"

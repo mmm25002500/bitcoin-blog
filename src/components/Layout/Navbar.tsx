@@ -277,8 +277,6 @@ const Navbar = (props: NavbarProps) => {
           </div>
         </HomePageSidebar>
       </nav>
-
-      {/* <div className={`${props.scrolled ? 'h-16' : ''}`} /> */}
     </>
   )
 }

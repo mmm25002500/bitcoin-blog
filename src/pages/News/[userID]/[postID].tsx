@@ -26,6 +26,22 @@ import left from '@/icons/left.svg';
 const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, authorData: any, ArticleNewsListMorePostPerclick: number }) => {
   const router = useRouter();
   const { postID, userID } = router.query;
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const [relatedPosts, setRelatedPosts] = useState<PostProps[]>([]);
 
@@ -73,7 +89,15 @@ const NewsPage = ({ initialPost, seo, authorData, ArticleNewsListMorePostPerclic
         <meta name="twitter:image" content={initialPost.frontMatter.image} />
       </Head>
       <article>
-        <Navbar />
+
+        <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+          <Navbar
+            scrolled={scrolled}
+          />
+
+        </div>
+        <div className={`${scrolled ? 'h-16' : ''}`} />
+
         <div className="mx-auto sm:px-28 w-full lg:w-[1280px]">
           <ArticleLayout className='pt-10 px-5 sm:px-0'>
             {/* 內文 */}

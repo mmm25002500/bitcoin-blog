@@ -34,6 +34,22 @@ const AuthorPage = (props: {
 }) => {
   const [postQuantity, setPostQuantity] = useState(0);
   const [collaspe, setCollaspe] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const { data: posts, error } = useSWR(`/api/getPostsByFilter?type=both&author=${props.initialAuthor.id}&tag=all`, fetcher, { fallbackData: props.initialPosts });
 
@@ -66,7 +82,15 @@ const AuthorPage = (props: {
       <div className="sm:hidden">
         <Header />
       </div>
-      <Navbar />
+
+      <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+        <Navbar
+          scrolled={scrolled}
+        />
+
+      </div>
+      <div className={`${scrolled ? 'h-16' : ''}`} />
+
       <HorizontalLine />
       <div className="mx-auto px-4 md:px-28 w-full 2xl:w-[1280px]">
         <div className="flex gap-10 my-5">

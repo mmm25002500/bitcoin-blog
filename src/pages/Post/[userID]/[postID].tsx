@@ -26,6 +26,22 @@ import left from '@/icons/left.svg';
 const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDownProps & { initialPost: MarkDownDataProps, seo: any, ArticlePostListMorePostPerclick: number }) => {
   const router = useRouter();
   const { postID, userID } = router.query;
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 68) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const [relatedPosts, setRelatedPosts] = useState<PostProps[]>([]);
 
@@ -72,7 +88,15 @@ const PostPage = ({ initialPost, seo, ArticlePostListMorePostPerclick }: MarkDow
         <meta name="twitter:image" content={initialPost.frontMatter.image} />
       </Head>
       <article>
-        <Navbar />
+
+        <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
+          <Navbar
+            scrolled={scrolled}
+          />
+
+        </div>
+        <div className={`${scrolled ? 'h-16' : ''}`} />
+
         <div className="mx-auto md:px-28 w-full lg:w-[1280px]">
           <ArticleLayout className='pt-10 px-5 md:px-0'>
             <h1 className="mb-2 text-3xl sm:text-[45px] leading-[30px] sm:leading-[48px] font-bold">{initialPost.frontMatter.title}</h1>

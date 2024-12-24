@@ -18,11 +18,10 @@ const Footer = () => {
 
   return (
     <div>
-      <hr className='border-[#E7E6F2] dark:border-1' />
       <div className="dark:bg-primary-black-300 bg-white px-5 gap-8">
         {/* Copyright */}
         <div className='flex flex-col gap-2 justify-left mb-0'>
-          <div className='flex gap-1 text-neutral-600 dark:text-neutral-300 justify-left text-[10px]'>
+          <div className='flex gap-1 text-neutral-600 dark:text-neutral-300 justify-left text-[10px] py-1'>
             <p>© Bitcoin.zh</p>
             <p>2140</p>
           </div>
