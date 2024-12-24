@@ -1,5 +1,7 @@
 import IconDark from '@/icons/icon_dark.svg';
 import IconLight from '@/icons/icon_light.svg';
+import IconMiniDark from '@/icons/miniLogo_dark.png';
+import IconMiniLight from '@/icons/miniLogo_light.png';
 import Themes from '@/components/Layout/Themes';
 import SearchBtn from '@/components/Button/SearchBtn';
 import More from '@/components/Button/More';
@@ -46,28 +48,12 @@ import { useRouter } from 'next/router';
 import { Card } from '@material-tailwind/react';
 import Close from '../Button/Close';
 import Link from 'next/link';
+import { NavbarProps } from '@/types/Layout/Navbar';
 
-const Navbar = () => {
+const Navbar = (props: NavbarProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchList, setSearchList] = useState<string[]>([]);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   const router = useRouter();
 
@@ -112,7 +98,7 @@ const Navbar = () => {
   return (
     <>
       <nav className={`relative bg-white dark:bg-neutral-black`}>
-        <div className={`relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16 py-2  ${isScrolled? 'bg-red-500':'bg-white'}`}>
+        <div className={`relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16 py-2`}>
           <div className="relative flex h-12 items-center justify-between">
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
@@ -120,28 +106,42 @@ const Navbar = () => {
                 href="/"
                 onClick={() => router.push("/")}
                 className="flex flex-shrink-0 items-center">
-                <Icon
-                  icon_light={IconLight}
-                  icon_dark={IconDark}
-                  className="h-8 w-auto"
-                />
+                {
+                  props.scrolled ? (
+                    <Icon
+                      icon_light={IconMiniLight}
+                      icon_dark={IconMiniDark}
+                      className={`w-auto h-8`}
+                    />
+                  ) : (
+                    <Icon
+                      icon_light={IconLight}
+                      icon_dark={IconDark}
+                      className={`w-auto h-8`}
+                    />
+                  )
+                }
               </Link>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {/* 切換主題 */}
               <div className="relative ml-3">
-                <Themes></Themes>
+                <Themes
+                  scrolled={props.scrolled}
+                />
               </div>
               {/* 搜尋 */}
               <div className="relative ml-3">
                 <SearchBtn
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
+                  scrolled={props.scrolled}
                 />
               </div>
               {/* 更多 */}
               <div className="relative ml-3">
                 <More
                   onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                  scrolled={props.scrolled}
                 />
               </div>
             </div>
@@ -159,15 +159,15 @@ const Navbar = () => {
             setIsDrawerOpen={setIsSearchOpen}
             className='bg-white dark:bg-neutral-black p-5'
           >
-          {/* className={`fixed top-0 left-0 right-0 z-10 transform transition-transform duration-300 ease-in-out ${isSearchOpen ? 'translate-y-0' : '-translate-y-full'}`} */}
+            {/* className={`fixed top-0 left-0 right-0 z-10 transform transition-transform duration-300 ease-in-out ${isSearchOpen ? 'translate-y-0' : '-translate-y-full'}`} */}
             {/* <div className={`w-full bg-white dark:bg-neutral-black p-5 transform transition-transform ease-in-out  ${isSearchOpen ? 'translate-y-0' : '-translate-y-full'}`}> */}
-              <InputLabel
-                placeholder={'請輸入內容'}
-                icon={searchBtn}
-                text={searchList}
-                onClick={handleSearch}
-                onChange={(searchText: string[]) => setSearchList(searchText)}
-              />
+            <InputLabel
+              placeholder={'請輸入內容'}
+              icon={searchBtn}
+              text={searchList}
+              onClick={handleSearch}
+              onChange={(searchText: string[]) => setSearchList(searchText)}
+            />
             {/* </div> */}
           </HomePageSearchDrawer>
         </div>
@@ -197,63 +197,63 @@ const Navbar = () => {
                 description="About Bitcoin"
                 photo_dark={Bitcoin_V2}
                 photo_light={Bitcoin_V2_Dark}
-                onClick={() => {closeDrawer(); router.push("/Post/Editor/about")}}
+                onClick={() => { closeDrawer(); router.push("/Post/Editor/about") }}
               />
               <SidebarBtn
                 title="錢包"
                 description="Wallet"
                 photo_dark={CryptoWallet}
                 photo_light={CryptoWallet_Dark}
-                onClick={() => {closeDrawer(); router.push("/Post/Editor/Wallet")}}
+                onClick={() => { closeDrawer(); router.push("/Post/Editor/Wallet") }}
               />
               <SidebarBtn
                 title="購買 比特幣"
                 description="Purchase bitcoin"
                 photo_dark={BuyBic}
                 photo_light={BuyBic_Dark}
-                onClick={() => {closeDrawer(); router.push("/Post/Editor/Buy")}}
+                onClick={() => { closeDrawer(); router.push("/Post/Editor/Buy") }}
               />
               <SidebarBtn
                 title="比特幣 挖礦"
                 description="Bitcoin Mining"
                 photo_dark={Mining}
                 photo_light={Mining_Dark}
-                onClick={() => {closeDrawer(); router.push("/Post/Editor/Mining")}}
+                onClick={() => { closeDrawer(); router.push("/Post/Editor/Mining") }}
               />
               <SidebarBtn
                 title="使用"
                 description="Use bitcoin"
                 photo_dark={UseBTC}
                 photo_light={UseBTC_Dark}
-                onClick={() => {closeDrawer(); router.push("/Post/Editor/Use")}}
+                onClick={() => { closeDrawer(); router.push("/Post/Editor/Use") }}
               />
               <SidebarBtn
                 title="加入社群"
                 description="Join Community"
                 photo_dark={Social}
                 photo_light={Social_Dark}
-                onClick={() => {closeDrawer(); router.push("/Post/Editor/Join")}}
+                onClick={() => { closeDrawer(); router.push("/Post/Editor/Join") }}
               />
               <SidebarBtn
                 title="支持我們"
                 description="Support us"
                 photo_dark={coffee}
                 photo_light={coffee_Dark}
-                onClick={() => {closeDrawer(); router.push("/Post/Editor/Support")}}
+                onClick={() => { closeDrawer(); router.push("/Post/Editor/Support") }}
               />
               <SidebarBtn
                 title="比特幣 更多資訊"
                 description="more BTC"
                 photo_dark={BicNews}
                 photo_light={BicNews_Dark}
-                onClick={() => {closeDrawer(); router.push("/moreBTC/about")}}
+                onClick={() => { closeDrawer(); router.push("/moreBTC/about") }}
               />
               <SidebarBtn
                 title="其他新聞資訊"
                 description="More info & news"
                 photo_dark={blockchain}
                 photo_light={blockchain_Dark}
-                onClick={() => {closeDrawer(); router.push("/Tag/News/all")}}
+                onClick={() => { closeDrawer(); router.push("/Tag/News/all") }}
               />
             </div>
           </Card>

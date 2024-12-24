@@ -63,7 +63,9 @@ const Home = (props: HomeProps) => {
       <Header />
 
       <div className={`top-0 w-full z-50 ${scrolled ? 'fixed bg-navbar-scrolled' : 'bg-navbar-default'}`} >
-        <Navbar />
+        <Navbar
+          scrolled={scrolled}
+        />
       </div>
       <div className={`${scrolled ? 'h-16' : ''}`} />
 

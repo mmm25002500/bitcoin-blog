@@ -4,8 +4,9 @@ import { useTheme } from "next-themes";
 import Image from 'next/image';
 import Moon from '@/icons/moon.svg';
 import light from '@/icons/light.svg';
+import { ThemeProps } from "@/types/Layout/Theme";
 
-const Themes = () => {
+const Themes = (props: ThemeProps) => {
 
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false)
@@ -14,7 +15,14 @@ const Themes = () => {
   if (!mounted) return null;
 
   return (
-    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="border-[1px] border-transparent font-medium rounded-xl text-sm px-5 py-2.5 me-2 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px] hover:border-btc">
+    <button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className={`border-[1px] border-transparent font-medium rounded-xl hover:border-btc
+        ${props.scrolled ?
+          'text-sm px-5 py-2.5 me-2 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px]' :
+          'text-sm px-5 py-2.5 me-2 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px]'}
+        `}
+    >
       {
         // 如果是 dark mode
         theme === 'dark' ? (
