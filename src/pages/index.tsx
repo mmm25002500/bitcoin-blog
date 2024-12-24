@@ -67,7 +67,7 @@ const Home = (props: HomeProps) => {
           scrolled={scrolled}
         />
       </div>
-      <div className={`${scrolled ? 'h-16' : ''}`} />
+      <div className={`${scrolled ? 'h-8' : ''}`} />
 
       <SwiperSection />
       <div className="sm:mx-auto sm:px-16">

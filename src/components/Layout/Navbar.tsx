@@ -98,8 +98,8 @@ const Navbar = (props: NavbarProps) => {
   return (
     <>
       <nav className={`relative bg-white dark:bg-neutral-black`}>
-        <div className={`relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16 py-2`}>
-          <div className="relative flex h-12 items-center justify-between">
+        <div className={`relative mx-auto px-2 z-40 bg-white dark:bg-neutral-black sm:mx-auto sm:px-16 ${props.scrolled? 'py-2' : 'py-2'}`}>
+          <div className={`relative flex items-center justify-between ${props.scrolled? 'h-8' : 'h-12'}`}>
             {/* Logo */}
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
               <Link
@@ -277,6 +277,8 @@ const Navbar = (props: NavbarProps) => {
           </div>
         </HomePageSidebar>
       </nav>
+
+      {/* <div className={`${props.scrolled ? 'h-16' : ''}`} /> */}
     </>
   )
 }
