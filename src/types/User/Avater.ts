@@ -1,6 +1,6 @@
-import { StaticImageData } from "next/image";
+import type { StaticImageData } from "next/image";
 
 export interface AvaterProps {
-  src: string | StaticImageData;
-  className?: string;
+	src: string | StaticImageData;
+	className?: string;
 }

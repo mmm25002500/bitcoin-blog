@@ -1,13 +1,14 @@
-import { TagData } from '@/types/Tag/Tag';
+import type { TagData } from "@/types/Tag/Tag";
 
 const Tag = (props: TagData) => {
-
-  return (
-    <>
-      <button
-        type="button"
-        onClick={() => { window.location.href = `/Tag/${props.type}/${props.text}` }}
-        className={`
+	return (
+		<>
+			<button
+				type="button"
+				onClick={() => {
+					window.location.href = `/Tag/${props.type}/${props.text}`;
+				}}
+				className={`
         text-sm font-medium rounded-full border focus:outline-none leading-5
 
         /* Light Mode */
@@ -27,11 +28,12 @@ const Tag = (props: TagData) => {
         dark:active:text-primary-black-300
         dark:active:border-0
 
-        ${props.className}`}>
-        { props.text }
-      </button>
-    </>
-  );
-}
+        ${props.className}`}
+			>
+				{props.text}
+			</button>
+		</>
+	);
+};
 
 export default Tag;

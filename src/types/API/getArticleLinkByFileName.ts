@@ -1,9 +1,9 @@
-import { AuthorData } from "../List/Author";
+import type { AuthorData } from "../List/Author";
 
 export interface GetArticleLinkByFileName {
-  title: string;
-  date: string;
-  description: string;
-  link: string;
-  authorData: AuthorData
+	title: string;
+	date: string;
+	description: string;
+	link: string;
+	authorData: AuthorData;
 }

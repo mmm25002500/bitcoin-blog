@@ -1,19 +1,18 @@
-import { MarkDownProperties } from '@/types/MarkDownProperties';
-import { MDXRemote } from 'next-mdx-remote';
-import Markdown from 'react-markdown';
+import type { MarkDownProperties } from "@/types/MarkDownProperties";
+import { MDXRemote } from "next-mdx-remote";
+import Markdown from "react-markdown";
 
 const MD = (props: MarkDownProperties) => {
+	const renderContent = () => {
+		if (typeof props.children === "string") {
+			return <Markdown>{props.children}</Markdown>;
+		}
+		return <MDXRemote {...props.children} />;
+	};
 
-  const renderContent = () => {
-    if (typeof props.children === 'string') {
-      return <Markdown>{props.children}</Markdown>;
-    } else {
-      return <MDXRemote {...props.children} />;
-    }
-  };
-
-  return (
-    <div className={`
+	return (
+		<div
+			className={`
       w-full max-w-none
       prose dark:prose-invert
 
@@ -39,10 +38,11 @@ const MD = (props: MarkDownProperties) => {
       prose-img:rounded-lg
 
       ${props.className}
-    `}>
-      {renderContent()}
-    </div>
-  )
-}
+    `}
+		>
+			{renderContent()}
+		</div>
+	);
+};
 
 export default MD;

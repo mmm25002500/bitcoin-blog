@@ -1,5 +1,5 @@
-import { PostProps } from "./PostData";
+import type { PostProps } from "./PostData";
 
 export interface PostListData {
-  data: PostProps[];
+	data: PostProps[];
 }

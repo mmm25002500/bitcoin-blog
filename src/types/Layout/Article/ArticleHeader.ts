@@ -1,8 +1,8 @@
-import { StaticImageData } from "next/image";
+import type { StaticImageData } from "next/image";
 
 export interface ArticleHeaderProps {
-  className?: string;
-  title: string;
-  subtitle: string;
-  icon: string | StaticImageData;
+	className?: string;
+	title: string;
+	subtitle: string;
+	icon: string | StaticImageData;
 }

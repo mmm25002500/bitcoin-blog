@@ -1,11 +1,12 @@
 import moreIcon from "@/icons/more.svg";
-import { MoreProps } from "@/types/Button/More";
+import type { MoreProps } from "@/types/Button/More";
 import Image from "next/image";
 
 const More = (props: MoreProps) => {
 	return (
 		<>
 			<button
+				type="button"
 				className="
       border focus:outline-none focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px]
 

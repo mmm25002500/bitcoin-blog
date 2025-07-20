@@ -1,21 +1,16 @@
-import { TagTabProps } from '@/types/Tag/Tag';
+import type { TagTabProps } from "@/types/Tag/Tag";
 
-const Tag = (props: { children: React.ReactNode; className?: string; }) => {
-  return (
-    <span className={`${props.className}`}>
-      { props.children }
-    </span>
-  );
-}
+const Tag = (props: { children: React.ReactNode; className?: string }) => {
+	return <span className={`${props.className}`}>{props.children}</span>;
+};
 
 const TagTab = (props: TagTabProps) => {
-
-  return (
-    <>
-      <button
-        type="button"
-        onClick={() => props.onClick}
-        className={`
+	return (
+		<>
+			<button
+				type="button"
+				onClick={() => props.onClick}
+				className={`
         py-1 px-5
         text-sm font-medium rounded-full border focus:outline-none leading-5
 
@@ -36,12 +31,13 @@ const TagTab = (props: TagTabProps) => {
         dark:active:text-primary-black-300
         dark:active:border-0
 
-        ${props.className}`}>
-        { props.text }
-      </button>
-    </>
-  );
-}
+        ${props.className}`}
+			>
+				{props.text}
+			</button>
+		</>
+	);
+};
 
 Tag.Tab = TagTab;
 

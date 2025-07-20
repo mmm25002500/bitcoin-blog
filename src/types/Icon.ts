@@ -1,7 +1,7 @@
-import { StaticImageData } from "next/image";
+import type { StaticImageData } from "next/image";
 
 export interface IconProps {
-  className?: string;
-  icon_light: string | StaticImageData;
-  icon_dark?: string | StaticImageData;
+	className?: string;
+	icon_light: string | StaticImageData;
+	icon_dark?: string | StaticImageData;
 }

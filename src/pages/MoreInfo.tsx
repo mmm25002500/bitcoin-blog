@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 const MoreInfos = () => {
-  const router = useRouter();
+	const router = useRouter();
 
-  useEffect(() => {
-    router.push(`/MoreInfo/%20`);
-  }, [router]);
+	useEffect(() => {
+		router.push("/MoreInfo/%20");
+	}, [router]);
 
-  return null;
+	return null;
 };
 
 export default MoreInfos;

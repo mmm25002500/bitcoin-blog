@@ -1,6 +1,6 @@
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 
 export interface MarkDownProperties {
-  children: MDXRemoteSerializeResult | string;
-  className?: string;
+	children: MDXRemoteSerializeResult | string;
+	className?: string;
 }

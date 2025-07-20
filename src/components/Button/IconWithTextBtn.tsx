@@ -1,13 +1,13 @@
-import { IconWithTextBtnProps } from "@/types/Button/IconWithTextBtn";
+import type { IconWithTextBtnProps } from "@/types/Button/IconWithTextBtn";
 
 const IconWithTextBtn = (props: IconWithTextBtnProps) => {
-  return (
-    <>
-
-    <button
-      disabled={props.disabled}
-      onClick={props.onClick}
-      className={`
+	return (
+		<>
+			<button
+				type="button"
+				disabled={props.disabled}
+				onClick={props.onClick}
+				className={`
       rounded-full w-full
 
       /* Light Mode (Secondary) */
@@ -31,11 +31,11 @@ const IconWithTextBtn = (props: IconWithTextBtnProps) => {
       /* Size */
       font-medium text-base leading-[22px] p-3 px-9 text-left ${props.className}
       `}
-    >
-      {props.children}
-      </button>
-    </>
-  )
-}
+			>
+				{props.children}
+			</button>
+		</>
+	);
+};
 
 export default IconWithTextBtn;
