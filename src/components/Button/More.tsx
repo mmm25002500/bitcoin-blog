@@ -1,12 +1,13 @@
-import moreIcon from '@/icons/more.svg';
-import { MoreProps } from '@/types/Button/More';
-import Image from 'next/image';
+import moreIcon from "@/icons/more.svg";
+import { MoreProps } from "@/types/Button/More";
+import Image from "next/image";
 
 const More = (props: MoreProps) => {
-  return (
-    <>
-      <button className="
-      border focus:outline-none focus:ring-4 font-medium rounded-xl text-sm px-5 py-2.5 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px]
+	return (
+		<>
+			<button
+				className="
+      border focus:outline-none focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 pt-[8px] pr-[12px] pb-[8px] pl-[12px] h-[40px] w-[40px]
 
       /* Light Mode */
       border-transparent
@@ -18,16 +19,16 @@ const More = (props: MoreProps) => {
       dark:hover:bg-primary-black-300
       dark:active:bg-primary-black-100
       "
-      onClick={props.onClick}
-      >
-      <Image
-        src={ moreIcon }
-        alt="Images Not Found"
-        className={`dark:invert ${props.className}`}
-      />
-      </button>
-    </>
-  );
-}
+				onClick={props.onClick}
+			>
+				<Image
+					src={moreIcon}
+					alt="Images Not Found"
+					className={`dark:invert ${props.className}`}
+				/>
+			</button>
+		</>
+	);
+};
 
 export default More;
