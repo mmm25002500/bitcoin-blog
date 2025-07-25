@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Moon from "@/icons/moon.svg";
 import light from "@/icons/light.svg";
-import { ThemeProps } from "@/types/Layout/Theme";
+import type { ThemeProps } from "@/types/Layout/Theme";
 
 const Themes = (props: ThemeProps) => {
 	const { theme, setTheme } = useTheme();
@@ -15,6 +15,7 @@ const Themes = (props: ThemeProps) => {
 
 	return (
 		<button
+			type="button"
 			onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
 			className={`border-[1px] border-transparent font-medium rounded-full hover:border-btc
         ${
@@ -33,7 +34,7 @@ const Themes = (props: ThemeProps) => {
 								src={light}
 								alt="Images Not Found"
 								className="mr-auto ml-auto inline-block align-middle"
-							></Image>
+							/>
 						</div>
 					</div>
 				) : (
@@ -44,7 +45,7 @@ const Themes = (props: ThemeProps) => {
 								src={Moon}
 								alt="Images Not Found"
 								className="mr-auto ml-auto inline-block align-middle"
-							></Image>
+							/>
 						</div>
 					</div>
 				)

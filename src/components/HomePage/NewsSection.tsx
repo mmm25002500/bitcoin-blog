@@ -14,9 +14,9 @@ import NewsList from "../List/NewsList";
 import type { TagsProps } from "@/types/Tag/Tag";
 import Tab from "../Tab/Tab";
 
-interface NewsSectionProps extends NewsPostProps {
-	tags: any;
-}
+// interface NewsSectionProps extends NewsPostProps {
+// 	tags: any;
+// }
 
 const NewsSection = ({
 	initialPosts,

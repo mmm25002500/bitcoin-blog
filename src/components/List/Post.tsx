@@ -17,43 +17,24 @@ const formatDate = (date: string) => {
 	const minutes = d.getMinutes().toString().padStart(2, "0");
 	const ampm = hours >= 12 ? "PM" : "AM";
 	const formattedHours = hours % 12 || 12;
-	let date_time = "";
 
-	if (month < 10) {
-		date_time = `${year}/0${month}`;
-	} else {
-		date_time = `${year}/${month}`;
-	}
+	const formattedDate = `${year}/${month.toString().padStart(2, "0")}/${day
+		.toString()
+		.padStart(2, "0")}`;
 
-	if (day < 10) {
-		date_time += `/0${day}`;
-	} else {
-		date_time += `/${day}`;
-	}
+	const formattedTime = `${formattedHours.toString().padStart(2, "0")}:${minutes} ${ampm}`;
 
-	if (hours > 12) {
-		const formattedHours = hours % 12;
-		if (formattedHours < 10) {
-			date_time += `&nbsp;&nbsp;&nbsp; 0${formattedHours}:${minutes} PM`;
-		} else {
-			date_time += ` ${formattedHours}:${minutes} PM`;
-		}
-	} else {
-		if (hours < 10) {
-			date_time += ` 0${hours}:${minutes} AM`;
-		} else {
-			date_time += ` ${hours}:${minutes} AM`;
-		}
-	}
-
-	return date_time;
+	return {
+		date: formattedDate,
+		time: formattedTime,
+	};
 };
 
 const _text =
 	"Spicy jalapeno bacon ipsum dolor amet drumstick sirloin chuck shankle.";
 
 const Post = (props: PostProps) => {
-	const formattedDate = formatDate(props.date);
+	const { date, time } = formatDate(props.date);
 	const router = useRouter();
 	const [text, setText] = useState(props.title);
 
@@ -230,7 +211,7 @@ const Post = (props: PostProps) => {
 				<div className="basis-3/4 grid grid-row-2 content-between">
 					{/* 標題 */}
 					<h1 className="sm:mb-2 text-2xl sm:text-3xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black cursor-pointer">
-						<button type="button" onClick={props.onClick}>
+						<button type="button" onClick={props.onClick} className="text-left">
 							<p className="line-clamp-2">{props.title}</p>
 						</button>
 					</h1>
@@ -326,10 +307,11 @@ const Post = (props: PostProps) => {
 
 				{/* 日期 */}
 				<div className="text-xs sm:text-sm text-black dark:text-neutral-200 leading-5 font-medium flex w-auto mr-4 cursor-default">
-					<p
-						className="whitespace-nowrap"
-						dangerouslySetInnerHTML={{ __html: formattedDate }}
-					/>
+					<p className="whitespace-nowrap">
+						{date}
+						<span className="inline-block w-4" />
+						{time}
+					</p>
 				</div>
 			</div>
 		</div>
