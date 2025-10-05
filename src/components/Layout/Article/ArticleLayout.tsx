@@ -1,11 +1,11 @@
-import { ArticleLayout } from "@/types/Layout/Article/ArticleLayout";
+import type { ArticleLayout } from "@/types/Layout/Article/ArticleLayout";
 
-const ArticleLayout = (props: ArticleLayout) => {
+const ArticleLayoutComponent = (props: ArticleLayout) => {
   return (
     <div className={`${props.className}`}>
-      { props.children }
+      {props.children}
     </div>
   );
 }
 
-export default ArticleLayout;
+export default ArticleLayoutComponent;
