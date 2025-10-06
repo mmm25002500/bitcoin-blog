@@ -119,6 +119,17 @@ export default async function handler(
 			? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${tableName.toLowerCase()}.image/${post.img}`
 			: "";
 
+		// 格式化日期為 yyyy-MM-dd HH:mm
+		const formatDate = (dateString: string) => {
+			const date = new Date(dateString);
+			const year = date.getFullYear();
+			const month = String(date.getMonth() + 1).padStart(2, "0");
+			const day = String(date.getDate()).padStart(2, "0");
+			const hours = String(date.getHours()).padStart(2, "0");
+			const minutes = String(date.getMinutes()).padStart(2, "0");
+			return `${year}-${month}-${day} ${hours}:${minutes}`;
+		};
+
 		return res.status(200).json({
 			content,
 			data: {
@@ -126,7 +137,7 @@ export default async function handler(
 				description: post.description,
 				tags: post.tags || [],
 				type: post.type || [],
-				date: post.created_at,
+				date: formatDate(post.created_at),
 				image: postImageUrl,
 			},
 			authorData: authorData

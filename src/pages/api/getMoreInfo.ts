@@ -84,6 +84,18 @@ export default async function handler(
 							? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/author.image/${author.image}`
 							: "";
 
+						// 格式化日期為 yyyy-MM-dd HH:mm
+						const formatDate = (dateString: string) => {
+							if (!dateString) return "";
+							const date = new Date(dateString);
+							const year = date.getFullYear();
+							const month = String(date.getMonth() + 1).padStart(2, "0");
+							const day = String(date.getDate()).padStart(2, "0");
+							const hours = String(date.getHours()).padStart(2, "0");
+							const minutes = String(date.getMinutes()).padStart(2, "0");
+							return `${year}-${month}-${day} ${hours}:${minutes}`;
+						};
+
 						return {
 							title: postData.title || post.title,
 							filename: post.filename,
@@ -99,7 +111,7 @@ export default async function handler(
 								: {
 										id: postData.author_id,
 									},
-							date: postData.created_at || "",
+							date: formatDate(postData.created_at || ""),
 							description: postData.description || "",
 							link: postData.id, // 使用文章 ID 而不是 userID/filename
 						};

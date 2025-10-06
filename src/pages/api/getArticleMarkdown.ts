@@ -91,13 +91,24 @@ export default async function handler(
 			? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${imageBucket}/${post.img}`
 			: "";
 
+		// 格式化日期為 yyyy-MM-dd HH:mm
+		const formatDate = (dateString: string) => {
+			const date = new Date(dateString);
+			const year = date.getFullYear();
+			const month = String(date.getMonth() + 1).padStart(2, "0");
+			const day = String(date.getDate()).padStart(2, "0");
+			const hours = String(date.getHours()).padStart(2, "0");
+			const minutes = String(date.getMinutes()).padStart(2, "0");
+			return `${year}-${month}-${day} ${hours}:${minutes}`;
+		};
+
 		// 使用資料庫的資料作為 frontMatter，而不是 MD 檔案的
 		const frontMatter = {
 			title: post.title,
 			description: post.description,
 			tags: post.tags || [],
 			type: post.type || [],
-			date: post.created_at,
+			date: formatDate(post.created_at),
 			image: imageUrl,
 			author_id: post.author_id,
 		};

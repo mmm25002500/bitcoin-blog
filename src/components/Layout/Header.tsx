@@ -11,6 +11,7 @@ import axios from "axios";
 
 const Header = () => {
 	const [scrolled, setScrolled] = useState(false);
+	const [today, setToday] = useState("");
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -27,14 +28,16 @@ const Header = () => {
 		};
 	}, []);
 
-	// Date
-	const date = new Date();
-	const year = date.getFullYear();
-	const month = date.getMonth() + 1;
-	const day = date.getDate();
-	const week = date.getDay();
-	const weekList = ["日", "一", "二", "三", "四", "五", "六"];
-	const today = `${year}.${month}.${day} 星期${weekList[week]}`;
+	// Date - moved to useEffect to avoid hydration mismatch
+	useEffect(() => {
+		const date = new Date();
+		const year = date.getFullYear();
+		const month = date.getMonth() + 1;
+		const day = date.getDate();
+		const week = date.getDay();
+		const weekList = ["日", "一", "二", "三", "四", "五", "六"];
+		setToday(`${year}.${month}.${day} 星期${weekList[week]}`);
+	}, []);
 
 	// Bitcoin Infomation
 	const [hashRate, setHashRate] = useState<number | null>(null);
