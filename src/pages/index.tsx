@@ -26,7 +26,7 @@ const Home = (props: HomeProps) => {
   const { data: initialPosts, error } = useSWR<PostProps[]>(
     "/api/getPostsByFilter?type=News&author=all&tag=all",
     fetcher,
-    { fallbackData: props.initialPosts },
+    { fallbackData: props.initialPosts || [] },
   );
   const [selection, setSelection] = useState("all");
 
@@ -88,7 +88,7 @@ const Home = (props: HomeProps) => {
         <ButtonSection classname="pb-8" />
         <HorizontalLine className="my-3 pb-5" />
       </div>
-      {initialPosts && (
+      {initialPosts && Array.isArray(initialPosts) && (
         <NewsSection
           initialPosts={initialPosts}
           initialSelection={selection}
@@ -110,15 +110,17 @@ export const getServerSideProps: GetServerSideProps = async () => {
     // 從 API 取得 Tags
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-    const [allTagsRes, newsTagsRes, postTagsRes] = await Promise.all([
+    const [allTagsRes, newsTagsRes, postTagsRes, postsRes] = await Promise.all([
       fetch(`${baseUrl}/api/tags/getAllTags`),
       fetch(`${baseUrl}/api/tags/News/getTags`),
       fetch(`${baseUrl}/api/tags/Posts/getTags`),
+      fetch(`${baseUrl}/api/getPostsByFilter?type=News&author=all&tag=all`),
     ]);
 
     const allTagsResult = await allTagsRes.json();
     const newsTagsResult = await newsTagsRes.json();
     const postTagsResult = await postTagsRes.json();
+    const postsData = await postsRes.json();
 
     const tagsData: TagsProps = {
       all: allTagsResult.success ? allTagsResult.tags : [],
@@ -128,6 +130,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
     return {
       props: {
+        initialPosts: Array.isArray(postsData) ? postsData : [],
         initialTags: tagsData,
       },
     };
@@ -135,6 +138,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     console.error("Error fetching initial data:", error);
     return {
       props: {
+        initialPosts: [],
         initialTags: {
           all: [],
           News: [],

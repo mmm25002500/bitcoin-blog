@@ -40,14 +40,24 @@ const NewsSection = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const fetchFilteredPosts = async () => {
-      const response = await axios.get("/api/getPostsByFilter", {
-        params: {
-          type: selectedTab,
-          author: currentAuthor,
-          tag: currentSelection,
-        },
-      });
-      setFilteredPosts(response.data);
+      try {
+        const response = await axios.get("/api/getPostsByFilter", {
+          params: {
+            type: selectedTab,
+            author: currentAuthor,
+            tag: currentSelection,
+          },
+        });
+        if (Array.isArray(response.data)) {
+          setFilteredPosts(response.data);
+        } else {
+          console.error("API returned non-array data:", response.data);
+          setFilteredPosts([]);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        setFilteredPosts([]);
+      }
     };
 
     fetchFilteredPosts();
@@ -90,7 +100,7 @@ const NewsSection = ({
                   />
                 </SwiperSlide>
 
-                {tags.all.map((tag: string) => (
+                {Array.isArray(tags.all) && tags.all.map((tag: string) => (
                   <SwiperSlide key={tag} className="!w-auto">
                     <Radio.Btn
                       text={tag}
@@ -146,7 +156,7 @@ const NewsSection = ({
 
           <NewsList
             data={
-              filteredPosts.map((post: PostProps) => ({
+              Array.isArray(filteredPosts) ? filteredPosts.map((post: PostProps) => ({
                 title: post.title,
                 description: post.description,
                 tags: post.tags,
@@ -162,7 +172,7 @@ const NewsSection = ({
                 img: post.authorData.image,
                 image: post.image,
                 id: post.id,
-              })) as any
+              })) as any : []
             }
             postsPerPage={HomePageNewsListPerpage}
           />
