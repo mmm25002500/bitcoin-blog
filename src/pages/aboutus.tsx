@@ -1,10 +1,8 @@
-import HorizontalLine from "@/components/HorizontalLine";
 import ArticleLayout from "@/components/Layout/Article/ArticleLayout";
 import ArticleHeader from "@/components/Layout/Article/ArticleHeader";
 import Header from "@/components/Layout/Header";
 import Navbar from "@/components/Layout/Navbar";
 import MD from "@/components/MD";
-import ContactSection from "@/components/Page/ContactSection";
 // import SubscribeSection from '@/components/Page/SubscribeSection';
 import IconLight from "@/icons/illustation/about us.svg";
 import Head from "next/head";
