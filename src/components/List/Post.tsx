@@ -225,9 +225,11 @@ const Post = (props: PostProps) => {
 				{/* 圖片 */}
 				<div className="inline-flex items-center relative w-auto h-auto max-w-[120px] sm:max-w-[236px]">
 					{props.image && props.image !== "" ? (
-						<img
+						<Image
 							src={props.image as string}
 							alt="圖片載入失敗，請檢查網址"
+							width={236}
+							height={152}
 							className="w-auto h-auto max-h-[78px] sm:max-h-[152px] rounded-md"
 						/>
 					) : (
