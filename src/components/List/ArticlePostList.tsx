@@ -56,7 +56,7 @@ const ArticlePostList = ({
 						key={post.title}
 						idx={index}
 						onClick={() =>
-							router.push(`/Post/${post.authorData?.id}/${post.id}`)
+							router.push(`/Post/${post.id}`)
 						}
 						title={post.title}
 						description={post.description}

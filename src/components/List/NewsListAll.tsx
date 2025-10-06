@@ -55,7 +55,7 @@ const PostList = ({
 					<Post
 						key={post.title}
 						onClick={() =>
-							router.push(`/News/${post.authorData?.id}/${post.id}`)
+							router.push(`/News/${post.id}`)
 						}
 						title={post.title}
 						description={post.description}

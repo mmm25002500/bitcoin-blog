@@ -33,7 +33,7 @@ const PostList = ({ data }: PostListData) => {
 				<Post
 					key={post.title}
 					idx={index}
-					onClick={() => router.push(`/Post/${post.authorData?.id}/${post.id}`)}
+					onClick={() => router.push(`/Post/${post.id}`)}
 					{...post}
 					className="px-5 sm:px-0"
 				/>

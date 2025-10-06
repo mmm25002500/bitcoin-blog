@@ -56,7 +56,7 @@ const PostList = ({
 						<React.Fragment key={post.title}>
 							<Post
 								onClick={() =>
-									router.push(`/Post/${post.authorData?.id}/${post.id}`)
+									router.push(`/Post/${post.id}`)
 								}
 								title={post.title}
 								description={post.description}
@@ -81,7 +81,7 @@ const PostList = ({
 						<React.Fragment key={post.title}>
 							<Post
 								onClick={() =>
-									router.push(`/Post/${post.authorData?.id}/${post.id}`)
+									router.push(`/Post/${post.id}`)
 								}
 								title={post.title}
 								description={post.description}
