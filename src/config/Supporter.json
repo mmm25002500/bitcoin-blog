@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Google",
+        "description": "Test 123",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png"
+    },
+    {
+        "name": "Facebook",
+        "description": "Test 123",
+        "image": "https://logos-world.net/wp-content/uploads/2020/05/Facebook-Logo.jpg"
+    },
+    {
+        "name": "Cardano",
+        "description": "Test 123",
+        "image": "https://logos-world.net/wp-content/uploads/2020/05/Facebook-Logo.jpg"
+    },
+    {
+        "name": "Ethereum Fundation",
+        "description": "Test 123",
+        "image": "https://logos-world.net/wp-content/uploads/2020/05/Facebook-Logo.jpg"
+    },
+    {
+        "name": "TSMC",
+        "description": "Test 123",
+        "image": "https://logos-world.net/wp-content/uploads/2020/05/Facebook-Logo.jpg"
+    },
+    {
+        "name": "Test",
+        "description": "Test 123",
+        "image": "https://logos-world.net/wp-content/uploads/2020/05/Facebook-Logo.jpg"
+    }
+]

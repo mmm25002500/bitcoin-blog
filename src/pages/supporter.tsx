@@ -5,21 +5,18 @@ import Navbar from "@/components/Layout/Navbar";
 import IconLight from "@/icons/illustation/Privacy Policy.svg";
 import Head from "next/head";
 import type { GetServerSideProps } from "next";
-import { initAdmin } from "lib/firebaseAdmin";
-import type { MarkDownDataProps } from "@/types/User/UserID";
-import matter from "gray-matter";
-import { serialize } from "next-mdx-remote/serialize";
 import LogoDark from "@/icons/icon_dark.svg";
 import LogoLight from "@/icons/icon_light.svg";
 
 import Icon from "@/components/Icon";
 import { useState, useEffect } from "react";
+import SEO from "@/config/SEO.json";
+import SupporterConfig from "@/config/Supporter.json";
 
 const SupporterPage = ({
-	initialPost,
 	SEO,
 	supporterCfg,
-}: { initialPost: MarkDownDataProps; SEO?: any; supporterCfg?: any }) => {
+}: { SEO?: any; supporterCfg?: any }) => {
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
@@ -106,48 +103,12 @@ const SupporterPage = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-	try {
-		const app = await initAdmin();
-		const bucket = app.storage().bucket();
-
-		// 取得SEO設定
-		const seoFile = bucket.file("config/SEO.json");
-		const seoFileContents = (await seoFile.download())[0].toString("utf8");
-		const seoData = JSON.parse(seoFileContents);
-
-		// 取得文章內容
-		const postFile = bucket.file("WebsiteArticle/PrivacyPolicy.mdx");
-		const [exists] = await postFile.exists();
-
-		// 取得文章內容
-		const supporterCfg = bucket.file("config/Supporter.json");
-		const supporterCfgContents = (await supporterCfg.download())[0].toString(
-			"utf8",
-		);
-		const supporterConfig = JSON.parse(supporterCfgContents);
-
-		if (!exists) {
-			return { notFound: true };
-		}
-
-		const postFileContents = (await postFile.download())[0].toString("utf8");
-		const { content, data } = matter(postFileContents);
-		const mdxSource = await serialize(content);
-
-		return {
-			props: {
-				initialPost: {
-					source: mdxSource,
-					frontMatter: data,
-				},
-				SEO: seoData,
-				supporterCfg: supporterConfig,
-			},
-		};
-	} catch (error) {
-		console.error("Error fetching article content or SEO/author data:", error);
-		return { notFound: true };
-	}
+	return {
+		props: {
+			SEO: SEO,
+			supporterCfg: SupporterConfig,
+		},
+	};
 };
 
 export default SupporterPage;
