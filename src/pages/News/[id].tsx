@@ -21,6 +21,7 @@ import { FreeMode, Navigation } from "swiper/modules";
 import blockImg from "@/icons/examplePhoto/block.jpg";
 import right from "@/icons/right.svg";
 import left from "@/icons/left.svg";
+import { getBaseUrl } from "@/lib/utils";
 
 const NewsPage = ({
   initialPost,
@@ -258,7 +259,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   try {
     // 從 API 取得文章 Markdown 內容
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = getBaseUrl();
     const response = await fetch(
       `${baseUrl}/api/getArticleMarkdown?id=${id}&type=News`,
     );

@@ -13,6 +13,7 @@ import SiteConfig from "@/config/SiteConfig.json";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import Image from "next/image";
+import { getBaseUrl } from "@/lib/utils";
 import right from "@/icons/right.svg";
 import left from "@/icons/left.svg";
 import Radio from "@/components/Radio/Radio";
@@ -253,7 +254,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   try {
     // 從 API 取得 Tags
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = getBaseUrl();
     const response = await fetch(`${baseUrl}/api/tags/getAllTags`);
     const result = await response.json();
 

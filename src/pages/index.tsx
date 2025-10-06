@@ -14,6 +14,7 @@ import type { TagsProps } from "@/types/Tag/Tag";
 import HeaderInfo from "@/components/Layout/HeaderInfo";
 import SEO from "@/config/SEO.json";
 import SiteConfig from "@/config/SiteConfig.json";
+import { getBaseUrl } from "@/lib/utils";
 
 interface HomeProps {
   initialPosts: PostProps[] | undefined;
@@ -108,7 +109,7 @@ const Home = (props: HomeProps) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // 從 API 取得 Tags
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = getBaseUrl();
 
     const [allTagsRes, newsTagsRes, postTagsRes, postsRes] = await Promise.all([
       fetch(`${baseUrl}/api/tags/getAllTags`),

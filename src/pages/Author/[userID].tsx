@@ -15,6 +15,7 @@ import type { PostProps } from "@/types/List/PostData";
 import Head from "next/head";
 import Image from "next/image";
 import SEO from "@/config/SEO.json";
+import { getBaseUrl } from "@/lib/utils";
 
 // fetcher 函數
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -208,7 +209,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 	try {
 		// 從 API 取得作者資料
-		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+		const baseUrl = getBaseUrl();
 		const response = await fetch(`${baseUrl}/api/author/getAuthorByUID`, {
 			method: "POST",
 			headers: {

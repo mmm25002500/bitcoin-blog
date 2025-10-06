@@ -23,6 +23,7 @@ import type { MoreInfoData } from "@/types/MoreInfo/MoreInfo";
 // Images
 import Image from "next/image";
 import DownIcon from "@/icons/down.svg";
+import { getBaseUrl } from "@/lib/utils";
 import ArrowLeft from "@/icons/arrow-left.svg";
 import Head from "next/head";
 
@@ -377,7 +378,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const ArticleName = params?.ArticleName as string;
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = getBaseUrl();
 
     // 從新的 API 取得文章資料
     const articleRes = await axios.get(
