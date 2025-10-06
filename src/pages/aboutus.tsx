@@ -9,7 +9,7 @@ import Head from "next/head";
 import type { GetServerSideProps } from "next";
 import matter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
-import type { MarkDownDataProps, MarkDownProps } from "@/types/User/UserID";
+import type { MarkDownDataProps } from "@/types/User/UserID";
 import { useState, useEffect } from "react";
 import { createServerClient } from "@supabase/ssr";
 import SEO from "@/config/SEO.json";

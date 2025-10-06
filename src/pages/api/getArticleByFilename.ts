@@ -47,7 +47,7 @@ export default async function handler(
 	try {
 		let post: any = null;
 		let tableName: "Post" | "News" = "Post";
-		let bucketName: string;
+		let bucketName = "post.article";
 
 		// 先從 Post 表查詢
 		const { data: postData, error: postError } = await supabase

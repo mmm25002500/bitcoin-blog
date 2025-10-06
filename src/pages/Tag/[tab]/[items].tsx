@@ -6,7 +6,6 @@ import HorizontalLine from "@/components/HorizontalLine";
 import PostListAll from "@/components/List/PostListAll";
 import type { PostProps } from "@/types/List/PostData";
 import axios from "axios";
-import type { LawAuthorData } from "@/types/List/Author";
 import Head from "next/head";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import SEO from "@/config/SEO.json";
@@ -33,10 +32,9 @@ const TagPage = ({
   );
   const [selectedTab, setSelectedTab] = useState<string>(initialSelection);
 
-  const [currentAuthor, setCurrentAuthor] = useState<string>("all");
+  const [currentAuthor] = useState<string>("all");
   const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(initialPosts);
-  const [mode, setMode] = useState<string>("all");
-  const [filteredAuthors, setFilteredAuthors] = useState<LawAuthorData[]>();
+  const [mode] = useState<string>("all");
 
   const items = router.query.items as string;
   const tab = router.query.tab as string;
@@ -98,16 +96,6 @@ const TagPage = ({
       fetchFilteredPosts();
     }
   }, [selectedTab, currentAuthor, mode, searchText]);
-
-  // 處理搜尋欄位改變
-  const handleSearchChange = (searchText: string[]) => {
-    setSearchText(searchText.join(","));
-  };
-
-  // 處理 Poster 及 News 搜尋
-  const handleSearch = () => {
-    searchText && redirect(selectedTab, searchText);
-  };
 
   // 重新導向 帶有陣列字串的搜尋
   const redirect = (tabName: string, searchText: string | string[]) => {
@@ -186,7 +174,7 @@ const TagPage = ({
                     />
                   </SwiperSlide>
 
-                  {tags.map((tag, idx) => (
+                  {tags.map((tag) => (
                     <SwiperSlide key={tag} className="!w-auto">
                       <Radio.Btn
                         text={tag}
