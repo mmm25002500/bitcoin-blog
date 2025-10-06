@@ -9,8 +9,10 @@ import axios from "axios";
 import type { LawAuthorData } from "@/types/List/Author";
 import Head from "next/head";
 import type { GetStaticPaths, GetStaticProps } from "next";
-import { initAdmin } from "lib/firebaseAdmin";
 import type { TabDataType } from "@/types/Tab/Tab";
+import SEO from "@/config/SEO.json";
+import SiteConfig from "@/config/SiteConfig.json";
+import SearchTab from "@/config/SearchTab.json";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import Image from "next/image";
@@ -21,17 +23,11 @@ import Radio from "@/components/Radio/Radio";
 const TagPage = ({
 	initialPosts,
 	initialSelection,
-	seoData,
 	tags,
-	tabData,
-	SiteConfig,
 }: {
 	initialPosts: PostProps[];
 	initialSelection: string;
 	tags: string[];
-	seoData: any;
-	tabData: TabDataType[];
-	SiteConfig: any;
 }) => {
 	const router = useRouter();
 	const [searchText, setSearchText] = useState<string>(
@@ -175,15 +171,15 @@ const TagPage = ({
 	return (
 		<>
 			<Head>
-				<title>{seoData.Search.title}</title>
-				<meta name="description" content={seoData.Search.description} />
-				<meta property="og:title" content={seoData.Search.title} />
-				<meta property="og:description" content={seoData.Search.description} />
-				<meta property="og:image" content={seoData.Search.image} />
-				<meta property="og:type" content={seoData.Search.type} />
-				<meta name="twitter:title" content={seoData.Search.title} />
-				<meta name="twitter:description" content={seoData.Search.description} />
-				<meta name="twitter:image" content={seoData.Search.image} />
+				<title>{SEO.Tag.title}</title>
+				<meta name="description" content={SEO.Tag.description} />
+				<meta property="og:title" content={SEO.Tag.title} />
+				<meta property="og:description" content={SEO.Tag.description} />
+				<meta property="og:image" content={SEO.Tag.image} />
+				<meta property="og:type" content={SEO.Tag.type} />
+				<meta name="twitter:title" content={SEO.Tag.title} />
+				<meta name="twitter:description" content={SEO.Tag.description} />
+				<meta name="twitter:image" content={SEO.Tag.image} />
 			</Head>
 
 			<div
@@ -296,67 +292,31 @@ const TagPage = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	try {
-		const app = await initAdmin();
-		const bucket = app.storage().bucket();
-		const moreInfoFile = bucket.file("config/MoreInfo.json");
-		const moreInfoFileContents = (await moreInfoFile.download())[0].toString(
-			"utf8",
-		);
-		const moreInfoData = JSON.parse(moreInfoFileContents);
-
-		const paths = moreInfoData.map((item: { link: string }) => ({
-			params: { ArticleName: item.link.split("/").pop() },
-		}));
-
-		return { paths, fallback: "blocking" };
-	} catch (error) {
-		console.error("Error fetching paths:", error);
-		return { paths: [], fallback: "blocking" };
-	}
+	return { paths: [], fallback: "blocking" };
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-	const params = context.params;
-	const tab = params?.tab as string;
-
 	try {
-		// 取得SEO設定
-		const app = await initAdmin();
-		const bucket = app.storage().bucket();
-		const seoFile = bucket.file("config/SEO.json");
-		const seoFileContents = (await seoFile.download())[0].toString("utf8");
-		const seoData = JSON.parse(seoFileContents);
-
-		// 取得Tab設定
-		const tabFile = bucket.file("config/SearchTab.json");
-		const tabFileContents = (await tabFile.download())[0].toString("utf8");
-		const tabData = JSON.parse(tabFileContents);
-
-		// 取得Tag設定
-		const tagsFile = bucket.file("config/Tags.json");
-		const tagsFileContents = (await tagsFile.download())[0].toString("utf8");
-		const tagsData = JSON.parse(tagsFileContents);
-
-		// 取得SiteConfig設定
-		const siteConfigFile = bucket.file("config/SiteConfig.json");
-		const siteConfigFileContents = (
-			await siteConfigFile.download()
-		)[0].toString("utf8");
-		const siteConfigData = JSON.parse(siteConfigFileContents);
+		// 從 API 取得 Tags
+		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+		const response = await fetch(`${baseUrl}/api/tags/getAllTags`);
+		const result = await response.json();
 
 		return {
 			props: {
-				seoData,
-				tabData,
-				SiteConfig: siteConfigData,
-				tags: tagsData.all,
+				tags: result.success ? result.tags : [],
+				initialPosts: [],
+				initialSelection: (context.params?.tab as string) || "Post",
 			},
 		};
 	} catch (error) {
 		console.error("Error fetching data:", error);
 		return {
-			notFound: true,
+			props: {
+				tags: [],
+				initialPosts: [],
+				initialSelection: "Post",
+			},
 		};
 	}
 };

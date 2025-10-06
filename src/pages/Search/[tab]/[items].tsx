@@ -13,21 +13,17 @@ import type { LawAuthorData } from "@/types/List/Author";
 import AuthorList from "@/components/List/AuthorList";
 import Head from "next/head";
 import type { GetStaticPaths, GetStaticProps } from "next";
-import { initAdmin } from "lib/firebaseAdmin";
 import type { TabDataType } from "@/types/Tab/Tab";
+import SEO from "@/config/SEO.json";
+import SiteConfig from "@/config/SiteConfig.json";
+import SearchTab from "@/config/SearchTab.json";
 
 const SearchPage = ({
 	initialPosts,
 	initialSelection,
-	seoData,
-	tabData,
-	SiteConfig,
 }: {
 	initialPosts: PostProps[];
 	initialSelection: string;
-	seoData: any;
-	tabData: TabDataType[];
-	SiteConfig: any;
 }) => {
 	const router = useRouter();
 	const [searchText, setSearchText] = useState<string>(
@@ -162,15 +158,15 @@ const SearchPage = ({
 	return (
 		<>
 			<Head>
-				<title>{seoData.Search.title}</title>
-				<meta name="description" content={seoData.Search.description} />
-				<meta property="og:title" content={seoData.Search.title} />
-				<meta property="og:description" content={seoData.Search.description} />
-				<meta property="og:image" content={seoData.Search.image} />
-				<meta property="og:type" content={seoData.Search.type} />
-				<meta name="twitter:title" content={seoData.Search.title} />
-				<meta name="twitter:description" content={seoData.Search.description} />
-				<meta name="twitter:image" content={seoData.Search.image} />
+				<title>{SEO.Search.title}</title>
+				<meta name="description" content={SEO.Search.description} />
+				<meta property="og:title" content={SEO.Search.title} />
+				<meta property="og:description" content={SEO.Search.description} />
+				<meta property="og:image" content={SEO.Search.image} />
+				<meta property="og:type" content={SEO.Search.type} />
+				<meta name="twitter:title" content={SEO.Search.title} />
+				<meta name="twitter:description" content={SEO.Search.description} />
+				<meta name="twitter:image" content={SEO.Search.image} />
 			</Head>
 			<Navbar />
 			<HorizontalLine />
@@ -204,7 +200,7 @@ const SearchPage = ({
 				<div className="sm:mx-auto sm:px-16">
 					{/* Tab */}
 					<Tab
-						data={tabData}
+						data={SearchTab}
 						className="mt-8"
 						selectedTab={selectedTab}
 						onChange={(tabName: string) => handleTabChange(tabName)}
@@ -233,60 +229,16 @@ const SearchPage = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	try {
-		const app = await initAdmin();
-		const bucket = app.storage().bucket();
-		const moreInfoFile = bucket.file("config/MoreInfo.json");
-		const moreInfoFileContents = (await moreInfoFile.download())[0].toString(
-			"utf8",
-		);
-		const moreInfoData = JSON.parse(moreInfoFileContents);
-
-		const paths = moreInfoData.map((item: { link: string }) => ({
-			params: { ArticleName: item.link.split("/").pop() },
-		}));
-
-		return { paths, fallback: "blocking" };
-	} catch (error) {
-		console.error("Error fetching paths:", error);
-		return { paths: [], fallback: "blocking" };
-	}
+	return { paths: [], fallback: "blocking" };
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-	try {
-		// 取得SEO設定
-		const app = await initAdmin();
-		const bucket = app.storage().bucket();
-		const seoFile = bucket.file("config/SEO.json");
-		const seoFileContents = (await seoFile.download())[0].toString("utf8");
-		const seoData = JSON.parse(seoFileContents);
-
-		// 取得Tab設定
-		const tabFile = bucket.file("config/SearchTab.json");
-		const tabFileContents = (await tabFile.download())[0].toString("utf8");
-		const tabData = JSON.parse(tabFileContents);
-
-		// 取得SiteConfig設定
-		const siteConfigFile = bucket.file("config/SiteConfig.json");
-		const siteConfigFileContents = (
-			await siteConfigFile.download()
-		)[0].toString("utf8");
-		const siteConfigData = JSON.parse(siteConfigFileContents);
-
-		return {
-			props: {
-				seoData,
-				tabData,
-				SiteConfig: siteConfigData,
-			},
-		};
-	} catch (error) {
-		console.error("Error fetching data:", error);
-		return {
-			notFound: true,
-		};
-	}
+	return {
+		props: {
+			initialPosts: [],
+			initialSelection: (context.params?.tab as string) || "Posters",
+		},
+	};
 };
 
 export default SearchPage;

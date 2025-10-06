@@ -59,5 +59,13 @@ export default async function handler(
 		return res.status(500).json({ success: false, error: error.message });
 	}
 
-	return res.status(200).json({ success: true, data });
+	// 組合完整圖片 URL
+	const authorWithImageUrl = {
+		...data,
+		image: data.image
+			? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/author.image/${data.image}`
+			: "",
+	};
+
+	return res.status(200).json({ success: true, data: authorWithImageUrl });
 }

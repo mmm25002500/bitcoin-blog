@@ -85,9 +85,12 @@ export default async function handler(
 		);
 	}
 
-	// 5. 加入 postQuantity 至每位作者資料中
+	// 5. 加入 postQuantity 至每位作者資料中,並組合完整圖片 URL
 	const enrichedAuthors = authors.map((author) => ({
 		...author,
+		image: author.image
+			? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/author.image/${author.image}`
+			: "",
 		postQuantity: countsMap.get(author.id) ?? 0,
 	}));
 

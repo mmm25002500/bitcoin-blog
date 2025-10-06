@@ -1,63 +1,15 @@
+import { createServerClient } from "@supabase/ssr";
 import type { NextApiRequest, NextApiResponse } from "next";
-import fetch from "node-fetch";
-import matter from "gray-matter";
-import type { PostProps } from "@/types/List/PostData";
-import type { LawAuthorData } from "@/types/List/Author";
-import { initAdmin } from "../../../lib/firebaseAdmin";
-
-interface FilteredPostsProps extends PostProps {
-	url: string;
-}
-
-interface FileType {
-	name: string;
-}
-
-// 動態設置 API URL
-const getApiUrl = (req: NextApiRequest): string => {
-	const host = req.headers.host;
-	if (!host) {
-		throw new Error("Host URL is not defined");
-	}
-	// 使用 HTTP 為本地開發環境
-	if (host.includes("localhost") || host.includes("127.0.0.1")) {
-		return `http://${host}`;
-	}
-	// 使用 HTTPS 為生產環境
-	return `https://${host}`;
-};
-
-// 根據 userID 取得作者資料
-const getAuthorData = async (
-	userID: string,
-	apiUrl: string,
-): Promise<LawAuthorData | undefined> => {
-	const res = await fetch(`${apiUrl}/api/getAuthorConfig`);
-	if (!res.ok) {
-		console.error("Error fetching author data:", res.statusText);
-		throw new Error("Failed to fetch author data");
-	}
-	const authorData: LawAuthorData[] = (await res.json()) as LawAuthorData[];
-	return authorData.find((author: LawAuthorData) => author.id === userID);
-};
-
-// 根據檔案名取得文章的元數據
-const getPostsMetadata = async (filename: string, userID: string) => {
-	const app = await initAdmin();
-	const bucket = app.storage().bucket();
-	const file = bucket.file(`Article/${userID}/${filename}.mdx`);
-	const fileContentsArray = await file.download();
-	const fileContents = fileContentsArray[0].toString("utf8");
-	const { content, data } = matter(fileContents);
-
-	return { content, data };
-};
 
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) {
-	const { type, author, tag, mode } = req.query;
+	if (req.method !== "GET") {
+		return res.status(405).json({ error: "Method not allowed" });
+	}
+
+	const { type, author, tag } = req.query;
 
 	// 檢查參數是否有效
 	if (
@@ -66,81 +18,122 @@ export default async function handler(
 		!author ||
 		!tag
 	) {
-		res.status(400).json({ error: "缺少或無效的 type, author 或 tag 參數" });
-		return;
+		return res.status(400).json({ error: "缺少或無效的 type, author 或 tag 參數" });
 	}
 
+	const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+	const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+	if (!supabaseUrl || !supabaseAnonKey) {
+		return res.status(500).json({
+			error: "Supabase environment variables are missing.",
+		});
+	}
+
+	const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+		cookies: {
+			getAll() {
+				return Object.entries(req.cookies).map(([name, value]) => ({
+					name,
+					value: value as string,
+				}));
+			},
+			setAll(cookiesToSet) {
+				for (const { name, value, options } of cookiesToSet) {
+					res.setHeader(
+						"Set-Cookie",
+						`${name}=${value}; Path=${options?.path || "/"}; ${options?.httpOnly ? "HttpOnly;" : ""} ${options?.secure ? "Secure;" : ""} ${options?.sameSite ? `SameSite=${options.sameSite};` : ""}`,
+					);
+				}
+			},
+		},
+	});
+
 	try {
-		const apiUrl = getApiUrl(req);
+		let allPosts: any[] = [];
 
-		const app = await initAdmin();
-		const bucket = app.storage().bucket();
-		const [files] = await bucket.getFiles({ prefix: "Article/" });
+		// 根據 type 決定要查詢哪些表
+		const tablesToQuery = type === "both" ? ["Post", "News"] : [type];
 
-		// 過濾掉無效的路徑
-		const validFiles = files.filter(
-			(file: FileType) =>
-				file.name.split("/").length >= 3 && file.name.endsWith(".mdx"),
+		// 取得所有作者資料
+		const { data: authors, error: authorError } = await supabase
+			.from("author")
+			.select("*");
+
+		if (authorError) {
+			console.error("[ERR] 取得作者失敗", authorError.message);
+			return res.status(500).json({ error: authorError.message });
+		}
+
+		// 建立作者 ID 到作者資料的映射
+		const authorMap = new Map(authors.map((a) => [a.id, a]));
+
+		// 查詢每個表
+		for (const tableName of tablesToQuery) {
+			let query = supabase.from(tableName).select("*");
+
+			// 如果不是 "all",則篩選作者
+			if (author !== "all") {
+				query = query.eq("author_id", author);
+			}
+
+			// 如果不是 "all",則篩選標籤
+			if (tag !== "all") {
+				// Supabase 的陣列包含查詢
+				query = query.contains("tags", [tag]);
+			}
+
+			const { data, error } = await query.order("created_at", {
+				ascending: false,
+			});
+
+			if (error) {
+				console.error(`[ERR] 查詢 ${tableName} 失敗:`, error.message);
+				continue;
+			}
+
+			// 將資料轉換為前端需要的格式
+			const formattedPosts =
+				data?.map((post) => {
+					const authorData = authorMap.get(post.author_id);
+					// 組合完整的圖片 URL
+					const authorImageUrl = authorData?.image
+						? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/author.image/${authorData.image}`
+						: "";
+					const postImageUrl = post.image
+						? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/author.image/${post.image}`
+						: "";
+
+					return {
+						title: post.title,
+						description: post.description,
+						tags: post.tags || [],
+						date: post.created_at,
+						authorData: {
+							fullname: authorData?.fullname || "",
+							name: authorData?.name || "",
+							description: authorData?.description || "",
+							image: authorImageUrl,
+							id: post.author_id,
+							posts: 0, // 可以之後再加上實際數量
+						},
+						type: [tableName as "Post" | "News"],
+						image: postImageUrl,
+						id: post.id,
+					};
+				}) || [];
+
+			allPosts = [...allPosts, ...formattedPosts];
+		}
+
+		// 按日期排序
+		allPosts.sort(
+			(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 		);
 
-		let filteredPosts: FilteredPostsProps[] = [];
-
-		// 如果 tag 是 all，則不進行標籤篩選
-		const isAllTags = tag === "all";
-		const tagsArray: string[] = isAllTags ? [] : (tag as string).split(",");
-
-		// 遍歷每篇文章檔案
-		const postPromises = validFiles.map(async (file) => {
-			const parts = file.name.split("/");
-			const userID = parts[1];
-			const filenameWithExt = parts[2];
-			const filename = filenameWithExt.replace(".mdx", "");
-
-			if (author !== "all" && userID !== author) {
-				return null;
-			}
-
-			const { content, data } = await getPostsMetadata(filename, userID);
-
-			// 取得作者資料
-			const postAuthor = await getAuthorData(userID, apiUrl);
-
-			// 篩選符合條件的文章
-			const hasAllTags = tagsArray.every((tag) => data.tags.includes(tag));
-			const hasAnyTag = tagsArray.some((tag) => data.tags.includes(tag));
-
-			if (
-				(type === "both" || data.type.includes(type)) &&
-				(isAllTags ||
-					(mode === "all" && hasAllTags) ||
-					(mode === "any" && hasAnyTag) ||
-					(!mode && hasAnyTag))
-			) {
-				return {
-					...data,
-					id: filename,
-					authorData: postAuthor
-						? {
-								...postAuthor,
-								id: userID,
-							}
-						: {
-								id: userID,
-							},
-					url: `/${type === "News" ? "News" : "Post"}/${userID}/${filename}`,
-				} as FilteredPostsProps;
-			}
-			return null;
-		});
-
-		const results = await Promise.all(postPromises);
-		filteredPosts = results.filter(
-			(post) => post !== null,
-		) as FilteredPostsProps[];
-
-		res.status(200).json(filteredPosts);
+		return res.status(200).json(allPosts);
 	} catch (error) {
-		console.error("Error accessing Firebase Storage:", error);
-		res.status(500).json({ error: "Error accessing Firebase Storage" });
+		console.error("Error accessing Supabase:", error);
+		return res.status(500).json({ error: "Error accessing Supabase" });
 	}
 }

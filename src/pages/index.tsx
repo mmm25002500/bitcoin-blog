@@ -12,14 +12,13 @@ import Head from "next/head";
 import type { GetServerSideProps } from "next";
 import type { PostProps } from "@/types/List/PostData";
 import type { TagsProps } from "@/types/Tag/Tag";
-import { initAdmin } from "lib/firebaseAdmin";
 import HeaderInfo from "@/components/Layout/HeaderInfo";
+import SEO from "@/config/SEO.json";
+import SiteConfig from "@/config/SiteConfig.json";
 
 interface HomeProps {
 	initialPosts: PostProps[] | undefined;
-	initialSEO: any;
 	initialTags: TagsProps;
-	initialSiteConfig: any;
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -52,21 +51,21 @@ const Home = (props: HomeProps) => {
 	return (
 		<>
 			<Head>
-				<title>{props.initialSEO.Index.title}</title>
-				<meta name="description" content={props.initialSEO.Index.description} />
-				<meta property="og:title" content={props.initialSEO.Index.title} />
+				<title>{SEO.Index.title}</title>
+				<meta name="description" content={SEO.Index.description} />
+				<meta property="og:title" content={SEO.Index.title} />
 				<meta
 					property="og:description"
-					content={props.initialSEO.Index.description}
+					content={SEO.Index.description}
 				/>
-				<meta property="og:image" content={props.initialSEO.Index.image} />
-				<meta property="og:type" content={props.initialSEO.Index.type} />
-				<meta name="twitter:title" content={props.initialSEO.Index.title} />
+				<meta property="og:image" content={SEO.Index.image} />
+				<meta property="og:type" content={SEO.Index.type} />
+				<meta name="twitter:title" content={SEO.Index.title} />
 				<meta
 					name="twitter:description"
-					content={props.initialSEO.Index.description}
+					content={SEO.Index.description}
 				/>
-				<meta name="twitter:image" content={props.initialSEO.Index.image} />
+				<meta name="twitter:image" content={SEO.Index.image} />
 			</Head>
 
 			<HeaderInfo />
@@ -95,9 +94,7 @@ const Home = (props: HomeProps) => {
 					initialPosts={initialPosts}
 					initialSelection={selection}
 					tags={props.initialTags}
-					HomePageNewsListPerpage={
-						props.initialSiteConfig.HomePageNewsListPerpage
-					}
+					HomePageNewsListPerpage={SiteConfig.HomePageNewsListPerpage}
 				/>
 			)}
 			{/* <HorizontalLine /> */}
@@ -111,39 +108,39 @@ const Home = (props: HomeProps) => {
 // 取得首頁的初始資料
 export const getServerSideProps: GetServerSideProps = async () => {
 	try {
-		// 取得SEO設定
-		const app = await initAdmin();
-		const bucket = app.storage().bucket();
-		const seoFile = bucket.file("config/SEO.json");
-		const seoFileContents = (await seoFile.download())[0].toString("utf8");
-		const seoData = JSON.parse(seoFileContents);
+		// 從 API 取得 Tags
+		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-		// 取得Tag設定
-		const tagFile = bucket.file("config/Tags.json");
-		const tagFileContents = (await tagFile.download())[0].toString("utf8");
-		const tagData = JSON.parse(tagFileContents);
+		const [allTagsRes, newsTagsRes, postTagsRes] = await Promise.all([
+			fetch(`${baseUrl}/api/tags/getAllTags`),
+			fetch(`${baseUrl}/api/tags/News/getTags`),
+			fetch(`${baseUrl}/api/tags/Posts/getTags`),
+		]);
 
-		// 取得SiteConfig設定
-		const siteConfigFile = bucket.file("config/SiteConfig.json");
-		const siteConfigFileContents = (
-			await siteConfigFile.download()
-		)[0].toString("utf8");
-		const siteConfigData = JSON.parse(siteConfigFileContents);
+		const allTagsResult = await allTagsRes.json();
+		const newsTagsResult = await newsTagsRes.json();
+		const postTagsResult = await postTagsRes.json();
+
+		const tagsData: TagsProps = {
+			all: allTagsResult.success ? allTagsResult.tags : [],
+			News: newsTagsResult.success ? newsTagsResult.tags : [],
+			Post: postTagsResult.success ? postTagsResult.tags : [],
+		};
 
 		return {
 			props: {
-				initialSEO: seoData,
-				initialTags: tagData,
-				initialSiteConfig: siteConfigData,
+				initialTags: tagsData,
 			},
 		};
 	} catch (error) {
 		console.error("Error fetching initial data:", error);
 		return {
 			props: {
-				initialSEO: null,
-				initialTags: null,
-				initialSiteConfig: null,
+				initialTags: {
+					all: [],
+					News: [],
+					Post: [],
+				},
 			},
 		};
 	}

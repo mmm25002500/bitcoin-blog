@@ -13,24 +13,14 @@ import PostList from "@/components/List/PostList";
 import type { GetServerSideProps } from "next";
 import type { PostProps } from "@/types/List/PostData";
 import Head from "next/head";
-import { initAdmin } from "lib/firebaseAdmin";
 import Image from "next/image";
-
-// 取得作者資料
-const getAuthorData = async () => {
-	const app = await initAdmin();
-	const bucket = app.storage().bucket();
-	const authorFile = bucket.file("config/Author.json");
-	const authorFileContents = (await authorFile.download())[0].toString("utf8");
-	return JSON.parse(authorFileContents);
-};
+import SEO from "@/config/SEO.json";
 
 // fetcher 函數
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const AuthorPage = (props: {
 	initialPosts: PostProps[];
-	initialSEO: any;
 	initialAuthor: any;
 }) => {
 	const [postQuantity, setPostQuantity] = useState(0);
@@ -74,31 +64,31 @@ const AuthorPage = (props: {
 		<>
 			<Head>
 				<title>
-					{props.initialAuthor.name} - {props.initialSEO.Author.title}
+					{props.initialAuthor.name} - {SEO.Author.title}
 				</title>
 				<meta
 					name="description"
-					content={props.initialSEO.Author.description}
+					content={SEO.Author.description}
 				/>
 				<meta
 					property="og:title"
-					content={`${props.initialAuthor.name} - ${props.initialSEO.Author.title}`}
+					content={`${props.initialAuthor.name} - ${SEO.Author.title}`}
 				/>
 				<meta
 					property="og:description"
-					content={props.initialSEO.Author.description}
+					content={SEO.Author.description}
 				/>
-				<meta property="og:image" content={props.initialSEO.Author.image} />
-				<meta property="og:type" content={props.initialSEO.Author.type} />
+				<meta property="og:image" content={SEO.Author.image} />
+				<meta property="og:type" content={SEO.Author.type} />
 				<meta
 					name="twitter:title"
-					content={`${props.initialAuthor.name} - ${props.initialSEO.Author.title}`}
+					content={`${props.initialAuthor.name} - ${SEO.Author.title}`}
 				/>
 				<meta
 					name="twitter:description"
-					content={props.initialSEO.Author.description}
+					content={SEO.Author.description}
 				/>
-				<meta name="twitter:image" content={props.initialSEO.Author.image} />
+				<meta name="twitter:image" content={SEO.Author.image} />
 			</Head>
 
 			<div className="sm:hidden">
@@ -217,16 +207,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	}
 
 	try {
-		const app = await initAdmin();
-		const bucket = app.storage().bucket();
-		const seoFile = bucket.file("config/SEO.json");
-		const seoFileContents = (await seoFile.download())[0].toString("utf8");
-		const seoData = JSON.parse(seoFileContents);
+		// 從 API 取得作者資料
+		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+		const response = await fetch(`${baseUrl}/api/author/getAuthorByUID`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ uid: userID }),
+		});
 
-		const authorData = await getAuthorData();
-		const author = authorData.find((author: any) => author.id === userID);
+		const result = await response.json();
 
-		if (!author) {
+		if (!result.success || !result.data) {
 			return {
 				notFound: true,
 			};
@@ -234,8 +227,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 		return {
 			props: {
-				initialSEO: seoData,
-				initialAuthor: author,
+				initialAuthor: result.data,
+				initialPosts: [],
 			},
 		};
 	} catch (error) {
