@@ -46,7 +46,25 @@ export default async function handler(
 	});
 
 	try {
-		let allPosts: any[] = [];
+		interface Post {
+			title: string;
+			description: string;
+			tags: string[];
+			date: string;
+			authorData: {
+				fullname: string;
+				name: string;
+				description: string;
+				image: string;
+				id: string;
+				posts: number;
+			};
+			type: ("Post" | "News")[];
+			image: string;
+			id: string;
+		}
+
+		let allPosts: Post[] = [];
 
 		// 根據 mode 決定要查詢哪些表
 		const tablesToQuery =

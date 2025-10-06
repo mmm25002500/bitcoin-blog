@@ -1,0 +1,105 @@
+[
+  {
+    "title": "認識比特幣",
+    "folder": "KnowBTC",
+    "post": [
+      {
+        "title": "比特幣 Bitcoin",
+        "filename": "about"
+      },
+      {
+        "title": "比特幣 基本資訊",
+        "filename": "2024090823"
+      },
+      {
+        "title": "中本聰",
+        "filename": "2024090831"
+      },
+      {
+        "title": "比特幣 錢包",
+        "filename": "Wallet"
+      },
+      {
+        "title": "購買 比特幣",
+        "filename": "Buy"
+      },
+      {
+        "title": "比特幣 區塊鏈瀏覽器 簡介",
+        "filename": "2024090806"
+      },
+      {
+        "title": "比特幣 發行機制",
+        "filename": "2024090804"
+      },
+      {
+        "title": "比特幣 分叉",
+        "filename": "2024090801"
+      },
+      {
+        "title": "比特幣 起源 背景",
+        "filename": "2024090820"
+      }
+    ]
+  },
+  {
+    "title": "比特幣故事",
+    "folder": "KnowBTC",
+    "post": [
+      {
+        "title": "Pizza Day 社群第一次比特幣採用",
+        "filename": "2024090816"
+      },
+      {
+        "title": "HODL",
+        "filename": "2024090821"
+      },
+      {
+        "title": "BUIDL",
+        "filename": "2024090825"
+      }
+    ]
+  },
+  {
+    "label": "比特幣技術資訊",
+    "title": "演算法",
+    "folder": "KnowBTC",
+    "post": [
+      {
+        "title": "安全雜湊演算法 SHA256  簡介",
+        "filename": "2024090812"
+      },
+      {
+        "title": "橢圓曲線數字簽名算法 ECDSA  簡介",
+        "filename": "2024090813"
+      }
+    ]
+  },
+  {
+    "title": "BIP 比特幣 改進提案",
+    "folder": "KnowBTC",
+    "post": [
+      {
+        "title": "BIP 比特幣 改進提案",
+        "filename": "2024090827"
+      },
+      {
+        "title": "BIP 39",
+        "filename": "2024090828"
+      }
+    ]
+  },
+  {
+    "title": "其他技術",
+    "folder": "KnowBTC",
+    "post": [
+      {
+        "title": "隔離見證 Segwit 簡介",
+        "filename": "2024090815"
+      },
+      {
+        "title": "閃電網路 Lighting Network 簡介",
+        "filename": "2024090810"
+      }
+    ]
+  }
+]
