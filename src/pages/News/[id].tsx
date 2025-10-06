@@ -27,7 +27,12 @@ const NewsPage = ({
   authorData,
 }: MarkDownProps & {
   initialPost: MarkDownDataProps;
-  authorData: any;
+  authorData: {
+    id: string;
+    name: string;
+    image: string;
+    // Add other fields as needed based on your author data structure
+  };
 }) => {
   const router = useRouter();
   const { id } = router.query;
