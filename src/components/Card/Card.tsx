@@ -38,8 +38,7 @@ const Card = (props: CardData.CardData) => {
 		return (
 			<Link
 				href={props.href}
-				className={`
-      flex flex-row ${props.className}`}
+				className={`flex flex-row ${props.className}`}
 			>
 				{props.children}
 			</Link>
@@ -50,8 +49,7 @@ const Card = (props: CardData.CardData) => {
 		<button
 			type="button"
 			onClick={props.onClick}
-			className={`
-      flex flex-row ${props.className}`}
+			className={`flex flex-row ${props.className}`}
 		>
 			{props.children}
 		</button>

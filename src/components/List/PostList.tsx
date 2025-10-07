@@ -9,7 +9,7 @@ const PostList = ({ data }: PostListData) => {
 	const postsPerPage = 6;
 
 	// 以日期排序
-	const sortedData = data.sort(
+	const sortedData = [...data].sort(
 		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 	);
 

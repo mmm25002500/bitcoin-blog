@@ -5,26 +5,14 @@ import type { PostProps } from "@/types/List/PostData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import defalutPostImage from "@/icons/examplePhoto/defaultPostImage.jpg";
+import { format } from "date-fns";
+import clsx from "clsx";
 
 const formatDate = (date: string) => {
   const d = new Date(date);
-  const year = d.getFullYear();
-  const month = d.getMonth() + 1;
-  const day = d.getDate();
-  const hours = d.getHours();
-  const minutes = d.getMinutes().toString().padStart(2, "0");
-  const ampm = hours >= 12 ? "PM" : "AM";
-  const formattedHours = hours % 12 || 12;
-
-  const formattedDate = `${year}/${month.toString().padStart(2, "0")}/${day
-    .toString()
-    .padStart(2, "0")}`;
-
-  const formattedTime = `${formattedHours.toString().padStart(2, "0")}:${minutes} ${ampm}`;
-
   return {
-    date: formattedDate,
-    time: formattedTime,
+    date: format(d, "yyyy/MM/dd"),
+    time: format(d, "hh:mm a"),
   };
 };
 
@@ -33,7 +21,12 @@ const Post = (props: PostProps) => {
 
   return (
     <div
-      className={`py-9 sm:pb-6 bg-white border-neutral-200 dark:bg-primary-black-300 dark:border-neutral-800 ${props.className} ${props.idx !== 0 ? "border-t-[1px]" : ""}`}
+      className={clsx(
+        "py-9 sm:pb-6 bg-white border-neutral-200",
+        "dark:bg-primary-black-300 dark:border-neutral-800",
+        props.className,
+        props.idx !== 0 && "border-t-[1px]"
+      )}
     >
       {/* 左邊文章，右邊圖片 */}
       <div className="flex gap-2">
@@ -42,11 +35,11 @@ const Post = (props: PostProps) => {
           {/* 標題 */}
           <h1 className="sm:mb-2 text-2xl sm:text-3xl font-bold tracking-tight text-neutral-black dark:text-neutral-white sm:text-neutral-black cursor-pointer">
             {props.href ? (
-              <Link href={props.href} className="text-left">
+              <Link href={props.href} className="text-left" aria-label={props.title}>
                 <p className="line-clamp-2">{props.title}</p>
               </Link>
             ) : (
-              <button type="button" onClick={props.onClick} className="text-left">
+              <button type="button" onClick={props.onClick} className="text-left" aria-label={props.title}>
                 <p className="line-clamp-2">{props.title}</p>
               </button>
             )}
@@ -121,8 +114,9 @@ const Post = (props: PostProps) => {
             <Link
               href={`/Author/${props.authorData.id}`}
               className="flex items-center space-x-2"
+              aria-label={`查看作者 ${props.authorData.name} 的頁面`}
             >
-              {props.authorData.image && (
+              {props.authorData?.image && (
                 <Image
                   src={props.authorData.image}
                   alt={`${props.authorData.name} avatar`}
@@ -131,7 +125,7 @@ const Post = (props: PostProps) => {
                   className="w-[14px] h-[14px] sm:w-5 sm:h-5 rounded-full"
                 />
               )}
-              {props.authorData.name && (
+              {props.authorData?.name && (
                 <span className="font-medium dark:text-white text-xs sm:text-base">
                   {props.authorData.name}
                 </span>

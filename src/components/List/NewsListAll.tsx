@@ -3,7 +3,7 @@ import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
 import Pagination from "../Pagination/Pagination";
 import type { PostProps } from "@/types/List/PostData";
-import { parse, isValid } from "date-fns";
+import { parseDate } from "@/utils/dateParser";
 
 const PostList = ({
 	data,
@@ -11,30 +11,8 @@ const PostList = ({
 }: PostListData & { postsPerPage: number }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 
-	// 解析日期字符串
-	const parseDate = (dateString: string): Date => {
-		if (typeof dateString !== "string") {
-			console.error(`Invalid date format: ${dateString}`);
-			return new Date(); // 回傳當前日期作為預設值
-		}
-
-		// 嘗試直接解析 ISO 8601 格式或標準日期字符串
-		let date = new Date(dateString);
-
-		// 如果直接解析失敗,嘗試使用 date-fns 解析 yyyy-MM-dd HH:mm 格式
-		if (!isValid(date)) {
-			date = parse(dateString, "yyyy-MM-dd HH:mm", new Date());
-		}
-
-		if (!isValid(date)) {
-			console.error(`Invalid date format: ${dateString}`);
-			return new Date(); // 回傳當前日期作為預設值
-		}
-		return date;
-	};
-
 	// 以日期排序
-	const sortedData = data.sort((a, b) => {
+	const sortedData = [...data].sort((a, b) => {
 		const dateA = parseDate(a.date);
 		const dateB = parseDate(b.date);
 		return dateB.getTime() - dateA.getTime();

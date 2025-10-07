@@ -3,10 +3,9 @@ import Link from "next/link";
 
 const Tag = (props: TagData) => {
 	return (
-		<>
-			<Link
-				href={`/Tag/${props.type}/${props.text}`}
-				className={`
+		<Link
+			href={`/Tag/${props.type}/${props.text}`}
+			className={`
         text-sm font-medium rounded-full border focus:outline-none leading-5 inline-block
 
         /* Light Mode */
@@ -27,10 +26,9 @@ const Tag = (props: TagData) => {
         dark:active:border-0
 
         ${props.className}`}
-			>
-				{props.text}
-			</Link>
-		</>
+		>
+			{props.text}
+		</Link>
 	);
 };
 

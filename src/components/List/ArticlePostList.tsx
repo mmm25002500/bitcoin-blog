@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
 import type { PostProps } from "@/types/List/PostData";
 import Button from "../Button/Button";
 import Icon from "../Icon";
 import right from "@/icons/right.svg";
-import { parse, isValid } from "date-fns";
+import { parseDate } from "@/utils/dateParser";
 
 const ArticlePostList = ({
   data,
@@ -14,34 +14,16 @@ const ArticlePostList = ({
   const [visibleCount, setVisibleCount] = useState(3); // 初始顯示的文章數量
   const increment = ArticlePostListMorePostPerclick; // 每次增加的文章數量
 
-  // 解析日期字串
-  const parseDate = (dateString: string): Date => {
-    if (typeof dateString !== "string") {
-      console.error(`Invalid date format: ${dateString}`);
-      return new Date(); // 回傳當前日期作為預設值
-    }
-
-    // 嘗試直接解析 ISO 8601 格式或標準日期字符串
-    let date = new Date(dateString);
-
-    // 如果直接解析失敗,嘗試使用 date-fns 解析 yyyy-MM-dd HH:mm 格式
-    if (!isValid(date)) {
-      date = parse(dateString, "yyyy-MM-dd HH:mm", new Date());
-    }
-
-    if (!isValid(date)) {
-      console.error(`Invalid date format: ${dateString}`);
-      return new Date(); // 回傳當前日期作為預設值
-    }
-    return date;
-  };
-
-  // 以日期排序
-  const sortedData = data.sort((a, b) => {
-    const dateA = parseDate(a.date);
-    const dateB = parseDate(b.date);
-    return dateB.getTime() - dateA.getTime();
-  });
+  // 以日期排序 (使用 useMemo 優化效能)
+  const sortedData = useMemo(
+    () =>
+      [...data].sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        return dateB.getTime() - dateA.getTime();
+      }),
+    [data]
+  );
 
   // 顯示當前的文章
   const currentPosts = sortedData.slice(0, visibleCount);
