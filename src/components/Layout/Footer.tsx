@@ -32,7 +32,7 @@ const Footer = () => {
           <Link href='/aboutus' prefetch={false}>
             <p>關於</p>
           </Link>
-          <Link href='/Post/Editor/Support' prefetch={false}>
+          <Link href='/Post/8' prefetch={false}>
             <p>支持</p>
           </Link>
           <Link href='/supporter' prefetch={false}>
@@ -60,21 +60,21 @@ const Footer = () => {
         </div>
       </div>
 
-        <div className="w-full h-full bg-primary-black-300 dark:bg-white md:pb-0">
-          {
-            theme === 'dark' ?
-              <Image
-                src={IMG_dark}
-                alt={''}
-                className='w-full h-full'
-              />
-              :
-              <Image
-                src={IMG}
-                alt={''}
-                className='w-full h-full'
-              />
-          }
+      <div className="w-full h-full bg-primary-black-300 dark:bg-white md:pb-0">
+        {
+          theme === 'dark' ?
+            <Image
+              src={IMG_dark}
+              alt={''}
+              className='w-full h-full'
+            />
+            :
+            <Image
+              src={IMG}
+              alt={''}
+              className='w-full h-full'
+            />
+        }
       </div>
       {/* <div className='bg-gradient-to-b from-primary-black-300 via-neutral-white to-neutral-white dark:from-neutral-white dark:via-primary-black-300 dark:to-primary-black-300 from-5% via-50% to-95% h-32 lg:hidden' /> */}
     </>
