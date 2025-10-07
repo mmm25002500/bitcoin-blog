@@ -1,114 +1,252 @@
 # 比特幣中文部落格網站 - 文檔
-## 使用說明
-1. 在寫 Markdown 要使用 HTML 語法的 class的時候要使用 className。
-### 首頁
-1. 按鈕部分與 Sidebar 是分開的，如果要設定，要兩個都設定。
-### 文章
-1. 文章路徑為 `Article/${name}/${mdx name}`
-2. 文章元標頭為：
-> title: "文章標題" <br>
-> description: "文章描述" <br>
-> date: "YYYY-MM-DD HH:MM" <br>
-> tags: ["標籤1", "標籤2", "標籤n"] <br>
-> type: ['News','Post'] （類別：文章為Post，新聞為 News） <br>
-> img: "/Author/JohnCarter/author.png"（必須放在本地，其位置於`public/Author/${name}/author.png`） <br>
-> image: "https://網址/圖片檔名.副檔名" <br>
 
-#### 關於我們
-位置：`WebsiteArticle/About.mdx`
+## Resources
+- **Framework**: Next.js 14 (Pages Router)
+- **Language**: TypeScript
+- **CSS**: Tailwind CSS, Material Tailwind
+- **MD**: MDX (next-mdx-remote)
+- **DB**: Supabase
+- **Deploy**: Vercel
+- **Data**: Blockchair (BTC Data)
 
-#### 隱私權政策
-位置：`WebsiteArticle/PrivacyPolicy.mdx`
+## 開發環境設定
 
-#### 免責聲明
-位置：`WebsiteArticle/Disclaimer.mdx`
+### Installation
 
-### 搜尋頁面
-1. Creators 以純文字搜索。
-2. Posters 及 News 以標籤方式搜索。
-### 文章列表
-1. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `PostListAllPerpage`。
-### 文章內頁
-1. 如果該文章只有 News 而沒有 Post 則跳轉到新聞頁面。
-2. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `ArticlePostListMorePostPerclick`。
-3. 底部 More Posts 會根據標籤進行查詢，只要本文標籤有的，其他文章有的，都會被篩選出，另外排除掉重複的。
-### 新聞列表
-1. 如想更改 More Posts 一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `NewsListAllPerpage`。
-### 新聞內頁
-1. 如果該文章只有 Post 而沒有 News 則跳轉到文章頁面
-2. 如想更改一次點擊出現多少文章，則需更改 `src/config/SiteConfig.json` 中的 `ArticleNewsListMorePostPerclick`。
-3. 底部 More Posts 會根據標籤進行查詢，只要本文標籤有的，其他文章有的，都會被篩選出，另外排除掉重複的。
-### Sidebar
-1. 跟 Navbar 是獨立的按鈕，需分開設定。
-### Firebase
-1. 採用 Firebase Storage 存放，並在後端抓下來。
-### 文章後端
-1. 透過 API 從 Firebase 抓文章下來。
-### SEO
-1. 設定檔放在 `/src/config/SEO.json`。
-### 作者
-1. `/src/config/Author.json` 的 `id` 務必與 `/src/Articles/${USERNAME}` 一致。
+#### pnpm（Recommanded）
+```bash
+pnpm install
+```
 
-## 網站架構
-### 內部API
-#### ADDR
-路徑：`/api/{name}?lebel_1=val_1&label2=val_2&...`
-#### 功能表
-| API | Input | Output | 簡介 |
-| --- | --- | --- | --- |
-| getArticleLinkByFilename | req.query: { filename: string } | res: { title: string, authorData: { fullname?: string, name?: string, img?: string, description?: string, id: string }, date: string, description: string, link: string } | 根據檔案名取得文章的相關鏈接和信息 |
-| getMoreInfo | NONE | res: { category: string, post: { title: string, filename: string, description?: string, link: string, authorData: { fullname: string, name: string, img: string, description: string, id: string }, date: string }[] }[] | 根據 MoreInfo.json 中的信息取得更多文章的元數據 |
-| getPostsByFilter | req.query: { type: string, author: string, tag: string, mode: string } | res: { title: string, authorData: { fullname?: string, name?: string, img?: string, description?: string, id: string }, date: string, description: string, link: string }[] | 根據篩選條件取得符合條件的文章 |
-| getRelatedPosts | req.query: { tag: string, exclude: string, mode: string } | res: { title: string, authorData: { id: string }, date: string, description: string, link: string }[] | 根據標籤和排除的文章 ID 取得相關文章 |
-| getAuthorPostCount | req.query: { author: string<> } | res: { author: string, postCount: number } | 根據作者ID回傳該作者的文章數量 |
-| getAuthorsByDescription | req.query: { text: string } | res: { fullname: string, name: string, description: string, image: string, id: string }[] | 根據描述字段中的文本篩選作者 |
-| getBitcoinStats | NONE | JSON 格式的比特幣統計資料 | 使用 Blockchair API 取得比特幣統計資料並回傳 |
-| getAuthorConfig | NONE | res: { [authorID: string]: { fullname: string, name: string, img: string, description: string } } | 取得所有作者的設定信息 |
-| getArticleMarkdown | req.query: { userID: string, postID: string } | res: { content: string, data: { [key: string]: any } } | 根據用戶ID和文章ID取得文章的Markdown內容 |
+#### or npm
+```bash
+npm install
+```
 
-### 外部API
-| Hash Rate | Block Height | Price |
-| -------- | -------- | -------- |
-| BlockChair | BlockChair | BlockChair |
+### env var
+建立 `.env.local` 檔案並設定以下變數：
 
-### 使用資源
-| 內容 | 服務 |
-| ---- | ---- |
-| Post Backend | Firebase |
-| Backend Server | Vercel |
-| Frontend Server | Vercel |
-| BTC info Provider | BlockChair |
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-### 擷取 Tags
-```sh
+### Hot-Reloading
+
+```bash
+pnpm dev
+# or
+npm run dev
+```
+開發伺服器將在 `http://localhost:3000` 啟動。
+
+### Build
+```bash
+pnpm build
+# or
+npm run build
+```
+
+### Production
+
+```bash
+pnpm start
+# or
+npm start
+```
+
+## 內容管理
+### 文章與新聞（棄用）
+注意：本段已棄用，目前已更改為 DB 的方式擷取資料，也以使用 MD 而非 MDX。
+
+文章與新聞透過 Supabase 資料庫管理，並使用管理後台 (bitcoin-blog-admin) 進行上傳與編輯。
+
+文章元資料格式：
+```yaml
+---
+title: "文章標題"
+description: "文章描述"
+date: "YYYY-MM-DD HH:MM"
+tags: ["標籤1", "標籤2"]
+type: "Post" 或 "News"
+img: "/Author/作者ID/author.png"
+image: "https://圖片網址/圖片.jpg"
+---
+```
+
+### 作者設定（棄用）
+注意：本段已棄用，目前已更改為 DB 的方式擷取資料。
+
+編輯 `src/config/Author.json` 來新增或修改作者資訊：
+
+```json
+{
+  "authorID": {
+    "fullname": "作者全名",
+    "name": "作者簡稱",
+    "img": "/Author/authorID/author.png",
+    "description": "作者簡介"
+  }
+}
+```
+
+### 網站設定
+在 `src/config/SiteConfig.json` 中設定分頁與顯示數量：
+
+```json
+{
+  "ArticlePostListMorePostPerclick": 3,
+  "ArticleNewsListMorePostPerclick": 3,
+  "HomePageNewsListPerpage": 3,
+  "NewsListAllPerpage": 6,
+  "PostListAllPerpage": 6
+}
+```
+
+### SEO 設定
+
+編輯 `src/config/SEO.json` 來設定 SEO 相關資訊。
+
+## API 端點
+
+### 內部 API 路由
+
+所有 API 端點位於 `/api/` 路徑下，使用查詢參數傳遞資料。
+
+#### 文章相關 (Post)
+
+| API 端點 | 方法 | 查詢參數 | 說明 |
+|---------|------|---------|------|
+| `/api/Post/getPosts` | GET | - | 取得所有文章列表 |
+| `/api/Post/getPostByID` | GET | `id: string` | 根據 ID 取得單篇文章 |
+| `/api/Post/getPostsByUID` | GET | `uid: string` | 根據作者 UID 取得該作者的所有文章 |
+
+#### 新聞相關 (News)
+
+| API 端點 | 方法 | 查詢參數 | 說明 |
+|---------|------|---------|------|
+| `/api/News/getPosts` | GET | - | 取得所有新聞列表 |
+| `/api/News/getPostByID` | GET | `id: string` | 根據 ID 取得單則新聞 |
+| `/api/News/getPostsByUID` | GET | `uid: string` | 根據作者 UID 取得該作者的所有新聞 |
+
+#### 通用文章 API
+
+| API 端點 | 方法 | 查詢參數 | 說明 |
+|---------|------|---------|------|
+| `/api/getArticleByFilename` | GET | `filename: string` | 根據檔案名取得文章資訊與連結 |
+| `/api/getArticleMarkdown` | GET | `userID: string, postID: string` | 從 Supabase 取得文章的 Markdown 內容 |
+| `/api/getPostsByFilter` | GET | `type: string, author: string, tag: string, mode: string` | 根據類型、作者、標籤篩選文章 |
+| `/api/getRelatedPosts` | GET | `tag: string, exclude: string, mode: string` | 取得相關文章（根據標籤） |
+| `/api/getMoreInfo` | GET | - | 取得首頁「更多資訊」區塊的文章列表 |
+
+#### 作者相關
+
+| API 端點 | 方法 | 查詢參數 | 說明 |
+|---------|------|---------|------|
+| `/api/author/getAuthor` | GET | - | 取得所有作者列表 |
+| `/api/author/getAuthorByUID` | GET | `uid: string` | 根據 UID 取得特定作者資訊 |
+| `/api/getAuthorPostCount` | GET | `author: string` | 取得特定作者的文章數量 |
+| `/api/getAuthorsByDescription` | GET | `text: string` | 根據描述搜尋作者 |
+
+#### 標籤相關 (Tags)
+
+| API 端點 | 方法 | 查詢參數 | 說明 |
+|---------|------|---------|------|
+| `/api/tags/getAllTags` | GET | - | 取得所有標籤（Post + News） |
+| `/api/tags/Posts/getTags` | GET | - | 取得文章標籤列表 |
+| `/api/tags/News/getTags` | GET | - | 取得新聞標籤列表 |
+
+#### 類型相關 (Types)
+
+| API 端點 | 方法 | 查詢參數 | 說明 |
+|---------|------|---------|------|
+| `/api/types/getAllTypes` | GET | - | 取得所有類型 |
+| `/api/types/Posts/getTypes` | GET | - | 取得文章類型列表 |
+| `/api/types/News/getTypes` | GET | - | 取得新聞類型列表 |
+
+#### 其他
+
+| API 端點 | 方法 | 查詢參數 | 說明 |
+|---------|------|---------|------|
+| `/api/getBitcoinStats` | GET | - | 從 Blockchair API 取得比特幣統計資料 |
+
+### 外部 API
+
+專案使用 [Blockchair API](https://blockchair.com/) 取得比特幣即時資料：
+- 雜湊率 (Hash Rate)
+- 區塊高度 (Block Height)
+- 價格 (Price)
+
+## 主要功能
+
+### 頁面路由
+
+| 路由 | 說明 |
+|-----|------|
+| `/` | 首頁 |
+| `/Post/[id]` | 文章內頁 |
+| `/News/[id]` | 新聞內頁 |
+| `/Author/[userID]` | 作者頁面 |
+| `/Search` | 搜尋頁面 |
+| `/Search/[tab]/[items]` | 搜尋結果頁面 |
+| `/Tag/[tab]/[items]` | 標籤篩選頁面 |
+| `/aboutus` | 關於我們 |
+| `/PrivacyPolicy` | 隱私權政策 |
+| `/Disclaimer` | 免責聲明 |
+| `/supporter` | 支持者頁面 |
+
+### 搜尋功能
+
+- **作者搜尋 (Creators)**: 使用純文字搜尋作者描述
+- **文章搜尋 (Posts)**: 使用標籤篩選文章
+- **新聞搜尋 (News)**: 使用標籤篩選新聞
+
+### 側邊欄與導航欄
+
+- 側邊欄 (Sidebar) 與導航欄 (Navbar) 的按鈕是獨立設定的
+- 修改時需要分別調整兩者的設定
+
+### 文章自動跳轉
+
+- 如果文章只有 News 類型，訪問 Post 頁面時會自動跳轉到 News 頁面
+- 如果文章只有 Post 類型，訪問 News 頁面時會自動跳轉到 Post 頁面
+
+## 部署
+
+### 使用 Vercel 部署
+
+1. 將專案推送到 GitHub
+2. 在 Vercel 建立新專案並連結 GitHub 儲存庫
+3. 設定環境變數（SUPABASE_URL, SUPABASE_ANON_KEY）
+4. 部署
+
+### 環境變數設定
+
+在 Vercel 或本地環境中設定以下變數：
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## 開發注意事項
+
+### Markdown 語法
+
+在 MDX 檔案中使用 HTML 標籤時，class 屬性必須改用 `className`。
+
+### 時區設定
+
+文章列表的時間顯示使用 UTC+8 時區。
+
+### 工具指令
+
+擷取所有文章標籤（用於產生標籤列表）：
+
+```bash
 grep -r 'tags' . | sed -n 's/.*tags: \(.*\)/\1/p' | tr -d '[]' | tr ',' '\n' | sed 's/^ *//;s/ *$//' | tr -d '"' | tr -d "'" | sort -u | uniq | sed 's/^/"/;s/$/"/' | sed 's/$/,/'
 ```
 
-## Hot Reloading & Deployment
-### pnpm (recommendation)
-```bash
-# install necessary pkg
-pnpm i
-# hot reloading dev
-pnpm dev
-# deploy & compile
-pnpm build
-```
-### npm (Not recommended)
-```bash
-# install necessary pkg
-npm i
-# hot reloading dev
-npm run dev
-# deploy & compile
-npm run build
-```
-### yarn (Not recommended)
-```bash
-# install necessary pkg
-yarn
-# hot reloading dev
-yarn dev
-# deploy & compile
-yarn build
-```
+## 授權
+
+本專案為私有專案。
