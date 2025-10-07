@@ -30,11 +30,17 @@ const Header = () => {
 
 	// Date - moved to useEffect to avoid hydration mismatch
 	useEffect(() => {
-		const date = new Date();
-		const year = date.getFullYear();
-		const month = date.getMonth() + 1;
-		const day = date.getDate();
-		const week = date.getDay();
+		// 取得 UTC+8 台北時間
+		const now = new Date();
+		const utcTime = now.getTime();
+		const localOffset = now.getTimezoneOffset() * 60000;
+		const taipeiOffset = 8 * 60 * 60000;
+		const taipeiDate = new Date(utcTime + localOffset + taipeiOffset);
+
+		const year = taipeiDate.getFullYear();
+		const month = taipeiDate.getMonth() + 1;
+		const day = taipeiDate.getDate();
+		const week = taipeiDate.getDay();
 		const weekList = ["日", "一", "二", "三", "四", "五", "六"];
 		setToday(`${year}.${month}.${day} 星期${weekList[week]}`);
 	}, []);

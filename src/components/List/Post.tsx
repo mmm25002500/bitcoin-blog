@@ -7,12 +7,13 @@ import { FreeMode } from "swiper/modules";
 import defalutPostImage from "@/icons/examplePhoto/defaultPostImage.jpg";
 import { format } from "date-fns";
 import clsx from "clsx";
+import { toTaipeiTime } from "@/utils/timezone";
 
 const formatDate = (date: string) => {
-  const d = new Date(date);
+  const taipeiTime = toTaipeiTime(date);
   return {
-    date: format(d, "yyyy/MM/dd"),
-    time: format(d, "hh:mm a"),
+    date: format(taipeiTime, "yyyy/MM/dd"),
+    time: format(taipeiTime, "hh:mm a"),
   };
 };
 
