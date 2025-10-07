@@ -13,5 +13,6 @@ export interface PostProps {
 	id?: string;
 	idx?: number;
 	onClick?: () => void;
+	href?: string;
 	className?: string;
 }

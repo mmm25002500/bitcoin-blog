@@ -5,4 +5,5 @@ export interface CreateWalletData {
   photo_dark?: string;
   className?: string;
   onClick?: () => void;
+  href?: string;
 }

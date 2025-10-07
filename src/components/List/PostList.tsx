@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
 import Pagination from "../Pagination/Pagination";
-import { useRouter } from "next/router";
 import type { PostProps } from "@/types/List/PostData";
 
 const PostList = ({ data }: PostListData) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const postsPerPage = 6;
-
-	const router = useRouter();
 
 	// 以日期排序
 	const sortedData = data.sort(
@@ -33,7 +30,7 @@ const PostList = ({ data }: PostListData) => {
 				<Post
 					key={post.title}
 					idx={index}
-					onClick={() => router.push(`/Post/${post.id}`)}
+					href={`/Post/${post.id}`}
 					{...post}
 					className="px-5 sm:px-0"
 				/>

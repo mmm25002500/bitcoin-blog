@@ -3,6 +3,7 @@ export interface CardData {
   className?: string;
   children?: React.ReactNode;
   onClick?: () => void;
+  href?: string;
 }
 
 // Card 的左邊的 Data

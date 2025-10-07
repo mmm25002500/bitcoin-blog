@@ -1,7 +1,6 @@
 import CreateButton from "@/components/Card/CreateButton";
 import type { ButtonSectionProps } from "@/types/HomePage/ButtonSection";
 import CreateButton2 from "../Card/CreateButton2";
-import { useRouter } from "next/router";
 
 // Light Mode
 import Bitcoin_V2 from "@/icons/HomePage/biitcoin_v2.svg";
@@ -26,8 +25,6 @@ import Social_Dark from "@/icons/HomePage/social_dark.svg";
 import UseBTC_Dark from "@/icons/HomePage/use_btc_dark.svg";
 
 const ButtonSection = (props: ButtonSectionProps) => {
-  const router = useRouter();
-
   return (
     <>
       <div className={`sm:flex sm:gap-4 ${props.classname}`}>
@@ -37,7 +34,7 @@ const ButtonSection = (props: ButtonSectionProps) => {
             description="About BTC"
             photo_dark={Bitcoin_V2}
             photo_light={Bitcoin_V2_Dark}
-            onClick={() => router.push("/")}
+            href="/"
           />
         </div> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 justify-items-center gap-3 w-full gap-y-5">
@@ -46,63 +43,63 @@ const ButtonSection = (props: ButtonSectionProps) => {
             description="About Bitcoin"
             photo_dark={Bitcoin_V2}
             photo_light={Bitcoin_V2_Dark}
-            onClick={() => router.push("/Post/4")}
+            href="/Post/4"
           />
           <CreateButton
             title="錢包"
             description="Wallet"
             photo_dark={CryptoWallet}
             photo_light={CryptoWallet_Dark}
-            onClick={() => router.push("/Post/10")}
+            href="/Post/10"
           />
           <CreateButton
             title="購買 比特幣"
             description="Purchase bitcoin"
             photo_dark={BuyBic}
             photo_light={BuyBic_Dark}
-            onClick={() => router.push("/Post/5")}
+            href="/Post/5"
           />
           <CreateButton
             title="比特幣 挖礦"
             description="Bitcoin Mining"
             photo_dark={Mining}
             photo_light={Mining_Dark}
-            onClick={() => router.push("/Post/7")}
+            href="/Post/7"
           />
           <CreateButton
             title="使用"
             description="Use bitcoin"
             photo_dark={UseBTC}
             photo_light={UseBTC_Dark}
-            onClick={() => router.push("/Post/9")}
+            href="/Post/9"
           />
           <CreateButton
             title="加入社群"
             description="Join Bitcoin"
             photo_dark={Social}
             photo_light={Social_Dark}
-            onClick={() => router.push("/Post/6")}
+            href="/Post/6"
           />
           <CreateButton
             title="支持我們"
             description="Support us"
             photo_dark={coffee}
             photo_light={coffee_Dark}
-            onClick={() => router.push("/Post/8")}
+            href="/Post/8"
           />
           <CreateButton
             title="比特幣 更多資訊"
             description="more BTC"
             photo_dark={BicNews}
             photo_light={BicNews_Dark}
-            onClick={() => router.push("/moreBTC/about")}
+            href="/moreBTC/about"
           />
           <CreateButton
             title="其他新聞資訊"
             description="More info & news"
             photo_dark={blockchain}
             photo_light={blockchain_Dark}
-            onClick={() => router.push("/Tag/News/all")}
+            href="/Tag/News/all"
           />
         </div>
       </div>

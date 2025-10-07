@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
 import Pagination from "../Pagination/Pagination";
-import { useRouter } from "next/router";
 import type { PostProps } from "@/types/List/PostData";
 import { parse, isValid } from "date-fns";
 
@@ -11,8 +10,6 @@ const PostList = ({
 	postsPerPage,
 }: PostListData & { postsPerPage: number }) => {
 	const [currentPage, setCurrentPage] = useState(1);
-
-	const router = useRouter();
 
 	// 解析日期字符串
 	const parseDate = (dateString: string): Date => {
@@ -62,9 +59,7 @@ const PostList = ({
 				return (
 					<Post
 						key={post.title}
-						onClick={() =>
-							router.push(`/News/${post.id}`)
-						}
+						href={`/News/${post.id}`}
 						title={post.title}
 						description={post.description}
 						tags={post.tags}

@@ -23,6 +23,7 @@ const CreateWallet = (props: CreateWalletData) => {
       ${props.className}
       `}
 			onClick={props.onClick}
+			href={props.href}
 		>
 			<Card.Infomation className="leading-normal flex flex-col items-start text-left pl-5 grow">
 				<Card.Title

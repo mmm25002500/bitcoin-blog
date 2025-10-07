@@ -73,12 +73,6 @@ const NewsPage = ({
     }
   }, [id, initialPost?.frontMatter?.tags]);
 
-  // 如果是Post文章
-  // useEffect(() => {
-  // 	if (initialPost?.frontMatter?.type && !initialPost.frontMatter.type.includes("News"))
-  // 		router.push(`/Post/${id}`);
-  // }, [initialPost?.frontMatter?.type, id, router]);
-
   if (!initialPost || id === "undefined" || id === undefined) {
     return <NotFoundPage />;
   }

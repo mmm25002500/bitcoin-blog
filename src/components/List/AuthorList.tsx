@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import type { LawAuthorData } from "@/types/List/Author";
 import Pagination from "../Pagination/Pagination";
 import Author from "./Author";
@@ -11,8 +11,6 @@ interface AuthorListProps {
 const AuthorList = ({ data }: AuthorListProps) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const authorsPerPage = 6;
-
-	const router = useRouter();
 
 	// 計算作者範圍
 	const indexOfLastAuthor = currentPage * authorsPerPage;
@@ -28,13 +26,12 @@ const AuthorList = ({ data }: AuthorListProps) => {
 	return (
 		<>
 			{currentAuthors.map((author: LawAuthorData, index) => (
-				<button
-					type="button"
+				<Link
 					key={author.name}
-					onClick={() => router.push(`/Author/${author.id}`)}
+					href={`/Author/${author.id}`}
 				>
 					<Author idx={index} {...author} />
-				</button>
+				</Link>
 			))}
 
 			{/* 分頁按鈕 */}

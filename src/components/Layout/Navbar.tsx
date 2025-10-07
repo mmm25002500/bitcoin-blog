@@ -107,7 +107,6 @@ const Navbar = (props: NavbarProps) => {
             <div className="flex flex-1 sm:items-stretch sm:justify-start">
               <Link
                 href="/"
-                onClick={() => router.push("/")}
                 className="flex flex-shrink-0 items-center"
               >
                 {props.scrolled ? (
@@ -200,97 +199,79 @@ const Navbar = (props: NavbarProps) => {
                 description="About Bitcoin"
                 photo_dark={Bitcoin_V2}
                 photo_light={Bitcoin_V2_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/Post/Editor/about");
-                }}
+                href="/Post/4"
+                onClick={closeDrawer}
               />
               <SidebarBtn
                 title="錢包"
                 description="Wallet"
                 photo_dark={CryptoWallet}
                 photo_light={CryptoWallet_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/Post/Editor/Wallet");
-                }}
+                href="/Post/10"
+                onClick={closeDrawer}
               />
               <SidebarBtn
                 title="購買 比特幣"
                 description="Purchase bitcoin"
                 photo_dark={BuyBic}
                 photo_light={BuyBic_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/Post/Editor/Buy");
-                }}
+                href="/Post/5"
+                onClick={closeDrawer}
               />
               <SidebarBtn
                 title="比特幣 挖礦"
                 description="Bitcoin Mining"
                 photo_dark={Mining}
                 photo_light={Mining_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/Post/Editor/Mining");
-                }}
+                href="/Post/7"
+                onClick={closeDrawer}
               />
               <SidebarBtn
                 title="使用"
                 description="Use bitcoin"
                 photo_dark={UseBTC}
                 photo_light={UseBTC_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/Post/Editor/Use");
-                }}
+                href="/Post/9"
+                onClick={closeDrawer}
               />
               <SidebarBtn
                 title="加入社群"
                 description="Join Community"
                 photo_dark={Social}
                 photo_light={Social_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/Post/Editor/Join");
-                }}
+                href="/Post/6"
+                onClick={closeDrawer}
               />
               <SidebarBtn
                 title="支持我們"
                 description="Support us"
                 photo_dark={coffee}
                 photo_light={coffee_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/Post/Editor/Support");
-                }}
+                href="/Post/8"
+                onClick={closeDrawer}
               />
               <SidebarBtn
                 title="比特幣 更多資訊"
                 description="more BTC"
                 photo_dark={BicNews}
                 photo_light={BicNews_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/moreBTC/about");
-                }}
+                href="/moreBTC/about"
+                onClick={closeDrawer}
               />
               <SidebarBtn
                 title="其他新聞資訊"
                 description="More info & news"
                 photo_dark={blockchain}
                 photo_light={blockchain_Dark}
-                onClick={() => {
-                  closeDrawer();
-                  router.push("/Tag/News/all");
-                }}
+                href="/Tag/News/all"
+                onClick={closeDrawer}
               />
             </div>
           </Card>
           {/* Social Media */}
           <div className="absolute bottom-0 pb-5 py-2 left-0 w-full bg-neutral-white dark:bg-neutral-black">
             <div className="flex justify-center space-x-6">
-              {SocialMedia.map((item, index) => (
+              {SocialMedia.map((item) => (
                 <a
                   key={item.title}
                   href={item.link}

@@ -1,5 +1,6 @@
 import type * as CardData from "@/types/Card/Card";
 import Image from "next/image";
+import Link from "next/link";
 
 // 左邊的 Infomation
 const Infomation = (props: CardData.InfomationData) => {
@@ -33,6 +34,18 @@ const Photo = (props: CardData.PhotoData) => {
 
 // 整個 Card
 const Card = (props: CardData.CardData) => {
+	if (props.href) {
+		return (
+			<Link
+				href={props.href}
+				className={`
+      flex flex-row ${props.className}`}
+			>
+				{props.children}
+			</Link>
+		);
+	}
+
 	return (
 		<button
 			type="button"

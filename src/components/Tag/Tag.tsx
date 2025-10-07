@@ -1,15 +1,13 @@
 import type { TagData } from "@/types/Tag/Tag";
+import Link from "next/link";
 
 const Tag = (props: TagData) => {
 	return (
 		<>
-			<button
-				type="button"
-				onClick={() => {
-					window.location.href = `/Tag/${props.type}/${props.text}`;
-				}}
+			<Link
+				href={`/Tag/${props.type}/${props.text}`}
 				className={`
-        text-sm font-medium rounded-full border focus:outline-none leading-5
+        text-sm font-medium rounded-full border focus:outline-none leading-5 inline-block
 
         /* Light Mode */
         bg-white
@@ -31,7 +29,7 @@ const Tag = (props: TagData) => {
         ${props.className}`}
 			>
 				{props.text}
-			</button>
+			</Link>
 		</>
 	);
 };

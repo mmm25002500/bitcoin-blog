@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import type { MoreInfoSidebarProps } from "@/types/Sidebar/MoreInfoSidebar";
 import type { categoryData } from "@/types/MoreInfo/MoreInfo";
 import Image from "next/image";
@@ -7,7 +7,6 @@ import DownIcon from "@/icons/down.svg";
 
 const Sidebar = (props: MoreInfoSidebarProps) => {
 	const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-	const router = useRouter();
 
 	// 控制展開和收起
 	const handleToggle = (index: number) => {
@@ -52,17 +51,14 @@ const Sidebar = (props: MoreInfoSidebarProps) => {
 									key={post.title}
 									className={`py-2 ${props.path === `${post.filename}` ? "bg-neutral-100 text-neutral-black dark:bg-neutral-900 dark:text-neutral-white rounded-[4px]" : "text-neutral-800 dark:text-neutral-300"}`}
 								>
-									<button
-										type="button"
-										onClick={() => {
-											props.onChange(post.filename);
-											router.push(`/moreBTC/${post.filename}`);
-										}}
+									<Link
+										href={`/moreBTC/${post.filename}`}
+										onClick={() => props.onChange(post.filename)}
 									>
 										<span className="pl-4 px-2 font-normal text-sm leading-6 break-all block text-justify">
 											{post.title}
 										</span>
-									</button>
+									</Link>
 								</li>
 							))}
 						</ul>
