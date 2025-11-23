@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import Image from "next/image";
 import IMG from "@/icons/examplePhoto/S__4964469.jpg";
 import IMG2 from "@/icons/examplePhoto/S__4964468.jpg";
 import IMG3 from "@/icons/examplePhoto/S__4988942.png";
@@ -17,49 +18,68 @@ const SwiperSection = () => {
 	};
 
 	return (
-		<Swiper
-			pagination={pagination}
-			modules={[Pagination]}
-			className="h-[500px]"
-		>
+		<div className="relative h-[500px]">
+			{/* 預載入的 LCP 圖片 - 在初始 HTML 中渲染 */}
+			<Image
+				src={IMG}
+				alt="比特幣 改變金融的貨幣"
+				fill
+				priority
+				className="object-cover"
+			/>
+			<div className="absolute inset-0 bg-[rgba(19,21,25,0.5)]" />
+
+			{/* Swiper 覆蓋在預載入圖片上 */}
+			<div className="absolute inset-0">
+				<Swiper
+					pagination={pagination}
+					modules={[Pagination]}
+					className="h-[500px]"
+				>
+					<SwiperSlide>
+						<div className="relative h-[500px]">
+							<Image
+								src={IMG}
+								alt="比特幣 改變金融的貨幣"
+								fill
+								priority
+								className="object-cover"
+							/>
+							<div className="absolute inset-0 bg-[rgba(19,21,25,0.5)]" />
+							<div className="absolute pt-28 sm:pt-10 md:pt-20 px-12 sm:px-10 md:px-12 sm:pl-14 md:pl-28 z-10">
+								<p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
+									比特幣 改變金融的貨幣
+								</p>
+								<p className="text-white font-normal text-lg leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
+									了解比特幣 <br />
+									以及正在改變的現代世界
+								</p>
+							</div>
+							<Button
+								type={"small"}
+								onClick={() => console.log("test")}
+								className="absolute bottom-0 m-24 pt-3 pb-3 pr-10 pl-10 flex items-center gap-3 mt-10 sm:mt-7 z-10"
+							>
+								<p>開始</p>
+								<Icon
+									icon_light={Right}
+									icon_dark={Right}
+									className="dark:invert"
+								/>
+							</Button>
+						</div>
+					</SwiperSlide>
 			<SwiperSlide>
-				<div className="relative">
-					<div className="absolute pt-28 sm:pt-10 md:pt-20 px-12 sm:px-10 md:px-12 sm:pl-14 md:pl-28">
-						<p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
-							比特幣 改變金融的貨幣
-						</p>
-						<p className="text-white font-normal text-lg leading-6 sm:text-[33px] sm:leading-[55px] mt-5 tracking-wider">
-							了解比特幣 <br />
-							以及正在改變的現代世界
-						</p>
-					</div>
-					<Button
-						type={"small"}
-						onClick={() => console.log("test")}
-						className="absolute bottom-0 m-24 pt-3 pb-3 pr-10 pl-10 flex items-center gap-3 mt-10 sm:mt-7"
-					>
-						<p>開始</p>
-						<Icon
-							icon_light={Right}
-							icon_dark={Right}
-							className="dark:invert"
-						/>
-					</Button>
-					<div
-						style={{
-							backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG.src}')`,
-							backgroundAttachment: "fixed",
-							backgroundRepeat: "no-repeat",
-							backgroundSize: "cover",
-							backgroundPosition: "center",
-						}}
-						className="h-[500px]"
+				<div className="relative h-[500px]">
+					<Image
+						src={IMG2}
+						alt="比特幣 錢包"
+						fill
+						loading="lazy"
+						className="object-cover"
 					/>
-				</div>
-			</SwiperSlide>
-			<SwiperSlide>
-				<div className="relative">
-					<div className="absolute pt-28 sm:pt-10 md:pt-20 px-12 sm:px-10 md:px-12 sm:pl-14 md:pl-28">
+					<div className="absolute inset-0 bg-[rgba(19,21,25,0.5)]" />
+					<div className="absolute pt-28 sm:pt-10 md:pt-20 px-12 sm:px-10 md:px-12 sm:pl-14 md:pl-28 z-10">
 						<p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
 							比特幣 錢包
 						</p>
@@ -71,7 +91,7 @@ const SwiperSection = () => {
 					<Button
 						type={"small"}
 						onClick={() => console.log("test")}
-						className="absolute bottom-0 m-24 pt-3 pb-3 pr-10 pl-10 flex items-center gap-3 mt-10 sm:mt-7"
+						className="absolute bottom-0 m-24 pt-3 pb-3 pr-10 pl-10 flex items-center gap-3 mt-10 sm:mt-7 z-10"
 					>
 						<p>開始</p>
 						<Icon
@@ -80,21 +100,19 @@ const SwiperSection = () => {
 							className="dark:invert"
 						/>
 					</Button>
-					<div
-						style={{
-							backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG2.src}')`,
-							backgroundAttachment: "fixed",
-							backgroundRepeat: "no-repeat",
-							backgroundSize: "cover",
-							backgroundPosition: "center",
-						}}
-						className="h-[500px]"
-					/>
 				</div>
 			</SwiperSlide>
 			<SwiperSlide>
-				<div className="relative">
-					<div className="absolute pt-28 sm:pt-10 md:pt-20 px-12 sm:px-10 md:px-12 sm:pl-14 md:pl-28">
+				<div className="relative h-[500px]">
+					<Image
+						src={IMG3}
+						alt="比特幣 購買"
+						fill
+						loading="lazy"
+						className="object-cover"
+					/>
+					<div className="absolute inset-0 bg-[rgba(19,21,25,0.5)]" />
+					<div className="absolute pt-28 sm:pt-10 md:pt-20 px-12 sm:px-10 md:px-12 sm:pl-14 md:pl-28 z-10">
 						<p className="text-white uppercase font-black text-2xl leading-[32.78px] sm:text-5xl sm:leading-[65px] tracking-wider">
 							比特幣 購買
 						</p>
@@ -106,7 +124,7 @@ const SwiperSection = () => {
 					<Button
 						type={"small"}
 						onClick={() => console.log("test")}
-						className="absolute bottom-0 m-24 pt-3 pb-3 pr-10 pl-10 flex items-center gap-3 mt-10 sm:mt-7"
+						className="absolute bottom-0 m-24 pt-3 pb-3 pr-10 pl-10 flex items-center gap-3 mt-10 sm:mt-7 z-10"
 					>
 						<p>開始</p>
 						<Icon
@@ -115,19 +133,11 @@ const SwiperSection = () => {
 							className="dark:invert"
 						/>
 					</Button>
-					<div
-						style={{
-							backgroundImage: `linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url('${IMG3.src}')`,
-							backgroundAttachment: "fixed",
-							backgroundRepeat: "no-repeat",
-							backgroundSize: "cover",
-							backgroundPosition: "center",
-						}}
-						className="h-[500px]"
-					/>
 				</div>
-			</SwiperSlide>
-		</Swiper>
+				</SwiperSlide>
+			</Swiper>
+			</div>
+		</div>
 	);
 };
 
