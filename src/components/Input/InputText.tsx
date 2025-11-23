@@ -82,6 +82,7 @@ const InputText = (props: InputData) => {
 				<button
 					type="button"
 					onClick={props.onClick}
+					aria-label="搜尋"
 					className="
           rounded-full py-[9px] px-3 mr-2
           bg-primary-black-300
@@ -91,7 +92,7 @@ const InputText = (props: InputData) => {
           dark:bg-white
         "
 				>
-					<Image src={props.icon} className="dark:invert-0 invert" alt={""} />
+					<Image src={props.icon} className="dark:invert-0 invert" alt="" />
 				</button>
 			</div>
 		</div>
