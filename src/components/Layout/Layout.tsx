@@ -13,24 +13,18 @@ const Layout = ({ children }: LayoutData) => {
 	const [footerVisible, setFooterVisible] = useState(false);
 
 	useEffect(() => {
-		const handleScroll = () => {
-			if (footerRef.current) {
-				const rect = footerRef.current.getBoundingClientRect();
-				const windowHeight = window.innerHeight;
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				setFooterVisible(entry.isIntersecting);
+			},
+			{ threshold: 0, rootMargin: "-15px 0px 0px 0px" }
+		);
 
-				// 如果 Footer 頂部進入或可見
-				if (rect.top + 15 <= windowHeight && rect.bottom >= 0) {
-					setFooterVisible(true);
-				} else {
-					setFooterVisible(false);
-				}
-			}
-		};
+		if (footerRef.current) {
+			observer.observe(footerRef.current);
+		}
 
-		window.addEventListener("scroll", handleScroll);
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
+		return () => observer.disconnect();
 	}, []);
 
 	return (
