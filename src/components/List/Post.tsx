@@ -66,6 +66,8 @@ const Post = (props: PostProps) => {
             <Image
               src={defalutPostImage}
               alt="圖片載入失敗，請檢查網址"
+              width={236}
+              height={152}
               className="w-auto h-auto max-h-[78px] sm:max-h-[152px] rounded-md"
             />
           )}
