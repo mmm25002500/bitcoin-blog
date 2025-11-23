@@ -39,6 +39,7 @@ const Card = (props: CardData.CardData) => {
 			<Link
 				href={props.href}
 				className={`flex flex-row ${props.className}`}
+				onClick={props.onClick}
 			>
 				{props.children}
 			</Link>
