@@ -1,6 +1,6 @@
 import NotFoundPage from "@/pages/404";
 import { useRouter } from "next/router";
-import type { GetServerSideProps } from "next";
+import type { GetStaticProps, GetStaticPaths } from "next";
 import { serialize } from "next-mdx-remote/serialize";
 import axios from "axios";
 import type { MarkDownDataProps, MarkDownProps } from "@/types/User/UserID";
@@ -210,9 +210,15 @@ const PostPage = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params } = context;
-  const id = params?.id;
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const id = context.params?.id;
 
   if (!id) {
     return { notFound: true };
@@ -241,6 +247,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           frontMatter: data,
         },
       },
+      revalidate: 60, // ISR: 每 60 秒重新生成
     };
   } catch (error) {
     console.error("Error fetching article:", error);
