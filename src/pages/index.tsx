@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import useSWR from "swr";
 import ButtonSection from "@/components/HomePage/ButtonSection";
-import NewsSection from "@/components/HomePage/NewsSection";
 import SwiperSection from "@/components/HomePage/SwiperSection";
 import HorizontalLine from "@/components/HorizontalLine";
 import Header from "@/components/Layout/Header";
 import Navbar from "@/components/Layout/Navbar";
-// import SubscribeSection from "@/components/Page/SubscribeSection";
 import Head from "next/head";
-import type { GetServerSideProps } from "next";
+import type { GetStaticProps } from "next";
 import type { PostProps } from "@/types/List/PostData";
 import type { TagsProps } from "@/types/Tag/Tag";
 import HeaderInfo from "@/components/Layout/HeaderInfo";
 import SEO from "@/config/SEO.json";
 import SiteConfig from "@/config/SiteConfig.json";
 import { getBaseUrl } from "@/lib/utils";
+
+const NewsSection = dynamic(() => import("@/components/HomePage/NewsSection"), {
+  loading: () => <div className="h-96" />,
+});
 
 interface HomeProps {
   initialPosts: PostProps[] | undefined;
@@ -32,20 +35,22 @@ const Home = (props: HomeProps) => {
   const [selection, setSelection] = useState("all");
 
   const [scrolled, setScrolled] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
+  // 使用 Intersection Observer 替代 scroll 事件監聽
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 68) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setScrolled(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    if (sentinelRef.current) {
+      observer.observe(sentinelRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -70,6 +75,8 @@ const Home = (props: HomeProps) => {
 
       <HeaderInfo />
       <Header />
+      {/* Sentinel for scroll detection */}
+      <div ref={sentinelRef} className="absolute top-[68px] h-0" />
 
       <div
         className={`top-0 w-full z-50 ${scrolled ? "fixed bg-navbar-scrolled" : "bg-navbar-default"}`}
@@ -105,8 +112,8 @@ const Home = (props: HomeProps) => {
   );
 };
 
-// 取得首頁的初始資料
-export const getServerSideProps: GetServerSideProps = async () => {
+// 取得首頁的初始資料 - 使用 ISR 每 60 秒重新生成
+export const getStaticProps: GetStaticProps = async () => {
   try {
     // 從 API 取得 Tags
     const baseUrl = getBaseUrl();
@@ -134,6 +141,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         initialPosts: Array.isArray(postsData) ? postsData : [],
         initialTags: tagsData,
       },
+      revalidate: 60, // ISR: 每 60 秒重新生成頁面
     };
   } catch (error) {
     console.error("Error fetching initial data:", error);
@@ -146,6 +154,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
           Post: [],
         },
       },
+      revalidate: 60,
     };
   }
 };

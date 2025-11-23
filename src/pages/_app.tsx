@@ -6,6 +6,11 @@ import NextNProgress from 'nextjs-progressbar';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+// Font Awesome 優化 - 避免 CSS 重複載入
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
+
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
