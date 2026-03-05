@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import ButtonSection from "@/components/HomePage/ButtonSection";
@@ -11,6 +11,7 @@ import type { GetStaticProps } from "next";
 import type { PostProps } from "@/types/List/PostData";
 import type { TagsProps } from "@/types/Tag/Tag";
 import HeaderInfo from "@/components/Layout/HeaderInfo";
+import BitcoinPriceOverlay from "@/components/HomePage/BitcoinPriceOverlay";
 import SEO from "@/config/SEO.json";
 import SiteConfig from "@/config/SiteConfig.json";
 import { getBaseUrl } from "@/lib/utils";
@@ -36,6 +37,7 @@ const Home = (props: HomeProps) => {
 
   const [scrolled, setScrolled] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const [showPriceOverlay, setShowPriceOverlay] = useState(false);
 
   // 使用 Intersection Observer 替代 scroll 事件監聽
   useEffect(() => {
@@ -53,8 +55,73 @@ const Home = (props: HomeProps) => {
     return () => observer.disconnect();
   }, []);
 
+  // 在頂部往上滾觸發 Bitcoin 價格 overlay
+  const handleOverlayClose = useCallback(() => {
+    setShowPriceOverlay(false);
+  }, []);
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (window.scrollY === 0 && e.deltaY < 0 && !showPriceOverlay) {
+        setShowPriceOverlay(true);
+      }
+    };
+
+    let touchStartY = 0;
+    let isPullingDown = false;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      isPullingDown = false;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (showPriceOverlay) return;
+      const deltaY = e.touches[0].clientY - touchStartY;
+      // 在頂部往下拉時，阻止瀏覽器 pull-to-refresh
+      if (window.scrollY === 0 && deltaY > 0) {
+        e.preventDefault();
+        if (deltaY > 80) {
+          isPullingDown = true;
+        }
+      }
+    };
+
+    const handleTouchEnd = () => {
+      if (isPullingDown && window.scrollY === 0 && !showPriceOverlay) {
+        setShowPriceOverlay(true);
+      }
+      isPullingDown = false;
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    // touchmove 必須是 non-passive 才能 preventDefault
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [showPriceOverlay]);
+
+  // overlay 開啟時阻止頁面滾動
+  useEffect(() => {
+    if (showPriceOverlay) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showPriceOverlay]);
+
   return (
     <>
+      <BitcoinPriceOverlay open={showPriceOverlay} onClose={handleOverlayClose} />
       <Head>
         <title>{SEO.Index.title}</title>
         <meta name="description" content={SEO.Index.description} />

@@ -25,6 +25,7 @@
     "cookies-next": "^4.1.0",
     "date-fns": "^3.6.0",
     "gray-matter": "^4.0.3",
+    "lightweight-charts": "^5.1.0",
     "next": "^14.2.0",
     "next-mdx-remote": "^4.4.1",
     "next-themes": "^0.2.1",
