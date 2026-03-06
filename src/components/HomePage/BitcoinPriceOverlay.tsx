@@ -202,118 +202,126 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
     <div
       className={`fixed inset-0 z-[100]
         bg-white dark:bg-primary-black-300
+        flex flex-col
         ${closing ? "animate-slideUp" : "animate-slideDown"}`}
     >
-      <div className="px-5 py-5">
-        {/* 上方區域 */}
-        <div className="flex flex-row-reverse md:flex-col justify-between">
-          <div className="flex flex-col-reverse">
-            <p className="text-lg md:text-2xl font-bold">nowBTCprice.com</p>
-            <p className="text-sm md:text-base">powered by</p>
-          </div>
+      <div className="px-6 py-6 md:px-10 md:py-8 flex flex-col h-full">
 
-          {/* ICON */}
-          <div>
+        {/* 頂部：品牌 + 價格 */}
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          {/* 左：icon + branding */}
+          <div className="flex items-center gap-3">
             <Icon
               icon_light={btc_icon_dark}
               icon_dark={btc_icon_light}
               className='w-[47px]'
             />
+            <div>
+              <p className="text-sm md:text-base">powered by</p>
+              <p className="text-lg md:text-2xl font-bold">nowBTCprice.com</p>
+            </div>
+          </div>
+
+          {/* 手機版-價格 */}
+          <div className="flex items-baseline gap-2 md:hidden ">
+            <span className="text-xl">$</span>
+            <span className="text-5xl md:text-7xl font-bold">
+              {displayPrice !== null
+                ? formatPrice(displayPrice)
+                : "---"}
+            </span>
+            <span className="text-2xl">USD</span>
           </div>
         </div>
 
-        {/* 關閉按鈕 */}
-        {/* <div className="absolute top-6 right-6">
-        <CloseBtn onClick={handleClose} className="invert" />
-      </div> */}
-        <div className="flex flex-col md:flex-none md:grid md:grid-cols-2 h-[550px] md:h-[400px]">
-          {/* bitcoin price */}
-          <div className="flex flex-col md:flex-row md:items-stretch md:gap-3 mt-10 mb-10 h-fit">
-            <div className="flex flex-row-reverse justify-between md:flex-col">
-              <div className="text-2xl">USD</div>
-              <div className="text-xl text-right md:text-left">$</div>
+        {/* 中間：圖表 flex-1 */}
+        <div className="flex flex-col md:flex-row-reverse md:gap-32 h-full">
+          <div className="md:flex-1 min-h-0 my-4 h-[400px] md:h-full">
+            <div className="tradingview-widget-container h-full" ref={tvContainerRef}>
+              <div className="tradingview-widget-container__widget h-full" />
             </div>
-            <div>
-              <p className="text-9xl md:text-9xl md:font-bold text-center md:text-left">
+          </div>
+
+          {/* 底部：日期/時間 + 統計表 */}
+          <div className="flex flex-col-reverse md:flex-col gap-4 mt-auto mb-auto">
+            {/* 比特幣價格 */}
+            <div className="md:flex md:items-baseline gap-2 hidden">
+              <span className="text-sm xl:text-xl">$</span>
+              <span className="text-5xl lg:text-7xl xl:text-9xl font-bold">
                 {displayPrice !== null
                   ? formatPrice(displayPrice)
                   : "---"}
-              </p>
+              </span>
+              <span className="text-2xl xl:text-4xl">USD</span>
             </div>
-          </div>
-
-          {/* TradingView Chart */}
-          <div className="tradingview-widget-container" ref={tvContainerRef}>
-            <div className="tradingview-widget-container__widget" />
-          </div>
-        </div>
-
-        {/* 下方區域 */}
-        <div className="flex flex-col-reverse md:grid md:grid-cols-2">
-          <div className="flex flex-col-reverse md:flex-col items-center md:items-start">
-            {/* 格式：星期 日期 星期幾，如: TUE 3 MAR */}
-            <div className="flex items-center gap-2 text-2xl font-bold">
-              <Icon
-                icon_light={calendarIcon}
-                className="h-5 hidden md:block w-auto dark:invert"
-              />
-              {/* 電腦版-日期*/}
-              <div className="hidden md:block">
-                {`${now.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()} ${now.getDate()} ${now.toLocaleDateString("en-US", { month: "short" }).toUpperCase()}`}
+            <div className="flex flex-col-reverse md:flex-col items-center md:items-start">
+              {/* 格式：星期 日期 星期幾，如: TUE 3 MAR */}
+              <div className="flex items-center gap-2 text-2xl xl:text-4xl">
+                <Icon
+                  icon_light={calendarIcon}
+                  className="h-5 hidden md:block w-auto dark:invert"
+                />
+                {/* 電腦版-日期*/}
+                <div className="hidden md:block">
+                  {`${now.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()} ${now.getDate()} ${now.toLocaleDateString("en-US", { month: "short" }).toUpperCase()}`}
+                </div>
+                {/* 手機版-日期 */}
+                <div className="md:hidden">
+                  {`${now.toLocaleDateString("en-US", { year: "numeric" }).toUpperCase()} ${now.toLocaleDateString("en-US", { month: "short" }).toUpperCase()} ${now.getDate()} ${now.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()}`}
+                </div>
               </div>
-              {/* 手機版-日期 */}
-              <div className="md:hidden">
-                {`${now.toLocaleDateString("en-US", { year: "numeric" }).toUpperCase()} ${now.toLocaleDateString("en-US", { month: "short" }).toUpperCase()} ${now.getDate()} ${now.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()}`}
+              {/* 格式 小時:分鐘，小時為24小時制 */}
+              <div className="flex items-center gap-2 text-6xl xl:text-8xl py-2">
+                {now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}
               </div>
             </div>
-            {/* 格式 小時:分鐘，小時為24小時制 */}
-            <div className="flex items-center gap-2 text-6xl font-bold py-2">
-              {now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}
-            </div>
+            {/* 資訊 */}
+            <table>
+              <tbody className="text-xl xl:text-2xl">
+                <tr>
+                  <td className="flex items-center gap-1">
+                    <Icon
+                      icon_light={shovelIcon}
+                      className="h-5 w-auto mr-2 dark:invert"
+                    />
+                    <span className="text-black dark:text-white font-bold">Hash Rate</span>
+                  </td>
+                  <td className="text-right">
+                    {data?.hashrate_24h ? formatHashRate(data.hashrate_24h) : "---"}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="flex items-center gap-1">
+                    <Icon
+                      icon_light={boxIcon}
+                      className="h-5 w-auto mr-2 dark:invert"
+                    />
+                    <span className="text-black dark:text-white font-bold">Block Height</span>
+                  </td>
+                  <td className="text-right">
+                    <p>
+                      {data?.best_block_height
+                        ? data.best_block_height.toLocaleString()
+                        : "---"}
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="flex items-center gap-3">
+                    <p className="font-medium mr-2">฿</p>
+                    <span className="text-black dark:text-white font-bold">BTC.D</span>
+                  </td>
+                  <td className="text-right">
+                    <p>
+                      {data?.market_dominance_percentage
+                        ? `${data.market_dominance_percentage.toFixed(2)}%`
+                        : "---"}
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <table className="">
-            <tr>
-              <td className="flex items-center gap-1">
-                <Icon
-                  icon_light={shovelIcon}
-                  className="h-5 w-auto mr-2 dark:invert"
-                />
-                <span className="text-lg text-black dark:text-white font-bold">Hash Rate</span>
-              </td>
-              <td className="text-right">
-                {data?.hashrate_24h ? formatHashRate(data.hashrate_24h) : "---"}
-              </td>
-            </tr>
-            <tr>
-              <td className="flex items-center gap-1">
-                <Icon
-                  icon_light={boxIcon}
-                  className="h-5 w-auto mr-2 dark:invert"
-                />
-                <span className="text-lg text-black dark:text-white font-bold">Block Height</span>
-              </td>
-              <td className="text-right">
-                <p className="text-lg">
-                  {data?.best_block_height
-                    ? data.best_block_height.toLocaleString()
-                    : "---"}
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td className="flex items-center gap-3">
-                <p className="font-medium mr-2 text-lg">฿</p>
-                <span className="text-lg text-black dark:text-white font-bold">BTC.D</span>
-              </td>
-              <td className="text-right">
-                <p className="text-lg">
-                  {data?.market_dominance_percentage
-                    ? `${data.market_dominance_percentage.toFixed(2)}%`
-                    : "---"}
-                </p>
-              </td>
-            </tr>
-          </table>
         </div>
       </div>
     </div>
