@@ -287,7 +287,7 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
               </div>
             </div>
             {/* 資訊 */}
-            <table>
+            <table className="mt-2">
               <tbody className="text-xl xl:text-2xl">
                 <tr>
                   <td className="flex items-center gap-1">
