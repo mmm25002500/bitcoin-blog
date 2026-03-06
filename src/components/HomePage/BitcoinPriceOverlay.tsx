@@ -228,8 +228,8 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
               />
             </div>
             <div>
-              <p className="text-sm md:text-base">powered by</p>
-              <p className="text-lg md:text-2xl font-bold">nowBTCprice.com</p>
+              {/* <p className="text-sm md:text-base">powered by</p>
+              <p className="text-lg md:text-2xl font-bold">nowBTCprice.com</p> */}
             </div>
           </div>
 
