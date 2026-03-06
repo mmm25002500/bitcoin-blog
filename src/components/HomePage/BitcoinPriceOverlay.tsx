@@ -207,7 +207,7 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
         flex flex-col
         ${closing ? "animate-slideUp" : "animate-slideDown"}`}
     >
-      <div className="px-6 py-6 md:px-10 md:py-8 flex flex-col h-full">
+      <div className="px-6 py-6 md:px-10 md:py-14 flex flex-col h-full">
 
         {/* 頂部：品牌 + 價格 */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -254,10 +254,10 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
           </div>
 
           {/* 底部：日期/時間 + 統計表 */}
-          <div className="flex flex-col-reverse md:flex-col gap-4 mt-auto mb-auto">
+          <div className="flex flex-col-reverse md:flex-col gap-5 mt-auto mb-auto">
             {/* 比特幣價格 */}
-            <div className="md:flex md:items-baseline gap-2 hidden">
-              <span className="text-sm xl:text-xl">$</span>
+            <div className="md:flex md:items-baseline gap-2 hidden mb-10">
+              <span className="text-2xl xl:text-7xl">$</span>
               <span className="text-5xl lg:text-7xl xl:text-9xl font-bold">
                 {displayPrice !== null
                   ? formatPrice(displayPrice)
@@ -267,7 +267,7 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
             </div>
             <div className="flex flex-col-reverse md:flex-col items-center md:items-start">
               {/* 格式：星期 日期 星期幾，如: TUE 3 MAR */}
-              <div className="flex items-center gap-2 text-2xl xl:text-4xl">
+              <div className="flex items-center gap-2 text-2xl xl:text-4xl mb-2">
                 <Icon
                   icon_light={calendarIcon}
                   className="h-5 hidden md:block w-auto dark:invert"
