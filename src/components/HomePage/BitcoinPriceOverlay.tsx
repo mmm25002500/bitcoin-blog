@@ -4,6 +4,8 @@ import type { BitcoinPriceOverlayProps, BitcoinStats } from "@/types/HomePage/Bi
 import btc_icon_light from '@/icons/btc_footer_light.svg';
 import btc_icon_dark from '@/icons/btc_footer_dark.svg';
 import calendarIcon from "@/icons/calendar.svg";
+import shovelIcon from "@/icons/shovel.svg";
+import boxIcon from "@/icons/box.svg";
 import Icon from "../Icon";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -43,7 +45,7 @@ function useBinancePrice(enabled: boolean) {
           setPrice((prev) => prev ?? Number.parseFloat(data.price));
         }
       })
-      .catch(() => {});
+      .catch(() => { });
 
     const ws = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@ticker");
     wsRef.current = ws;
@@ -204,31 +206,35 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
     >
       <div className="px-5 py-5">
         {/* 上方區域 */}
-        <p className="text-2xl font-bold">nowBTCprice.com</p>
-        <p>powered by</p>
+        <div className="flex flex-row-reverse md:flex-col justify-between">
+          <div className="flex flex-col-reverse">
+            <p className="text-lg md:text-2xl font-bold">nowBTCprice.com</p>
+            <p className="text-sm md:text-base">powered by</p>
+          </div>
 
-        {/* ICON */}
-        <div>
-          <Icon
-            icon_light={btc_icon_dark}
-            icon_dark={btc_icon_light}
-            className='w-[47px]'
-          />
+          {/* ICON */}
+          <div>
+            <Icon
+              icon_light={btc_icon_dark}
+              icon_dark={btc_icon_light}
+              className='w-[47px]'
+            />
+          </div>
         </div>
 
         {/* 關閉按鈕 */}
         {/* <div className="absolute top-6 right-6">
         <CloseBtn onClick={handleClose} className="invert" />
       </div> */}
-        <div className="grid grid-cols-2 h-[400px]">
+        <div className="flex flex-col md:flex-none md:grid md:grid-cols-2 h-[550px] md:h-[400px]">
           {/* bitcoin price */}
-          <div className="flex items-stretch gap-3 mt-10 mb-10 h-fit">
-            <div className="flex flex-col justify-between">
+          <div className="flex flex-col md:flex-row md:items-stretch md:gap-3 mt-10 mb-10 h-fit">
+            <div className="flex flex-row-reverse justify-between md:flex-col">
               <div className="text-2xl">USD</div>
-              <div className="text-xl text-right">$</div>
+              <div className="text-xl text-right md:text-left">$</div>
             </div>
             <div>
-              <p className="text-7xl font-bold">
+              <p className="text-9xl md:text-9xl md:font-bold text-center md:text-left">
                 {displayPrice !== null
                   ? formatPrice(displayPrice)
                   : "---"}
@@ -243,35 +249,50 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
         </div>
 
         {/* 下方區域 */}
-        <div className="grid grid-cols-2">
-          <div className="">
+        <div className="flex flex-col-reverse md:grid md:grid-cols-2">
+          <div className="flex flex-col-reverse md:flex-col items-center md:items-start">
             {/* 格式：星期 日期 星期幾，如: TUE 3 MAR */}
-            <div className="flex items-center gap-2 text-2xl font-blod">
+            <div className="flex items-center gap-2 text-2xl font-bold">
               <Icon
                 icon_light={calendarIcon}
-                className="h-5 block w-auto dark:invert"
+                className="h-5 hidden md:block w-auto dark:invert"
               />
-              {`${now.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()} ${now.getDate()} ${now.toLocaleDateString("en-US", { month: "short" }).toUpperCase()}`}
+              {/* 電腦版-日期*/}
+              <div className="hidden md:block">
+                {`${now.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()} ${now.getDate()} ${now.toLocaleDateString("en-US", { month: "short" }).toUpperCase()}`}
+              </div>
+              {/* 手機版-日期 */}
+              <div className="md:hidden">
+                {`${now.toLocaleDateString("en-US", { year: "numeric" }).toUpperCase()} ${now.toLocaleDateString("en-US", { month: "short" }).toUpperCase()} ${now.getDate()} ${now.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()}`}
+              </div>
             </div>
             {/* 格式 小時:分鐘，小時為24小時制 */}
-            <div className="flex items-center gap-2 text-6xl font-blod">
+            <div className="flex items-center gap-2 text-6xl font-bold py-2">
               {now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}
             </div>
           </div>
           <table className="">
             <tr>
-              <td>
+              <td className="flex items-center gap-1">
+                <Icon
+                  icon_light={shovelIcon}
+                  className="h-5 w-auto mr-2 dark:invert"
+                />
                 <span className="text-lg text-black dark:text-white font-bold">Hash Rate</span>
               </td>
-              <td>
+              <td className="text-right">
                 {data?.hashrate_24h ? formatHashRate(data.hashrate_24h) : "---"}
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="flex items-center gap-1">
+                <Icon
+                  icon_light={boxIcon}
+                  className="h-5 w-auto mr-2 dark:invert"
+                />
                 <span className="text-lg text-black dark:text-white font-bold">Block Height</span>
               </td>
-              <td>
+              <td className="text-right">
                 <p className="text-lg">
                   {data?.best_block_height
                     ? data.best_block_height.toLocaleString()
@@ -280,10 +301,11 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="flex items-center gap-3">
+                <p className="font-medium mr-2 text-lg">฿</p>
                 <span className="text-lg text-black dark:text-white font-bold">BTC.D</span>
               </td>
-              <td>
+              <td className="text-right">
                 <p className="text-lg">
                   {data?.market_dominance_percentage
                     ? `${data.market_dominance_percentage.toFixed(2)}%`
