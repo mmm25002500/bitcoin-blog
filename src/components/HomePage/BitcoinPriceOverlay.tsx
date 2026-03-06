@@ -3,6 +3,8 @@ import useSWR from "swr";
 import type { BitcoinPriceOverlayProps, BitcoinStats } from "@/types/HomePage/BitcoinPriceOverlay";
 import btc_icon_light from '@/icons/btc_footer_light.svg';
 import btc_icon_dark from '@/icons/btc_footer_dark.svg';
+import icon_dark from '@/icons/icon_dark.svg';
+import icon_light from '@/icons/icon_light.svg';
 import calendarIcon from "@/icons/calendar.svg";
 import shovelIcon from "@/icons/shovel.svg";
 import boxIcon from "@/icons/box.svg";
@@ -211,11 +213,20 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           {/* 左：icon + branding */}
           <div className="flex items-center gap-3">
-            <Icon
-              icon_light={btc_icon_dark}
-              icon_dark={btc_icon_light}
-              className='w-[47px]'
-            />
+            <div className="hidden md:block">
+              <Icon
+                icon_light={icon_light}
+                icon_dark={icon_dark}
+                className=''
+              />
+            </div>
+            <div className="md:hidden">
+              <Icon
+                icon_light={btc_icon_dark}
+                icon_dark={btc_icon_light}
+                className='w-[47px]'
+              />
+            </div>
             <div>
               <p className="text-sm md:text-base">powered by</p>
               <p className="text-lg md:text-2xl font-bold">nowBTCprice.com</p>
