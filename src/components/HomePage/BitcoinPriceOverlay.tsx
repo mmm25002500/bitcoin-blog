@@ -72,12 +72,18 @@ function useBinancePrice(enabled: boolean) {
   return price;
 }
 
-const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
+const DISMISS_THRESHOLD = 0.3; // 滑動超過 30% 就關閉
+const SCROLL_SENSITIVITY = 0.003; // 滾輪靈敏度
+
+const BitcoinPriceOverlay = ({ open, onClose, enterProgress }: BitcoinPriceOverlayProps) => {
   const [closing, setClosing] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [now, setNow] = useState(new Date());
   const tvContainerRef = useRef<HTMLDivElement | null>(null);
   const [isDark, setIsDark] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0); // 0 = fully visible, 1 = fully dismissed
+  const scrollProgressRef = useRef(0);
+  const isSnappingRef = useRef(false);
 
   // 偵測 dark mode
   useEffect(() => {
@@ -142,61 +148,116 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
     return () => clearInterval(timer);
   }, [mounted]);
 
-  const handleClose = useCallback(() => {
-    setClosing(true);
-    setTimeout(() => {
-      setClosing(false);
-      setMounted(false);
-      onClose();
-    }, 400);
-  }, [onClose]);
-
-  // 當 open 變為 true 時，掛載組件並開始顯示
+  // 當 enterProgress > 0 或 open 變為 true 時，掛載組件
   useEffect(() => {
-    if (open) {
+    if (open || enterProgress > 0) {
       setMounted(true);
       setClosing(false);
+      setScrollProgress(0);
+      scrollProgressRef.current = 0;
+      isSnappingRef.current = false;
+    } else if (!open && enterProgress === 0) {
+      setMounted(false);
     }
-  }, [open]);
+  }, [open, enterProgress]);
 
-  // 監聽滾輪事件以支援往下滾動關閉
+  // 平滑 snap 回原位或關閉
+  const snapTo = useCallback((target: number) => {
+    if (isSnappingRef.current) return;
+    isSnappingRef.current = true;
+
+    if (target >= 1) {
+      setClosing(true);
+      setScrollProgress(1);
+      scrollProgressRef.current = 1;
+      setTimeout(() => {
+        setClosing(false);
+        setMounted(false);
+        setScrollProgress(0);
+        scrollProgressRef.current = 0;
+        isSnappingRef.current = false;
+        onClose();
+      }, 300);
+    } else {
+      const start = scrollProgressRef.current;
+      const duration = 250;
+      const startTime = performance.now();
+
+      const animate = (time: number) => {
+        const elapsed = time - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const eased = 1 - (1 - t) * (1 - t);
+        const value = start * (1 - eased);
+        scrollProgressRef.current = value;
+        setScrollProgress(value);
+        if (t < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          isSnappingRef.current = false;
+        }
+      };
+      requestAnimationFrame(animate);
+    }
+  }, [onClose]);
+
+  // 監聽滾輪事件以支援往下滾動關閉（只在完全打開後才啟用）
   useEffect(() => {
-    if (!mounted || closing) return;
+    if (!open || !mounted || closing) return;
 
     const handleWheel = (e: WheelEvent) => {
-      if (e.deltaY > 0) {
-        handleClose();
+      if (isSnappingRef.current) return;
+
+      const delta = e.deltaY * SCROLL_SENSITIVITY;
+      const next = Math.max(0, Math.min(1, scrollProgressRef.current + delta));
+      scrollProgressRef.current = next;
+      setScrollProgress(next);
+
+      if (next >= DISMISS_THRESHOLD) {
+        snapTo(1);
       }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: true });
     return () => window.removeEventListener("wheel", handleWheel);
-  }, [mounted, closing, handleClose]);
+  }, [open, mounted, closing, snapTo]);
 
-  // 監聽觸控事件以支援手機往下滑動關閉
+  // 監聽觸控事件以支援手機往下滑動關閉（只在完全打開後才啟用）
   useEffect(() => {
-    if (!mounted || closing) return;
+    if (!open || !mounted || closing) return;
 
     let touchStartY = 0;
 
     const handleTouchStart = (e: TouchEvent) => {
+      if (isSnappingRef.current) return;
       touchStartY = e.touches[0].clientY;
     };
 
-    const handleTouchEnd = (e: TouchEvent) => {
-      const deltaY = touchStartY - e.changedTouches[0].clientY;
-      if (deltaY > 50) {
-        handleClose();
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isSnappingRef.current) return;
+      const deltaY = touchStartY - e.touches[0].clientY;
+      const progress = Math.max(0, Math.min(1, deltaY / window.innerHeight));
+      scrollProgressRef.current = progress;
+      setScrollProgress(progress);
+    };
+
+    const handleTouchEnd = () => {
+      if (isSnappingRef.current) return;
+      if (scrollProgressRef.current >= DISMISS_THRESHOLD) {
+        snapTo(1);
+      } else {
+        snapTo(0);
       }
     };
 
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
     return () => {
       window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [mounted, closing, handleClose]);
+  }, [open, mounted, closing, snapTo]);
 
   if (!mounted) return null;
 
@@ -204,8 +265,15 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
     <div
       className={`fixed inset-0 z-[100]
         bg-white dark:bg-primary-black-300
-        flex flex-col
-        ${closing ? "animate-slideUp" : "animate-slideDown"}`}
+        flex flex-col`}
+      style={{
+        transform: !open
+          ? `translateY(-${(1 - enterProgress) * 100}%)` // 開啟過渡：從 -100% 往 0 滑
+          : scrollProgress > 0 || closing
+            ? `translateY(-${scrollProgress * 100}%)` // 關閉過渡：從 0 往 -100% 滑
+            : 'translateY(0)',
+        transition: closing ? 'transform 0.3s ease-in' : 'none',
+      }}
     >
       <div className="px-6 py-6 md:px-10 md:py-14 flex flex-col h-full">
 
@@ -319,7 +387,7 @@ const BitcoinPriceOverlay = ({ open, onClose }: BitcoinPriceOverlayProps) => {
                 </tr>
                 <tr>
                   <td className="flex items-center gap-3">
-                    <p className="font-medium mr-2">฿</p>
+                    <p className="font-medium mr-1">฿</p>
                     <span className="text-black dark:text-white font-bold">BTC.D</span>
                   </td>
                   <td className="text-right">

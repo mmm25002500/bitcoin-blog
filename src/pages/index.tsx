@@ -38,8 +38,11 @@ const Home = (props: HomeProps) => {
   const [scrolled, setScrolled] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [showPriceOverlay, setShowPriceOverlay] = useState(false);
+  const [enterProgress, setEnterProgress] = useState(0); // 0~1 開啟過渡進度
+  const enterProgressRef = useRef(0);
+  const isSnappingRef = useRef(false);
 
-  // 使用 Intersection Observer 替代 scroll 事件監聽
+  // 使用 Intersection Observer 替代 scroll 事件監聯
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -55,47 +58,118 @@ const Home = (props: HomeProps) => {
     return () => observer.disconnect();
   }, []);
 
+  const ENTER_THRESHOLD = 0.3;
+  const ENTER_SCROLL_SENSITIVITY = 0.003;
+
   // 在頂部往上滾觸發 Bitcoin 價格 overlay
   const handleOverlayClose = useCallback(() => {
     setShowPriceOverlay(false);
+    setEnterProgress(0);
+    enterProgressRef.current = 0;
+    isSnappingRef.current = false;
+  }, []);
+
+  // snap 進度到目標值（1=完全打開, 0=收回）
+  const snapEnterTo = useCallback((target: number) => {
+    if (isSnappingRef.current) return;
+    isSnappingRef.current = true;
+
+    if (target >= 1) {
+      // 完全打開
+      const start = enterProgressRef.current;
+      const duration = 250;
+      const startTime = performance.now();
+      const animate = (time: number) => {
+        const elapsed = time - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const eased = 1 - (1 - t) * (1 - t);
+        const value = start + (1 - start) * eased;
+        enterProgressRef.current = value;
+        setEnterProgress(value);
+        if (t < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setShowPriceOverlay(true);
+          isSnappingRef.current = false;
+        }
+      };
+      requestAnimationFrame(animate);
+    } else {
+      // 收回
+      const start = enterProgressRef.current;
+      const duration = 250;
+      const startTime = performance.now();
+      const animate = (time: number) => {
+        const elapsed = time - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const eased = 1 - (1 - t) * (1 - t);
+        const value = start * (1 - eased);
+        enterProgressRef.current = value;
+        setEnterProgress(value);
+        if (t < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          isSnappingRef.current = false;
+        }
+      };
+      requestAnimationFrame(animate);
+    }
   }, []);
 
   useEffect(() => {
+    if (showPriceOverlay) return;
+
     const handleWheel = (e: WheelEvent) => {
-      if (window.scrollY === 0 && e.deltaY < 0 && !showPriceOverlay) {
-        setShowPriceOverlay(true);
+      if (isSnappingRef.current) return;
+      if (window.scrollY !== 0) return;
+
+      // deltaY < 0 = 往上滑 → 拉出 overlay
+      if (e.deltaY < 0) {
+        const delta = Math.abs(e.deltaY) * ENTER_SCROLL_SENSITIVITY;
+        const next = Math.min(1, enterProgressRef.current + delta);
+        enterProgressRef.current = next;
+        setEnterProgress(next);
+
+        if (next >= ENTER_THRESHOLD) {
+          snapEnterTo(1);
+        }
+      } else if (e.deltaY > 0 && enterProgressRef.current > 0) {
+        // 往下滑 → 收回 overlay
+        const delta = e.deltaY * ENTER_SCROLL_SENSITIVITY;
+        const next = Math.max(0, enterProgressRef.current - delta);
+        enterProgressRef.current = next;
+        setEnterProgress(next);
       }
     };
 
     let touchStartY = 0;
-    let isPullingDown = false;
 
     const handleTouchStart = (e: TouchEvent) => {
+      if (isSnappingRef.current) return;
       touchStartY = e.touches[0].clientY;
-      isPullingDown = false;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (showPriceOverlay) return;
+      if (isSnappingRef.current || showPriceOverlay) return;
       const deltaY = e.touches[0].clientY - touchStartY;
-      // 在頂部往下拉時，阻止瀏覽器 pull-to-refresh
       if (window.scrollY === 0 && deltaY > 0) {
         e.preventDefault();
-        if (deltaY > 80) {
-          isPullingDown = true;
-        }
+        const progress = Math.min(1, deltaY / window.innerHeight);
+        enterProgressRef.current = progress;
+        setEnterProgress(progress);
       }
     };
 
     const handleTouchEnd = () => {
-      if (isPullingDown && window.scrollY === 0 && !showPriceOverlay) {
-        setShowPriceOverlay(true);
+      if (isSnappingRef.current || showPriceOverlay) return;
+      if (enterProgressRef.current >= ENTER_THRESHOLD) {
+        snapEnterTo(1);
+      } else if (enterProgressRef.current > 0) {
+        snapEnterTo(0);
       }
-      isPullingDown = false;
     };
 
     window.addEventListener("wheel", handleWheel, { passive: true });
-    // touchmove 必須是 non-passive 才能 preventDefault
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
@@ -105,7 +179,7 @@ const Home = (props: HomeProps) => {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [showPriceOverlay]);
+  }, [showPriceOverlay, snapEnterTo]);
 
   // overlay 開啟時阻止頁面滾動
   useEffect(() => {
@@ -121,7 +195,7 @@ const Home = (props: HomeProps) => {
 
   return (
     <>
-      <BitcoinPriceOverlay open={showPriceOverlay} onClose={handleOverlayClose} />
+      <BitcoinPriceOverlay open={showPriceOverlay} onClose={handleOverlayClose} enterProgress={enterProgress} />
       <Head>
         <title>{SEO.Index.title}</title>
         <meta name="description" content={SEO.Index.description} />
