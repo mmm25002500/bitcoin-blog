@@ -263,9 +263,9 @@ const BitcoinPriceOverlay = ({ open, onClose, enterProgress }: BitcoinPriceOverl
 
   return (
     <div
-      className={`fixed inset-0 z-[100]
+      className={`fixed top-0 left-0 w-full h-[100dvh] z-[100]
         bg-white dark:bg-primary-black-300
-        flex flex-col`}
+        flex flex-col overflow-hidden`}
       style={{
         transform: !open
           ? `translateY(-${(1 - enterProgress) * 100}%)` // 開啟過渡：從 -100% 往 0 滑
