@@ -387,7 +387,7 @@ const BitcoinPriceOverlay = ({ open, onClose, enterProgress }: BitcoinPriceOverl
                 </tr>
                 <tr>
                   <td className="flex items-center gap-3">
-                    <p className="font-medium mr-1">฿</p>
+                    <p className="font-medium mr-[7px] sm:mr-1">฿</p>
                     <span className="text-black dark:text-white font-bold">BTC.D</span>
                   </td>
                   <td className="text-right">
