@@ -275,7 +275,7 @@ const BitcoinPriceOverlay = ({ open, onClose, enterProgress }: BitcoinPriceOverl
         transition: closing ? 'transform 0.3s ease-in' : 'none',
       }}
     >
-      <div className="px-6 py-6 md:px-10 md:py-14 flex flex-col h-full">
+      <div className="px-6 py-6 md:px-10 md:py-14 flex flex-col flex-1 min-h-0">
 
         {/* 頂部：品牌 + 價格 */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -314,8 +314,8 @@ const BitcoinPriceOverlay = ({ open, onClose, enterProgress }: BitcoinPriceOverl
         </div>
 
         {/* 中間：圖表 flex-1 */}
-        <div className="flex flex-col md:flex-row-reverse md:gap-32 h-full">
-          <div className="md:flex-1 min-h-0 my-4 h-[400px] md:h-full">
+        <div className="flex flex-col md:flex-row-reverse md:gap-32 flex-1 min-h-0">
+          <div className="flex-1 min-h-0 my-4">
             <div className="tradingview-widget-container h-full" ref={tvContainerRef}>
               <div className="tradingview-widget-container__widget h-full" />
             </div>
