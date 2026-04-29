@@ -335,7 +335,7 @@ const BitcoinPriceOverlay = ({ open, onClose, enterProgress }: BitcoinPriceOverl
             </div>
             <div className="flex flex-col-reverse md:flex-col items-center md:items-start">
               {/* 格式：星期 日期 星期幾，如: TUE 3 MAR */}
-              <div className="flex items-center gap-2 text-2xl xl:text-4xl mb-2">
+              <div className="flex items-center gap-2 text-2xl xl:text-4xl mb-1">
                 <Icon
                   icon_light={calendarIcon}
                   className="h-5 hidden md:block w-auto dark:invert"
