@@ -58,8 +58,9 @@ const Navbar = (props: NavbarProps) => {
   const router = useRouter();
 
   // 處理搜尋
-  const handleSearch = () => {
-    const newPath = `/Search/Posters/${searchList.join(",")}`;
+  const handleSearch = (list?: string[]) => {
+    const searchTerms = list ?? searchList;
+    const newPath = `/Search/Posters/${searchTerms.join(",")}`;
     if (router.asPath !== newPath) {
       router.push(newPath);
     }

@@ -120,8 +120,9 @@ const SearchPage = ({
   };
 
   // 處理 Poster 及 News 搜尋
-  const handleSearch = () => {
-    searchText && redirect(selectedTab, searchText);
+  const handleSearch = (list?: string[]) => {
+    const terms = list ? list.join(",") : searchText;
+    terms && redirect(selectedTab, terms);
   };
 
   // 重新導向 帶有陣列字串的搜尋

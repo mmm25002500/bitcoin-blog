@@ -26,6 +26,17 @@ const InputLabel = (props: InputLabelProps) => {
 		props.onChange([...content, contentTemp]);
 	};
 
+	// 點擊搜尋按鈕：先把尚未送出的輸入加入標籤，再觸發搜尋
+	const handleSearchClick = () => {
+		const newContent = contentTemp ? [...content, contentTemp] : content;
+		if (contentTemp) {
+			setContent(newContent);
+			setContentTemp("");
+		}
+		props.onChange(newContent);
+		props.onClick(newContent);
+	};
+
 	// 移除標籤
 	const removeContent = (index: number) => {
 		const newContent = content.filter((_, i) => i !== index);
@@ -96,7 +107,10 @@ const InputLabel = (props: InputLabelProps) => {
 				<div className="flex-none">
 					<button
 						type="button"
-						onClick={() => setContent([])}
+						onClick={() => {
+							setContent([]);
+							props.onChange([]);
+						}}
 						className="
             rounded-full py-[9px] px-3
             text-sm font-medium
@@ -114,7 +128,7 @@ const InputLabel = (props: InputLabelProps) => {
 			<div className="flex-none">
 				<button
 					type="button"
-					onClick={props.onClick}
+					onClick={handleSearchClick}
 					aria-label="搜尋"
 					className="
           rounded-full py-[9px] px-3 mr-2

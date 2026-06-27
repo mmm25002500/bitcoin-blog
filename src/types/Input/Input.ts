@@ -14,7 +14,7 @@ export interface InputLabelProps {
   icon: string;
   text: string[];
   frontIcon?: boolean;
-  onClick: () => void;
+  onClick: (text?: string[]) => void;
   onChange: (text: string[]) => void;
   className?: string;
 }
