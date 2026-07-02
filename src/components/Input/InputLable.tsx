@@ -7,46 +7,46 @@ import Label from "../Label/Label";
 import Image from "next/image";
 
 const InputLabel = (props: InputLabelProps) => {
-	const [contentTemp, setContentTemp] = useState("");
-	const [content, setContent] = useState<string[]>(props.text);
+  const [contentTemp, setContentTemp] = useState("");
+  const [content, setContent] = useState<string[]>(props.text);
 
-	// 如果 props.text 有值，則將其設定為 content
-	useEffect(() => {
-		if (props.text) {
-			setContent(props.text);
-		}
-	}, [props.text]);
+  // 如果 props.text 有值，則將其設定為 content
+  useEffect(() => {
+    if (props.text) {
+      setContent(props.text);
+    }
+  }, [props.text]);
 
-	// 新增標籤
-	const addContent = () => {
-		if (contentTemp) {
-			setContent([...content, contentTemp]);
-			setContentTemp("");
-		}
-		props.onChange([...content, contentTemp]);
-	};
+  // 新增標籤
+  const addContent = () => {
+    if (contentTemp) {
+      setContent([...content, contentTemp]);
+      setContentTemp("");
+    }
+    props.onChange([...content, contentTemp]);
+  };
 
-	// 點擊搜尋按鈕：先把尚未送出的輸入加入標籤，再觸發搜尋
-	const handleSearchClick = () => {
-		const newContent = contentTemp ? [...content, contentTemp] : content;
-		if (contentTemp) {
-			setContent(newContent);
-			setContentTemp("");
-		}
-		props.onChange(newContent);
-		props.onClick(newContent);
-	};
+  // 點擊搜尋按鈕：先把尚未送出的輸入加入標籤，再觸發搜尋
+  const handleSearchClick = () => {
+    const newContent = contentTemp ? [...content, contentTemp] : content;
+    if (contentTemp) {
+      setContent(newContent);
+      setContentTemp("");
+    }
+    props.onChange(newContent);
+    props.onClick(newContent);
+  };
 
-	// 移除標籤
-	const removeContent = (index: number) => {
-		const newContent = content.filter((_, i) => i !== index);
-		setContent(newContent);
-		props.onChange(newContent);
-	};
+  // 移除標籤
+  const removeContent = (index: number) => {
+    const newContent = content.filter((_, i) => i !== index);
+    setContent(newContent);
+    props.onChange(newContent);
+  };
 
-	return (
-		<div
-			className={`
+  return (
+    <div
+      className={`
         ${content.length > 2 ? "rounded-3xl" : "rounded-full"}
         border-0
         relative flex items-center
@@ -66,71 +66,71 @@ const InputLabel = (props: InputLabelProps) => {
 
         ${props.className}
     `}
-		>
-			{/* 圖標 */}
-			{props.frontIcon && (
-				<div className="flex-none ml-3">
-					<Image src={props.icon} className="dark:invert-0 invert" alt={""} />
-				</div>
-			)}
+    >
+      {/* 圖標 */}
+      {props.frontIcon && (
+        <div className="flex-none ml-3">
+          <Image src={props.icon} className="dark:invert-0 invert" alt={""} />
+        </div>
+      )}
 
-			{/* 標籤 */}
-			<div className="flex-grow flex flex-wrap items-center p-1">
-				<div className="flex flex-wrap items-center gap-2 ml-2">
-					{content.map((item, index) => (
-						<Label
-							key={item}
-							text={item}
-							onClick={() => removeContent(index)}
-							className="dark:text-neutral-white dark:bg-primary-black-300 rounded-full"
-						/>
-					))}
-				</div>
+      {/* 標籤 */}
+      <div className="flex-grow flex flex-wrap items-center p-1">
+        <div className="flex flex-wrap items-center gap-2 ml-2">
+          {content.map((item, index) => (
+            <Label
+              key={item}
+              text={item}
+              onClick={() => removeContent(index)}
+              className="dark:text-neutral-white dark:bg-primary-black-300 rounded-full"
+            />
+          ))}
+        </div>
 
-				{/* 輸入框 */}
-				<input
-					type="text"
-					placeholder={props.placeholder}
-					value={contentTemp}
-					onChange={(e) => {
-						setContentTemp(e.target.value);
-					}}
-					onKeyPress={(e) => {
-						if (e.key === "Enter") addContent();
-					}}
-					className="flex-grow outline-none p-2.5 bg-transparent rounded-full w-[60%]"
-				/>
-			</div>
+        {/* 輸入框 */}
+        <input
+          type="text"
+          placeholder={props.placeholder}
+          value={contentTemp}
+          onChange={(e) => {
+            setContentTemp(e.target.value);
+          }}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") addContent();
+          }}
+          className="flex-grow outline-none p-2.5 bg-transparent rounded-full w-[60%] text-black dark:text-gray-300"
+        />
+      </div>
 
-			{/* 清除按鈕 */}
-			{content.length > 0 && (
-				<div className="flex-none">
-					<button
-						type="button"
-						onClick={() => {
-							setContent([]);
-							props.onChange([]);
-						}}
-						className="
+      {/* 清除按鈕 */}
+      {content.length > 0 && (
+        <div className="flex-none">
+          <button
+            type="button"
+            onClick={() => {
+              setContent([]);
+              props.onChange([]);
+            }}
+            className="
             rounded-full py-[9px] px-3
             text-sm font-medium
             text-black
             focus:outline-none
             dark:text-white
           "
-					>
-						<Icon icon_light={clearIcon} className="dark:invert" />
-					</button>
-				</div>
-			)}
+          >
+            <Icon icon_light={clearIcon} className="dark:invert" />
+          </button>
+        </div>
+      )}
 
-			{/* 按鈕 */}
-			<div className="flex-none">
-				<button
-					type="button"
-					onClick={handleSearchClick}
-					aria-label="搜尋"
-					className="
+      {/* 按鈕 */}
+      <div className="flex-none">
+        <button
+          type="button"
+          onClick={handleSearchClick}
+          aria-label="搜尋"
+          className="
           rounded-full py-[9px] px-3 mr-2
           bg-primary-black-300
           text-sm font-medium
@@ -138,12 +138,12 @@ const InputLabel = (props: InputLabelProps) => {
           focus:outline-none
           dark:bg-white
         "
-				>
-					<Image src={props.icon} className="dark:invert-0 invert" alt="" />
-				</button>
-			</div>
-		</div>
-	);
+        >
+          <Image src={props.icon} className="dark:invert-0 invert" alt="" />
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default InputLabel;
