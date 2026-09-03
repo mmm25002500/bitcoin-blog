@@ -102,6 +102,32 @@ export default async function handler(
 			return `${year}-${month}-${day} ${hours}:${minutes}`;
 		};
 
+		// 文章底部按鈕：logo 若為 storage 檔名則組成完整 URL
+		const buttons = Array.isArray(post.buttons)
+			? post.buttons
+					.filter(
+						(btn: { title?: string }) => btn && typeof btn.title === "string",
+					)
+					.slice(0, 6)
+					.map(
+						(btn: {
+							title: string;
+							description?: string;
+							logo?: string;
+							link?: string;
+						}) => ({
+							title: btn.title,
+							description: btn.description || "",
+							link: btn.link || "",
+							logo: btn.logo
+								? /^https?:\/\//.test(btn.logo)
+									? btn.logo
+									: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${imageBucket}/${btn.logo}`
+								: "",
+						}),
+					)
+			: [];
+
 		// 使用資料庫的資料作為 frontMatter，而不是 MD 檔案的
 		const frontMatter = {
 			title: post.title,
@@ -111,6 +137,7 @@ export default async function handler(
 			date: formatDate(post.created_at),
 			image: imageUrl,
 			author_id: post.author_id,
+			buttons,
 		};
 
 		return res.status(200).json({ content, data: frontMatter });

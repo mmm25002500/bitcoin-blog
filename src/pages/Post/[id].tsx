@@ -8,6 +8,7 @@ import type { PostProps } from "@/types/List/PostData";
 import Navbar from "@/components/Layout/Navbar";
 import ArticleLayout from "@/components/Layout/Article/ArticleLayout";
 import MD from "@/components/MD";
+import ArticleButtonSection from "@/components/Article/ArticleButtonSection";
 import Tag from "@/components/Tag/Tag";
 import HorizontalLine from "@/components/HorizontalLine";
 import ArticlePostList from "@/components/List/ArticlePostList";
@@ -130,6 +131,12 @@ const PostPage = ({
               </div>
             )}
             <MD>{initialPost.source}</MD>
+
+            {/* 文章底部按鈕（每排三個，最多 6 個） */}
+            <ArticleButtonSection
+              buttons={initialPost.frontMatter.buttons}
+              className="mt-10"
+            />
 
             {/* 標籤 */}
             <div className="relative w-full h-10 my-5 mt-14">

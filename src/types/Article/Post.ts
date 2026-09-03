@@ -1,3 +1,5 @@
+import type { ArticleButtonData } from "./ArticleButton";
+
 export interface PostProps {
   image: any;
   title: string;
@@ -14,4 +16,5 @@ export interface PostProps {
   img: string;
   id: string;
   tags: string[];
+  buttons?: ArticleButtonData[];
 }
