@@ -1,6 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
 import type { NextApiRequest, NextApiResponse } from "next";
-import MoreInfo from "@/config/MoreInfo.json";
 
 export default async function handler(
 	req: NextApiRequest,
@@ -49,6 +48,25 @@ export default async function handler(
 			}>;
 		}
 
+		// 取得目錄分類（後台可編輯）
+		const { data: categories, error: categoryError } = await supabase
+			.from("MoreInfo")
+			.select("*")
+			.order("sort_order", { ascending: true })
+			.order("id", { ascending: true });
+
+		if (categoryError) {
+			console.error("[ERR] 取得目錄分類失敗:", categoryError.message);
+			return res.status(500).json({ error: categoryError.message });
+		}
+
+		const categoryList: CategoryData[] = (categories || []).map((category) => ({
+			title: category.title,
+			folder: category.folder,
+			label: category.label || undefined,
+			post: Array.isArray(category.posts) ? category.posts : [],
+		}));
+
 		// 取得所有作者資料
 		const { data: authors, error: authorError } = await supabase
 			.from("author")
@@ -61,9 +79,9 @@ export default async function handler(
 
 		const authorMap = new Map(authors.map((a) => [a.id, a]));
 
-		// 遍歷 MoreInfo.json 中的每個類別
+		// 遍歷每個類別
 		const result = await Promise.all(
-			(MoreInfo as CategoryData[]).map(async (category) => {
+			categoryList.map(async (category) => {
 				// 對每個類別中的每篇文章進行處理
 				const posts = await Promise.all(
 					category.post.map(async (post) => {
