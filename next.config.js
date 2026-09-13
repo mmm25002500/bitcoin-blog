@@ -8,6 +8,21 @@ const nextConfig = {
 			},
 		],
 	},
+	async headers() {
+		return [
+			{
+				// API 都是公開的讀取資料，讓 Vercel CDN 快取 60 秒，
+				// 過期後先回舊資料、背景再更新，避免每個請求都打 Supabase / Blockchair
+				source: "/api/:path*",
+				headers: [
+					{
+						key: "Cache-Control",
+						value: "public, s-maxage=60, stale-while-revalidate=300",
+					},
+				],
+			},
+		];
+	},
 	async redirects() {
 		return [
 			{

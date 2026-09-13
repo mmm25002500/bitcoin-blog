@@ -111,8 +111,8 @@ export default async function handler(
 						const authorImageUrl = authorData?.image
 							? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/author.image/${authorData.image}`
 							: "";
-						const postImageUrl = post.image
-							? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/author.image/${post.image}`
+						const postImageUrl = post.img
+							? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${tableName.toLowerCase()}.image/${post.img}`
 							: "";
 
 						// 格式化日期為 yyyy-MM-dd HH:mm

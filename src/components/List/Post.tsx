@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Tag from "../Tag/Tag";
@@ -19,6 +20,9 @@ const formatDate = (date: string) => {
 
 const Post = (props: PostProps) => {
   const { date, time } = formatDate(props.date);
+  // storage 裡找不到圖片（例如 img 還是 defaultPostImage.jpg）時改用預設圖
+  const [imageFailed, setImageFailed] = useState(false);
+  const imageSrc = props.image && !imageFailed ? props.image : defalutPostImage;
 
   return (
     <div
@@ -54,23 +58,14 @@ const Post = (props: PostProps) => {
         </div>
         {/* 圖片 */}
         <div className="inline-flex items-center relative w-auto h-auto max-w-[120px] sm:max-w-[236px]">
-          {props.image && props.image !== "" ? (
-            <Image
-              src={props.image as string}
-              alt="圖片載入失敗，請檢查網址"
-              width={236}
-              height={152}
-              className="w-auto h-auto max-h-[78px] sm:max-h-[152px] rounded-md"
-            />
-          ) : (
-            <Image
-              src={defalutPostImage}
-              alt="圖片載入失敗，請檢查網址"
-              width={236}
-              height={152}
-              className="w-auto h-auto max-h-[78px] sm:max-h-[152px] rounded-md"
-            />
-          )}
+          <Image
+            src={imageSrc}
+            alt="圖片載入失敗，請檢查網址"
+            width={236}
+            height={152}
+            onError={() => setImageFailed(true)}
+            className="w-auto h-auto max-h-[78px] sm:max-h-[152px] rounded-md"
+          />
         </div>
       </div>
 

@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
-import useSWR from "swr";
 import ButtonSection from "@/components/HomePage/ButtonSection";
 import SwiperSection from "@/components/HomePage/SwiperSection";
 import HorizontalLine from "@/components/HorizontalLine";

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import type { PostProps } from "@/types/List/PostData";
 import Radio from "@/components/Radio/Radio";
@@ -35,10 +35,17 @@ const NewsSection = ({
   const [currentType, setCurrentType] = useState<string>("News");
   const [currentAuthor, setCurrentAuthor] = useState<string>("all");
   const [selectedTab, setSelectedTab] = useState<string>("Post");
+  // 上一次查詢的條件，初始值對應 getStaticProps 已經抓好的資料
+  const lastQueryRef = useRef(`Post|all|${initialSelection}`);
 
   // 傳到後端拿資料，用TAG篩選文章
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    // 條件沒變就不重抓（首次載入直接用 initialPosts）
+    const query = `${selectedTab}|${currentAuthor}|${currentSelection}`;
+    if (query === lastQueryRef.current) return;
+    lastQueryRef.current = query;
+
     const fetchFilteredPosts = async () => {
       try {
         const response = await axios.get("/api/getPostsByFilter", {
