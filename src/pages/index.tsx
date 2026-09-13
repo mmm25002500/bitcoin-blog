@@ -24,14 +24,9 @@ interface HomeProps {
   initialTags: TagsProps;
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const Home = (props: HomeProps) => {
-  const { data: initialPosts, error } = useSWR<PostProps[]>(
-    "/api/getPostsByFilter?type=News&author=all&tag=all",
-    fetcher,
-    { fallbackData: props.initialPosts || [] },
-  );
+  // getStaticProps 已抓好（ISR 60 秒），不用在瀏覽器再抓一次
+  const initialPosts = props.initialPosts || [];
   const [selection, setSelection] = useState("all");
 
   const [scrolled, setScrolled] = useState(false);
@@ -262,7 +257,8 @@ export const getStaticProps: GetStaticProps = async () => {
       fetch(`${baseUrl}/api/tags/getAllTags`),
       fetch(`${baseUrl}/api/tags/News/getTags`),
       fetch(`${baseUrl}/api/tags/Posts/getTags`),
-      fetch(`${baseUrl}/api/getPostsByFilter?type=News&author=all&tag=all`),
+      // NewsSection 預設顯示「文章」分頁，所以先抓 Post
+      fetch(`${baseUrl}/api/getPostsByFilter?type=Post&author=all&tag=all`),
     ]);
 
     const allTagsResult = await allTagsRes.json();
