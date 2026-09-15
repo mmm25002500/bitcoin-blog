@@ -67,7 +67,7 @@ const SupporterPage = ({
       </div>
       <div className={`${scrolled ? "h-16" : ""}`} />
 
-      <ArticleHeader title="Supporter" subtitle="贊助頁面" icon={IconLight} />
+      <ArticleHeader title="Supporter" subtitle="贊助" icon={IconLight} />
       <div className="px-5 sm:px-28 pb-20 mx-auto md:px-28 w-full xl:w-[1280px]">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 content-center pt-10">
           {supporterCfg.map(

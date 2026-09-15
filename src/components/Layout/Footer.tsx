@@ -14,6 +14,20 @@ const Footer = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  const [visitorNumber, setVisitorNumber] = useState<number | null>(null);
+
+  // 登記訪客並取得名次（每個 IP 算一次）
+  useEffect(() => {
+    fetch('/api/visitor', { method: 'POST' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && Number.isFinite(data.number) && data.number > 0) {
+          setVisitorNumber(data.number);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   if (!mounted) return null;
 
   return (
@@ -36,7 +50,7 @@ const Footer = () => {
             <p>支持</p>
           </Link>
           <Link href='/supporter' prefetch={false}>
-            <p>贊助頁面</p>
+            <p>贊助</p>
           </Link>
         </div>
 
@@ -57,6 +71,11 @@ const Footer = () => {
             <p>v1.10.07.a1</p>
             <p>2140</p>
           </div>
+          {visitorNumber && (
+            <p className='text-neutral-600 dark:text-neutral-300 text-center'>
+              🧡 你是第 {visitorNumber.toLocaleString()} 個支持比特幣的用戶
+            </p>
+          )}
         </div>
       </div>
 
