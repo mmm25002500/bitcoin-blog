@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import type { GetServerSideProps } from "next";
 import axios from "axios";
-import { serialize } from "next-mdx-remote/serialize";
+import { serializeMarkdown } from "@/lib/mdx";
 
 // components
 import Navbar from "@/components/Layout/Navbar";
@@ -392,7 +392,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { content, data, authorData } = articleRes.data;
 
     // 使用 serialize 處理 Markdown
-    const mdxSource = await serialize(content);
+    const mdxSource = await serializeMarkdown(content);
 
     return {
       props: {

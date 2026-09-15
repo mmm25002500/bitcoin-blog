@@ -8,7 +8,7 @@ import IconLight from "@/icons/illustation/Disclaimer.svg";
 import Head from "next/head";
 import type { GetServerSideProps } from "next";
 import matter from "gray-matter";
-import { serialize } from "next-mdx-remote/serialize";
+import { serializeMarkdown } from "@/lib/mdx";
 import type { MarkDownDataProps } from "@/types/User/UserID";
 import { useState, useEffect } from "react";
 import { createServerClient } from "@supabase/ssr";
@@ -120,7 +120,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     // 使用 gray-matter 解析 frontmatter
     const { content, data } = matter(fileContents);
-    const mdxSource = await serialize(content);
+    const mdxSource = await serializeMarkdown(content);
 
     return {
       props: {

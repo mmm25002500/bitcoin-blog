@@ -1,7 +1,7 @@
 import NotFoundPage from "@/pages/404";
 import { useRouter } from "next/router";
 import type { GetStaticProps, GetStaticPaths } from "next";
-import { serialize } from "next-mdx-remote/serialize";
+import { serializeMarkdown } from "@/lib/mdx";
 import axios from "axios";
 import type { MarkDownDataProps, MarkDownProps } from "@/types/User/UserID";
 import type { PostProps } from "@/types/List/PostData";
@@ -254,7 +254,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
 
     // 使用 serialize 處理 Markdown
-    const mdxSource = await serialize(content);
+    const mdxSource = await serializeMarkdown(content);
 
     return {
       props: {

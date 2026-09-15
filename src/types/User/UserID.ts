@@ -4,20 +4,20 @@ import type { PostProps } from "../Article/Post";
 // 多個文章
 export interface MarkDownsProps {
 	posts: {
-		source: MDXRemoteSerializeResult;
+		source: MDXRemoteSerializeResult | string;
 		frontMatter: PostProps;
 	}[];
 }
 
 export interface MarkDownProps {
 	post: {
-		source: MDXRemoteSerializeResult;
+		source: MDXRemoteSerializeResult | string;
 		frontMatter: PostProps;
 	};
 }
 
 export interface MarkDownDataProps {
-	source: MDXRemoteSerializeResult;
+	source: MDXRemoteSerializeResult | string;
 	frontMatter: PostProps;
 }
 

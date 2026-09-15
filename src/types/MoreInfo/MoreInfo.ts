@@ -3,7 +3,7 @@ import type { AuthorData } from "../List/Author";
 
 export interface MoreInfoData {
 	post: {
-		source: MDXRemoteSerializeResult;
+		source: MDXRemoteSerializeResult | string;
 		frontMatter: {
 			title: string;
 			description: string;
