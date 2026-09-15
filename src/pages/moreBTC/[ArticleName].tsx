@@ -227,7 +227,12 @@ const MoreInfos = (props: MoreInfoData & { seo: SeoData }) => {
         <meta name="twitter:image" content={seo.MoreInfo.image} />
       </Head>
 
-      <Navbar />
+      <div
+        className={`top-0 w-full z-50 ${scrolled ? "fixed bg-navbar-scrolled" : "bg-navbar-default"}`}
+      >
+        <Navbar scrolled={scrolled} />
+      </div>
+      <div className={`${scrolled ? "h-16" : ""}`} />
       <div className="min-h-screen flex flex-col">
         <div className="sm:flex">
           {/* Sidebar */}
