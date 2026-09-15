@@ -12,8 +12,13 @@ const nextConfig = {
 		return [
 			{
 				// API 都是公開的讀取資料，讓 Vercel CDN 快取 60 秒，
-				// 過期後先回舊資料、背景再更新，避免每個請求都打 Supabase / Blockchair
-				source: "/api/:path*",
+				// 過期後先回舊資料、背景再更新，避免每個請求都打 Supabase / Blockchair。
+				// 排除：
+				// - getArticleMarkdown / getArticleByFilename：只給頁面產生時用，頁面本身已有 ISR，
+				//   再經過 CDN 快取會讓剛建立的文章拿到舊的 404
+				// - visitor：每個人的名次不同
+				source:
+					"/api/:path((?!getArticleMarkdown$|getArticleByFilename$|visitor$).*)",
 				headers: [
 					{
 						key: "Cache-Control",
