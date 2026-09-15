@@ -262,7 +262,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id;
 
   if (!id) {
-    return { notFound: true };
+    return { notFound: true, revalidate: 60 };
   }
 
   try {
@@ -273,7 +273,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     );
 
     if (!response.ok) {
-      return { notFound: true };
+      return { notFound: true, revalidate: 60 };
     }
 
     const { content, data, matchedBy } = await response.json();
@@ -297,7 +297,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     });
 
     if (!authorResponse.ok) {
-      return { notFound: true };
+      return { notFound: true, revalidate: 60 };
     }
 
     const authorResult = await authorResponse.json();
@@ -314,7 +314,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   } catch (error) {
     console.error("Error fetching article:", error);
-    return { notFound: true };
+    return { notFound: true, revalidate: 60 };
   }
 };
 
