@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
+import { articleHref } from "@/lib/articleUrl";
 import Pagination from "../Pagination/Pagination";
 import type { PostProps } from "@/types/List/PostData";
 import { parseDate } from "@/utils/dateParser";
@@ -37,7 +38,7 @@ const PostList = ({
 				return (
 					<Post
 						key={post.title}
-						href={`/News/${post.id}`}
+						href={articleHref("News", post)}
 						title={post.title}
 						description={post.description}
 						tags={post.tags}

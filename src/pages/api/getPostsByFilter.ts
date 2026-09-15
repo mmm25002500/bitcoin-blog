@@ -131,6 +131,7 @@ export default async function handler(
 						type: [tableName as "Post" | "News"],
 						image: postImageUrl,
 						id: post.id,
+						slug: post.slug ?? null,
 					};
 				}) || [];
 

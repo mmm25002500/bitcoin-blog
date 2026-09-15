@@ -103,7 +103,8 @@ export default async function handler(
 				data
 					?.filter((post) => {
 						// 排除當前文章（現在直接比對 ID）
-						return post.id !== exclude;
+						// 文章頁的網址可能是編號也可能是自訂網址，兩種都要比
+							return String(post.id) !== String(exclude) && post.slug !== exclude;
 					})
 					.map((post) => {
 						const authorData = authorMap.get(post.author_id);
@@ -142,6 +143,7 @@ export default async function handler(
 							type: [tableName as "Post" | "News"],
 							image: postImageUrl,
 							id: post.id,
+							slug: post.slug ?? null,
 						};
 					}) || [];
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
+import { articleHref } from "@/lib/articleUrl";
 import Pagination from "../Pagination/Pagination";
 import type { PostProps } from "@/types/List/PostData";
 
@@ -30,7 +31,7 @@ const PostList = ({ data }: PostListData) => {
 				<Post
 					key={post.title}
 					idx={index}
-					href={`/Post/${post.id}`}
+					href={articleHref("Post", post)}
 					{...post}
 					className="px-5 sm:px-0"
 				/>

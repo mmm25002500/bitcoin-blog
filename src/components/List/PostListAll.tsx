@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
+import { articleHref } from "@/lib/articleUrl";
 import Pagination from "../Pagination/Pagination";
 import type { PostProps } from "@/types/List/PostData";
 import { parseDate } from "@/utils/dateParser";
@@ -38,7 +39,7 @@ const PostList = ({
           return (
             <React.Fragment key={post.title}>
               <Post
-                href={`/${post.type}/${post.id}`}
+                href={articleHref(String(post.type), post)}
                 title={post.title}
                 description={post.description}
                 tags={post.tags}
@@ -61,7 +62,7 @@ const PostList = ({
           return (
             <React.Fragment key={post.title}>
               <Post
-                href={`/${post.type}/${post.id}`}
+                href={articleHref(String(post.type), post)}
                 title={post.title}
                 description={post.description}
                 tags={post.tags}

@@ -23,6 +23,7 @@ import blockImg from "@/icons/examplePhoto/block.jpg";
 import right from "@/icons/right.svg";
 import left from "@/icons/left.svg";
 import { getBaseUrl } from "@/lib/utils";
+import { articleHref } from "@/lib/articleUrl";
 
 const PostPage = ({
   initialPost,
@@ -235,14 +236,22 @@ export const getStaticProps: GetStaticProps = async (context) => {
     // 從 API 取得文章 Markdown 內容
     const baseUrl = getBaseUrl();
     const response = await fetch(
-      `${baseUrl}/api/getArticleMarkdown?id=${id}&type=Post`,
+      `${baseUrl}/api/getArticleMarkdown?id=${encodeURIComponent(String(id))}&type=Post`,
     );
 
     if (!response.ok) {
       return { notFound: true };
     }
 
-    const { content, data } = await response.json();
+    const { content, data, matchedBy } = await response.json();
+
+    // 用編號或舊網址進來，而文章有自訂網址（或網址改過）→ 轉到目前的網址
+    if (matchedBy === "old_slug" || (matchedBy === "id" && data.slug)) {
+      return {
+        redirect: { destination: articleHref("Post", data), permanent: false },
+        revalidate: 60,
+      };
+    }
 
     // 使用 serialize 處理 Markdown
     const mdxSource = await serialize(content);

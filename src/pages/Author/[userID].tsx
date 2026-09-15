@@ -188,6 +188,7 @@ const AuthorPage = (props: {
 								img: props.initialAuthor.image,
 								image: post.image,
 								id: post.id,
+								slug: post.slug,
 							})) as any
 						}
 					/>

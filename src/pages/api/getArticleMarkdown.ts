@@ -48,12 +48,26 @@ export default async function handler(
 		// 根據 type 選擇對應的資料表
 		const tableName = type === "Post" ? "Post" : "News";
 
-		// 從資料庫查詢取得所有文章資料
-		const { data: post, error: queryError } = await supabase
+		// id 可以是文章編號、自訂網址（slug），或改過的舊網址
+		const key = String(id);
+		const isNumericId = /^[0-9]+$/.test(key);
+		let matchedBy: "id" | "slug" | "old_slug" = isNumericId ? "id" : "slug";
+
+		let { data: post, error: queryError } = await supabase
 			.from(tableName)
 			.select("*")
-			.eq("id", id)
-			.single();
+			.eq(isNumericId ? "id" : "slug", key)
+			.maybeSingle();
+
+		if (!post && !queryError && !isNumericId) {
+			({ data: post, error: queryError } = await supabase
+				.from(tableName)
+				.select("*")
+				.contains("old_slugs", [key])
+				.limit(1)
+				.maybeSingle());
+			matchedBy = "old_slug";
+		}
 
 		if (queryError || !post) {
 			console.error("[ERR] 查詢文章失敗:", queryError?.message);
@@ -138,9 +152,11 @@ export default async function handler(
 			image: imageUrl,
 			author_id: post.author_id,
 			buttons,
+			id: post.id,
+			slug: post.slug ?? null,
 		};
 
-		return res.status(200).json({ content, data: frontMatter });
+		return res.status(200).json({ content, data: frontMatter, matchedBy });
 	} catch (error) {
 		console.error("Error accessing Supabase Storage:", error);
 		return res.status(500).json({ error: "Error accessing Supabase Storage" });

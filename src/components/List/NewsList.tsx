@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
+import { articleHref } from "@/lib/articleUrl";
 import Button from "../Button/Button";
 import type { PostProps } from "@/types/List/PostData";
 import { parseDate } from "@/utils/dateParser";
@@ -36,7 +37,7 @@ const PostList = ({
 					<div key={post.title}>
 						<Post
 							key={post.title}
-							href={`/${post.type}/${post.id}`}
+							href={articleHref(String(post.type), post)}
 							title={post.title}
 							description={post.description}
 							tags={post.tags}

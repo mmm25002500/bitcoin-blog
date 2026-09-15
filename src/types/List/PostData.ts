@@ -11,6 +11,7 @@ export interface PostProps {
 	date: string;
 	type: ["Post" | "News"];
 	id?: string;
+	slug?: string | null;
 	idx?: number;
 	onClick?: () => void;
 	href?: string;

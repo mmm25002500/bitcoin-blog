@@ -179,6 +179,7 @@ const NewsSection = ({
                 img: post.authorData.image,
                 image: post.image,
                 id: post.id,
+                slug: post.slug,
               })) as any : []
             }
             postsPerPage={HomePageNewsListPerpage}

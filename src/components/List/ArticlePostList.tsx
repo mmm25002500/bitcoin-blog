@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import type { PostListData } from "../../types/List/PostList";
 import Post from "./Post";
+import { articleHref } from "@/lib/articleUrl";
 import type { PostProps } from "@/types/List/PostData";
 import Button from "../Button/Button";
 import Icon from "../Icon";
@@ -41,7 +42,7 @@ const ArticlePostList = ({
           <Post
             key={post.title}
             idx={index}
-            href={`/Post/${post.id}`}
+            href={articleHref("Post", post)}
             title={post.title}
             description={post.description}
             tags={post.tags}
