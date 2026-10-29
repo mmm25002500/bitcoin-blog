@@ -154,6 +154,8 @@ export default async function handler(
 			buttons,
 			id: post.id,
 			slug: post.slug ?? null,
+			// 內文頂部改用比特幣價格走勢圖（縮圖仍用 image）
+			coverChart: post.cover_chart === true,
 		};
 
 		return res.status(200).json({ content, data: frontMatter, matchedBy });

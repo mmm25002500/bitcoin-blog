@@ -9,6 +9,7 @@ import Navbar from "@/components/Layout/Navbar";
 import ArticleLayout from "@/components/Layout/Article/ArticleLayout";
 import MD from "@/components/MD";
 import ArticleButtonSection from "@/components/Article/ArticleButtonSection";
+import ArticlePriceChart from "@/components/Article/ArticlePriceChart";
 import Tag from "@/components/Tag/Tag";
 import HorizontalLine from "@/components/HorizontalLine";
 import ArticleNewsList from "@/components/List/ArticleNewsList";
@@ -128,7 +129,9 @@ const NewsPage = ({
             <p className="mb-3 text-base sm:text-2xl leading-[22px] sm:leading-[30px] font-medium text-neutral-800 dark:text-neutral-200">
               {initialPost.frontMatter.description}
             </p>
-            {initialPost.frontMatter.image && (
+            {initialPost.frontMatter.coverChart ? (
+              <ArticlePriceChart />
+            ) : initialPost.frontMatter.image && (
               <div className="flex justify-center">
                 <Image
                   src={initialPost.frontMatter.image}

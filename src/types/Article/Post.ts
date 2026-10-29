@@ -17,4 +17,5 @@ export interface PostProps {
   id: string;
   tags: string[];
   buttons?: ArticleButtonData[];
+  coverChart?: boolean; // 內文頂部用比特幣價格走勢圖取代封面圖
 }
