@@ -1,13 +1,13 @@
 {
     "default": {
-        "title": "比特幣.中文 Bitcoin.zh",
-        "description": "比特幣中文網 Bitcoin.org.tw",
+        "title": "比特幣.中文 btc.org.tw",
+        "description": "比特幣中文網 btc.org.tw",
         "image": "/ogimage.jpg",
         "type": "website"
     },
     "Index": {
-        "title": "比特幣.中文 Bitcoin.zh",
-        "description": "比特幣中文網 Bitcoin.org.tw",
+        "title": "比特幣.中文 btc.org.tw",
+        "description": "比特幣中文網 btc.org.tw",
         "image": "/ogimage.jpg",
         "type": "website"
     },
